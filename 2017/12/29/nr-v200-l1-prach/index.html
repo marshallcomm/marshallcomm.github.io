@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="PRACH 序列生成 随机接入前导$ { {x}_{u,v}}(n) $应根据以下方式生成 \[ \begin{align}  \nonumber &amp; { {x}_{u,v}}(n)&#x3D;{ {x}_{u}}((n+{ {C}_{v}})\bmod { {L}_{\text{RA}}}) \\   \nonumber  &amp; { {x}_{u}}(i)&#x3D;{ {e}^{-j\fr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G PRACH与随机接入">
+<meta property="og:url" content="https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/index.html">
+<meta property="og:site_name" content="Marshall - Comm. Tech. Blog">
+<meta property="og:description" content="PRACH 序列生成 随机接入前导$ { {x}_{u,v}}(n) $应根据以下方式生成 \[ \begin{align}  \nonumber &amp; { {x}_{u,v}}(n)&#x3D;{ {x}_{u}}((n+{ {C}_{v}})\bmod { {L}_{\text{RA}}}) \\   \nonumber  &amp; { {x}_{u}}(i)&#x3D;{ {e}^{-j\fr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/112954192.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113036188.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113143413.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113251910.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113318908.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113341808.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113400040.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113418389.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150255196.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150334167.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150402629.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150424741.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/151344428.png">
+<meta property="article:published_time" content="2017-12-29T02:52:39.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:48:07.324Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta property="article:tag" content="2017-12">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/112954192.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/","path":"2017/12/29/nr-v200-l1-prach/","title":"5G PRACH与随机接入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G PRACH与随机接入 | Marshall - Comm. Tech. Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Marshall - Comm. Tech. Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#prach"><span class="nav-number">1.</span> <span class="nav-text">PRACH</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="nav-number">1.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">随机接入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E5%89%8D%E5%AF%BC"><span class="nav-number">2.1.</span> <span class="nav-text">随机接入前导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E5%93%8D%E5%BA%94rar"><span class="nav-number">2.2.</span> <span class="nav-text">随机接入响应（RAR)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#msg3-pusch"><span class="nav-number">2.3.</span> <span class="nav-text">Msg3 PUSCH</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description">Comm. Tech. Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="Comm. Tech. Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall - Comm. Tech. Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G PRACH与随机接入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-29 10:52:39" itemprop="dateCreated datePublished" datetime="2017-12-29T10:52:39+08:00">2017-12-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-10-21 13:48:07" itemprop="dateModified" datetime="2018-10-21T13:48:07+08:00">2018-10-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="prach">PRACH</h1>
+<h2 id="序列生成">序列生成</h2>
+<p><br/>随机接入前导$ { {x}_{u,v}}(n) $应根据以下方式生成</p>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; { {x}_{u,v}}(n)={ {x}_{u}}((n+{ {C}_{v}})\bmod { {L}_{\text{RA}}}) \\ 
+ \nonumber  &amp; { {x}_{u}}(i)={ {e}^{-j\frac{\pi ui(i+1)}{ { {L}_{\text{RA}}}}}},i=0,1,...,{ {L}_{\text{RA}}}-1  
+\end{align} 
+\]</span></p>
+<p>从而进一步生成频域表示</p>
+<p><span class="math display">\[ { {y}_{u,v}}(n)=\sum\limits_{m=0}^{ { {L}_{\text{RA}}}-1}{ { {x}_{u,v}}(m)\cdot { {e}^{-j\frac{2\pi mn}{ { {L}_{\text{RA}}}}}}} \]</span></p>
+<p>其中$ { {L}<em>{}}=839 <span class="math inline">\(或\)</span> { {L}</em>{}}=139 <span class="math inline">\(取决于表6.3.3.1-1和6.3.3.1-2给定的PRACH前导格式。序列号\)</span> u $根据表6.3.3.1-3和6.3.3.1-4由高层参数 <em>PRACHRootSequenceIndex</em> 获得。</p>
+<span id="more"></span>
+<p>循环移位$ { {C}_{v}} $为</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; C{}_{v}=\left\{ \begin{array}{*{35}{l}}
+   v{ {N}_{\text{CS}}} &amp; \text{v}=\text{0,1,}...\text{,}\left\lfloor { { {L}_{\text{RA}}}}/{ { {N}_{\text{CS}}}}\; \right\rfloor -1,{ {N}_{\text{CS}}}\ne 0 &amp; \text{for unrestricted sets}  \\
+   \text{0} &amp; { {N}_{\text{CS}}}=0 &amp; \text{for unrestricted sets}  \\
+   { {d}_{\text{start}}}\left\lfloor {v}/{n_{\text{shift}}^{\text{RA}}}\; \right\rfloor +\left( v\bmod n_{\text{shift}}^{\text{RA}} \right){ {N}_{\text{CS}}} \nonumber &amp; v=0,1,...,w-1 &amp; \text{for restricted sets type A and B}  \\
+   { { {\bar{\bar{d}}}}_{\text{start}}}+\left( v-w \right){ {N}_{\text{CS}}} &amp; v=w,...,w+\bar{\bar{n}}_{\text{shift}}^{\text{RA}}-1 &amp; \text{for restricted sets type B}  \\
+   { { {\bar{\bar{\bar{d}}}}}_{\text{start}}}+\left( v-w-\bar{\bar{n}}_{\text{shift}}^{\text{RA}} \right){ {N}_{\text{CS}}} &amp; v=w+\bar{\bar{n}}_{\text{shift}}^{\text{RA}},...,w+\bar{\bar{n}}_{\text{shift}}^{\text{RA}}+\bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}-1 &amp; \text{for restricted sets type B}  \\
+\end{array} \right. \\ 
+ \nonumber &amp; w=n_{\text{shift}}^{\text{RA}}n_{\text{group}}^{\text{RA}}+\bar{n}_{\text{shift}}^{\text{RA}}  
+\end{align} \]</span></p>
+<p>其中$ { {N}_{}} $由表6.3.3.1-5到6.3.3.1-7提供，高层参数 <em>restrictedSetConfig</em> 决定限制集类型（非限制集，限制集A，限制集B），表6.3.3.1-1和6.3.3.1-2指示不同前导格式所支持的限制集类型。</p>
+<p>变量$ { {d}_{u}} $为</p>
+<p><span class="math display">\[ { {d}_{u}}=\left\{ \begin{array}{*{35}{l}}
+   q &amp; 0\le q&lt;{ { {L}_{\text{RA}}}}/{2}\;  \\
+   { {L}_{\text{RA}}}-q &amp; \text{otherwise}  \\
+\end{array} \right. 
+\]</span></p>
+<p>其中<span class="math inline">\(q\)</span>是满足$ ( qu )=1 <span class="math inline">\(的最小非负整数。循环移位的限制集参数取决于\)</span> { {d}_{u}} $的值。</p>
+<p>对于限制集A，参数给定为</p>
+<ul>
+<li>for $ { {N}<em>{}}&lt;{ { {L}</em>{}}}/{3}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}=2{ {d}_{u}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {L}_{\text{RA}}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {({ {L}_{\text{RA}}}-2{ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right)  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ { { {L}_{}}}/{3};/{2}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {({ {L}_{\text{RA}}}-2{ {d}_{u}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}={ {L}_{\text{RA}}}-2{ {d}_{u}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\min \left( \max \left( \left\lfloor {({ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right),n_{\text{shift}}^{\text{RA}} \right)  
+\end{align} 
+\]</span></p>
+<p>对于限制集B，参数给定为</p>
+<ul>
+<li>for $ { {N}<em>{}}&lt;{ { {L}</em>{}}}/{5}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}=4{ {d}_{u}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {L}_{\text{RA}}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {({ {L}_{\text{RA}}}-4{ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right)  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ { { {L}_{}}}/{5};/{}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {\left( { {L}_{\text{RA}}}-4{ {d}_{u}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}={ {L}_{\text{RA}}}-4{ {d}_{u}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\min \left( \max \left( \left\lfloor {({ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right),n_{\text{shift}}^{\text{RA}} \right)  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ {({ {L}<em>{}}+{ {N}</em>{}})}/{4};&lt;{2{ {L}_{}}}/{7}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {(4{ {d}_{u}}-{ {L}_{\text{RA}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}=4{ {d}_{u}}-{ {L}_{\text{RA}}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{d}}}}_{\text{start}}}={ {L}_{\text{RA}}}-3{ {d}_{u}}+n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}}+\bar{n}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}_{\text{start}}}={ {L}_{\text{RA}}}-2{ {d}_{u}}+n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}}+\bar{\bar{n}}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {\left( { {L}_{\text{RA}}}-3{ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right) \\ 
+ \nonumber &amp; \bar{\bar{n}}_{\text{shift}}^{\text{RA}}=\left\lfloor {\min \left( { {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}},4{ {d}_{u}}-{ {L}_{\text{RA}}}-\bar{n}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}=\left\lfloor {\left( \left( 1-\min \left( 1,\bar{n}_{\text{shift}}^{\text{RA}} \right) \right)\left( { {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}} \right)+\min \left( 1,\bar{n}_{\text{shift}}^{\text{RA}} \right)\left( 4{ {d}_{u}}-{ {L}_{\text{RA}}}-\bar{n}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \right) \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor -\bar{\bar{n}}_{\text{shift}}^{\text{RA}}  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ {2{ {L}_{}}}/{7};/{3}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {({ {L}_{\text{RA}}}-3{ {d}_{u}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}={ {L}_{\text{RA}}}-3{ {d}_{u}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{d}}}}_{\text{start}}}={ {d}_{u}}+n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}}+\bar{n}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}_{\text{start}}}=0 \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {\left( 4{ {d}_{u}}-{ {L}_{\text{RA}}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right) \\ 
+ \nonumber &amp; \bar{\bar{n}}_{\text{shift}}^{\text{RA}}=\left\lfloor {\min \left( { {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}},{ {L}_{\text{RA}}}-3{ {d}_{u}}-\bar{n}_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}=0  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ {({ {L}<em>{}}+{ {N}</em>{}})}/{3};&lt;{2{ {L}_{}}}/{5}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {(3{ {d}_{u}}-{ {N}_{\text{ZC}}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}=3{ {d}_{u}}-{ {N}_{\text{ZC}}}+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{d}}}}_{\text{start}}}=0 \\ 
+ \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}_{\text{start}}}=0 \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor { { {d}_{u}}}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {\left( { {L}_{\text{RA}}}-2{ {d}_{u}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right) \\ 
+ \nonumber &amp; \bar{\bar{n}}_{\text{shift}}^{\text{RA}}=0 \\ 
+ \nonumber &amp; \bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}=0  
+\end{align} 
+\]</span></p>
+<ul>
+<li>for $ {2{ {L}_{}}}/{5};/{2}; $</li>
+</ul>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; n_{\text{shift}}^{\text{RA}}=\left\lfloor {({ {N}_{\text{ZC}}}-2{ {d}_{u}})}/{ { {N}_{\text{CS}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; { {d}_{\text{start}}}=2({ {N}_{\text{ZC}}}-2{ {d}_{u}})+n_{\text{shift}}^{\text{RA}}{ {N}_{\text{CS}}} \\ 
+ \nonumber &amp; { { {\bar{\bar{d}}}}_{\text{start}}}=0 \\ 
+ \nonumber  &amp; { { {\bar{\bar{\bar{d}}}}}_{\text{start}}}=0 \\ 
+ \nonumber &amp; n_{\text{group}}^{\text{RA}}=\left\lfloor {({ {L}_{\text{RA}}}-{ {d}_{u}})}/{ { {d}_{\text{start}}}}\; \right\rfloor  \\ 
+ \nonumber &amp; \bar{n}_{\text{shift}}^{\text{RA}}=\max \left( \left\lfloor {\left( 3{ {d}_{u}}-{ {L}_{\text{RA}}}-n_{\text{group}}^{\text{RA}}{ {d}_{\text{start}}} \right)}/{ { {N}_{\text{CS}}}}\; \right\rfloor ,0 \right) \\ 
+ \nonumber &amp; \bar{\bar{n}}_{\text{shift}}^{\text{RA}}=0 \\ 
+ \nonumber &amp; \bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}=0  
+\end{align} 
+\]</span></p>
+<p>对于所有其他$ { {d}_{u}} $的值，限制集中无循环移位。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/112954192.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113036188.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113143413.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113251910.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113318908.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113341808.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113400040.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/113418389.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="物理资源映射">物理资源映射</h2>
+<p><br/>前导序列应根据以下方式映射到物理资源</p>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; a_{k}^{(p,\text{RA})}={ {\beta }_{\text{PRACH}}}{ {y}_{u,v}}(k) \\ 
+ \nonumber &amp; k=0,1,...,{ {L}_{\text{RA}}}-1  
+\end{align} 
+\]</span></p>
+<p>其中与声明为“保留”的资源重叠的物理资源应计入映射过程但不用于传输，$ { {}_{}} <span class="math inline">\(是幅值因子，天线端口\)</span> p=4000 <span class="math inline">\(。基带信号的产生应按照38.211的5.3节进行，使用表6.3.3.1-1或表6.3.3.1-2中的参数，\)</span> {k} $由表6.3.3.2-1给出。</p>
+<p>随机接入前导只能根据表6.3.3.2-2的高层参数 <em>PRACHConfigurationIndex</em> 给定的时间和频率资源上进行传输。该表取决于38.101中定义的FR1或FR2（频率范围FR的定义见本文附录）以及频谱类型。为了表中的时隙编号的目的，应该假定下面的子载波间隔：</p>
+<ul>
+<li>$ 15 $用于PRACH前导格式0-3</li>
+<li>$ 15 <span class="math inline">\(用于PRACH前导格式A1，A2，A3，B1，B2，B3，B4，C0，C2，其中\)</span> $是PRACH子载波间隔配置</li>
+</ul>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150255196.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150334167.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150402629.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/150424741.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h1 id="随机接入过程">随机接入过程</h1>
+<p><br/>在开始物理随机接入过程之前，L1必须从高层接收一组SSB索引，并且应该向高层提供相应的一组RSRP测量值。</p>
+<p>在开始物理随机接入过程之前，L1应从高层接收以下信息：</p>
+<ul>
+<li>物理随机接入信道（PRACH）传输参数（用于PRACH传输的PRACH前导格式，时间资源和频率资源）的配置。</li>
+<li>用于确定PRACH前导序列集合中的根序列及其循环移位的参数（逻辑根序列索引表，循环移位（ ）和集合类型（非限制集，限制集A或限制集B））</li>
+</ul>
+<p>从物理层的角度来看，L1随机接入过程包括PRACH中的随机接入前导（Msg1）的传输，PDSCH（Msg2）中的随机接入响应（RAR），Msg3 PUSCH和PDSCH中的竞争解决（Msg4）。</p>
+<p>如果UE没有被配置有两个UL载波，并且通过“PDCCH order”向UE发起随机接入过程，则随机接入前导传输与由高层发起的随机接入前导传输具有相同的子载波间隔。</p>
+<p>如果UE配置有针对服务小区的两个UL载波，并且UE检测到“PDCCH order”，则UE使用检测到的“PDCCH order”的UL/SUL指示域的值来确定用于对应的随机接入前导传输的UL载波，和随机接入前导传输与UE被配置用于对应UL载波的子载波间隔。</p>
+<h2 id="随机接入前导">随机接入前导</h2>
+<p><br/>L1过程在高层请求PRACH传输时被触发。PRACH传输的高层配置包括以下内容：</p>
+<ul>
+<li>用于PRACH传输的配置[TS38.211]</li>
+<li>前导索引，前导子载波间隔，$ { {P}_{}} $，相应的RA-RNTI和PRACH资源</li>
+</ul>
+<p>在所指示的PRACH资源上，使用所选择的PRACH格式和发送功率$ { {P}_{}} $发送前导序列。</p>
+<p>UE确定传输周期<span class="math inline">\(i\)</span>服务小区<span class="math inline">\(c\)</span>载波<span class="math inline">\(f\)</span>上的PRACH的传输功率为：</p>
+<p><span class="math display">\[ { {P}_{\text{PRACH,}f,c}}(i)=\min { {\left\{ { {P}_{\text{CMAX},f,c}}(i),\ { {P}_{\text{PRACH,target}}}+P{ {L}_{f,c}} \right\}}^{ {}}}  dBm\]</span></p>
+<p>其中$ { {P}<em>{f,c}}(i) <span class="math inline">\(是在38.101中定义的传输周期\)</span>i<span class="math inline">\(服务小区\)</span>c<span class="math inline">\(载波\)</span>f<span class="math inline">\(上的UE发送功率，\)</span> { {P}</em>{}} <span class="math inline">\(是由高层参数 *preambleReceivedTargetPower* 提供的PRACH目标接收功率，\)</span> P{ {L}_{f,c}} <span class="math inline">\(是由UE计算的服务小区\)</span>c<span class="math inline">\(载波\)</span>f$上的路径损耗，以dB为单位计算为<em>referenceSignalPower</em>——高层滤波器RSRP，其中RSRP在38.215中定义，高层滤波器的配置则在38.331中定义。<em>referenceSignalPower</em> 等于 <em>SS-PBCHBlockPower</em>，其中 <em>SS-PBCHBlockPower</em> 由SIB1提供。</p>
+<p>如果UE发送PRACH以传送链路重配置请求，如38.213第6章所述，$ { {P}_{}} $由高层参数<em>preambleReceivedTargetPower-BFR</em>提供。</p>
+<p>如果在随机接入响应窗口内，如2.2节所述，若UE未收到包含着与UE发送的前导序列相对应的前导ID的随机接入响应，则UE应当确定后续PRACH传输的传输功率（如果有的话，如38.321所述）。</p>
+<h2 id="随机接入响应rar">随机接入响应（RAR)</h2>
+<p><br/>对PRACH响应的传输，UE在高层（38.321）控制的窗口期间尝试检测具有相应RA-RNTI的PDCCH。窗口从Type1-PDCCH公共搜索空间的最早的CORESET的第一个符号开始，也即在前导序列传输的最后一个符号之后$ { {/{ { {T}<em>{sf}}}; }^{ {}}}/{( N</em>{}<sup>{}N_{}</sup>{} )}; $个符号。基于Type0-PDCCH公共搜索空间的子载波间隔和CP，窗口长度的时隙数由高层参数 <em>rar-WindowLength</em> 提供。</p>
+<p>如果UE在窗口内检测到具有对应的RA-RNTI的PDCCH和相应的DL-SCH传输块，则UE将传输块传递到高层。高层针对与PRACH传输相关联的随机接入前导标识（RAPID）解析传输块，并且如果RAPID被识别，则向物理层指示上行授权。UE应接收PDCCH和PDSCH，其中PDSCH包含的DL-SCH传输块具有与PDCCH Type0-PDCCH公共搜索空间的接收相同的子载波间隔和相同的循环前缀，并且与DM-RS天线端口具有QCL性质（38.214）。</p>
+<p>除非UE已配置子载波间隔，否则UE使用与提供RAR的PDSCH相同的子载波间隔以接收后续的PDSCH。</p>
+<p>如果UE在窗口内未检测到PDDCH或对应的DL-SCH传输块，则UE过程如38.321中所述。</p>
+<h2 id="msg3-pusch">Msg3 PUSCH</h2>
+<p><br/>高层参数 <em>msg3-tp</em> 向UE指示UE是否应当对Msg3 PUSCH传输应用变换预编码（如38.211中所述）。</p>
+<p>Msg3 PUSCH传输的子载波间隔由高层参数 <em>msg3-scs</em> 提供。UE将在同一个服务小区上发送PRACH和Msg3 PUSCH。</p>
+<p>用于Msg3 PUSCH传输的UL BWP由SIB1指示。</p>
+<h1 id="附录">附录</h1>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/151344428.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>本文参考3GPP TS38.211 V2.0.0 (2017-12)</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/" title="5G PRACH与随机接入">https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+              <a href="/tags/2017-12/" rel="tag"># 2017-12</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/12/29/nr-v200-l1-ssb/" rel="prev" title="5G SSB与小区搜索">
+                  <i class="fa fa-chevron-left"></i> 5G SSB与小区搜索
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/12/30/nr-v200-l1-pdcch/" rel="next" title="5G PDCCH">
+                  5G PDCCH <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"5ee8f6434b074f05a2fa1a33c238ebbc"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

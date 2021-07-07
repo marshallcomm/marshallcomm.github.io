@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Marshall：5G NR物理层规范已更新到v1.1.0版本，本文整理了38.211规范v1.1.0版，同时宣告v1.0.0版本过时。   mark  Scope References Definitions, symbols and abbreviations 帧结构与物理资源 概述 在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位\({ {T}_{\te">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G-NR物理信道与调制v1.1.0">
+<meta property="og:url" content="https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/index.html">
+<meta property="og:site_name" content="Marshall - Comm. Tech. Blog">
+<meta property="og:description" content="Marshall：5G NR物理层规范已更新到v1.1.0版本，本文整理了38.211规范v1.1.0版，同时宣告v1.0.0版本过时。   mark  Scope References Definitions, symbols and abbreviations 帧结构与物理资源 概述 在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位\({ {T}_{\te">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/151427236.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143031394.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143556228.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143622401.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143930833.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/144316598.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/145910963.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/150000105.png">
+<meta property="article:published_time" content="2017-10-23T06:05:43.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:46:41.612Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta property="article:tag" content="2017-10">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/151427236.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/","path":"2017/10/23/nr-v110-l1-channel-modulation/","title":"5G-NR物理信道与调制v1.1.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G-NR物理信道与调制v1.1.0 | Marshall - Comm. Tech. Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Marshall - Comm. Tech. Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#definitions-symbols-and-abbreviations"><span class="nav-number">3.</span> <span class="nav-text">Definitions, symbols and abbreviations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">帧结构与物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A2%E5%BD%A2%E5%8F%82%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">波形参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.</span> <span class="nav-text">帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A7%E5%92%8C%E5%AD%90%E5%B8%A7"><span class="nav-number">4.3.1.</span> <span class="nav-text">帧和子帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%9A%99"><span class="nav-number">4.3.2.</span> <span class="nav-text">时隙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">4.4.</span> <span class="nav-text">物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E7%AB%AF%E5%8F%A3"><span class="nav-number">4.4.1.</span> <span class="nav-text">天线端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%A0%BC"><span class="nav-number">4.4.2.</span> <span class="nav-text">资源格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%B2%92%E5%AD%90"><span class="nav-number">4.4.3.</span> <span class="nav-text">资源粒子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%9D%97"><span class="nav-number">4.4.4.</span> <span class="nav-text">资源块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E8%BD%BD%E6%B3%A2%E5%B8%A6%E5%AE%BD"><span class="nav-number">4.4.5.</span> <span class="nav-text">部分载波带宽</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E8%81%9A%E5%90%88"><span class="nav-number">4.5.</span> <span class="nav-text">载波聚合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">通用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E6%98%A0%E5%B0%84%E5%99%A8"><span class="nav-number">5.1.</span> <span class="nav-text">调制映射器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%CF%802-bpsk"><span class="nav-number">5.1.1.</span> <span class="nav-text">π&#x2F;2-BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpsk"><span class="nav-number">5.1.2.</span> <span class="nav-text">BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qpsk"><span class="nav-number">5.1.3.</span> <span class="nav-text">QPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam"><span class="nav-number">5.1.4.</span> <span class="nav-text">16QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam-1"><span class="nav-number">5.1.5.</span> <span class="nav-text">64QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam-2"><span class="nav-number">5.1.6.</span> <span class="nav-text">256QAM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">5.2.</span> <span class="nav-text">序列生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">5.2.1.</span> <span class="nav-text">伪随机序列生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zc%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">5.2.2.</span> <span class="nav-text">ZC序列生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%BF%E5%BA%A6%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E-3n_-%E7%9A%84%E5%9F%BA%E5%BA%8F%E5%88%97"><span class="nav-number">5.2.2.1.</span> <span class="nav-text">长度大于等于$ 3N_{}^{} $的基序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%BF%E5%BA%A6%E5%B0%8F%E4%BA%8E-3n_-%E7%9A%84%E5%9F%BA%E5%BA%8F%E5%88%97"><span class="nav-number">5.2.2.2.</span> <span class="nav-text">长度小于$ 3N_{}^{} $的基序列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ofdm%E5%9F%BA%E5%B8%A6%E7%AC%A6%E5%8F%B7%E7%94%9F%E6%88%90"><span class="nav-number">5.3.</span> <span class="nav-text">OFDM基带符号生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E5%92%8C%E4%B8%8A%E5%8F%98%E9%A2%91"><span class="nav-number">5.4.</span> <span class="nav-text">调制和上变频</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">6.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">7.</span> <span class="nav-text">下行链路</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description">Comm. Tech. Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="Comm. Tech. Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall - Comm. Tech. Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G-NR物理信道与调制v1.1.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-10-23 14:05:43" itemprop="dateCreated datePublished" datetime="2017-10-23T14:05:43+08:00">2017-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-10-21 13:46:41" itemprop="dateModified" datetime="2018-10-21T13:46:41+08:00">2018-10-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><strong>Marshall：</strong>5G NR物理层规范已更新到<a href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>，本文整理了38.211规范v1.1.0版，同时宣告<a href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>过时。</p>
+</blockquote>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/151427236.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位<span class="math inline">\({ {T}_{\text{c}}}={1}/{\left( \Delta { {f}_{\max }}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span class="math inline">\(\Delta { {f}_{\max }}=480\cdot { {10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({ {N}_{\text{f}}}=4096\)</span>。常数<span class="math inline">\(\kappa ={ { {T}_{\text{s}}}}/{ { {T}_{\text{c}}}}\;=64\)</span>，其中<span class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta { {f}_{\text{ref}}}\cdot { {N}_{\text{f,ref}}} \right)}\;\)</span>，<span class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot { {10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({ {N}_{\text{f,ref}}}=2048\)</span>。</p>
+<blockquote>
+<p><span class="math inline">\({ {T}_{\text{s}}}\)</span>是LTE的采样间隔，为了不引起混淆，NR的采样间隔用新的符号<span class="math inline">\({ {T}_{c}}\)</span>命名，<span class="math inline">\({ {T}_{c}}=64{ {T}_{s}}\)</span>。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="波形参数">波形参数</h2>
+<p><br/>如Table 4.2-1所示，NR支持多种OFDM波形参数。部分载波带宽（carrier bandwidth part）的$ $和CP由高层参数给定，其中下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143031394.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p><strong>Marshall：</strong>NR支持多种子载波间隔，当$  $时即为LTE的参数配置，也就是说LTE的参数配置是NR的一个特例。</p>
+</blockquote>
+<h2 id="帧结构">帧结构</h2>
+<h3 id="帧和子帧">帧和子帧</h3>
+<p><br/>下行与上行链路传输于帧中，一帧的时域为$ { {T}<em>{}}=( {}/{100}; )=10 <span class="math inline">\(，一帧包含10个子帧，每个子帧时域为\)</span> { {T}</em>{}}=( {}/{1000}; )=1 <span class="math inline">\(。每个子帧内连续的OFDM符号数为\)</span> N_{}<sup>{,}=N_{}</sup>{}N_{}^{,} $。每帧分为两个相等大小的半帧，每个半帧包含5个子帧，即半帧0由子帧0-4组成，半帧1由子帧5-9组成。</p>
+<p>在一个载波上有一组帧用于上行链路，有一组帧用于下行链路。</p>
+<p>来自UE的上行帧<span class="math inline">\(i\)</span>应在UE对应的下行帧开始前$ { {T}<em>{}}={ {N}</em>{}}{ {T}_{}} $传输。</p>
+<h3 id="时隙">时隙</h3>
+<p><br/>对于子载波间隔配置$ <span class="math inline">\(，时隙在子帧内按递增顺序编号为\)</span> n_{}^{}{ 0,...,N_{}^{}-1 } <span class="math inline">\(，在帧内按递增顺序编号为\)</span> n_{}^{}{ 0,...,N_{}^{}-1 } <span class="math inline">\(。一个时隙内有\)</span> N_{}^{} <span class="math inline">\(个连续的OFDM符号，其中\)</span> N_{}^{} <span class="math inline">\(的值依赖于CP长度，CP长度由Tables 4.3.2-1 and 4.3.2-2给定。一个子帧内的起始时隙\)</span> n_{}^{} <span class="math inline">\(与这个子帧内起始OFDM符号\)</span>n_{}<sup>{}N_{}</sup>{}$在时间上对齐。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143556228.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143622401.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p><strong>Marshall：</strong>一个帧是10ms，一个子帧是1ms，一个子帧内的时隙数是不定的，而一个时隙内的符号数是固定的，因此一个子帧内的符号数是不定的。这里唯一变化的参数就是时隙数，而时隙数是根据子载波间隔配置$ <span class="math inline">\(来确定的。追溯到源头，是由于\)</span> $的不同配置，带来了上述参数的变化。</p>
+</blockquote>
+<h2 id="物理资源">物理资源</h2>
+<h3 id="天线端口">天线端口</h3>
+<p><br/>天线端口定义为，在同一个天线端口上，传输某一符号的信道可以从传输另一个符号的信道推知。</p>
+<p>若在一个天线端口上传输的某一符号的信道的大尺度特性，可以从另一个天线端口上传输的某一符号的信道推知，则这两个天线端口被称为是准共定位（quasi co-located，QCL）的。大尺度特性包括一个或多个时延扩展，多普勒频移，平均增益，平均时延，空间Rx参数。</p>
+<h3 id="资源格">资源格</h3>
+<p><br/>对于给定的波形参数和子载波间隔配置，资源格定义为$ N_{x}<sup>{}N_{}</sup>{} <span class="math inline">\(个频域子载波和\)</span> N_{}^{,} <span class="math inline">\(个时域OFDM符号，其中\)</span> N_{x}^{} <span class="math inline">\(由Table 4.4.2-1给定，\)</span> x <span class="math inline">\(表示DL（downlink）或UL（uplink）。在不会产生混淆时，下标\)</span> x <span class="math inline">\(可省略。每个天线端口\)</span> p <span class="math inline">\(、每个子载波间隔配置\)</span> $以及每个传输方向（上行或下行），对应一个资源格。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/143930833.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h3 id="资源粒子">资源粒子</h3>
+<p><br/>对于天线端口$ p <span class="math inline">\(和子载波间隔配置\)</span> <span class="math inline">\(，资源格中的每个元素被称为资源粒子，并且由索引对\)</span> ( k,l ) <span class="math inline">\(唯一地标识，其中\)</span> k <span class="math inline">\(是频域索引，\)</span> l $是时域符号索引。</p>
+<p>天线端口$ p <span class="math inline">\(和子载波间隔配置\)</span> <span class="math inline">\(下的资源粒子表示为\)</span> { {( k,l )}<em>{p,}} <span class="math inline">\(，其对应的复数值为\)</span> a</em>{k,l}^{(p,)} <span class="math inline">\(。在不会产生混淆时，或在没有指定某一天线端口或子载波间隔时，索引\)</span> p <span class="math inline">\(和\)</span> <span class="math inline">\(可以省略，表示为\)</span> a_{k,l}^{(p)} <span class="math inline">\(或\)</span> { {a}_{k,l}} $。</p>
+<p>一个资源粒子可分为“上行链路”、“下行链路”、“灵活”或“保留”。</p>
+<ul>
+<li>如果一个资源粒子被配置为“保留”，UE不应在上行链路资源粒子中传输任何数据，也不应假设下行链路资源粒子中有任何内容。</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/144316598.png" title="Figure 4.4.3-1: Resource grid and resource block" /></p>
+<h3 id="资源块">资源块</h3>
+<p><br/>在频域内，物理资源块定义为$ N_{}^{}=12 $连续的子载波。</p>
+<p>在频域内，物理资源块从0到$ N_{}^{}-1 <span class="math inline">\(进行编号。在频域内，物理资源块号\)</span> { {n}_{}} $与资源粒子 的关系如下：</p>
+<p><span class="math display">\[ { {n}_{\text{PRB}}}=\left\lfloor \frac{k}{N_{\text{sc}}^{\text{RB}}} \right\rfloor  \]</span></p>
+<h3 id="部分载波带宽">部分载波带宽</h3>
+<p><br/>对于给定载波上的给定波形参数$ { {}<em>{i}} <span class="math inline">\(，部分载波带宽（Carrier bandwidth part）定义为一个物理资源块（在4.4.4中定义）的连续子集。BWP中的资源块从0到\)</span> N</em>{x}^{}-1 <span class="math inline">\(进行编号，其中\)</span> x <span class="math inline">\(表示DL（downlink）或UL（uplink）。\)</span> N_{}^{i} <span class="math inline">\(是4.4.4节中绝对资源块格栅中的PRB0与编号为\)</span>i<span class="math inline">\(的部分载波载波带宽中的PRB0之间的偏移。一个BWP内的资源块数应满足\)</span> N_{x}<sup>{}N_{x}</sup>{}N_{x}^{} $，其中最小与最大值由Table 4.4.2-1给定。</p>
+<p>在下行链路，UE可以配置一个或多个BWP，并且可以在指定的时间对下行BWP进行激活。在激活的BWP之外，UE不会接收PDSCH或PDCCH。</p>
+<p>在上行链路，UE可以配置一个或多个BWP，并且可以在指定的时间对上行BWP进行激活。在激活的BWP之外，UE不会接收PUSCH或PUCCH。</p>
+<h2 id="载波聚合">载波聚合</h2>
+<p><br/>多个小区的传输可以被聚合起来，除了主小区之外最多可聚合15个次级小区。除非另有说明，本规范中的描述适用于多达16个服务小区中的每一个。</p>
+<h1 id="通用函数">通用函数</h1>
+<h2 id="调制映射器">调制映射器</h2>
+<p><br/>调制映射器采用二进制0或1作为输入，产生复值调制符号作为输出。</p>
+<h3 id="π2-bpsk">π/2-BPSK</h3>
+<p><br/>对于π/2-BPSK调制，比特<span class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{ { {e}^{j{i\pi }/{2}\;}}}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i) \right) \right]\]</span></p>
+<h3 id="bpsk">BPSK</h3>
+<p><br/>对于BPSK调制，比特<span class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i) \right) \right]\]</span></p>
+<h3 id="qpsk">QPSK</h3>
+<p><br/>对于QPSK调制，成对比特<span class="math inline">\(b(i),b(i+1)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i+1) \right) \right]\]</span></p>
+<h3 id="qam">16QAM</h3>
+<p><br/>对于16QAM调制，四位比特<span class="math inline">\(b(i),b(i+1),b(i+2),b(i+3)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{10}}\left[ \left( 1-2b(i) \right)\left( 2-\left( 1-2b(i+2) \right) \right)+j\left( 1-2b(i+1) \right)\left( 2-\left( 1-2b(i+3) \right) \right) \right]\]</span></p>
+<h3 id="qam-1">64QAM</h3>
+<p><br/>对于64QAM调制，六位比特<span class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; x=\frac{1}{\sqrt{42}}\left[ \left( 1-2b(i) \right)\left( 4-\left( 1-2b(i+2) \right)\left( 2-\left( 1-2b(i+4) \right) \right) \right) \right. \\ 
+ \nonumber &amp; \ \ \ \ \ \ \left. +j\left( 1-2b(i+1) \right)\left( 4-\left( 1-2b(i+3) \right)\left( 2-\left( 1-2b(i+5) \right) \right) \right) \right] \\ 
+\end{align}\]</span></p>
+<h3 id="qam-2">256QAM</h3>
+<p><br/>对于256QAM调制，八位比特<span class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5),b(i+6),b(i+7)\)</span>根据下式映射为复值调制符号<span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+ \nonumber &amp; x=\frac{1}{\sqrt{170}}\left[ \left( 1-2b(i) \right)\left( 8-\left( 1-2b(i+2) \right)\left( 4-\left( 1-2b(i+4) \right)\left( 2-\left( 1-2b(i+6) \right) \right) \right) \right) \right. \\ 
+ \ \ \ \nonumber &amp; \left. +j\left( 1-2b(i+1) \right)\left( 8-\left( 1-2b(i+3) \right)\left( 4-\left( 1-2b(i+5) \right)\left( 2-\left( 1-2b(i+7) \right) \right) \right) \right) \right]  
+\end{align}\]</span></p>
+<h2 id="序列生成">序列生成</h2>
+<h3 id="伪随机序列生成">伪随机序列生成</h3>
+<p><br/>伪随机序列由长度为31的Gold序列定义。输出序列$ c(n) <span class="math inline">\(长度为\)</span> { {M}<em>{}} <span class="math inline">\(，其中\)</span> n=0,1,...,{ {M}</em>{}}-1 <span class="math inline">\(，\)</span> c(n) $由下式定义</p>
+<p><span class="math display">\[ \begin{align}
+ \nonumber &amp; c(n)=\left( { {x}_{1}}(n+{ {N}_{C}})+{ {x}_{2}}(n+{ {N}_{C}}) \right)\bmod 2 \\ 
+ \nonumber &amp; { {x}_{1}}(n+31)=\left( { {x}_{1}}(n+3)+{ {x}_{1}}(n) \right)\bmod 2 \\ 
+ \nonumber &amp; { {x}_{2}}(n+31)=\left( { {x}_{2}}(n+3)+{ {x}_{2}}(n+2)+{ {x}_{2}}(n+1)+{ {x}_{2}}(n) \right)\bmod 2  
+\end{align} 
+\]</span></p>
+<p>其中$ { {N}<em>{C}}=1600 <span class="math inline">\(，第一m序列应由\)</span> { {x}</em>{1}}(0)=1,{ {x}<em>{1}}(n)=0,n=1,2,...,30 <span class="math inline">\(初始化。第二m序列由\)</span> { {c}</em>{}}=<em>{i=0}^{30}{ { {x}</em>{2}}(i)} $进行初始化，其值取决于序列的应用。</p>
+<h3 id="zc序列生成">ZC序列生成</h3>
+<p><br/>序列$ r_{u,v}^{(,)}(n) <span class="math inline">\(由基序列\)</span> { _{u,v}}(n) <span class="math inline">\(根据下式的循环移位\)</span> $得到：</p>
+<p><span class="math display">\[ r_{u,v}^{(\alpha ,\delta )}(n)=\begin{matrix}
+   { {e}^{j\alpha \left( n+\delta \frac{\omega \bmod 2}{2} \right)}}{ { {\bar{r}}}_{u,v}}(n), &amp; 0\le n&lt;{ {M}_{\text{ZC}}}  \\
+\end{matrix}-1 
+\]</span></p>
+<p>其中$ { {M}<em>{}}={mN</em>{}^{}}/{ { {2}^{}}}; <span class="math inline">\(是序列长度，且\)</span> 1mN_{}^{} <span class="math inline">\(。多个序列由基序列根据不同的\)</span> <span class="math inline">\(和\)</span> $值来得到。</p>
+<p>基序列$ { <em>{u,v}}(n) <span class="math inline">\(被分为若干组，\)</span> u{ 0,1,...,29 } <span class="math inline">\(是分组号，\)</span> v <span class="math inline">\(是组内基序列号。每个组包含一个长度为\)</span> { {M}</em>{}}=mN_{}^{} <span class="math inline">\(的基序列（\)</span> v=0 <span class="math inline">\(）且\)</span> 1m <span class="math inline">\(，和两个长度为\)</span> { {M}<em>{}}=mN</em>{}^{} <span class="math inline">\(的基序列（\)</span> v=0,1 <span class="math inline">\(）且\)</span> 6mN_{}^{} <span class="math inline">\(。基序列\)</span> { <em>{u,v}}(0),...,{ </em>{u,v}}({ {M}<em>{}}-1) <span class="math inline">\(的定义依赖于序列长度\)</span> { {M}</em>{}} $。</p>
+<h4 id="长度大于等于-3n_-的基序列">长度大于等于$ 3N_{}^{} $的基序列</h4>
+<p><br/>对于$ { {M}<em>{}}3N</em>{}^{} <span class="math inline">\(，基序列\)</span> { <em>{u,v}}(0),...,{ </em>{u,v}}({ {M}_{}}-1) $为</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { { {\bar{r}}}_{u,v}}(n)={ {x}_{q}}\left( n\bmod { {N}_{\text{ZC}}} \right) \\ 
+ \nonumber &amp; { {x}_{q}}\left( m \right)={ {e}^{-j\frac{\pi qm\left( m+1 \right)}{ { {N}_{\text{ZC}}}}}}  
+\end{align} 
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; q=\left\lfloor \bar{q}+{1}/{2}\; \right\rfloor +v\cdot { {(-1)}^{\left\lfloor 2\bar{q} \right\rfloor }} \\ 
+ \nonumber &amp; \bar{q}={ {N}_{\text{ZC}}}\cdot {(u+1)}/{31}\; \\ 
+\end{align} 
+\]</span></p>
+<p>长度$ { {N}<em>{}} <span class="math inline">\(为满足\)</span> { {N}</em>{}}&lt;{ {M}_{}} $的最大素数。</p>
+<h4 id="长度小于-3n_-的基序列">长度小于$ 3N_{}^{} $的基序列</h4>
+<p><br/>对于$ { {M}<em>{}}={ {N}</em>{}} <span class="math inline">\(和\)</span> { {M}<em>{}}=2{ {N}</em>{}} $，基序列为</p>
+<p><span class="math display">\[ { {\bar{r}}_{u,v}}(n)=\begin{matrix}
+   { {e}^{j{\phi (n)\pi }/{4}\;}}, &amp; 0\le n\le { {M}_{\text{ZC}}}-1  \\
+\end{matrix} 
+\]</span></p>
+<p>其中$ (n) $的值由Tables 5.5.1.2-1 and 5.5.1.2-2给定。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/145910963.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/150000105.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="ofdm基带符号生成">OFDM基带符号生成</h2>
+<p><br/>时域连续序号$ s_{l}^{(p,)}( t ) <span class="math inline">\(是天线端口\)</span> p <span class="math inline">\(和子载波间隔配置\)</span> <span class="math inline">\(下，在一个子帧内的第\)</span> l $个OFDM符号。OFDM符号用于除PRACH之外的任何物理信道或物理信号，定义为</p>
+<p><span class="math display">\[ s_{ {\bar{l}}}^{(p,\mu )}\left( t \right)=\sum\limits_{k=-\left\lfloor N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}/2 \right\rfloor }^{ { {\left\lceil N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}/2 \right\rceil }^{ {}}}-1}{a_{ {k}&#39;,l}^{(p,\mu )}\cdot { {e}^{j2\pi \left( k+{ {k}_{0}} \right)\Delta f\left( t-{ {N}_{\text{CP},l}}{ {T}_{\text{c}}} \right)}}} \]</span></p>
+<p>其中$ 0t&lt;( { {N}<em>{}}+N</em>{,{l}}^{} ){ {T}<em>{}} <span class="math inline">\(且\)</span> {k}'=k+/{2}; <span class="math inline">\(。\)</span> { {k}</em>{0}} <span class="math inline">\(是在子载波间隔配置\)</span> <span class="math inline">\(下，一个RB内最低编号的子载波，并且与任何小于\)</span> $的配置下的RB内最低编号的子载波相一致。</p>
+<p>子载波间隔配置$ <span class="math inline">\(下，一个子帧内OFDM符号\)</span> l $的起始位置为</p>
+<p><span class="math display">\[ t_{\text{start},l}^{\mu }=\left\{ \begin{array}{*{35}{l}}
+   0 &amp; l=0  \\
+   t_{\text{start},l-1}^{\mu }+\left( { {N}_{\text{u}}}+N_{\text{CP,}l-1}^{\mu } \right)\cdot { {T}_{\text{c}}} &amp; \text{otherwise}  \\
+\end{array} \right. 
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { {N}_{\text{u}}}=2048\kappa \cdot { {2}^{-\mu }} \\ 
+  \nonumber &amp; { {N}_{\text{CP},l}}=\left\{ \begin{array}{*{35}{l}}
+   512\kappa \cdot { {2}^{-\mu }} &amp; \text{extended cyclic prefix}  \\
+   144\kappa \cdot { {2}^{-\mu }}+16\kappa  &amp; \text{normal cyclic prefix and }l=0\text{ or }l=7  \\
+   144\kappa \cdot { {2}^{-\mu }} &amp; \text{otherwise}  \\
+\end{array} \right.\cdot { {2}^{\mu }}  
+\end{align} 
+\]</span></p>
+<p>时域连续符号$ s_{l}^{(p,)}( t ) <span class="math inline">\(是天线端口\)</span> p $上用于传输PRACH的符号，定义为</p>
+<p><span class="math display">\[ s_{l}^{(p,\mu )}\left( t \right)=\sum\limits_{k=-\left\lfloor { {L}_{\text{RA}}}/2 \right\rfloor }^{ { {\left\lceil { {L}_{\text{RA}}}/2 \right\rceil }^{ {}}}-1}{a_{ { {k}&#39;}}^{(p,\text{RA})}\cdot { {e}^{j2\pi \left( k+{ {k}_{0}} \right)\Delta { {f}_{\text{RA}}}\left( t-N_{\text{CP},l}^{\text{RA}}{ {T}_{\text{c}}} \right)}}} \]</span></p>
+<p>其中$ 0t&lt;( { {N}<em>{}}+N</em>{,l}^{} ){ {T}_{}} <span class="math inline">\(且\)</span> {k}'=k+/{2}; $。</p>
+<p>一个子帧内PRACH前导的起始位置定义为$ t_{}^{} <span class="math inline">\(，假设子帧在\)</span> t=0 $时刻开始，</p>
+<ul>
+<li>对于$ { 15,30,60,120 } <span class="math inline">\(，对于符号\)</span> l <span class="math inline">\(有\)</span> t_{}<sup>{}=t_{,l}</sup>{} $</li>
+</ul>
+<p>$ { {L}<em>{}} <span class="math inline">\(和\)</span> { {N}</em>{}} <span class="math inline">\(由6.3.3节和\)</span> N_{,l}<sup>{}=N_{}</sup>{}+n$给定，其中</p>
+<ul>
+<li>对于$ { 1.25,5 } <span class="math inline">\(，有\)</span> n=0 $</li>
+<li>对于$ { 15,30,60,120 } <span class="math inline">\(，\)</span>n$ is the number of times the interval $ $ overlaps with either time instance 0 or time instance $ ( {}/{2000}; )=0.5 $ in a subframe.</li>
+</ul>
+<h2 id="调制和上变频">调制和上变频</h2>
+<p><br/>对于天线端口$ p <span class="math inline">\(和子载波间隔配置\)</span> <span class="math inline">\(，复值OFDM基带信号调制和上变频至载频\)</span> { {f}_{0}} $：</p>
+<p><span class="math display">\[ \operatorname{Re}\left\{ s_{l}^{(p,\mu )}\left( t \right)\cdot { {e}^{j2\pi { {f}_{0}}t}} \right\} \]</span></p>
+<h1 id="上行链路">上行链路</h1>
+<p><br/><a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
+<h1 id="下行链路">下行链路</h1>
+<p><br/><a href="http://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/">5G-NR物理信道与调制-下行链路v1.1.0</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/" title="5G-NR物理信道与调制v1.1.0">https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+              <a href="/tags/2017-10/" rel="tag"># 2017-10</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/10/20/polar-code-23-3gpp-ran1-90b/" rel="prev" title="Polar Code（23）3GPP RAN1#90bis">
+                  <i class="fa fa-chevron-left"></i> Polar Code（23）3GPP RAN1#90bis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/10/23/nr-v110-l1-channel-modulation-ul/" rel="next" title="5G-NR物理信道与调制-上行链路v1.1.0">
+                  5G-NR物理信道与调制-上行链路v1.1.0 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"43278c51b9d7f78be98a8129392d07a8"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

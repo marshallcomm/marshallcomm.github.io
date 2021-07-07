@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言 极化信道的可靠性估计是Polar Code编码的第一步，对于BEC信道，若计算巴氏参数，转移概率是绕不开的一步。此外对于译码判决来说，计算转移概率也是必须的。本文就尝试梳理一下极化信道的转移概率\(W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)\)。 离散信道的数学模型 信道是信号传输的媒介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（5）编码之信道转移概率">
+<meta property="og:url" content="https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/index.html">
+<meta property="og:site_name" content="Marshall - Comm. Tech. Blog">
+<meta property="og:description" content="前言 极化信道的可靠性估计是Polar Code编码的第一步，对于BEC信道，若计算巴氏参数，转移概率是绕不开的一步。此外对于译码判决来说，计算转移概率也是必须的。本文就尝试梳理一下极化信道的转移概率\(W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)\)。 离散信道的数学模型 信道是信号传输的媒介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/214259492.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/215829213.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/220220784.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/220515878.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/224336662.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082522769.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082636188.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082720011.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082801240.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082845515.jpg">
+<meta property="article:published_time" content="2017-03-12T13:31:26.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:49:03.747Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/214259492.jpg">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/","path":"2017/03/12/polar-code-5-encoding-chan-trans-prob/","title":"Polar Code（5）编码之信道转移概率"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（5）编码之信道转移概率 | Marshall - Comm. Tech. Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Marshall - Comm. Tech. Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">离散信道的数学模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A6%BB%E6%95%A3%E6%97%A0%E8%AE%B0%E5%BF%86%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.</span> <span class="nav-text">二进制离散无记忆信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AF%B9%E7%A7%B0%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.1.</span> <span class="nav-text">二进制对称信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%88%A0%E9%99%A4%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">二进制删除信道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.</span> <span class="nav-text">极化信道</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E4%BF%A1%E9%81%93%E8%BD%AC%E7%A7%BB%E6%A6%82%E7%8E%87"><span class="nav-number">3.</span> <span class="nav-text">极化信道转移概率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#w_1left-1-right"><span class="nav-number">3.1.</span> <span class="nav-text">\(W_{1}^{\left( 1 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_2left-1-right"><span class="nav-number">3.2.</span> <span class="nav-text">\(W_{2}^{\left( 1 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_2left-2-right"><span class="nav-number">3.3.</span> <span class="nav-text">\(W_{2}^{\left( 2 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_4left-1-right"><span class="nav-number">3.4.</span> <span class="nav-text">\(W_{4}^{\left( 1 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_4left-2-right"><span class="nav-number">3.5.</span> <span class="nav-text">\(W_{4}^{\left( 2 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_4left-3-right"><span class="nav-number">3.6.</span> <span class="nav-text">\(W_{4}^{\left( 3 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w_4left-4-right"><span class="nav-number">3.7.</span> <span class="nav-text">\(W_{4}^{\left( 4 \right)}\)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description">Comm. Tech. Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="Comm. Tech. Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall - Comm. Tech. Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（5）编码之信道转移概率
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-12 21:31:26" itemprop="dateCreated datePublished" datetime="2017-03-12T21:31:26+08:00">2017-03-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-10-21 13:49:03" itemprop="dateModified" datetime="2018-10-21T13:49:03+08:00">2018-10-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言">前言</h1>
+<p><br/>极化信道的可靠性估计是Polar Code编码的第一步，对于BEC信道，若计算巴氏参数，转移概率是绕不开的一步。此外对于译码判决来说，计算转移概率也是必须的。本文就尝试梳理一下极化信道的转移概率<span class="math inline">\(W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)\)</span>。</p>
+<h1 id="离散信道的数学模型">离散信道的数学模型</h1>
+<p><br/>信道是信号传输的媒介，是传送信息的通道。在信息论研究中不考虑信道的物理特性，而只是考虑它的概率特性。研究信道的目的主要是为了解决信息如何通过信道实现有效和可靠传输的问题。香农第二定理指出，信息传输速率小于信道容量是实现可靠传输的充分与必要的条件。信道容量是信息能够可靠传输的最大信息传输速率，是信道研究中的一个重要内容。信道容量定义为信道输入与输出平均互信息的最大值，它是信道本身固有特性的反映，仅与信道的<strong>转移概率</strong>有关，与信道的输入概率无关，但是信道输人概率必须与信道匹配才能达到容量。</p>
+<span id="more"></span>
+<p>设信道的输入符号集合<span class="math inline">\(X\)</span>为随机变量集合，则输出符号集合<span class="math inline">\(Y\)</span>也为随机变量集合。因为信道有随机噪声干扰，使<span class="math inline">\(Y\)</span>在<span class="math inline">\(X\)</span>给定条件下为随机变量，所以用条件概率或转移概率<span class="math inline">\(P\left( y|x \right)\)</span>描述<span class="math inline">\(Y\)</span>与<span class="math inline">\(X\)</span> 之间的关系，其中<span class="math inline">\(x\in X,y\in Y\)</span>。信道模型如图1所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/214259492.jpg" title="图 1 离散信道模型" /></p>
+<p>一般的信道输入与输出均为随机矢量，设输入集合为<span class="math inline">\({ {X}^{N}}={ {X}_{1}},{ {X}_{2}},...,{ {X}_{N}}\)</span>，集合中的矢量<span class="math inline">\(\mathbf{x}={ {x}_{1}},{ {x}_{2}},...{ {x}_{N}},\mathbf{x}\in { {X}^{N}}\)</span>，输入单符号集为<span class="math inline">\(A=\left\{ { {a}_{1}},{ {a}_{2}},...,{ {a}_{r}} \right\}\)</span>，其中<span class="math inline">\({ {a}_{1}},{ {a}_{2}},...,{ {a}_{r}}\)</span>的概率分别是<span class="math inline">\({ {p}_{1}},{ {p}_{2}},...{ {p}_{r}}\)</span>，且<span class="math inline">\({ {x}_{n}}\)</span>取自<span class="math inline">\(A\)</span>，<span class="math inline">\(1\le n\le N\)</span>，输入矢量的符号集为<span class="math inline">\({ {A}^{N}}\)</span>。输出集合为<span class="math inline">\({ {Y}^{N}}={ {Y}_{1}},{ {Y}_{2}},...,{ {Y}_{N}}\)</span>，集合中的矢量为<span class="math inline">\(\mathbf{y}={ {y}_{1}},{ {y}_{2}},...,{ {y}_{N}},\mathbf{y}\in { {Y}^{N}}\)</span>，输出单符号集为<span class="math inline">\(B=\left\{ { {b}_{1}},{ {b}_{2}},...,{ {b}_{s}} \right\}\)</span>，其中<span class="math inline">\({ {b}_{1}},{ {b}_{2}},...,{ {b}_{s}}\)</span>的概率分别是<span class="math inline">\({ {q}_{1}},{ {q}_{2}},...,{ {q}_{s}}\)</span>，且<span class="math inline">\({ {y}_{n}}\)</span>取自<span class="math inline">\(B\)</span>，<span class="math inline">\(1\le n\le N\)</span>，输出矢量的符号集为<span class="math inline">\({ {B}^{N}}\)</span>。这种信道模型表示为<span class="math inline">\(\left\{ { {X}^{N}},p\left( \mathbf{y}|\mathbf{x} \right),{ {Y}^{N}} \right\}\)</span>，其中<span class="math inline">\(p\left( \mathbf{y}|\mathbf{x} \right)=p\left( { {y}_{1}},...,{ {y}_{N}}|{ {x}_{1}},...,{ {x}_{N}} \right)\)</span>。</p>
+<h2 id="二进制离散无记忆信道">二进制离散无记忆信道</h2>
+<p><br/>设信道的输入和输出分别是长为<span class="math inline">\(N\)</span>的序列，若信道的转移概率满足</p>
+<p><span class="math display">\[p\left( \mathbf{y}|\mathbf{x} \right)=\prod\limits_{n=1}^{N}{p\left( { {y}_{n}}|{ {x}_{n}} \right)}\]</span></p>
+<p>则称此信道为离散无记忆信道（DMC），其数学模型为：<span class="math inline">\(\left\{ X,p\left( { {y}_{n}}|{ {x}_{n}} \right),Y \right\}\)</span>。若输入单符号集为<span class="math inline">\(A=\left\{ { {a}_{1}},{ {a}_{2}} \right\}\text{=}\left\{ 0,1 \right\}\)</span>，则此信道为二进制离散无记忆信道（B-DMC）。</p>
+<h3 id="二进制对称信道">二进制对称信道</h3>
+<p><br/>二进制对称信道，简记为BSC（Binary Symmetric Channel），输入与输出符号集分别为<span class="math inline">\(A=\left\{ 0,1 \right\}\)</span>，<span class="math inline">\(B=\left\{ 0,1 \right\}\)</span>，信道转移概率满足<span class="math inline">\({ {P}_{Y|X}}\left( 0|0 \right)={ {P}_{Y|X}}\left( 1|1 \right)=p\)</span>，<span class="math inline">\({ {P}_{Y|X}}\left( 1|0 \right)={ {P}_{Y|X}}\left( 0|1 \right)=1-p\)</span>。BSC转移概率图如图2所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/215829213.jpg" title="图 2 二进制对称信道转移概率图" /></p>
+<h3 id="二进制删除信道">二进制删除信道</h3>
+<p><br/>二进制删除信道，简记为BEC（Binary Erasure Channel），输入与输出符号集分别为<span class="math inline">\(A=\left\{ 0,1 \right\}\)</span>，<span class="math inline">\(B=\left\{ 0,2,1 \right\}\)</span>，信道转移概率满足${ {P}<em>{Y|X}}( 0|0 )={ {P}</em>{Y|X}}( 1|1 )=1-<span class="math inline">\(，\)</span>{ {P}<em>{Y|X}}( 2|0 )={ {P}</em>{Y|X}}( 2|1 )=<span class="math inline">\(，\)</span>$称为错误率。BEC转移概率图如图3所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/220220784.jpg" title="图 3 二进制删除信道转移概率图" /></p>
+<h2 id="极化信道">极化信道</h2>
+<p><br/>Arikan在研究极化信道和极化码时是基于B-DMC的。原始信道<span class="math inline">\(W:X\to Y\)</span>如图4（a）所示，其转移概率为<span class="math inline">\(W\left( y|u \right),u\in X,y\in Y\)</span>。将原始信道<span class="math inline">\(W\)</span>的<span class="math inline">\(N\)</span>个独立副本经过联合与分裂操作之后就形成了新的极化信道<span class="math inline">\(W_{N}^{\left( i \right)}:X\to { {Y}^{N}}\times { {X}^{i-1}}\)</span>，如图4（b）所示，其转移概率为<span class="math inline">\(W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)\)</span>。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/220515878.jpg" title="图 4 原始信道与极化信道" /></p>
+<h1 id="极化信道转移概率">极化信道转移概率</h1>
+<p><br/>对任何<span class="math inline">\(n\ge 0,N={ {2}^{n}},1\le i\le {N}/{2}\;\)</span>，有递归式</p>
+<p><span class="math display">\[\begin{align}
+  &amp; W_{N}^{\left( 2i-1 \right)}\left( y_{1}^{N},u_{1}^{2i-2}|{ {u}_{2i-1}} \right)=\sum\limits_{ { {u}_{2i}}}{\frac{1}{2}W_{ {N}/{2}\;}^{\left( i \right)}\left( y_{1}^{ {N}/{2}\;},u_{1,o}^{2i-2}\oplus u_{1,e}^{2i-2}|{ {u}_{2i-1}}\oplus { {u}_{2i}} \right)} \\ 
+ &amp; \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \nonumber \cdot W_{ {N}/{2}\;}^{\left( i \right)}\left( y_{ {N}/{2}\;+1}^{N},u_{1,e}^{2i-2}|{ {u}_{2i}} \right) \\ 
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+  &amp; W_{N}^{\left( 2i \right)}\left( y_{1}^{N},u_{1}^{2i-1}|{ {u}_{2i}} \right)=\frac{1}{2}W_{ {N}/{2}\;}^{\left( i \right)}\left( y_{1}^{ {N}/{2}\;},u_{1,o}^{2i-2}\oplus u_{1,e}^{2i-2}|{ {u}_{2i-1}}\oplus { {u}_{2i}} \right) \\ 
+ &amp; \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \nonumber \cdot W_{ {N}/{2}\;}^{\left( i \right)}\left( y_{ {N}/{2}\;+1}^{N},u_{1,e}^{2i-2}|{ {u}_{2i}} \right) \\ 
+\end{align}\]</span></p>
+<p>递归计算过程中对于任意<span class="math inline">\(a_{i}^{j}\)</span>，只有<span class="math inline">\(i\le j\)</span>的情况，如遇到<span class="math inline">\(a_{i}^{j},i&gt;j\)</span>的情况则视为无效，并定义<span class="math inline">\(W_{1}^{\left( 1 \right)}\triangleq { {W}_{1}}=W\)</span>，<span class="math inline">\(y_{1}^{1}\triangleq { {y}_{1}}\)</span>，<span class="math inline">\(u_{1}^{1}\triangleq { {u}_{1}}\)</span>。下面以<span class="math inline">\(N=4\)</span>为例详细说明。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170312/224336662.jpg" title="图 5 极化信道${ {W}_{4}}$" /></p>
+<p><br/>下面以BSC信道为例，计算各极化信道转移概率。</p>
+<h2 id="w_1left-1-right"><span class="math inline">\(W_{1}^{\left( 1 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=1,i=1\)</span>时，利用式（1）计算信道<span class="math inline">\(W_{1}^{\left( 1 \right)}\text{=}W\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+W_{1}^{\left( 1 \right)}\left( y_{1}^{1},u_{1}^{0}|{ {u}_{1}} \right)=W\left( { {y}_{1}}|{ {u}_{1}} \right)=p
+\end{align}\]</span></p>
+<p>此时的信道即为如图4（a）所示的原始信道。类似的有<span class="math inline">\(W\left( { {y}_{2}}|{ {u}_{2}} \right)=W\left( { {y}_{N}}|{ {u}_{N}} \right)=p\)</span>。</p>
+<h2 id="w_2left-1-right"><span class="math inline">\(W_{2}^{\left( 1 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=2,i=1\)</span>时，利用式（1）计算信道<span class="math inline">\(W_{2}^{\left( 1 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber W_{2}^{\left( 1 \right)}\left( y_{1}^{2},u_{1}^{0}|{ {u}_{1}} \right)=\sum\limits_{ { {u}_{2}}}{\frac{1}{2}}W_{1}^{\left( 1 \right)}\left( y_{1}^{1},u_{1,o}^{0}\oplus u_{1,e}^{0}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W_{1}^{\left( 1 \right)}\left( y_{2}^{2},u_{1,e}^{0}|{ {u}_{2}} \right) \\ 
+  \downarrow  \\ 
+  \nonumber W_{2}^{\left( 1 \right)}\left( y_{1}^{2}|{ {u}_{1}} \right)=\sum\limits_{ { {u}_{2}}}{\frac{1}{2}}W\left( { {y}_{1}}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W\left( { {y}_{2}}|{ {u}_{2}} \right) \\ 
+\end{align}\]</span></p>
+<p>此时的信道即为如图4（b）所示的第1个极化信道。考察对<span class="math inline">\({ {u}_{1}}\)</span>的译码可知，根据运算关系有<span class="math inline">\({ {u}_{1}}={ {y}_{1}}\oplus { {y}_{2}}\)</span>，当<span class="math inline">\(\left\{ { {y}_{1}},{ {y}_{2}} \right\}\)</span>中有一个是错误符号时，<span class="math inline">\({ {u}_{1}}\)</span>的值便无法获得，此时<span class="math inline">\({ {u}_{1}}\)</span>译码失败，可以计算<span class="math inline">\(W_{2}^{\left( 1 \right)}\)</span>的转移概率为</p>
+<p><span class="math display">\[\begin{align}
+W_{2}^{\left( 1 \right)}\left( y_{1}^{2}|{ {u}_{1}} \right)=p\times p={ {p}^{2}}
+\end{align}\]</span></p>
+<p>两个原始信道<span class="math inline">\(W\)</span>的副本经过信道极化构成极化信道<span class="math inline">\({ {W}_{2}}\)</span>。如图5所示，<span class="math inline">\({ {W}_{2}}\)</span>的一个分裂子信道<span class="math inline">\({ {v}_{1}}\)</span>的转移概率即为<span class="math inline">\(W_{2}^{\left( 1 \right)}\)</span>，<span class="math inline">\({ {v}_{2}}\)</span>是<span class="math inline">\({ {W}_{2}}\)</span>的另一个分裂子信道。下面求<span class="math inline">\({ {v}_{2}}\)</span>的转移概率。</p>
+<h2 id="w_2left-2-right"><span class="math inline">\(W_{2}^{\left( 2 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=2,i=1\)</span>时，利用式（2）计算信道<span class="math inline">\(W_{2}^{\left( 2 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber W_{2}^{\left( 2 \right)}\left( y_{1}^{2},u_{1}^{1}|{ {u}_{2}} \right)=\frac{1}{2}W_{1}^{\left( 1 \right)}\left( y_{1}^{1},u_{1,o}^{0}\oplus u_{1,e}^{0}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W_{1}^{\left( 1 \right)}\left( y_{2}^{2},u_{1,e}^{0}|{ {u}_{2}} \right) \\ 
+  \downarrow  \\ 
+  \nonumber W_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ {u}_{1}}|{ {u}_{2}} \right)=\frac{1}{2}W\left( { {y}_{1}}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W\left( { {y}_{2}}|{ {u}_{2}} \right) \\ 
+\end{align}\]</span></p>
+<p>此时的信道即为如图4（b）所示的第2个极化信道。考察对<span class="math inline">\({ {u}_{2}}\)</span>的译码可知，根据运算关系有<span class="math inline">\({ {u}_{2}}={ {y}_{1}}\oplus { {u}_{1}}\)</span>或<span class="math inline">\({ {u}_{2}}={ {y}_{2}}\)</span>，只要这两个式子的任意一个提供了正确符号，那么<span class="math inline">\({ {u}_{2}}\)</span>将必定被正确译码。即当<span class="math inline">\({ {u}_{1}}\)</span>被正确译码时，只有<span class="math inline">\(\left\{ { {y}_{1}},{ {y}_{2}} \right\}\)</span>全部是错误符号时，<span class="math inline">\({ {u}_{2}}\)</span>才会译码失败。可以计算<span class="math inline">\(W_{2}^{\left( 2 \right)}\)</span>的转移概率为</p>
+<p><span class="math display">\[\begin{align}
+W_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ {u}_{1}}|{ {u}_{2}} \right)=1-{ {\left( 1-p \right)}^{2}}
+\end{align}\]</span></p>
+<p>两个极化信道<span class="math inline">\({ {W}_{2}}\)</span>的副本又进一步经过信道极化构成了极化信道<span class="math inline">\({ {W}_{4}}\)</span>。<span class="math inline">\({ {v}_{1}}\)</span>和<span class="math inline">\({ {v}_{3}}\)</span>的转移概率相同，<span class="math inline">\({ {v}_{2}}\)</span>和<span class="math inline">\({ {v}_{4}}\)</span>的转移概率相同，如图6所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082522769.jpg" title="图 6 极化信道${ {W}_{2}}$的转移概率" /></p>
+<h2 id="w_4left-1-right"><span class="math inline">\(W_{4}^{\left( 1 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=4,i=1\)</span>时，利用式（1）计算信道<span class="math inline">\(W_{4}^{\left( 1 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber W_{4}^{\left( 1 \right)}\left( y_{1}^{4},u_{1}^{0}|{ {u}_{1}} \right)=\sum\limits_{ { {u}_{2}}}{\frac{1}{2}W_{2}^{\left( 1 \right)}\left( y_{1}^{2},u_{1,o}^{0}\oplus u_{1,e}^{0}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W_{2}^{\left( 1 \right)}\left( y_{3}^{4},u_{1,e}^{0}|{ {u}_{2}} \right)} \\ 
+  \downarrow  \\ 
+  \nonumber W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)=\sum\limits_{ { {u}_{2}}}{\frac{1}{2}W_{2}^{\left( 1 \right)}\left( y_{1}^{2}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W_{2}^{\left( 1 \right)}\left( y_{3}^{4}|{ {u}_{2}} \right)} \\ 
+\end{align}\]</span></p>
+<p>利用递归思想，将（4）式<span class="math inline">\(W_{2}^{\left( 1 \right)}\left( y_{1}^{2}|{ {u}_{1}} \right)\)</span>的计算结果作为新的“原始信道”的转移概率，即根据<span class="math inline">\(\left\{ \begin{matrix}  { {y}_{1}}=v{}_{1}\oplus { {v}_{3}} \\  { {y}_{2}}={ {v}_{3}} \\ \end{matrix} \right.\)</span>递归计算<span class="math inline">\(W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)\)</span>的转移概率为<span class="math inline">\({ {\left( { {p}^{2}} \right)}^{2}}\)</span>，如图7所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082636188.jpg" title="图 7 $W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)$" /></p>
+<h2 id="w_4left-2-right"><span class="math inline">\(W_{4}^{\left( 2 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=4,i=1\)</span>时，利用式（2）计算信道<span class="math inline">\(W_{4}^{\left( 2 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; W_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {u}_{1}}|{ {u}_{2}} \right)=\frac{1}{2}W_{2}^{\left( 1 \right)}\left( y_{1}^{2}|{ {u}_{1}}\oplus { {u}_{2}} \right)\cdot W_{2}^{\left( 1 \right)}\left( y_{3}^{4}|{ {u}_{2}} \right) \\ 
+ &amp; =1-{ {\left( 1-{ {p}^{2}} \right)}^{2}} \\ 
+\end{align}\]</span></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082720011.jpg" title="图 8 $W_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {u}_{1}}|{ {u}_{2}} \right)$" /></p>
+<h2 id="w_4left-3-right"><span class="math inline">\(W_{4}^{\left( 3 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=4,i=2\)</span>时，利用式（1）计算信道<span class="math inline">\(W_{4}^{\left( 3 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; W_{4}^{\left( 3 \right)}\left( y_{1}^{4},u_{1}^{2}|{ {u}_{3}} \right)=\sum\limits_{ { {u}_{4}}}{\frac{1}{2}W_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ {u}_{1}}\oplus { {u}_{2}}|{ {u}_{3}}\oplus { {u}_{4}} \right)\cdot W_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ {u}_{2}}|{ {u}_{4}} \right)} \\ 
+ &amp; ={ {\left( 1-{ {\left( 1-p \right)}^{2}} \right)}^{2}} \\ 
+\end{align}\]</span></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082801240.jpg" title="图 9 $W_{4}^{\left( 3 \right)}\left( y_{1}^{4},u_{1}^{2}|{ {u}_{3}} \right)$" /></p>
+<h2 id="w_4left-4-right"><span class="math inline">\(W_{4}^{\left( 4 \right)}\)</span></h2>
+<p><br/>当<span class="math inline">\(N=4,i=2\)</span>时，利用式（2）计算信道<span class="math inline">\(W_{4}^{\left( 4 \right)}\)</span>的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; W_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}|{ {u}_{4}} \right)=\frac{1}{2}W_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ {u}_{1}}\oplus { {u}_{2}}|{ {u}_{3}}\oplus { {u}_{4}} \right)\cdot W_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ {u}_{2}}|{ {u}_{4}} \right) \\ 
+ &amp; =1-{ {\left( { {\left( 1-p \right)}^{2}} \right)}^{2}} \\ 
+\end{align}\]</span></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170314/082845515.jpg" title="图 10 $W_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}|{ {u}_{4}} \right)$" /></p>
+<h2 id="小结">小结</h2>
+<p><br/>经过以上运算得到了极化信道<span class="math inline">\({ {W}_{4}}\)</span>的各个分裂子信道的转移概率：</p>
+<p><span class="math display">\[\begin{align}
+\left\{ \begin{matrix}
+   W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)={ {\left( { {p}^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {u}_{1}}|{ {u}_{2}} \right)=1-{ {\left( 1-{ {p}^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 3 \right)}\left( y_{1}^{4},u_{1}^{2}|{ {u}_{3}} \right)={ {\left( 1-{ {\left( 1-p \right)}^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}|{ {u}_{4}} \right)=1-{ {\left( { {\left( 1-p \right)}^{2}} \right)}^{2}}  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>若信道为BSC，则<span class="math inline">\({ {W}_{4}}\)</span>的各分裂子信道的转移概率即为式（12）。若信道为BEC，只需将<span class="math inline">\(p\)</span>替换为$1-$，即</p>
+<p><span class="math display">\[\begin{align}
+\left\{ \begin{matrix}
+   W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)={ {\left( { {\left( 1-\varepsilon  \right)}^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {u}_{1}}|{ {u}_{2}} \right)=1-{ {\left( 1-{ {\left( 1-\varepsilon  \right)}^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 3 \right)}\left( y_{1}^{4},u_{1}^{2}|{ {u}_{3}} \right)={ {\left( 1-{ {\varepsilon }^{2}} \right)}^{2}}  \\
+   W_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}|{ {u}_{4}} \right)=1-{ {\left( { {\varepsilon }^{2}} \right)}^{2}}  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<h1 id="验证">验证</h1>
+<p><br/>假设对于删除概率为<span class="math inline">\(\varepsilon =0.5\)</span>的BEC，原始信道<span class="math inline">\(W\)</span>的对称容量<span class="math inline">\(I\left( W \right)=0.5\)</span>，利用式（13）可得各分裂信道转移概率</p>
+<p><span class="math display">\[\begin{align}
+\left\{ \begin{matrix}
+   W_{4}^{\left( 1 \right)}\left( y_{1}^{4}|{ {u}_{1}} \right)={ {\left( { {\left( 1-\varepsilon  \right)}^{2}} \right)}^{2}}=0.0625  \\
+   W_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {u}_{1}}|{ {u}_{2}} \right)=1-{ {\left( 1-{ {\left( 1-\varepsilon  \right)}^{2}} \right)}^{2}}=0.4375  \\
+   W_{4}^{\left( 3 \right)}\left( y_{1}^{4},u_{1}^{2}|{ {u}_{3}} \right)={ {\left( 1-{ {\varepsilon }^{2}} \right)}^{2}}=0.5625  \\
+   W_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}|{ {u}_{4}} \right)=1-{ {\left( { {\varepsilon }^{2}} \right)}^{2}}=0.9375  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>进而求得各分裂信道的对称容量</p>
+<p><span class="math display">\[\begin{align}
+\left\{ \begin{matrix}
+   I\left( W_{4}^{\left( 1 \right)} \right)=0.0625  \\
+   I\left( W_{4}^{\left( 2 \right)} \right)=\text{0}\text{.4375}  \\
+   I\left( W_{4}^{\left( 3 \right)} \right)=\text{0}\text{.5625}  \\
+   I\left( W_{4}^{\left( 4 \right)} \right)=\text{0}\text{.9375}  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>从式（15）可以看出原始信道<span class="math inline">\(W\)</span>的4个独立副本经过信道极化以后，各分裂信道的容量呈现两极分化趋势。一部分子信道容量开始趋近于0，另一部分子信道容量开始趋近于1。并且信道总容量不变：<span class="math inline">\(I\left( W_{4}^{\left( 1 \right)} \right)\text{+}I\left( W_{4}^{\left( 2 \right)} \right)\text{+}I\left( W_{4}^{\left( 3 \right)} \right)\text{+}I\left( W_{4}^{\left( 4 \right)} \right)\text{=}4\times I\left( W \right)\)</span>。</p>
+<h1 id="总结">总结</h1>
+<p><br/>本文首先引入离散信道的数学模型，进而定义二进制对称信道和二进制删除信道的转移概率，并延伸出极化信道的转移概率。之后以<span class="math inline">\(N=4\)</span>为例，推导了极化信道<span class="math inline">\({ {W}_{4}}\)</span>各分裂子信道的转移概率。最后由各分裂信道的转移概率计算相应的对称容量，验证了信道极化现象。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><br/>[1] 田宝玉. 信息论基础.第2版[M]. 人民邮电出版社, 2016. [2] Arikan E. Channel Polarization: A Method for Constructing Capacity-Achieving Codes for Symmetric Binary-Input Memoryless Channels[J]. IEEE Transactions on Information Theory, 2008, 55(7):3051-3073.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/" title="Polar Code（5）编码之信道转移概率">https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/07/answer-polar-code-def-error-prob/" rel="prev" title="Answer-Polar Code-定义错误概率">
+                  <i class="fa fa-chevron-left"></i> Answer-Polar Code-定义错误概率
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/13/polar-code-6-sc-decoder/" rel="next" title="Polar Code（6）SC译码算法">
+                  Polar Code（6）SC译码算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ba0037b39659b0733775a2fb0456bc1b"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

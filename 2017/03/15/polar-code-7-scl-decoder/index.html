@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言 Polar Code在码长趋于无穷时，信道极化才越完全。但在有限码长下，由于信道极化并不完全，依然会存在一些信息比特无法被正确译码。当前面\(i-1\)个信息比特的译码中发生错误之后，由于SC译码器在对后面的信息比特译码时需要用到之前的信息比特的估计值，这就会导致较为严重的错误传递。SC译码算法是一种贪婪算法，对码树的每一层仅仅搜索到最优路径就进行下一层，所以无法对错误进行修改。SCL译码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（7）SCL译码算法">
+<meta property="og:url" content="https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/index.html">
+<meta property="og:site_name" content="Marshall - Comm. Tech. Blog">
+<meta property="og:description" content="前言 Polar Code在码长趋于无穷时，信道极化才越完全。但在有限码长下，由于信道极化并不完全，依然会存在一些信息比特无法被正确译码。当前面\(i-1\)个信息比特的译码中发生错误之后，由于SC译码器在对后面的信息比特译码时需要用到之前的信息比特的估计值，这就会导致较为严重的错误传递。SC译码算法是一种贪婪算法，对码树的每一层仅仅搜索到最优路径就进行下一层，所以无法对错误进行修改。SCL译码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/205026503.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171123/112310741.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221254645.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221926567.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222254421.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222502055.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/223032922.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134154868.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134331096.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/135823406.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140245285.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140423071.jpg">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171123/110111367.png">
+<meta property="article:published_time" content="2017-03-15T12:40:17.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:49:25.006Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/205026503.jpg">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/","path":"2017/03/15/polar-code-7-scl-decoder/","title":"Polar Code（7）SCL译码算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（7）SCL译码算法 | Marshall - Comm. Tech. Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Marshall - Comm. Tech. Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sc%E8%AF%91%E7%A0%81%E7%AE%97%E6%B3%95%E7%9A%84%E7%A0%81%E6%A0%91%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">SC译码算法的码树表示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scl%E8%AF%91%E7%A0%81%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">SCL译码算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">3.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%BA%A6%E9%87%8F%E5%80%BC"><span class="nav-number">3.2.</span> <span class="nav-text">路径度量值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scl%E8%AF%91%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">SCL译码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%AC%AC%E4%B8%80%E5%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">搜索第一层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%AC1%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9B%B8%E5%85%B3%E7%9A%84llr"><span class="nav-number">4.1.1.</span> <span class="nav-text">计算第1个比特相关的LLR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%80%99%E9%80%89%E8%B7%AF%E5%BE%84%E7%9A%84%E5%BA%A6%E9%87%8F%E5%80%BC"><span class="nav-number">4.1.2.</span> <span class="nav-text">计算候选路径的度量值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-0"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">a. 0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-1"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">b. 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E6%89%A9%E5%B1%95"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">路径扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%AC%AC%E4%BA%8C%E5%B1%82"><span class="nav-number">4.2.</span> <span class="nav-text">搜索第二层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%AC2%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9B%B8%E5%85%B3%E7%9A%84llr"><span class="nav-number">4.2.1.</span> <span class="nav-text">计算第2个比特相关的LLR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-00"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">a. 00</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-01"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">b. 01</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-10"><span class="nav-number">4.2.1.3.</span> <span class="nav-text">c. 10</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-11"><span class="nav-number">4.2.1.4.</span> <span class="nav-text">d. 11</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%80%99%E9%80%89%E8%B7%AF%E5%BE%84%E7%9A%84%E5%BA%A6%E9%87%8F%E5%80%BC-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">计算候选路径的度量值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-00-1"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">a. 00</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-01-1"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">b. 01</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-10-1"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">c. 10</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-11-1"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">d. 11</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D"><span class="nav-number">4.2.3.</span> <span class="nav-text">剪枝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%AC%AC%E4%B8%89%E5%B1%82"><span class="nav-number">4.3.</span> <span class="nav-text">搜索第三层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%AC3%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9B%B8%E5%85%B3%E7%9A%84llr"><span class="nav-number">4.3.1.</span> <span class="nav-text">计算第3个比特相关的LLR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-000"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">a. 000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-001"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">b. 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-010"><span class="nav-number">4.3.1.3.</span> <span class="nav-text">c. 010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-011"><span class="nav-number">4.3.1.4.</span> <span class="nav-text">d. 011</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%80%99%E9%80%89%E8%B7%AF%E5%BE%84%E7%9A%84%E5%BA%A6%E9%87%8F%E5%80%BC-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">计算候选路径的度量值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-000-1"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">a. 000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-001-1"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">b. 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-010-1"><span class="nav-number">4.3.2.3.</span> <span class="nav-text">c. 010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-011-1"><span class="nav-number">4.3.2.4.</span> <span class="nav-text">d. 011</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D-1"><span class="nav-number">4.3.3.</span> <span class="nav-text">剪枝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%AC%AC%E5%9B%9B%E5%B1%82"><span class="nav-number">4.4.</span> <span class="nav-text">搜索第四层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%AC%AC4%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9B%B8%E5%85%B3%E7%9A%84llr"><span class="nav-number">4.4.1.</span> <span class="nav-text">计算第4个比特相关的LLR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-0000"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">a. 0000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-0001"><span class="nav-number">4.4.1.2.</span> <span class="nav-text">b. 0001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-0010"><span class="nav-number">4.4.1.3.</span> <span class="nav-text">c. 0010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-0011"><span class="nav-number">4.4.1.4.</span> <span class="nav-text">d. 0011</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%80%99%E9%80%89%E8%B7%AF%E5%BE%84%E7%9A%84%E5%BA%A6%E9%87%8F%E5%80%BC-3"><span class="nav-number">4.4.2.</span> <span class="nav-text">计算候选路径的度量值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a.-0000-1"><span class="nav-number">4.4.2.1.</span> <span class="nav-text">a. 0000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b.-0001-1"><span class="nav-number">4.4.2.2.</span> <span class="nav-text">b. 0001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c.-0010-1"><span class="nav-number">4.4.2.3.</span> <span class="nav-text">c. 0010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d.-0011-1"><span class="nav-number">4.4.2.4.</span> <span class="nav-text">d. 0011</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D-2"><span class="nav-number">4.4.3.</span> <span class="nav-text">剪枝</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description">Comm. Tech. Blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="Comm. Tech. Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall - Comm. Tech. Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（7）SCL译码算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-15 20:40:17" itemprop="dateCreated datePublished" datetime="2017-03-15T20:40:17+08:00">2017-03-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-10-21 13:49:25" itemprop="dateModified" datetime="2018-10-21T13:49:25+08:00">2018-10-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言">前言</h1>
+<p><br/>Polar Code在码长趋于无穷时，信道极化才越完全。但在有限码长下，由于信道极化并不完全，依然会存在一些信息比特无法被正确译码。当前面<span class="math inline">\(i-1\)</span>个信息比特的译码中发生错误之后，由于SC译码器在对后面的信息比特译码时需要用到之前的信息比特的估计值，这就会导致较为严重的错误传递。SC译码算法是一种贪婪算法，对码树的每一层仅仅搜索到最优路径就进行下一层，所以无法对错误进行修改。SCL译码算法就是对SC算法的改进。但在SCL之前，先来看看SC译码算法的码树表示。</p>
+<span id="more"></span>
+<h1 id="sc译码算法的码树表示">SC译码算法的码树表示</h1>
+<p><br/>根据极化码在SC译码下各个比特判决之间的依赖关系，能够构造一颗码树<span class="math inline">\(\Gamma =\left( \varepsilon ,V \right)\)</span>，其中$<span class="math inline">\(和\)</span>V<span class="math inline">\(分别表示码树中的边和节点集合。定义节点的深度为该节点到根节点的最短路径长度，对于一个码长为\)</span>N<span class="math inline">\(的极化码，其码树节点集合\)</span>V<span class="math inline">\(能够按照深度\)</span>d<span class="math inline">\(划分成\)</span>N+1<span class="math inline">\(个子集，记作\)</span>{ {V}<em>{d}}<span class="math inline">\(，其中\)</span>d=0,1,...,N<span class="math inline">\(。特别地，\)</span>{ {V}</em>{0}}<span class="math inline">\(仅包含根节点，即\)</span>| { {V}<em>{0}} |=1<span class="math inline">\(。除了叶节点（即\)</span>d=N<span class="math inline">\(时），码树\)</span><span class="math inline">\(中的每一个节点\)</span>v<span class="math inline">\(均分别通过两条标记着0、1的边与两个\)</span>{ {V}</em>{d+1}}<span class="math inline">\(中的后继节点相连。某一个节点\)</span>v<span class="math inline">\(所对应的序列\)</span>u_{1}<sup>{d}<span class="math inline">\(的值定义为从根节点开始到达该节点\)</span>v<span class="math inline">\(所需经过的各个边的标记序列。例如，若某一个节点\)</span>v<span class="math inline">\(表示了序列\)</span>u_{1}</sup>{i}<span class="math inline">\(，则其左、右后继节点分别代表了路径\)</span>( u_{1}<sup>{i},u_{1}</sup>{i+1}=0 )<span class="math inline">\(与\)</span>( u_{1}<sup>{i},u_{1}</sup>{i+1}=1 )<span class="math inline">\(。于是，从根节点到每一个深度为\)</span>d<span class="math inline">\(的节点\)</span>v<span class="math inline">\(的路径，均对应了一种\)</span>u_{1}^{d}<span class="math inline">\(可能的取值，由于信源序列为二进制比特序列，所以\)</span>| { {V}<em>{d}} |={ {2}^{d}}<span class="math inline">\(。定义连接着深度为\)</span>i-1<span class="math inline">\(和\)</span>i<span class="math inline">\(的节点的边所构成的集合为第\)</span>i<span class="math inline">\(层边，记作\)</span>{ {}</em>{i}}<span class="math inline">\(。显然，对任意\)</span>i{ 1,2,...,N }<span class="math inline">\(，有\)</span>| { {}<em>{i}} |={ {2}^{i}}<span class="math inline">\(。从根节点到任何一个节点所形成的路径，均对应一个路径度量值（PM）。值得注意的是，该码树结构仅与码长\)</span>N<span class="math inline">\(有关。极化码译码码树实质上是一个满二叉树，因此译码过程也就是在满二叉树上寻找合适的路径。如图1所示，给出了一个当\)</span>N=4<span class="math inline">\(时极化码码树的示例，各节点旁的数字指示了对应的转移概率，在每个节点处选择转移概率最大的路径，最终译码序列为\)</span></em>{1}^{N}=$。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/205026503.jpg" title="图 1 码长为4的极化码译码码树" /></p>
+<h1 id="scl译码算法">SCL译码算法</h1>
+<p><br/>针对SC译码算法的缺点，一个直接的改进方案是，增加每一层路径搜索后允许保留的候选路径数量，从仅允许选择“最好的一条路径进行下一步扩展”改为“最大允许选择最好的 条路径进行下一步扩展”，其中<span class="math inline">\(L\ge 1\)</span>。与SC算法一样，改进的算法依然从码树根节点开始，逐层依次向叶子节点层进行路径搜索。不同的是，每一层扩展后，尽可能多地保留后继路径（每一层保留的路径数不大于<span class="math inline">\(L\)</span>）。完成一层的路径扩展后，选择路径度量值（Path Metrics，PM）最小的<span class="math inline">\(L\)</span>条，保存在一个列表中，等待进行下一层的扩展。因此称该算法为<strong>串行抵消列表（Successive Cancellation List，SCL）译码算法</strong>，并称参数<span class="math inline">\(L\)</span>为<strong>搜索宽度</strong>。当<span class="math inline">\(L=1\)</span>时，SCL译码算法退化为SC译码算法；当<span class="math inline">\(L\ge { {2}^{K}}\)</span>时，SCL译码等价于最大似然译码。</p>
+<h2 id="思考">思考</h2>
+<p><br/>现在思考一个问题：如图2所示，当Polar Code编译码结构用“蝶形图”表示时，在译码时只需要在每个节点处计算相应的对数似然比，从右到左依次计算，并最终得到<span class="math inline">\(L_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1} \right)\)</span>，若LLR值为非负则判决<span class="math inline">\({ {\hat{u}}_{i}}=0\)</span>，否则判决<span class="math inline">\({ {\hat{u}}_{i}}=1\)</span>。一共有<span class="math inline">\(N\log N\)</span>个节点，因此相应地也要计算<span class="math inline">\(N\log N\)</span>个LLR。对于图2来说这一过程没有任何问题。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171123/112310741.jpg" title="图 2 Polar Code编译码结构蝶形图表示" /></p>
+<p>现在转换思路，将译码结构用二叉树表示，一个LLR值指示了每个节点两条支路上的转移概率的比值关系。如果像图1那样，每条支路就用转移概率来表征，向左是发送为比特0的转移概率，向右是发送为比特1的转移概率。当然这样也可以，对于SC译码来说，图1使用转移概率和图2使用对数似然比实际上是等价的。但随着码长的增加，转移概率函数的数值会越来越小，译码器存在着下溢的风险，所以通常不直接使用转移概率。由于SC译码过程实质上是二值判决，因此通常还是要采用转移概率的对数似然比。</p>
+<p>现在可以明确两点：一是使用对数似然比，二是在满二叉树上使用对数似然比。但仍然存在的问题是：SC算法实际上是SCL算法的特例，即搜索宽度<span class="math inline">\(L=1\)</span>的情况；对于<span class="math inline">\(L\ge 2\)</span>的情况，单单依靠LLR是无法在<span class="math inline">\(2L\)</span>个后继节点中挑选<span class="math inline">\(L\)</span>个最优节点作为后继译码路径的。这就需要在LLR的基础上对<span class="math inline">\(2L\)</span>条路径度量值进行计算，以便可以实现在对数似然域上的SCL译码算法。因此需要明确的第三点就是：重新定义路径度量值（PM）。</p>
+<h2 id="路径度量值">路径度量值</h2>
+<p><br/>在SCL译码过程中，存在<span class="math inline">\(L\)</span>条路径同时进行译码搜索，对于任意一条路径<span class="math inline">\(l\in \left\{ 1,2,...,L \right\}\)</span>以及任意发送比特<span class="math inline">\({ {u}_{i}}\)</span>（<span class="math inline">\(i\in \left\{ 1,2,...,N \right\}\)</span>），其对应的路径度量值定义如下：</p>
+<p><span class="math display">\[\begin{align}
+PM_{l}^{\left( i \right)}\triangleq \sum\limits_{j=1}^{i}{\ln \left( 1+\exp \left( -\left( 1-2{ { {\hat{u}}}_{j}}\left[ l \right] \right)\cdot L_{N}^{\left( j \right)} \right) \right)}
+\end{align}\]</span></p>
+<p>其中，<span class="math inline">\(L_{N}^{\left( j \right)}\left[ l \right]=\ln \frac{W_{N}^{\left( i \right)}\left( y_{1}^{N},\hat{u}_{1}^{i-1}\left[ l \right]|0 \right)}{W_{N}^{\left( i \right)}\left( y_{1}^{N},\hat{u}_{1}^{i-1}\left[ l \right]|1 \right)}\)</span>。</p>
+<p>如果发送端所有信息比特在<span class="math inline">\(\left\{ 0,1 \right\}\)</span>上均匀分布，那么对于任意两条不同路径<span class="math inline">\({ {l}_{1}},{ {l}_{2}}\in \left\{ 1,2,...,L \right\}\)</span>，当且仅当<span class="math inline">\(PM_{ { {l}_{1}}}^{\left( i \right)}&gt;PM_{ { {l}_{2}}}^{\left( i \right)}\)</span>成立时，有如下关系成立：</p>
+<p><span class="math display">\[\begin{align}
+W_{N}^{\left( i \right)}\left( y_{1}^{N},\hat{u}_{1}^{i-1}\left[ { {l}_{1}} \right]|\hat{u}_{1}^{i}\left[ { {l}_{1}} \right] \right)&lt;W_{N}^{\left( i \right)}\left( y_{1}^{N},\hat{u}_{1}^{i-1}\left[ { {l}_{2}} \right]|\hat{u}_{1}^{i}\left[ { {l}_{2}} \right] \right)
+\end{align}\]</span></p>
+<p>由上式可见，路径对应的转移概率越大，路径度量值越小。基于这种关系就完全可以在对数似然比上对<span class="math inline">\(2L\)</span>条路径进行挑选。式（1）可以近似表示为</p>
+<p><span class="math display">\[\begin{align}
+\nonumber PM_{l}^{\left( i \right)}\approx \left\{ \begin{matrix}
+   PM_{l}^{\left( i-1 \right)},\ \ if\ { { {\hat{u}}}_{i}}\left[ l \right]=\delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right)  \\
+   PM_{l}^{\left( i-1 \right)}+\left| L_{N}^{\left( i \right)}\left[ l \right] \right|,\ \ if\ { { {\hat{u}}}_{i}}\left[ l \right]\ne \delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right)  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>但考虑译码过程中包含了信息比特和冻结比特，因此上式可以改写为</p>
+<p><span class="math display">\[PM_{l}^{\left( i \right)}=\left\{ \begin{align}
+  \nonumber &amp; PM_{l}^{\left( i-1 \right)}\ \ ,\ if\ { {u}_{i}}\ is\ \text{information or frozen bit}\ and\text{ }{ { {\hat{u}}}_{i}}\left[ l \right]=\delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right) \\ 
+ &amp; PM_{l}^{\left( i-1 \right)}+\left| L_{N}^{\left( i \right)}\left[ l \right] \right|,\ if\ { {u}_{i}}\ is\ \text{information or frozen bit}\ and\text{ }{ { {\hat{u}}}_{i}}\left[ l \right]\ne \delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right) \\ 
+ \nonumber &amp; +\infty \ \ ,\ if\ { {u}_{i}}\ is\ \text{frozen bit}\ and\ \text{incorrect value} \\ 
+\end{align} \right.\]</span></p>
+<p>其中<span class="math inline">\(\delta \left( x \right)=\frac{1}{2}\left( 1-sign\left( x \right) \right)\)</span>，<span class="math inline">\(PM_{l}^{\left( 0 \right)}=0\)</span>。对于信息比特的判决有</p>
+<p><span class="math display">\[\begin{align}
+{ {\hat{u}}_{i}}=\delta \left( L_{N}^{\left( i \right)}\left( y_{1}^{N},\hat{u}_{1}^{i-1} \right) \right)
+\end{align}\]</span></p>
+<h1 id="scl译码示例">SCL译码示例</h1>
+<p><br/>下面仍然以<a href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">《Polar Code（6）SC译码算法》</a>中的SC译码的例子为例来说明SCL算法的具体实现过程。给定发送端原始比特序列<span class="math inline">\(u_{1}^{4}=\left( \begin{matrix}  { {u}_{1}} &amp; { {u}_{2}} &amp; { {u}_{3}} &amp; { {u}_{4}} \\ \end{matrix} \right)=\left( \begin{matrix}  0 &amp; 0 &amp; 0 &amp; 0 \\ \end{matrix} \right)\)</span>，其中<span class="math inline">\({ {u}_{1}}\)</span>为冻结比特，<span class="math inline">\(u_{2}^{4}\)</span>为信息比特。经过Polar编码以后通过AWGN信道传输。假设接收端已知各子信道对数似然比<span class="math inline">\(L_{1}^{\left( 1 \right)}\left( y_{1}^{4} \right)=\left[ \begin{matrix}  1.5 &amp; 2 &amp; -1 &amp; 0.5 \\ \end{matrix} \right]\)</span>。</p>
+<p><font color="#FF0000"><br />
+每一条路径都拥有自己的一套LLR值，每一条路径的PM都要根据各自路径上的LLR值计算。以a、b、c、d表示路径1、路径2、路径3、路径4。为了便于说明SCL译码过程，PM值直接标注在示意图上，LLR值则用一个向量来表示。 </font></p>
+<h2 id="搜索第一层">搜索第一层</h2>
+<h3 id="计算第1个比特相关的llr">计算第1个比特相关的LLR</h3>
+<p><br/><span class="math display">\[L_{4}^{\left( 1 \right)}\left( y_{1}^{4} \right)=f\left( L_{2}^{\left( 1 \right)}\left( y_{1}^{2} \right),L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right) \right)\]</span></p>
+<p>其中，<span class="math inline">\(L_{2}^{\left( 1 \right)}\left( y_{1}^{2} \right)\)</span>和<span class="math inline">\(L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right)\)</span>递归地计算为</p>
+<p><span class="math display">\[L_{2}^{\left( 1 \right)}\left( y_{1}^{2} \right)=f\left( L_{1}^{\left( 1 \right)}\left( { {y}_{1}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{2}} \right) \right)=f\left( 1.5,2 \right)=1.06\]</span></p>
+<p><span class="math display">\[L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right)=f\left( L_{1}^{\left( 1 \right)}\left( { {y}_{3}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{4}} \right) \right)=f\left( -1,0.5 \right)=-0.23\]</span></p>
+<p>从而，<span class="math display">\[L_{4}^{\left( 1 \right)}\left( y_{1}^{4} \right)=f\left( 1.06,-0.23 \right)=-0.11\]</span>。</p>
+<p><strong>建立向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   -0.11 &amp; -0.11  \\
+\end{matrix} \right]\]</span></p>
+<h3 id="计算候选路径的度量值">计算候选路径的度量值</h3>
+<h4 id="a.-0">a. 0</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 1 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 1 \right)}=-0.11\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{1}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 1 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -0.11 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{1}}\)</span>是冻结比特，但<span class="math inline">\({ {\hat{u}}_{1}}\ne \delta \left( L_{4}^{\left( 1 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( { { {\hat{u}}}_{1}}=0 \right)=PM_{1}^{\left( 0 \right)}+\left| L_{4}^{\left( 1 \right)} \right|=0+0.11=0.11\]</span></p>
+<h4 id="b.-1">b. 1</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 1 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 1 \right)}=-0.11\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{1}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 1 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -0.11 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{1}}\)</span>是冻结比特，但此时<span class="math inline">\({ {\hat{u}}_{1}}=1\)</span>显然取值错误，所以有</p>
+<p><span class="math display">\[PM\left( { { {\hat{u}}}_{1}}=1 \right)=\text{+}\infty \]</span></p>
+<h4 id="路径扩展">路径扩展</h4>
+<p><br/>如图3所示，由于搜索宽度已达到<span class="math inline">\(L=2\)</span>，因此第1层的2条路径均保留。继续在下一层扩展，至<span class="math inline">\(2L\)</span>条路径，再从中挑选<span class="math inline">\(L\)</span>条。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221254645.jpg" title="图 3 SCL译码算法在第1层的扩展" /></p>
+<h2 id="搜索第二层">搜索第二层</h2>
+<h3 id="计算第2个比特相关的llr">计算第2个比特相关的LLR</h3>
+<p><br/>分别计算<span class="math inline">\(2L\)</span>条路径在第2层对应的LLR。</p>
+<h4 id="a.-00">a. 00</h4>
+<p><br/>比特估计值<span class="math inline">\({ {\hat{u}}_{1}}=0\)</span>，所以有</p>
+<p><span class="math display">\[\nonumber \begin{align}
+  &amp; L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=g\left( L_{2}^{\left( 1 \right)}\left( y_{1}^{2} \right),L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right),{ { {\hat{u}}}_{1}} \right)\text{=}g\left( 1.06,-0.23,0 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{0}}\times 1.06+\left( -0.23 \right) \\ 
+ \nonumber &amp; =0.83 \\ 
+\end{align}\]</span></p>
+<p><strong>重新建立向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ 0.83 \right]\]</span></p>
+<h4 id="b.-01">b. 01</h4>
+<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=0.83\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   0.83 &amp; 0.83  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="c.-10">c. 10</h4>
+<p><br/>比特估计值<span class="math inline">\({ {\hat{u}}_{1}}=1\)</span>，所以有</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=g\left( L_{2}^{\left( 1 \right)}\left( y_{1}^{2} \right),L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right),{ { {\hat{u}}}_{1}} \right)\text{=}g\left( 1.06,-0.23,1 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{1}}\times 1.06+\left( -0.23 \right) \\ 
+ \nonumber &amp; =-1.29 \\ 
+\end{align}\\]</span></p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   \begin{matrix}
+   0.83 &amp; 0.83  \\
+\end{matrix} &amp; -1.29  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="d.-11">d. 11</h4>
+<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=-1.29\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   \begin{matrix}
+   \begin{matrix}
+   0.83 &amp; 0.83  \\
+\end{matrix} &amp; -1.29  \\
+\end{matrix} &amp; -1.29  \\
+\end{matrix} \right]\]</span></p>
+<h3 id="计算候选路径的度量值-1">计算候选路径的度量值</h3>
+<p><br/>由于在上一层已经扩展至<span class="math inline">\(L\)</span>条路径，那么在这一层将会计算<span class="math inline">\(2L\)</span>条路径的度量值，然后保留PM最小的<span class="math inline">\(L\)</span>条路径，并且删除其余路径。</p>
+<h4 id="a.-00-1">a. 00</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 2 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2 \right)}=0.83\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{2}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 2 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 0.83 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{2}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{2}}=\delta \left( L_{4}^{\left( 2 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{2}=00 \right)=PM\left( { { {\hat{u}}}_{1}}=0 \right)=0.11\]</span></p>
+<h4 id="b.-01-1">b. 01</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 2 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2 \right)}=0.83\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{2}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 2 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 0.83 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{2}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{2}}\ne \delta \left( L_{4}^{\left( 2 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{2}=01 \right)=PM\left( { { {\hat{u}}}_{1}}=0 \right)+\left| L_{4}^{\left( 2 \right)} \right|\text{=0}\text{.11+}0.83=0.94\]</span></p>
+<p>截止目前的扩展路径如图4所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221926567.jpg" title="图 4 SCL译码算法在第2层的扩展" /></p>
+<h4 id="c.-10-1">c. 10</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 2 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2 \right)}=-1.29\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{2}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 2 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -1.29 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{2}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{2}}\ne \delta \left( L_{4}^{\left( 2 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{2}=10 \right)=PM\left( { { {\hat{u}}}_{1}}=1 \right)\text{+}L_{4}^{\left( 2 \right)}\text{=}+\infty +1.29\to +\infty \]</span></p>
+<h4 id="d.-11-1">d. 11</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 2 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2 \right)}=-1.29\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{2}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 2 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -1.29 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{2}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{2}}=\delta \left( L_{4}^{\left( 2 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{2}=11 \right)=PM\left( { { {\hat{u}}}_{1}}=1 \right)\text{=}+\infty \]</span></p>
+<p>截止目前的扩展路径如图5所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222254421.jpg" title="图 5 SCL译码算法在第2层的扩展" /></p>
+<h3 id="剪枝">剪枝</h3>
+<p><br/>将已经计算出的<span class="math inline">\(2L\)</span>路径按照PM值从小到大排序，对这<span class="math inline">\(2L\)</span>条路径进行剪枝操作：保留<span class="math inline">\(L\)</span>条PM值最小的路径，并且删掉其余路径。如图6所示，被保留的路径为红色，被剪枝的路径均已变成灰色。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222502055.jpg" title="图 6 剪枝" /></p>
+<h2 id="搜索第三层">搜索第三层</h2>
+<p><br/>分别计算 条路径在第3层对应的LLR。</p>
+<h3 id="计算第3个比特相关的llr">计算第3个比特相关的LLR</h3>
+<h4 id="a.-000">a. 000</h4>
+<p><br/>比特估计值<span class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0\)</span>。</p>
+<p><span class="math display">\[L_{4}^{\left( 3 \right)}\left( y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( L_{2}^{\left( 2 \right)}\left( y_{1}^{2},\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right),L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ { {\hat{u}}}_{2}} \right) \right)\]</span></p>
+<p>其中，<span class="math inline">\(L_{2}^{\left( 2 \right)}\left( y_{1}^{2},\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right)\)</span>和<span class="math inline">\(L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ { {\hat{u}}}_{2}} \right)\)</span>递归地计算为</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{2}^{\left( 2 \right)}\left( y_{1}^{2},\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right)=g\left( L_{1}^{\left( 1 \right)}\left( { {y}_{1}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{2}} \right),\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right)=g\left( 1.5,2,0 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{0}}\times 1.5+2 \\ 
+ \nonumber &amp; =3.5 \\ 
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ { {\hat{u}}}_{2}} \right)=g\left( L_{1}^{\left( 1 \right)}\left( { {y}_{3}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{4}} \right),{ { {\hat{u}}}_{2}} \right)=g\left( -1,0.5,0 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{0}}\times \left( -1 \right)+0.5 \\ 
+ \nonumber &amp; =-0.5 \\ 
+\end{align}\]</span></p>
+<p>从而，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left( y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 3.5,-0.5 \right)=-0.47\)</span>。</p>
+<p><strong>重新建立向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ -0.47 \right]\]</span></p>
+<h4 id="b.-001">b. 001</h4>
+<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left( y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 3.5,-0.5 \right)=-0.47\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   -0.47 &amp; -0.47  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="c.-010">c. 010</h4>
+<p><br/>比特估计值<span class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=1\)</span>。</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{2}^{\left( 2 \right)}\left( y_{1}^{2},\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right)=g\left( L_{1}^{\left( 1 \right)}\left( { {y}_{1}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{2}} \right),\hat{u}{}_{1}\oplus { { {\hat{u}}}_{2}} \right)=g\left( 1.5,2,1 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{1}}\times 1.5+2 \\ 
+ \nonumber &amp; =0.5 \\ 
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ { {\hat{u}}}_{2}} \right)=g\left( L_{1}^{\left( 1 \right)}\left( { {y}_{3}} \right),L_{1}^{\left( 1 \right)}\left( { {y}_{4}} \right),{ { {\hat{u}}}_{2}} \right)=g\left( -1,0.5,1 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{1}}\times \left( -1 \right)+0.5 \\ 
+ \nonumber &amp; =1.5 \\ 
+\end{align}\]</span></p>
+<p>从而，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left( y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 0.5,1.5 \right)=0.31\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   \begin{matrix}
+   -0.47 &amp; -0.47  \\
+\end{matrix} &amp; 0.31  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="d.-011">d. 011</h4>
+<p>同上，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left( y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 0.5,1.5 \right)=0.31\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   \begin{matrix}
+   \begin{matrix}
+   -0.47 &amp; -0.47  \\
+\end{matrix} &amp; 0.31  \\
+\end{matrix} &amp; 0.31  \\
+\end{matrix} \right]\]</span></p>
+<h3 id="计算候选路径的度量值-2">计算候选路径的度量值</h3>
+<p><br/>分别计算<span class="math inline">\(2L\)</span>条路径的度量值。</p>
+<h4 id="a.-000-1">a. 000</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 3 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3 \right)}=-0.47\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{3}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 3 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -0.47 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{3}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{3}}\ne \delta \left( L_{4}^{\left( 3 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{3}=000 \right)=PM\left( \hat{u}_{1}^{2}=00 \right)+\left| L_{4}^{\left( 3 \right)} \right|=0.11+0.47=0.58\]</span></p>
+<h4 id="b.-001-1">b. 001</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 3 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3 \right)}=-0.47\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{3}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 3 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -0.47 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{3}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{3}}=\delta \left( L_{4}^{\left( 3 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{3}=001 \right)=PM\left( \hat{u}_{1}^{2}=00 \right)\text{=}0.11\]</span></p>
+<p>截止目前的扩展路径如图7所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/223032922.jpg" title="图 7 SCL译码算法在第3层的扩展" /></p>
+<h4 id="c.-010-1">c. 010</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 3 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3 \right)}=0.31\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{3}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 3 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 0.31 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{3}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{3}}=\delta \left( L_{4}^{\left( 3 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{3}=010 \right)=PM\left( \hat{u}_{1}^{2}=01 \right)=0.94\]</span></p>
+<h4 id="d.-011-1">d. 011</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 3 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3 \right)}=0.31\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{3}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 3 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 0.31 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{3}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{3}}\ne \delta \left( L_{4}^{\left( 3 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{3}=011 \right)=PM\left( \hat{u}_{1}^{2}=01 \right)+L_{4}^{\left( 3 \right)}=0.94+0.31=1.25\]</span></p>
+<p>截止目前的扩展路径如图8所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134154868.jpg" title="图 8 SCL译码算法在第3层的扩展" /></p>
+<h3 id="剪枝-1">剪枝</h3>
+<p><br/>将已经计算出的<span class="math inline">\(2L\)</span>路径按照PM值从小到大排序，对这<span class="math inline">\(2L\)</span>条路径进行剪枝操作：保留<span class="math inline">\(L\)</span>条PM值最小的路径，并且删掉其余路径。如图9所示，被保留的路径为红色，被剪枝的路径均已变成灰色。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134331096.jpg" title="图 9 剪枝" /></p>
+<h2 id="搜索第四层">搜索第四层</h2>
+<h3 id="计算第4个比特相关的llr">计算第4个比特相关的LLR</h3>
+<p><br/>分别计算<span class="math inline">\(2L\)</span>条路径在第4层对应的LLR。</p>
+<h4 id="a.-0000">a. 0000</h4>
+<p><br/>比特估计值<span class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0,\hat{u}{}_{3}=0\)</span>。</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; L_{4}^{\left( 4 \right)}\left( y_{1}^{4},\hat{u}_{1}^{3} \right)=g\left( L_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ { {\hat{u}}}_{1}}\oplus { { {\hat{u}}}_{2}} \right),L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ { {\hat{u}}}_{2}} \right),{ { {\hat{u}}}_{3}} \right)=g\left( 3.5,-0.5,0 \right) \\ 
+ \nonumber &amp; ={ {\left( -1 \right)}^{0}}\times 3.5+\left( -0.5 \right) \\ 
+ \nonumber &amp; =3 \\ 
+\end{align}\]</span></p>
+<p><strong>重新建立向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ 3 \right]\]</span></p>
+<h4 id="b.-0001">b. 0001</h4>
+<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left( y_{1}^{4},\hat{u}_{1}^{3} \right)=3\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   3 &amp; 3  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="c.-0010">c. 0010</h4>
+<p><br/>比特估计值<span class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0,\hat{u}{}_{3}=1\)</span>。</p>
+<p><span class="math display">\[\begin{align}
+ \nonumber &amp; L_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3} \right)=g\left( L_{2}^{\left( 2 \right)}\left( y_{1}^{2},{ {u}_{1}}\oplus { {u}_{2}} \right),L_{2}^{\left( 2 \right)}\left( y_{3}^{4},{ {u}_{2}} \right),{ {u}_{3}} \right)=g\left( 3.5,-0.5,1 \right) \\ 
+\nonumber &amp; ={ {\left( -1 \right)}^{1}}\times 3.5+\left( -0.5 \right) \\ 
+\nonumber &amp; =-4 \\ 
+\end{align}\]</span></p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   3 &amp; 3 &amp; -4  \\
+\end{matrix} \right]\]</span></p>
+<h4 id="d.-0011">d. 0011</h4>
+<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left( y_{1}^{4},\hat{u}_{1}^{3} \right)=-4\)</span>。</p>
+<p><strong>更新向量LLR</strong></p>
+<p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
+   \begin{matrix}
+   3 &amp; 3 &amp; -4  \\
+\end{matrix} &amp; -4  \\
+\end{matrix} \right]\]</span></p>
+<h3 id="计算候选路径的度量值-3">计算候选路径的度量值</h3>
+<p><br/>终于到最后一层了，继续计算<span class="math inline">\(2L\)</span>个路径的度量值。</p>
+<h4 id="a.-0000-1">a. 0000</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 4 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4 \right)}=3\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{4}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 4 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 3 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{4}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{4}}=\delta \left( L_{4}^{\left( 4 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{4}=0000 \right)=PM\left( \hat{u}_{1}^{3}=000 \right)=0.58\]</span></p>
+<h4 id="b.-0001-1">b. 0001</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 4 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4 \right)}=3\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{4}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 4 \right)} \right)=\frac{1}{2}\left( 1-sign\left( 3 \right) \right)=0\)</span>。由于<span class="math inline">\({ {u}_{4}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{4}}\ne \delta \left( L_{4}^{\left( 4 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{4}=0001 \right)=PM\left( \hat{u}_{1}^{3}=000 \right)+L_{4}^{\left( 4 \right)}=0.58+3=3.58\]</span></p>
+<p>截止目前的扩展路径如图10所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/135823406.jpg" title="图 10 SCL译码算法在4层的扩展" /></p>
+<h4 id="c.-0010-1">c. 0010</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 4 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4 \right)}=-4\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{4}}=0\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 4 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -4 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{4}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{4}}\ne \delta \left( L_{4}^{\left( 4 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{4}=0010 \right)=PM\left( \hat{u}_{1}^{3}=001 \right)+\left| L_{4}^{\left( 4 \right)} \right|=0.11+4=4.\text{11}\]</span></p>
+<h4 id="d.-0011-1">d. 0011</h4>
+<p><br/><span class="math inline">\(L_{4}^{\left( 4 \right)}\)</span>取向量<span class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000"> 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4 \right)}=-4\)</span>；比特估计值<span class="math inline">\({ {\hat{u}}_{4}}=1\)</span>。</p>
+<p><span class="math inline">\(\delta \left( L_{4}^{\left( 4 \right)} \right)=\frac{1}{2}\left( 1-sign\left( -4 \right) \right)=1\)</span>。由于<span class="math inline">\({ {u}_{4}}\)</span>为信息比特，且<span class="math inline">\({ {\hat{u}}_{4}}=\delta \left( L_{4}^{\left( 4 \right)} \right)\)</span>，所以有</p>
+<p><span class="math display">\[PM\left( \hat{u}_{1}^{4}=0011 \right)=PM\left( \hat{u}_{1}^{3}=001 \right)=0.11\]</span></p>
+<p>截止目前的扩展路径如图11所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140245285.jpg" title="图 11 SCL译码算法在4层的扩展" /></p>
+<h3 id="剪枝-2">剪枝</h3>
+<p><br/>到了最后一层，选取PM最小的路径作为唯一路径，即为译码输出结果：<span class="math inline">\(\hat{u}_{1}^{4}=\left( \begin{matrix}  0 &amp; 0 &amp; 1 &amp; 1 \\ \end{matrix} \right)\)</span>。如图12所示，只保留这一条路径，删除其余路径。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140423071.jpg" title="图 12 SCL译码算法输出结果" /></p>
+<p>注意，此时的<span class="math inline">\(\hat{u}_{1}^{4}=\left( \begin{matrix}  0 &amp; 0 &amp; 1 &amp; 1 \\ \end{matrix} \right)\)</span>并不是按正常顺序排列的译码结果。别忘了极化码编码时是经过比特反转的，<span class="math inline">\(\left( \begin{matrix}  0 &amp; 0 &amp; 1 &amp; 1 \\ \end{matrix} \right)\)</span>对应的比特位置是<span class="math inline">\(\left( \begin{matrix}  1 &amp; 3 &amp; 2 &amp; 4 \\ \end{matrix} \right)\)</span>。所以再比特反转一次，得到最终的译码比特<span class="math inline">\(\left( \begin{matrix}  0 &amp; 1 &amp; 0 &amp; 1 \\ \end{matrix} \right)\)</span>，其中第2、4位发生了译码错误。</p>
+<figure>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171123/110111367.png" alt="mark" /><figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h1 id="总结">总结</h1>
+<p><br/>SC译码算法是深度优先的，要的是从根节点快速到达叶子节点。而SCL译码算法是广度优先的，先扩展，再剪枝，最终到达叶子节点。SCL译码算法的PM机制就像“马太效应”，越是错误的路径越要施加惩罚，越是正确的路径越可以直接继承父节点以便保证自己具有最小的PM。对于信息比特且<span class="math inline">\({ {\hat{u}}_{i}}\left[ l \right]\)</span>与<span class="math inline">\(\delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right)\)</span>相等的情况，该比特直接继承父节点的PM；对于信息比特且<span class="math inline">\({ {\hat{u}}_{i}}\left[ l \right]\)</span>与<span class="math inline">\(\delta \left( L_{N}^{\left( i \right)}\left[ l \right] \right)\)</span>不相等的情况则次之，施加一个惩罚因子，该惩罚因子的大小就是LLR的模值；对于冻结比特而且还取值错误的情况是最坏的，施加的惩罚因子是无穷大。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><br/>[1] Tal I, Vardy A. List Decoding of Polar Codes[J]. Information Theory IEEE Transactions on, 2012, 61(5):2213-2226. [2] Balatsoukas-Stimming A, Parizi M B, Burg A. LLR-Based Successive Cancellation List Decoding of Polar Codes[J]. IEEE Transactions on Signal Processing, 2015, 63(19):5165-5179. [3] 陈凯. 极化编码理论与实用方案研究[D]. 北京邮电大学, 2014.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/" title="Polar Code（7）SCL译码算法">https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/13/polar-code-6-sc-decoder/" rel="prev" title="Polar Code（6）SC译码算法">
+                  <i class="fa fa-chevron-left"></i> Polar Code（6）SC译码算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/17/polar-code-8-gaussian-approximation/" rel="next" title="Polar Code（8）高斯近似">
+                  Polar Code（8）高斯近似 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"26cadded2c25c091f7222ddde4d00425"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
