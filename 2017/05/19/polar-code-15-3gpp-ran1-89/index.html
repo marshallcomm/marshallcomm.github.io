@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言3GPP标准化会议于5月15~19日在杭州召开。本周在杭州参加3GPP RAN1 #89次会议，亲历了5G标准化进程中的一个时间点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（15）3GPP RAN1#89">
+<meta property="og:url" content="https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="前言3GPP标准化会议于5月15~19日在杭州召开。本周在杭州参加3GPP RAN1 #89次会议，亲历了5G标准化进程中的一个时间点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095532334.JPG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095722749.JPG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/100741806.PNG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101358568.JPG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101526024.JPG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101624100.JPG">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101659864.JPG">
+<meta property="article:published_time" content="2017-05-19T01:53:07.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:51:20.446Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta property="article:tag" content="3GPP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095532334.JPG">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/","path":"2017/05/19/polar-code-15-3gpp-ran1-89/","title":"Polar Code（15）3GPP RAN1#89"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（15）3GPP RAN1#89 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-construction"><span class="nav-number">2.</span> <span class="nav-text">Code construction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequence-design"><span class="nav-number">3.</span> <span class="nav-text">Sequence design</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rate-matching"><span class="nav-number">4.</span> <span class="nav-text">Rate matching</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Polar Code（15）3GPP RAN1#89 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（15）3GPP RAN1#89
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-19 09:53:07" itemprop="dateCreated datePublished" datetime="2017-05-19T09:53:07+08:00">2017-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:51:20" itemprop="dateModified" datetime="2018-10-21T13:51:20+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/3GPP-PolarCode/" itemprop="url" rel="index"><span itemprop="name">3GPP_PolarCode</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>3GPP标准化会议于5月15~19日在杭州召开。本周在杭州参加3GPP RAN1 #89次会议，亲历了5G标准化进程中的一个时间点。</p>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095532334.JPG" title="3GPP RAN1#89 主会场（杭州）" />
+
+<span id="more"></span>
+
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095722749.JPG" title="3GPP RAN1#89 信道编码分会场" />
+
+<p>本文简要介绍polar code在3GPP 5G NR讨论的最新进展。</p>
+<h1 id="Code-construction"><a href="#Code-construction" class="headerlink" title="Code construction"></a>Code construction</h1><p><br/>本周召开的RAN1 #89会议，<strong>关于Code construction达成的结论为：</strong></p>
+<p><strong>对于下行链路：</strong></p>
+<ul>
+<li>J’的长度为3或6（下次会议再进一步做出选择）；</li>
+<li>若J’&#x3D;6，工作假设：J+J’bits以分布式的方式分布（在编码结构中支持Early termination）（不排除非分布式的方式）；</li>
+<li>若J’&#x3D;3，J+J’bits是否采用分布式的方式分布（在编码结构中支持Early termination）有待进一步研究。</li>
+</ul>
+<p>在编码结构中，J+J’bits以分布式的方式插入到信息比特中以实现Early termination的方案：</p>
+<ul>
+<li>支持者：DCM, Nokia, HW, ZTE, CATT, IDC, CL, NEC, Mediatek, Accelercomm, Spreadtrum</li>
+<li>反对者：Intel, LG, QC, Eri, Sams, Fuji, ETRI, Tsofun, IAESI</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/100741806.PNG" alt="mark"></p>
+<h1 id="Sequence-design"><a href="#Sequence-design" class="headerlink" title="Sequence design"></a>Sequence design</h1><p><br/><strong>关于Sequence design本次会议达成的结论为：</strong></p>
+<ul>
+<li><strong>工作假设（1）</strong>：一个母码长度对应一个single fixed sequence，以提供信息比特和冻结比特的选择</li>
+<li>多个不同母码长度对应着一个固定序列（fixed sequences）的集合，这些固定序列来源于“single reference mother code size”，<ul>
+<li>单参考母码长度的最大值为512或64（下次会议进一步确定）。</li>
+<li>如果修改上述<strong>工作假设（1）</strong>，使得对于最大母码长度存在多于一个的序列，则由其他母码长度派生出额外的序列集合。</li>
+</ul>
+</li>
+<li>选择序列时，至少考虑已知的CCE大小，如果可能，考虑到典型的有效载荷。</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101358568.JPG" alt="mark"></p>
+<h1 id="Rate-matching"><a href="#Rate-matching" class="headerlink" title="Rate matching"></a>Rate matching</h1><p><br/><strong>关于速率匹配方案RAN1今后使用的术语：</strong></p>
+<p><strong>Puncturing</strong>：凿孔比特是指那些不传输的编码比特，接收端对于这些不传输的比特是<strong>未知的</strong>，相应的LLR被设置为0；</p>
+<p><strong>Shortening</strong>：将输入比特设定为已知，接收端对于这些不传输的比特是<strong>已知的</strong>，相应的LLR设置为一个较大的值。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101526024.JPG" alt="mark"></p>
+<p>关于这两种凿孔方案有必要再交代一下。博文<a href="http://marshallcomm.cn/2017/03/21/polar-code-10-rcpp/">《Polar Code（10）速率适配的凿孔极化码》</a>中提到过，极化码的凿孔方案分为两类：一类被称为“C0”（capacity-zero）凿孔模式，就是RAN1在此定义的Puncturing方案；另一类被称为“C1”（capacity-one）凿孔模式，就是RAN1在此定义的Shortening方案。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101624100.JPG" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/101659864.JPG" alt="mark"></p>
+<p><strong>本次会议关于速率匹配达成的结论：</strong></p>
+<p>码块分段之后（如果有的话）：</p>
+<ul>
+<li>$K$是信息比特数（包括CRC）</li>
+<li>$M$是传输的编码比特数</li>
+<li>${ {N}_{DM}}$是满足2的幂次方并且大于等于$M$的最小值</li>
+<li>${ {N}_{M}}$是<ul>
+<li>${ { {N}<em>{DM}}}&#x2F;{2};$，如果$M&lt;\beta *{ { {N}</em>{DM}}}&#x2F;{2};$且${K}&#x2F;{M};&lt;{ {R}<em>{repthr}},1\le \beta &lt;2$（准确的$\beta $有待进一步研究；不排除$\beta $是${ {N}</em>{DM}}$的函数）</li>
+<li>否则，${ {N}_{DM}}$</li>
+<li>${ {R}<em>{repthr}}$的值有待进一步研究；不排除${ {R}</em>{repthr}}&#x3D;0$</li>
+</ul>
+</li>
+<li>${ {N}<em>{R}}$是满足2的幂次方并且大于等于${K}&#x2F;{ { {R}</em>{\min }}};$的最小值<ul>
+<li>${ {R}_{\min }}$是所支持的最小码率</li>
+<li>$\sim {1}&#x2F;{12\le };{ {R}_{\min }}\le \sim {1}&#x2F;{5};$，准确值有待进一步研究</li>
+</ul>
+</li>
+<li>${ {N}_{\max }}$是所支持的最大母码长度</li>
+<li>母码长度$N$由$\min \left( { {N}<em>{M}},{ {N}</em>{R}},{ {N}_{\max }} \right)$确定</li>
+<li>当$M&gt;N$时，采用重复（<strong>Repetition</strong>）编码</li>
+<li>当$M&lt;N$时，采用Puncturing or Shortening：<ul>
+<li>低码率时采用<strong>Puncturing</strong>，例如当码率小于等于${ {R}_{psthr}}$时，和或其他条件</li>
+<li>高码率时采用<strong>Shortening</strong>，例如当码率大于${ {R}_{psthr}}$时，和或其他条件</li>
+<li>${ {R}_{psthr}}$的值有待进一步研究</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/" title="Polar Code（15）3GPP RAN1#89">https://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/15/polar-code-14-3gpp-ran1-88b/" rel="prev" title="Polar Code（14）3GPP RAN1#88bis">
+                  <i class="fa fa-chevron-left"></i> Polar Code（14）3GPP RAN1#88bis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/01/polar-code-16-3gpp-ran1-adhoc2/" rel="next" title="Polar Code（16）3GPP RAN1 adhoc#2">
+                  Polar Code（16）3GPP RAN1 adhoc#2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"cf9286341fd86ac33c0483581620b953"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

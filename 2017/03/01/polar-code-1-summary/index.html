@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="2016年11月18日，在美国内华达州里诺召开的3GPP RAN1 #87次会议，确定Polar Code作为5G eMBB（增强移动宽带）场景下控制信道编码方案。 2008年，Erdal Arikan在国际信息论ISIT会议上首次提出了信道极化（Channel Polarization）的概念；2009年在“IEEE Transaction on Information Theory”期刊上发表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（1）概述">
+<meta property="og:url" content="https://marshallcomm.cn/2017/03/01/polar-code-1-summary/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="2016年11月18日，在美国内华达州里诺召开的3GPP RAN1 #87次会议，确定Polar Code作为5G eMBB（增强移动宽带）场景下控制信道编码方案。 2008年，Erdal Arikan在国际信息论ISIT会议上首次提出了信道极化（Channel Polarization）的概念；2009年在“IEEE Transaction on Information Theory”期刊上发表">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-01T08:23:13.000Z">
+<meta property="article:modified_time" content="2017-08-04T09:02:32.123Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/03/01/polar-code-1-summary/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/03/01/polar-code-1-summary/","path":"2017/03/01/polar-code-1-summary/","title":"Polar Code（1）概述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（1）概述 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/03/01/polar-code-1-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Polar Code（1）概述 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（1）概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-01 16:23:13" itemprop="dateCreated datePublished" datetime="2017-03-01T16:23:13+08:00">2017-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2017-08-04 17:02:32" itemprop="dateModified" datetime="2017-08-04T17:02:32+08:00">2017-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>2016年11月18日，在美国内华达州里诺召开的3GPP RAN1 #87次会议，确定<strong>Polar Code</strong>作为5G <strong>eMBB</strong>（增强移动宽带）场景下<strong>控制信道</strong>编码方案。</p>
+<p>2008年，Erdal Arikan在国际信息论ISIT会议上首次提出了<strong>信道极化（Channel Polarization）</strong>的概念；2009年在“IEEE Transaction on Information Theory”期刊上发表了一篇长达23页的论文更加详细地阐述了信道极化，并基于信道极化给出了一种新的编码方式，名称为<strong>极化码（Polar Code）</strong>。极化码具有确定性的构造方法，并且是已知的唯一一种能够被严格证明“达到”信道容量的信道编码方法。</p>
+<span id="more"></span>
+
+
+<p>从代数编码和概率编码的角度来说，极化码具备了两者各自的特点。首先，只要给定编码长度，极化码的编译码结构就唯一确定了，而且可以通过生成矩阵的形式完成编码过程，这一点和代数编码的常见思维是一致的。其次，极化码在设计时并没有考虑最小距离特性，而是利用了<strong>信道联合（Channel Combination）与信道分裂（Channel Splitting）</strong>的过程来选择具体的编码方案，而且在译码时也是采用概率算法，这一点比较符合概率编码的思想。</p>
+<p>对于长度为$N&#x3D;{2^{n}}$（$n$为任意正整数）的极化码，它利用信道$W$的N个独立副本，进行信道联合和信道分裂，得到新的N个分裂之后的信道$\left{ W_{N}^{\left( 1 \right)},W_{N}^{\left( 2 \right)},…,W_{N}^{\left( N \right)} \right}$。随着码长N的增加，分裂之后的信道将向两个极端发展：其中一部分分裂信道会趋近于完美信道，即信道容量趋近于1的无噪声信道；而另一部分分裂信道会趋近于完全噪声信道，即信道容量趋近于0的信道。假设原信道$W$的二进制输入对称容量记作$I\left(W\right)$，那么当码长N趋近于无穷大时，信道容量趋近于1的分裂信道比例约为$K&#x3D;N\times I\left( W \right)$，而信道容量趋近于0的比例约为$N\times \left( 1-I\left( W \right) \right)$。对于信道容量为1的可靠信道，可以直接放置消息比特而不采用任何编码，即相当于编码速率为$R&#x3D;1$；而对于信道容量为0的不可靠信道，可以放置发送端和接收端都事先已知的冻结比特，即相当于编码速率为$R&#x3D;0$。那么当码长$N\to \infty $时，极化码的可达编码速率$R&#x3D;N\times I\left(W\right)&#x2F;N&#x3D;I\left(W\right)$，即在理论上，极化码可以被证明是可达信道容量的。</p>
+<p>在极化码编码时，首先要区分出N个分裂信道的可靠程度，即哪些属于可靠信道，哪些属于不可靠信道。对各个极化信道的可靠性进行度量常用的有三种方法：<strong>巴氏参数</strong>（Bhattacharyya Parameter）法、<strong>密度进化</strong>（Density Evolution，DE）法和<strong>高斯近似</strong>（Gaussian Approximation）法：</p>
+<ol>
+<li>最初，极化码采用巴氏参数$Z\left( W \right)$来作为每个分裂信道的可靠性度量，$Z\left( W \right)$越大表示信道的可靠程度越低。当信道$W$是二元删除信道（Binary Erasure Channel，BEC）时，每个$Z\left( W_{N}^{\left( i \right)} \right)$都可以采用递归的方式计算出来，复杂度为$O\left( N\log N \right)$。然而，对于其他信道，如二进制输入对称信道（Binary-input Symmeric Channel，BSC）或者二进制输入加性高斯白噪声信道（Binary-input Additive White Gaussian Channel，BAWGNC）并不存在准确的能够计算$Z\left( W_{N}^{\left( i \right)} \right)$的方法。</li>
+<li>因此，Mori等人提出了一种采用密度进化方法跟踪每个子信道概率密度函数（Probability Density Function，PDF），从而估计每个子信道错误概率的方法。这种方法适用于所有类型的二进制输入离散无记忆信道（Binary-input Discrete Memoryless Channel，B-DMC）信道。</li>
+<li>在大多数研究场景下，信道编码的传输信道模型均为BAWGNC信道。在BAWGNC信道下，可以将密度进化中的对数似然比（Likelihood Rate，LLR）的概率密度函数用一族方差为均值2倍的高斯分布来近似，从而简化成了对一维均值的计算，大大降低计算量，这种对DE的简化计算即为高斯近似。</li>
+</ol>
+<p>参考文献：<br>[1] Arikan E. Channel polarization: A method for constructing capacity-achieving codes[C]&#x2F;&#x2F; IEEE International Symposium on Information Theory. IEEE, 2008:1173-1177.<br>[2] Arikan E. Channel Polarization: A Method for Constructing Capacity-Achieving Codes for Symmetric Binary-Input Memoryless Channels[J]. IEEE Transactions on Information Theory, 2008, 55(7):3051-3073.<br>[3] 陈凯. 极化编码理论与实用方案研究[D]. 北京邮电大学, 2014.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/03/01/polar-code-1-summary/" title="Polar Code（1）概述">https://marshallcomm.cn/2017/03/01/polar-code-1-summary/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/01/hello-world/" rel="prev" title="开宗明义">
+                  <i class="fa fa-chevron-left"></i> 开宗明义
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/04/polar-code-2-encoding-principle/" rel="next" title="Polar Code（2）编码原理">
+                  Polar Code（2）编码原理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"b2cd34d9de49abd6cf3a73525d5ca0cc"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

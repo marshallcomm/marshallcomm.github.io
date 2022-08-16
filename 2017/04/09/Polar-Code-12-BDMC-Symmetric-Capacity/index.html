@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言任何一本信息论书籍讲到离散信道容量时都会涉及形如$I\left( X;Y \right)&#x3D;\sum\limits_{i,j}{ { {p}{i}}{ {p}{ij}}\log \frac{ { {p}{ij}}}{ { {q}{j}}}}$的公式。但这个公式，我理解是经过转化得来的，不是直接得到的。怎么转化呢？请继续阅读。 输入符号概率${ {p}{i}}&#x3D;p\left(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（12）B-DMC对称容量">
+<meta property="og:url" content="https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="前言任何一本信息论书籍讲到离散信道容量时都会涉及形如$I\left( X;Y \right)&#x3D;\sum\limits_{i,j}{ { {p}{i}}{ {p}{ij}}\log \frac{ { {p}{ij}}}{ { {q}{j}}}}$的公式。但这个公式，我理解是经过转化得来的，不是直接得到的。怎么转化呢？请继续阅读。 输入符号概率${ {p}{i}}&#x3D;p\left(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170409/202751865.jpg">
+<meta property="article:published_time" content="2017-04-09T12:15:27.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:50:40.390Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170409/202751865.jpg">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/","path":"2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/","title":"Polar Code（12）B-DMC对称容量"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（12）B-DMC对称容量 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">互信息量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B3%E5%9D%87%E4%BA%92%E4%BF%A1%E6%81%AF%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">平均互信息量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E3%80%81%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87%E4%B8%8E%E8%BD%AC%E7%A7%BB%E6%A6%82%E7%8E%87%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">联合概率、后验概率与转移概率的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">信道容量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-DMC%E5%B9%B3%E5%9D%87%E4%BA%92%E4%BF%A1%E6%81%AF%E9%87%8F"><span class="nav-number">6.</span> <span class="nav-text">B-DMC平均互信息量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F"><span class="nav-number">7.</span> <span class="nav-text">对称信道容量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-number">8.</span> <span class="nav-text">理解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Polar Code（12）B-DMC对称容量 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（12）B-DMC对称容量
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-09 20:15:27" itemprop="dateCreated datePublished" datetime="2017-04-09T20:15:27+08:00">2017-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:50:40" itemprop="dateModified" datetime="2018-10-21T13:50:40+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>任何一本信息论书籍讲到离散信道容量时都会涉及形如$I\left( X;Y \right)&#x3D;\sum\limits_{i,j}{ { {p}<em>{i}}{ {p}</em>{ij}}\log \frac{ { {p}<em>{ij}}}{ { {q}</em>{j}}}}$的公式。但这个公式，我理解是经过转化得来的，不是直接得到的。怎么转化呢？请继续阅读。</p>
+<p>输入符号概率${ {p}<em>{i}}&#x3D;p\left( { {x}</em>{i}} \right)$，输出符号概率${ {q}<em>{j}}&#x3D;q\left( { {y}</em>{j}} \right)$，输入符号到输出符号的转移概率${ {p}<em>{ij}}&#x3D;p\left( { {y}</em>{j}}|{ {x}_{i}} \right)$，这三种概率完全地表达了一个信道。对于信道容量，第一个概念是互信息量。</p>
+<span id="more"></span>
+
+
+<h1 id="互信息量"><a href="#互信息量" class="headerlink" title="互信息量"></a>互信息量</h1><p><br/>互信息量定义为<strong>后验概率与先验概率比值的对数</strong>。虽然有这个定义，但必须先要明确观察者的角度才能进一步确定后验概率是谁，先验概率是谁。$I\left( X;Y \right)$是站在接收端的角度观察，是$Y$对$X$的平均互信息量；而$I\left( Y;X \right)$是站在发送端角度观察，是$X$对$Y$的平均互信息量。我们只说第一种角度，即以接收者的视角来观察信道。</p>
+<p>通常接收端可以预知信息$X$发出的各个符号的集合，以及它们的概率分布，也就是说发送符号概率$p\left( { {x}<em>{i}} \right)$是<strong>先验概率</strong>。当接收端收到一个符号${ {y}</em>{j}}$后，接收端可以计算发送端消息的条件概率$p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)$，这种条件概率就是<strong>后验概率</strong>。根据互信息量定义，${ {y}<em>{j}}$对${ {x}</em>{i}}$的互信息量为：</p>
+<p>$$\begin{align}<br>I\left( { {x}<em>{i}};{ {y}</em>{j}} \right)&#x3D;\log \frac{p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)}{p\left( { {x}_{i}} \right)}<br>\end{align}$$</p>
+<h1 id="平均互信息量"><a href="#平均互信息量" class="headerlink" title="平均互信息量"></a>平均互信息量</h1><p><br/>只有$I\left( { {x}<em>{i}};{ {y}</em>{j}} \right)$是没有意义的，因为通常无法确定$p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)$和$p\left( { {x}<em>{i}} \right)$的大小关系，$I\left( { {x}</em>{i}};{ {y}<em>{j}} \right)$不一定大于或等于0。由于发送符号$X$和接收符号$Y$都是随机变量，要探知$Y$对$X$的互信息量得用统计的方法去计算$I\left( { {x}</em>{i}};{ {y}<em>{j}} \right)$的平均值，准确地说是计算$I\left( { {x}</em>{i}};{ {y}_{j}} \right)$在发送符号集合$X$和接收符号集合$Y$上的概率加权统计平均值，这就是平均互信息量：</p>
+<p>$$\begin{align}<br>I\left( X;Y \right)&#x3D;\sum\limits_{i}{\sum\limits_{j}{p\left( { {x}<em>{i}}{ {y}</em>{j}} \right)}\log }\frac{p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)}{p\left( { {x}_{i}} \right)}<br>\end{align}$$</p>
+<p>其中$p\left( { {x}<em>{i}}{ {y}</em>{j}} \right)$是发送符号${ {x}<em>{i}}$与接收符号${ {y}</em>{j}}$的联合概率。</p>
+<h1 id="联合概率、后验概率与转移概率的关系"><a href="#联合概率、后验概率与转移概率的关系" class="headerlink" title="联合概率、后验概率与转移概率的关系"></a>联合概率、后验概率与转移概率的关系</h1><p>$$\begin{align}<br>p\left( { {x}<em>{i}}{ {y}</em>{j}} \right)&#x3D;p\left( { {x}<em>{i}} \right)p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)&#x3D;p\left( { {y}</em>{j}} \right)p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)<br>\end{align}$$</p>
+<p>这个关系式相当重要！它打通了前向与后向之间的联系。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170409/202751865.jpg" alt="mark"></p>
+<p>研究互信息量自然离不开对信道的定义。而信道是由输入符号、输出符号和转移概率三者确定的。转移概率$p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)$是站在发送端的角度观察，方向是$X\to Y$，因此也称为<strong>前向概率</strong>。后验概率$p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)$是站在接收端的角度观察，方向是$Y\to X$，因此也称为<strong>后向概率</strong>。后验概率是逆向思维，不仅难以理解而且还不易求，既然如此那就全部按正向来吧。根据关系式（3），把<strong>后验概率用转移概率来表示</strong>：</p>
+<p>$$\begin{align}<br>p\left( { {x}<em>{i}}|{ {y}</em>{j}} \right)&#x3D;\frac{p\left( { {x}<em>{i}} \right)p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)}{p\left( { {y}</em>{j}} \right)}<br>\end{align}$$</p>
+<p>带入式（2）则平均互信息量$I\left( X;Y \right)$用转移概率可重新表示为：</p>
+<p>$$\begin{align}<br>I\left( X;Y \right)&#x3D;\sum\limits_{i}{\sum\limits_{j}{p\left( { {x}<em>{i}} \right)p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)}\log }\frac{p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)}{p\left( { {y}</em>{j}} \right)}<br>\end{align}$$</p>
+<p>其中$p\left( { {x}<em>{i}} \right)$是先验概率自不必说，$p\left( { {y}</em>{j}} \right)$是接收符号概率也可以用转移概率表示：</p>
+<p>$$\begin{align}<br>p\left( { {y}<em>{j}} \right)&#x3D;\sum\limits</em>{i}{p\left( { {x}<em>{i}} \right)}p\left( { {y}</em>{j}}|{ {x}_{i}} \right)<br>\end{align}$$</p>
+<p>通过式（5~6）可以看出，在信道给定的情况下，平均互信息量$I\left( X;Y \right)$的大小由输入符号的概率分布$p\left( { {x}_{i}} \right)$来确定。</p>
+<h1 id="信道容量"><a href="#信道容量" class="headerlink" title="信道容量"></a>信道容量</h1><p><br/>进一步，<strong>信道容量</strong>定义为平均互信息量$I\left( X;Y \right)$的最大值，用符号$C$来表示，即</p>
+<p>$$\begin{align}<br>C&#x3D;\underset{p\left( { {x}<em>{i}} \right)}{\mathop{\max }},I\left( X;Y \right)&#x3D;\underset{p\left( { {x}</em>{i}} \right)}{\mathop{\max }},\sum\limits_{i}{\sum\limits_{j}{p\left( { {x}<em>{i}} \right)p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)}\log }\frac{p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)}{\sum\limits</em>{i}{p\left( { {x}<em>{i}} \right)}p\left( { {y}</em>{j}}|{ {x}_{i}} \right)}<br>\end{align}$$</p>
+<p>什么时候$I\left( X;Y \right)$取得最大值呢？根据信息论，在对称信道下，输入等概时互信息量达到最大值，该最大值即为信道容量$C$。在非对称信道下，也一定存在某种输入概率分布，使得互信息量$I\left( X;Y \right)$最大，该最大值即为该信道的容量，而相应的输入概率分布称为最佳输入分布。当信道给定后，转移概率$p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)$就固定，$C$仅与$p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)$有关，而与$p\left( { {x}_{i}} \right)$无关。</p>
+<h1 id="B-DMC平均互信息量"><a href="#B-DMC平均互信息量" class="headerlink" title="B-DMC平均互信息量"></a>B-DMC平均互信息量</h1><p><br/>对于一般二进制离散无记忆信道（此时先不论信道是否对称），假定信源符号以等概率发送，则有$p\left( 0 \right)&#x3D;p\left( 1 \right)&#x3D;\frac{1}{2}$，带入式（2）得到输入等概时的平均互信息量：</p>
+<p>$$\begin{align}<br>I\left( X;Y \right)&#x3D;\sum\limits_{i}{\sum\limits_{j}{\frac{1}{2}p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)}\log }\frac{p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)}{\sum\limits_{i}{p\left( { {x}<em>{i}} \right)}p\left( { {y}</em>{j}}|{ {x}_{i}} \right)}<br>\end{align}$$</p>
+<p>分母展开$\sum\limits_{i}{p\left( { {x}<em>{i}} \right)}p\left( { {y}</em>{j}}|{ {x}<em>{i}} \right)&#x3D;\frac{1}{2}p\left( { {y}</em>{j}}|0 \right)+\frac{1}{2}p\left( { {y}_{j}}|1 \right)$，并带入式（8）得到一般B-DMC在输入等概时的平均互信息量为：</p>
+<p>$$\begin{align}<br>I\left( X;Y \right)&#x3D;\sum\limits_{i}{\sum\limits_{j}{\frac{1}{2}p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)}\log \frac{p\left( { {y}<em>{j}}|{ {x}</em>{i}} \right)}{\frac{1}{2}p\left( { {y}<em>{j}}|0 \right)+\frac{1}{2}p\left( { {y}</em>{j}}|1 \right)}}<br>\end{align}$$</p>
+<p>由于此时还未定义这个一般B-DMC是否为对称信道，虽然假定输入等概，但此时不能确定（9）式的最大值。下面添加对称性条件。</p>
+<h1 id="对称信道容量"><a href="#对称信道容量" class="headerlink" title="对称信道容量"></a>对称信道容量</h1><p><br/>如果转移概率矩阵$\mathbf{P}$的每一行都是第一行的置换，称该矩阵是输入对称的；如果转移概率矩阵$\mathbf{P}$的每一列都是第一列的置换，称该矩阵是输出对称的；如果输入、输出都对称，则称该DMC为<strong>对称的DMC信道</strong>。</p>
+<p>满足对称条件的B-DMC有两个典型例子：BSC和BEC。其中BSC的转移概率矩阵为</p>
+<p>$$\begin{align}<br>\mathbf{P}&#x3D;\left[ \begin{matrix}<br>   p &amp; 1-p  \<br>   1-p &amp; p  \<br>\end{matrix} \right]<br>\end{align}$$</p>
+<p>显然式（10）的每一行、每一列都分别是第一行、第一列的置换，因此转移概率满足式（10）的信道是一种对称信道。把BSC转移概率带入式（9）得到平均互信息量</p>
+<p>$$\begin{align}<br>I\left( X;Y \right)&#x3D;p\log 2p+\left( 1-p \right)\log 2\left( 1-p \right)<br>\end{align}$$</p>
+<p>此时的平均互信息量就是所能达到的最大值，因为式（11）是输入等概下的对称信道的平均互信息量，即对称信道的容量，也即<strong>BSC的对称容量</strong>。此时才有</p>
+<p>$$\begin{align}<br>C&#x3D;I\left( X;Y \right)&#x3D;p\log 2p+\left( 1-p \right)\log 2\left( 1-p \right)<br>\end{align}$$</p>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p><br/>既然是离散信道，其输入、输出必然都是离散的。为什么输出符号是任意的？站在发送端的角度去看，发送端唯一确知的就是自己能够发什么，发送符号取值范围是{0,1}，这是明确的。我发的信号我做主，发送端只管得了自己，但它不并知道信道是什么样的，也不知道接收端能收到什么。所以对于发送端而言，信道和接收符号都是未知的、任意的。概率也仅仅表达了一种可能性。弓箭手射箭，一旦射出，箭就不由弓箭手所控制了。</p>
+<p>为什么Arikan由B-DMC直接给出了对称容量？式（9）给出的就是一般B-DMC的平均互信息量，此时还没涉及对称的概念。注意，式（9）是一个不完整的计算式，它有4个转移概率值仍是未知的。因此你必须对B-DMC有进一步的定义，而此时式（9）的值则完全取决于信道类型。转移概率满足什么样的特性，它就定义了什么样的信道类型。当满足$P\left( 0|0 \right)&#x3D;P\left( 1|1 \right)&#x3D;p$、$P\left( 1|0 \right)&#x3D;P\left( 0|1 \right)&#x3D;1-p$时，B-DMC就是BSC信道。对称，发0的情况和发1的情况完全相同，这就是对称。BSC是研究二元编解码最简单，最常用的信道模型。</p>
+<p>研究编解码离不开具体的信道模型，只谈B-DMC是不够的，它还有4个概率值需要进一步给出定义。当进一步研究编码时不可能凭空讨论，一定要更加具体，是B-DMC下的BSC，还是B-DMC下的BEC？如此这般才构成讨论的基础。为什么一定要对称？因为它是最简单最基础的模型。定义就是定义，不需要纠结于为什么要这么定义。一上来就给出讨论的前提，在这种定义的框架下去讨论编码问题。</p>
+<p>说“BSC的对称容量”、“BEC的对称容量”都没问题，因为BSC和BEC都是对称信道。说“B-DMC的对称容量”，其实是隐含地指出了B-DMC满足对称性，要么是BSC，要么是BEC。</p>
+<p>BSC和BEC的相关链接：</p>
+<p><a href="http://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">Polar Code（5）编码之信道转移概率</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/" title="Polar Code（12）B-DMC对称容量">https://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/31/writing-is-thinking/" rel="prev" title="写作即思考">
+                  <i class="fa fa-chevron-left"></i> 写作即思考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/04/Polar-Code-13-channel-polarization/" rel="next" title="Polar Code（13）信道极化">
+                  Polar Code（13）信道极化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"535a6be41f6495e1b3cc3f7f0e969e50"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

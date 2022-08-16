@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言在5G NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS&#x2F;PBCH block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。 同步信号（SS）物理层小区ID1008个唯一的物理层小区ID根据如下公式确定 $$ N_{\text{ID}}^{\text{c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G SSB与小区搜索">
+<meta property="og:url" content="https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="前言在5G NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS&#x2F;PBCH block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。 同步信号（SS）物理层小区ID1008个唯一的物理层小区ID根据如下公式确定 $$ N_{\text{ID}}^{\text{c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/094753857.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/095600758.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101842369.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101923796.png">
+<meta property="article:published_time" content="2017-12-29T01:21:26.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:48:18.452Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta property="article:tag" content="2017-12">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/094753857.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/","path":"2017/12/29/nr-v200-l1-ssb/","title":"5G SSB与小区搜索"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G SSB与小区搜索 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BF%A1%E5%8F%B7%EF%BC%88SS%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">同步信号（SS）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E5%B0%8F%E5%8C%BAID"><span class="nav-number">2.1.</span> <span class="nav-text">物理层小区ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%90%8C%E6%AD%A5%E4%BF%A1%E5%8F%B7%EF%BC%88PSS%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">主同步信号（PSS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">2.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="nav-number">2.2.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%85%E5%90%8C%E6%AD%A5%E4%BF%A1%E5%8F%B7%EF%BC%88SSS%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">辅同步信号（SSS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%EF%BC%88PBCH%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">物理广播信道（PBCH）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0"><span class="nav-number">3.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-2"><span class="nav-number">3.3.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E8%B0%83%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7%EF%BC%88DM-RS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">解调参考信号（DM-RS）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-2"><span class="nav-number">4.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-3"><span class="nav-number">4.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSB"><span class="nav-number">5.</span> <span class="nav-text">SSB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSB%E7%9A%84%E6%97%B6%E5%9F%9F%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">SSB的时域结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSB%E4%B8%AD%E7%9A%84PSS%E6%98%A0%E5%B0%84"><span class="nav-number">5.1.1.</span> <span class="nav-text">SSB中的PSS映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSB%E4%B8%AD%E7%9A%84SSS%E6%98%A0%E5%B0%84"><span class="nav-number">5.1.2.</span> <span class="nav-text">SSB中的SSS映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSB%E4%B8%AD%E7%9A%84PBCH%E5%92%8CDM-RS%E6%98%A0%E5%B0%84"><span class="nav-number">5.1.3.</span> <span class="nav-text">SSB中的PBCH和DM-RS映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSB%E7%9A%84%E6%97%B6%E5%9F%9F%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">SSB的时域位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%8C%BA%E6%90%9C%E7%B4%A2"><span class="nav-number">6.</span> <span class="nav-text">小区搜索</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="5G SSB与小区搜索 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G SSB与小区搜索
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-29 09:21:26" itemprop="dateCreated datePublished" datetime="2017-12-29T09:21:26+08:00">2017-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:48:18" itemprop="dateModified" datetime="2018-10-21T13:48:18+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>在5G NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS&#x2F;PBCH block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。</p>
+<h1 id="同步信号（SS）"><a href="#同步信号（SS）" class="headerlink" title="同步信号（SS）"></a>同步信号（SS）</h1><h2 id="物理层小区ID"><a href="#物理层小区ID" class="headerlink" title="物理层小区ID"></a>物理层小区ID</h2><p><br/>1008个唯一的物理层小区ID根据如下公式确定</p>
+<p>$$ N_{\text{ID}}^{\text{cell}}&#x3D;3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}} $$</p>
+<p>其中$ N_{\text{ID}}^{\text{(1)}}\in \left{ 0,1,…,335 \right} $，$ N_{\text{ID}}^{\text{(2)}}\in \left{ 0,1,2 \right} $。</p>
+<span id="more"></span>
+
+<h2 id="主同步信号（PSS）"><a href="#主同步信号（PSS）" class="headerlink" title="主同步信号（PSS）"></a>主同步信号（PSS）</h2><h3 id="序列生成"><a href="#序列生成" class="headerlink" title="序列生成"></a>序列生成</h3><p>PSS序列$ { {d}_{\text{PSS}}}(n) $根据如下公式生成</p>
+<p>$$ \begin{align}<br> \nonumber &amp; { {d}<em>{\text{PSS}}}\left( n \right)&#x3D;1-2x\left( m \right) \<br> \nonumber &amp; m&#x3D;\left( n+43N</em>{\text{ID}}^{\text{(2)}} \right)\bmod 127 \<br> \nonumber &amp; 0\le n&lt;127<br>\end{align}<br>$$</p>
+<p>其中</p>
+<p>$$ x\left( i+7 \right)&#x3D;\left( x\left( i+4 \right)+x\left( i \right) \right)\bmod 2 $$</p>
+<p>且</p>
+<p>$$ \left[ \begin{matrix}<br>   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right) &amp; x\left( 3 \right) &amp; x\left( 2 \right) &amp; x\left( 1 \right) &amp; x\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \<br>\end{matrix} \right]<br>$$</p>
+<h3 id="物理资源映射"><a href="#物理资源映射" class="headerlink" title="物理资源映射"></a>物理资源映射</h3><p><br/>物理资源映射见本文SSB。</p>
+<h2 id="辅同步信号（SSS）"><a href="#辅同步信号（SSS）" class="headerlink" title="辅同步信号（SSS）"></a>辅同步信号（SSS）</h2><h3 id="序列生成-1"><a href="#序列生成-1" class="headerlink" title="序列生成"></a>序列生成</h3><p><br/>SSS序列$ { {d}_{\text{SSS}}}(n) $根据如下公式生成</p>
+<p>$$ \begin{align}<br>  \nonumber &amp; { {d}<em>{\text{SSS}}}\left( n \right)&#x3D;\left[ 1-2{ {x}</em>{0}}\left( \left( n+{ {m}<em>{0}} \right)\bmod 127 \right) \right]\left[ 1-2{ {x}</em>{1}}\left( \left( n+{ {m}<em>{1}} \right)\bmod 127 \right) \right] \<br> \nonumber &amp; { {m}</em>{0}}&#x3D;15\left\lfloor \frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor +5N_{\text{ID}}^{\text{(2)}} \<br> \nonumber &amp; { {m}<em>{1}}&#x3D;N</em>{\text{ID}}^{\text{(1)}}\bmod 112 \<br> \nonumber &amp; 0\le n&lt;127<br>\end{align}<br>$$</p>
+<p>其中</p>
+<p>$$ \begin{align}<br>  \nonumber &amp; { {x}<em>{0}}\left( i+7 \right)&#x3D;\left( { {x}</em>{0}}\left( i+4 \right)+x{}<em>{0}\left( i \right) \right)\bmod 2 \<br> \nonumber &amp; { {x}</em>{1}}\left( i+7 \right)&#x3D;\left( { {x}<em>{1}}\left( i+1 \right)+x{}</em>{1}\left( i \right) \right)\bmod 2<br>\end{align}<br>$$</p>
+<p>且 </p>
+<p>$$ \begin{align}<br>  \nonumber &amp; \left[ \begin{matrix}<br>   { {x}<em>{0}}\left( 6 \right) &amp; { {x}</em>{0}}\left( 5 \right) &amp; { {x}<em>{0}}\left( 4 \right) &amp; { {x}</em>{0}}\left( 3 \right) &amp; { {x}<em>{0}}\left( 2 \right) &amp; { {x}</em>{0}}\left( 1 \right) &amp; { {x}<em>{0}}\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \<br>\end{matrix} \right] \<br>  \nonumber &amp; \left[ \begin{matrix}<br>   { {x}</em>{1}}\left( 6 \right) &amp; { {x}<em>{1}}\left( 5 \right) &amp; { {x}</em>{1}}\left( 4 \right) &amp; { {x}<em>{1}}\left( 3 \right) &amp; { {x}</em>{1}}\left( 2 \right) &amp; { {x}<em>{1}}\left( 1 \right) &amp; { {x}</em>{1}}\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \<br>\end{matrix} \right]<br>\end{align}<br>$$</p>
+<h3 id="物理资源映射-1"><a href="#物理资源映射-1" class="headerlink" title="物理资源映射"></a>物理资源映射</h3><p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="物理广播信道（PBCH）"><a href="#物理广播信道（PBCH）" class="headerlink" title="物理广播信道（PBCH）"></a>物理广播信道（PBCH）</h1><h2 id="加扰"><a href="#加扰" class="headerlink" title="加扰"></a>加扰</h2><p><br/>UE应假定比特块$ b(0),…,b(M_{\text{bit}}^{ {}}-1) $在调制前进行加扰，其中$ { {M}<em>{\text{bit}}} $是PBCH传输的比特数，加扰后的比特块为$ \tilde{b}(0),…,\tilde{b}({ {M}</em>{\text{bit}}}-1) $</p>
+<p>$$ \tilde{b}(i)&#x3D;\left( b(i)+c(i+v{ {M}_{\text{bit}}}) \right)\bmod 2 $$</p>
+<p>其中扰码序列$ c(i) $由38.211的5.2节给定。扰码序列应在每个SSB的开始时根据$ { {c}<em>{\text{init}}}&#x3D;N</em>{\text{ID}}^{\text{cell}} $进行初始化</p>
+<ul>
+<li>对于$ { {L}_{\max }}&#x3D;4 $，$ v $是SSB索引的2个最低有效位</li>
+<li>对于$ { {L}<em>{\max }}&#x3D;8 $或$ { {L}</em>{\max }}&#x3D;64 $，$ v $是SSB索引的3 个最低有效位</li>
+</ul>
+<p>其中$ { {L}_{\max }} $是38.104给出的特定频带的SS&#x2F;PBCH周期中的SSB的最大数目。</p>
+<h2 id="调制"><a href="#调制" class="headerlink" title="调制"></a>调制</h2><p><br/>UE应假定比特块$ \tilde{b}(0),…,\tilde{b}({ {M}<em>{\text{bit}}}-1) $采用QPSK调制，得到复值调制符号块$ { {d}</em>{\text{PBCH}}}(0),…,{ {d}<em>{\text{PBCH}}}({ {M}</em>{\text{symb}}}-1) $，QPSK见38.211的5.1.3节。</p>
+<h2 id="物理资源映射-2"><a href="#物理资源映射-2" class="headerlink" title="物理资源映射"></a>物理资源映射</h2><p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="解调参考信号（DM-RS）"><a href="#解调参考信号（DM-RS）" class="headerlink" title="解调参考信号（DM-RS）"></a>解调参考信号（DM-RS）</h1><h2 id="序列生成-2"><a href="#序列生成-2" class="headerlink" title="序列生成"></a>序列生成</h2><p><br/>UE应假定SSB的参考信号序列$ r(m) $定义为</p>
+<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<p>其中加扰序列$ c(n) $在38.211的5.2节定义。扰码序列生成器应在每个SSB 机会的开始处进行初始化</p>
+<p>$$ \begin{align}<br> \nonumber &amp; { {c}<em>{\text{init}}}&#x3D;{ {2}^{11}}\left( { { {\bar{i}}}</em>{\text{SSB}}}+1 \right)\left( \left\lfloor {N_{\text{ID}}^{\text{cell}}}&#x2F;{\text{4}}; \right\rfloor +1 \right)+{ {2}^{6}}\left( { { {\bar{i}}}<em>{\text{SSB}}}+1 \right)+\left( N</em>{\text{ID}}^{\text{cell}}\bmod 4 \right) \<br> \nonumber &amp; { { {\bar{i}}}<em>{\text{SSB}}}&#x3D;4{ {i}</em>{\text{SSB}}}+n{}_{\text{hf}} \<br>\end{align}<br>$$</p>
+<p>其中</p>
+<ul>
+<li>若$ { {L}<em>{\max }}&#x3D;4 $，则$ { {n}</em>{\text{hf}}} $是发送PBCH的半帧数目，$ { {i}_{\text{SSB}}} $是SSB索引的2个LSB比特</li>
+<li>若$ { {L}<em>{\max }}&#x3D;8 $或$ { {L}</em>{\max }}&#x3D;64 $，则$ { {n}<em>{\text{hf}}}&#x3D;0 $，$ { {i}</em>{\text{SSB}}} $是SSB索引的3个LSB比特</li>
+</ul>
+<p>其中$ { {L}_{\max }} $是特定带宽下的SSB周期中SSB的最大数量。</p>
+<h2 id="物理资源映射-3"><a href="#物理资源映射-3" class="headerlink" title="物理资源映射"></a>物理资源映射</h2><p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="SSB"><a href="#SSB" class="headerlink" title="SSB"></a>SSB</h1><h2 id="SSB的时域结构"><a href="#SSB的时域结构" class="headerlink" title="SSB的时域结构"></a>SSB的时域结构</h2><p><br/>在时域上，1个SSB由4个OFDM符号组成，符号在SSB内从0到3增序编号。如表7.4.3.1-1所示，PSS、SSS、PBCH及其DM-RS占用不同的符号。</p>
+<p>在频域上，1个SSB由240个连续子载波组成，子载波在SSB内从0到239增序编号。$ k $和$ l $分别表示SSB内的频域索引和时域索引。UE可假定表7.4.3.1-1中的“Set to 0”的资源粒子（RE）被设置为零。SSB的子载波0对应于公共资源块$ N_{\text{CRB}}^{\text{SSB}} $的子载波$ { {k}<em>{0}} $，其中$ N</em>{\text{CRB}}^{\text{SSB}} $由高层参数 <em>offset-ref-low-scs-ref-PRB</em> 得到。</p>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/094753857.png" title="图 1 SS/PBCH block时频域结构" />
+
+<p>与SSB部分或完全重叠的任何公共资源块应当被视为被占用，并且不被用于PDSCH或PDCCH传输。UE可假定不用于SS&#x2F;PBCH传输的资源粒子，将部分重叠的公共资源的一部分设置为零。</p>
+<p>对于SSB，UE应假定</p>
+<ul>
+<li>天线端口$ p&#x3D;4000 $，</li>
+<li>PSS、SSS和PBCH具有相同的CP长度和子载波间隔，</li>
+<li>对于SSB type A，$ { {k}<em>{0}}\in \left{ \text{0, 1, 2, }…\text{, 23} \right} $，$ { {k}</em>{0}}\in \left{ \text{0, 1, 2, }…\text{, 23} \right} $，$ N_{\text{CRB}}^{\text{SSB}} $是就15kHz子载波间隔而言的表示，</li>
+<li>对于SSB type B，$ { {k}<em>{0}}\in \left{ \text{0, 1, 2, }…\text{, 11} \right} $，$ \mu \in \left{ \text{3,4} \right} $，$ N</em>{\text{CRB}}^{\text{SSB}} $是就60kHz子载波间隔而言的表示</li>
+</ul>
+<p>UE可假定相同的块索引所发送的SSB关于多普勒扩展，多普勒频移，平均增益，平均延迟和空间Rx参数是准共同定位（quasi co-located，QCL）的。对于任何其他SSB传输，UE不应假定QCL。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/095600758.png" alt="mark"></p>
+<h3 id="SSB中的PSS映射"><a href="#SSB中的PSS映射" class="headerlink" title="SSB中的PSS映射"></a>SSB中的PSS映射</h3><p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{\text{PSS}}}(0),…,{ {d}</em>{\text{PSS}}}(126) $乘以幅值因子$ { {\beta }<em>{\text{PSS}}} $，以符合TS 38.213中规定的PSS功率分配。符号序列按$ k $增序映射到RE $ { {\left( k,l \right)}</em>{p,\mu }} $，其中$ k $和$ l $由表7.4.3.1-1给定，分为表示SSB中的频域索引和时域索引。</p>
+<h3 id="SSB中的SSS映射"><a href="#SSB中的SSS映射" class="headerlink" title="SSB中的SSS映射"></a>SSB中的SSS映射</h3><p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{\text{SSS}}}(0),…,{ {d}</em>{\text{SSS}}}(126) $乘以幅值因子$ { {\beta }<em>{\text{ }!!\grave{\ }!!\text{ PBCH}}} $，并按$ k $增序映射到RE $ { {\left( k,l \right)}</em>{p,\mu }} $，其中$ k $和$ l $由表7.4.3.1-1给定，分为表示SSB内的频域索引和时域索引。</p>
+<h3 id="SSB中的PBCH和DM-RS映射"><a href="#SSB中的PBCH和DM-RS映射" class="headerlink" title="SSB中的PBCH和DM-RS映射"></a>SSB中的PBCH和DM-RS映射</h3><p><br/>UE应假定组成PBCH的符号序列$ { {d}<em>{\text{PBCH}}}(0),…,{ {d}</em>{\text{PBCH}}}({ {M}<em>{\text{symb}}}-1) $乘以幅值因子$ { {\beta }</em>{\text{ }!!\grave{\ }!!\text{ PBCH}}} $，以符合TS 38.213中规定的PBCH功率分配。符号序列从$ { {d}<em>{\text{PBCH}}}(0) $开始映射到RE $ { {\left( k,l \right)}</em>{p,\mu }} $，并满足下列条件：</p>
+<ul>
+<li>这些RE不用于PDCCH DM-RS</li>
+</ul>
+<p>对于不为PBCH DM-RS保留的RE的映射，按递增顺序先$ k $后$l$映射，其中$ k $和$l$分别是SSB内的频域和时域索引，并由表7.4.3.1-1给定。</p>
+<p>UE应假定SSB的DM-RS复值符号序列$ { {r}<em>{l}}(0),…,{ {r}</em>{l}}(143) $乘以幅值因子$ \beta <em>{\text{PBCH}}^{ {}} $，以符合TS38.213中规定的PBCH功率分配，并按递增顺序先$k$后$l$映射到资源粒子$ { {\left( k,l \right)}</em>{p,\mu }} $，其中$k$和$l$分别是SSB内的频域和时域索引，并由Table 7.4.3.1-1给定，其中 $v&#x3D;N_{\text{ID}}^{\text{cell}}\bmod 4$。</p>
+<h2 id="SSB的时域位置"><a href="#SSB的时域位置" class="headerlink" title="SSB的时域位置"></a>SSB的时域位置</h2><p><br/>在下一章描述UE将监测的可能的SSB时域位置。</p>
+<h1 id="小区搜索"><a href="#小区搜索" class="headerlink" title="小区搜索"></a>小区搜索</h1><p><br/>小区搜索是UE获取与小区的时间和频率同步，并检测该小区的物理层小区ID的过程。</p>
+<p>UE接收以下同步信号（SS）以执行小区搜索：TS38.211中定义的主同步信号（PSS）和辅同步信号（SSS）。</p>
+<p>UE应假定PBCH、PSS和SSS在连续的符号中接收，并形成SS&#x2F;PBCH block（如TS38.211中所定义）。UE应假定SSS和PBCH DM-RS具有相同的EPRE。</p>
+<p>对于具有SSB的半帧，候选SSB的数目和第一个符号索引位置根据SSB的子载波间隔确定如下：</p>
+<ul>
+<li>Case A - 15 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} + 14*n。对于载频小于或等于3 GHz的情况，n&#x3D;0,1。对于载频大于3 GHz且小于或等于6 GHz的情况，n&#x3D;0,1,2,3。</li>
+<li>CaseB - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16, 20} + 28*n。对于载频小于或等于3 GHz的情况，n&#x3D;0。对于载频大于3 GHz且小于或等于6 GHz的情况，n&#x3D;0,1。</li>
+<li>Case C - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} + 14*n。对于载频小于或等于3 GHz的情况，n&#x3D;0,1。对于载频大于3 GHz且小于或等于6 GHz的情况，n&#x3D;0,1,2,3。</li>
+<li>Case D - 120 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16, 20} + 28*n。对于载频大于6 GHz的情况，n&#x3D;0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16, 17, 18。</li>
+<li>Case E - 240 kHz子载波间隔：候选SSB的第一个符号的索引为{8, 12, 16, 20, 32, 36, 40, 44} + 56*n。对于载频对于6 GHz的情况，n&#x3D;0, 1, 2, 3, 5, 6, 7, 8。</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101842369.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101923796.png" alt="mark"></p>
+<p>半帧中的候选SSB索引在时间上从0到$ L-1 $升序编号。在PBCH中发送的DM-RS序列的索引与每半帧中的SSB索引形成一一映射，若$ L&#x3D;4 $，则UE应从DM-RS序列索引中确定半帧中SSB索引的2个低有效位；若$ L&gt;4 $，则UE应从DM-RS索引中确定半帧中SSB索引的3个低有效位。若$ L&#x3D;64 $，UE应从高层参数 <em>SSB-index-explicit</em> 确定每半帧中的SSB索引的3个高有效位。</p>
+<p>UE可以通过参数 <em>SSB-transmitted-SIB1</em> 得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。UE也可以通过高层参数 <em>SSB-transmitted</em> 按照每个服务小区得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。 <em>SSB-transmitted</em> 的配置覆盖 <em>SSB-transmitted-SIB1</em> 的配置。UE可以通过高层参数 <em>SSB-timing</em> 为每个服务小区配置用于接收每个服务小区的SSB的半帧的周期。如果UE没有配置接收SSB的半帧的周期，则UE将假定周期为半帧。UE应该假定服务小区中的所有SSB的周期是相同的。</p>
+<p>对于初始小区选择，UE可假定具有SSB的半帧以2个帧为周期。</p>
+<p>对于没有发送SSB的服务小区，UE基于服务小区的小区群的PCell或PSCell上的SSB的接收来获取与服务小区的时间和频率同步。</p>
+<blockquote>
+<p>本文参考3GPP TS38.211 V2.0.0 (2017-12)</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/" title="5G SSB与小区搜索">https://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+              <a href="/tags/2017-12/" rel="tag"># 2017-12</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/12/25/polar-code-24-brief-summary/" rel="prev" title="Polar Code（24）小结">
+                  <i class="fa fa-chevron-left"></i> Polar Code（24）小结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/12/29/nr-v200-l1-prach/" rel="next" title="5G PRACH与随机接入">
+                  5G PRACH与随机接入 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"45152471f932add5c237dca0e020f213"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。 文献[1]首先揭示了极化码合成信道（synthesized channels）之间的偏序（Partial Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1 #86次会议上，华为提出了用极化权重（Polarization Weight">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（20）Beta-expansion">
+<meta property="og:url" content="https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="前言高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。 文献[1]首先揭示了极化码合成信道（synthesized channels）之间的偏序（Partial Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1 #86次会议上，华为提出了用极化权重（Polarization Weight">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181904087.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181329970.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182022400.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182147280.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/183636666.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184231335.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184439317.png">
+<meta property="article:published_time" content="2017-09-19T09:20:30.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:52:11.239Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181904087.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/","path":"2017/09/19/polar-code-20-beta-expansion/","title":"Polar Code（20）Beta-expansion"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（20）Beta-expansion | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E7%A0%81%E7%AD%96%E7%95%A5"><span class="nav-number">2.1.</span> <span class="nav-text">极化码策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%81%8F%E5%BA%8F%EF%BC%88UPO%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">通用偏序（UPO）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UPO%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">3.</span> <span class="nav-text">UPO的性质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%CE%B2-expansion%EF%BC%9APW%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">β-expansion：PW算法原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AWGN%E4%BF%A1%E9%81%93%E4%B8%8B%E7%9A%84%E5%BF%AB%E9%80%9F%E6%9E%84%E9%80%A0"><span class="nav-number">5.</span> <span class="nav-text">AWGN信道下的快速构造</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%90%E8%BF%9B%E6%80%A7%E5%88%86%E6%9E%90%E4%B8%8E%E6%95%B0%E5%80%BC%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="nav-number">6.</span> <span class="nav-text">渐进性分析与数值仿真结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Polar Code（20）Beta-expansion | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（20）Beta-expansion
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-09-19 17:20:30" itemprop="dateCreated datePublished" datetime="2017-09-19T17:20:30+08:00">2017-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:52:11" itemprop="dateModified" datetime="2018-10-21T13:52:11+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/><strong>高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。</strong></p>
+<p>文献[1]首先揭示了极化码合成信道（synthesized channels）之间的偏序（Partial Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1 #86次会议上，华为提出了用极化权重（Polarization Weight，PW）来表征AWGN信道下极化码合成信道可靠性的算法[2]。这两项独立的研究似乎不谋而合，促使华为进一步进行理论扩展，追求AWGN信道下极化码的快速构造方法。这就是本博文所要介绍的β-expansion[3]。</p>
+<p>文献[3]首先介绍了通用偏序（Universal Partial Order，UPO）的两个重要性质：嵌套和对称。这两个性质是能够采用递归方式构造极化码序列的基础。然后介绍了PW方法，其中β参数需要慎重地选择，其值的大小直接决定了合成信道的顺序。最后用大量的篇幅论证了β的最佳取值为1.1892，即$\beta &#x3D;{ {2}^{ {1}&#x2F;{4};}}$。无论是渐进性分析，还是数值仿真结果都证实β-expansion方法以低复杂度获得了与GA相同的性能。</p>
+<span id="more"></span>
+
+<h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><h2 id="极化码策略"><a href="#极化码策略" class="headerlink" title="极化码策略"></a>极化码策略</h2><p><br/><strong>策略：</strong>将信息比特放置于好的信道位置上，将冻结比特放置于差的信道位置上。</p>
+<p><strong>关键：</strong>如何有效地识别信道位置的好坏并按可靠性排序，是极化码序列构造的关键。</p>
+<p><strong>不幸：</strong>有效地序列构造仅存在于二进制删除信道（BEC）上。</p>
+<p><strong>挑战：</strong>5G无线通信系统要求极化码至少能够适用于AWGN信道。</p>
+<p><strong>已有方法：</strong>高斯近似（GA）。</p>
+<p><strong>已有方法缺点：</strong>GA的缺点是计算量大，其计算量随着码块长度成比例增加，这对于码长和码率变化的实际系统是不可接受的。不仅如此，对于低延迟的编译码器，也无法实现在线地处理。</p>
+<h2 id="通用偏序（UPO）"><a href="#通用偏序（UPO）" class="headerlink" title="通用偏序（UPO）"></a>通用偏序（UPO）</h2><p><br/>文献[1]证明了任意二进制输入对称信道下的可靠性测量存在偏序（Partial Order）关系。给定一对合成信道索引$\left( x,y \right)$，它们的可靠性关系取决于下列规则：</p>
+<p><strong>Addition：</strong>若一个合成信道索引用二进制表示为$\left( a,b,1,c \right)$，那么它的可靠性一定大于合成信道$\left( a,b,0,c \right)$。$’’1\succ 0’’$模式对于1比特或多比特同样适用。例如：</p>
+<p>2（0, 1 ,0） $\prec $ 3（0, 1, 1）</p>
+<p>9（1, 0, 0, 1） $\prec $ 15（1, 1, 1, 1）</p>
+<p>在此例中（1, 0, 0, 1）是合成信道索引9的二进制表示。</p>
+<p><strong>Left-swap：</strong>若合成信道索引为$\left( a,0,b,1,c \right)$，那么它的可靠性一定小于合成信道$\left( a,1,b,0,c \right)$。$’’0…1\prec 1…0’’$模式可以出现多次，并且0,1不需要彼此相邻。例如：</p>
+<p>2（0, 1 ,0） $\prec $ 4（1, 0, 0）</p>
+<p>12（0, 1, 1, 0, 0） $\prec $ 24（1, 1, 0, 0, 0）</p>
+<p>但这两个规则也不是万能的，对于某些索引对$\left( x,y \right)$则无能为力。Addition、Left-swap或它们的联合都不能确定顺序。例如：</p>
+<p>3（0, 1, 1）and 4（1, 0, 0）</p>
+<p>7（0, 1, 1, 1）and 12（1, 1, 0, 0）</p>
+<p>我们称这些序对于UPO是<strong>未知的</strong>。</p>
+<h1 id="UPO的性质"><a href="#UPO的性质" class="headerlink" title="UPO的性质"></a>UPO的性质</h1><p><br/><strong>Proposition 1.</strong> （嵌套和对称）极化码通用偏序有两个重要性质：</p>
+<p><strong>嵌套：</strong>码长为$N$的序可在码长为$2N$的序中保持不变。</p>
+<p><strong>对称：</strong>在码长为$N$的极化码中，$x\prec y$的序和$\left( N-1-x \right)\prec \left( N-1-y \right)$的序对称。</p>
+<p>现在讨论UPO的递归结构。定义$\mathbf{UP}{ {\mathbf{O}}_{n}}$为极化码码长$N$的偏序关系$x\prec y$的最小集合，其中$x\prec y$记为$\left{ x,y \right}$，$x,y$是$\left[ 0,N-1 \right]$内的整数。关系链$x\prec y\prec z$可以用若干子链表示最临近节点之间的关系，即$x\prec y$和$y\prec z$。例如：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181904087.png" alt="mark"></p>
+<p>其中$\mathbf{UP}{ {\mathbf{O}}<em>{n}}$中黑色字体的序来源于它的上一级$\mathbf{UP}{ {\mathbf{O}}</em>{n-1}}$，对应于Proposition 1的<strong>嵌套性质</strong>；蓝色字体的序表示与黑色字体的序对称的部分，对应于Proposition 1的<strong>对称性质</strong>；红色字体的序表示从$\mathbf{UP}{ {\mathbf{O}}<em>{n-1}}$到$\mathbf{UP}{ {\mathbf{O}}</em>{n}}$构造过程中出现的新序，这些新出现的序对于UPO来说是<strong>未知的</strong>。</p>
+<h1 id="β-expansion：PW算法原理"><a href="#β-expansion：PW算法原理" class="headerlink" title="β-expansion：PW算法原理"></a>β-expansion：PW算法原理</h1><p><br/><strong>定义：（PW 算法）</strong>考虑一个合成信道索引$x$，其$n$比特二进制扩展为$B&#x3D;\left( { {b}<em>{n-1}},…,{ {b}</em>{1}},{ {b}_{0}} \right)$，最左边为最高有效位。极化权重定义为</p>
+<p>$$\begin{align}<br>{ {f}^{PW}}:x\mapsto \sum\limits_{i&#x3D;1}^{n}{ { {b}_{i}}{ {\beta }^{i}}}<br>\end{align}$$</p>
+<p>其中$\beta $的值需要慎重选择。文献[2]建议$\beta &#x3D;{ {2}^{ {1}&#x2F;{4};}}$。</p>
+<p>在数学上，这种表示方法被称为β-expansion，是十进制扩展的推广，可以看作是对于任意实数$y$的基于β的非整数表示。</p>
+<p><strong>例1：</strong>令$\beta &#x3D;{ {2}^{ {1}&#x2F;{4};}}$，极化码码长为$N&#x3D;{ {2}^{n}}&#x3D;16$。则对于合成信道索引3，即${ {B}_{3}}&#x3D;\left( 0,0,1,1 \right)$，其β-expansion可计算为</p>
+<p>$${ {w}_{3}}&#x3D;0\cdot { {2}^{ {3}&#x2F;{4};}}+0\cdot { {2}^{ {2}&#x2F;{4};}}+1\cdot { {2}^{ {1}&#x2F;{4};}}+1\cdot { {2}^{ {0}&#x2F;{4};}}&#x3D;2.189\cdot \cdot \cdot $$</p>
+<p>同理，我们可以写出所有合成信道的β-expansion</p>
+<p>$$\begin{align}<br>  \nonumber &amp; w&#x3D;\left{ \begin{matrix}<br>   0.000 &amp; 1.000 &amp; 1.189 &amp; 2.189 &amp; 1.414 &amp; 2.414 &amp; 2.603 &amp; 3.603  \<br>\end{matrix} \right. \<br> \nonumber &amp; \ \ \ \ \ \ \ \left. \begin{matrix}<br>   1.682 &amp; 2.682 &amp; 2.871 &amp; 3.871 &amp; 3.096 &amp; 4.096 &amp; 4.285 &amp; 5.285  \<br>\end{matrix} \right} \<br>\end{align}$$</p>
+<p>${ {w}_{x}}$值越大表示合成信道索引$x$的可靠性越高。将$w$按可靠性增序排列，就得到了极化码序列</p>
+<p>$$order&#x3D;\left{ \begin{matrix}<br>   0 &amp; 1 &amp; 2 &amp; 4 &amp; 8 &amp; 3 &amp; 5 &amp; 6 &amp; 9 &amp; 10 &amp; 12 &amp; 7 &amp; 11 &amp; 13 &amp; 14 &amp; 15  \<br>\end{matrix} \right}$$</p>
+<p><strong>PW算法的优点是，对合成信道可靠性，提供了一种简洁、低复杂度的全排列算法，并且当码长${ {2}^{n}}$从$n&#x3D;1$到$n\to +\infty $增加时，能够始终保持一种嵌套性质。</strong></p>
+<p>**Proposition 2. **（嵌套结构）PW算法维持了极化码的嵌套码构造的特性。</p>
+<p><strong>Proposition 3.</strong> 当$\beta &gt;1$，任何由PW算法得到的序列都遵循极化码的通用偏序（UPO）关系。</p>
+<p><strong>Theorem 1.</strong> 对于长度为${ {2}^{n}}\left( n\ge 3 \right)$的极化码，存在一个升序集合${ {A}<em>{n}}&#x3D;\left{ { {a}</em>{0}},{ {a}<em>{1}},{ {a}</em>{2}},…,{ {a}<em>{ { {i}</em>{\max }}}},+\infty  \right}$，其中${ {a}<em>{0}}&#x3D;1$和${ {a}</em>{1}},{ {a}<em>{2}},…,{ {a}</em>{ { {i}<em>{\max }}}}$都是代数。任意$\beta $落入区间$\left( { {a}</em>{i}},{ {a}<em>{i+1}} \right),\forall i\ge 0$内，β-expansion都是唯一的，并且$\beta $落入不同区间可导致不同的顺序序列。此外，集合${ {A}</em>{n}}$是嵌套的，即${ {A}<em>{n}}\subset { {A}</em>{n+1}}$。</p>
+<blockquote>
+<p>Marshall：通过上述Proposition和Theorem，初步地把β-expansion和偏序建立起联系，β-expansion获得了偏序的理论支撑。两者的共性在于，它们都具有嵌套结构。然而$\beta $的值究竟取何值呢？这还需要在具体的用例中去分析和确定。</p>
+</blockquote>
+<h1 id="AWGN信道下的快速构造"><a href="#AWGN信道下的快速构造" class="headerlink" title="AWGN信道下的快速构造"></a>AWGN信道下的快速构造</h1><p><br/>现在UPO已经成为极化码序列构造的基础，而极化码序列的构造决定了合成信道的可靠性顺序。但UPO无法做到对整个序列进行全排列，正如在UPO的性质一节所看到的，从$\mathbf{UP}{ {\mathbf{O}}<em>{n-1}}$到$\mathbf{UP}{ {\mathbf{O}}</em>{n}}$的构造中，总会有一些新的序是UPO无法判断的。而高斯近似虽然能够对整个序列进行全排序，但由于其高复杂度而不适用于实际应用。为了克服两者的缺点，本节呈现了一种基于UPO和β-expansion的快速构造方法。</p>
+<blockquote>
+<p>Marshall：根据高斯近似的结果，一步一步缩小$\beta $的取值范围，最终的序列不仅满足UPO性质，而且与高斯近似的结果保持一致。换句话说，没有条件，就去创造条件。</p>
+</blockquote>
+<p>解释一下为什么$\beta $的取值会影响序列顺序，如图1所示。</p>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181329970.png" title="图 1 $\beta $-expansion嵌套结构，$\beta ={ {2}^{ {1}/{4}\;}}$，$N=2,4,8,16$ "/>
+
+<p>根据定理1，是默认为$\beta &gt;1$，所以今后只考虑$\beta &gt;1$。</p>
+<p>当$n&#x3D;3$时，只有一对未定关系，即$\left( \beta +1,{ {\beta }^{2}} \right)$。为了区分它们的关系，需要多项式方式${ {x}^{2}}-x-1&#x3D;0$，取其大于1的根为$x&#x3D;\frac{1+\sqrt{5}}{2}&#x3D;1.618$，因此升序集合为</p>
+<p>$${ {A}_{3}}&#x3D;\left{ 1,1.618,+\infty  \right}$$</p>
+<p>当$\beta \in \left( 1,1.618 \right)$时，有$\beta +1&gt;{ {\beta }^{2}}$，则相应的序列为</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182022400.png" alt="mark"></p>
+<p>当$\beta \in \left( 1.618,+\infty  \right)$时，有$\beta +1&lt;{ {\beta }^{2}}$，则相应的序列为</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182147280.png" alt="mark"></p>
+<p>这就是定理1所说的，当$\beta $落入${ {A}_{3}}$的任意区间内，β-expansion是唯一的，且导致不同的顺序序列。</p>
+<p>当$n&#x3D;4$时，有4对未定关系，包括之前提到的$\left( \beta +1,{ {\beta }^{2}} \right)$及其两个等价形式，即</p>
+<p>$$\begin{align}<br>  \nonumber &amp; \left( \beta +1,{ {\beta }^{2}} \right),\left( { {\beta }^{2}}+\beta ,{ {\beta }^{3}} \right),\left( { {\beta }^{2}}+\beta ,{ {\beta }^{3}} \right) \<br> \nonumber &amp; \left( \beta +1,{ {\beta }^{3}} \right),\left( { {\beta }^{2}}+1,{ {\beta }^{3}} \right),\left( { {\beta }^{2}}+\beta +1,{ {\beta }^{3}} \right) \<br>\end{align}$$</p>
+<p>为了区分它们的关系，需要求解4个多项式方程</p>
+<p>$$\begin{align}<br>{ {x}^{3}}-{ {x}^{2}}-x-1&#x3D;0<br>\end{align}$$</p>
+<p>$$\begin{align}<br>{ {x}^{3}}-{ {x}^{2}}-1&#x3D;0<br>\end{align}$$</p>
+<p>$$\begin{align}<br>{ {x}^{2}}-x-1&#x3D;0<br>\end{align}$$</p>
+<p>$$\begin{align}<br>{ {x}^{3}}-x-1&#x3D;0<br>\end{align}$$</p>
+<p>得到</p>
+<p>$${ {A}_{4}}&#x3D;\left{ 1,1.325,1.466,1.618,1.839,+\infty  \right}$$</p>
+<p>其中1.325,1.466,1.618,1.839分别是多项式方程（2~5）的根。</p>
+<p>$\beta $分别落入${ {A}_{4}}$的5段子区间内，将导致5种不同的序，如图2所示。</p>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/183636666.png" title="图 2 极化码的$\beta $-expansion，$N=16$"/>
+
+<p>$\beta $取哪个值？此时高斯近似法开始派上用场。对于码长$N&#x3D;{ {2}^{4}}&#x3D;16$，$n&#x3D;4$的极化码，AWGN信道下，高斯近似法对合成信道索引的排序为</p>
+<p>$$\begin{align}<br>  \nonumber &amp; 0\to 1\to 2\to 4\to 8\to 3\to 5\to 6\to 9 \<br>  \nonumber &amp; \to 10\to 12\to 7\to 11\to 13\to 14\to 15 \<br>\end{align}$$</p>
+<p>将这个序与图2对比，发现当$\beta \in \left( 1,1.325 \right)$时，两个序一致。</p>
+<p>由此，我们将$\beta $的取值范围由$n&#x3D;3$时的$\left( 1,1.618 \right)$缩小到$n&#x3D;4$时的$\left( 1,1.325 \right)$。</p>
+<p>进一步，当$n&#x3D;5$时，有5对未定关系，即$\left( 28,15 \right),\left( 14,19 \right),\left( 24,13 \right),\left( 24,11 \right),\left( 24,7 \right)$。根据高斯近似的可靠性结果，呈现出与$\beta $的对应关系</p>
+<p>$$\begin{align}<br>  \nonumber &amp; 28\prec 15,\ 24\prec 11\Leftrightarrow \beta &lt;1.221 \<br> \nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 14\prec 19\Leftrightarrow \beta &lt;1.325 \<br> \nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 24\prec 13\Leftrightarrow \beta &lt;1.272 \<br>\end{align}$$</p>
+<p>对于序$\left{ 7,24 \right}$，虽然依赖于SNR的可靠性结果为$7\succ 24$，但大量仿真结果表明$7\prec 24$具有更好的性能。因此选择</p>
+<p>$$7\prec 24\Leftrightarrow \beta &gt;1.179$$</p>
+<p>此时，$\beta $的取值范围进一步缩小到$\left( 1.179,1.221 \right)$。</p>
+<p>对于$n&gt;5$（$N&gt;32$）的情况，继续重复这一搜索过程，得到如下表中所示的结果。随着$N$的增加，$\beta $的取值范围不断缩小，并接近于$1.1892\approx { {2}^{ {1}&#x2F;{4};}}$。新的序对小于合成信道总数的20%。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184231335.png" alt="mark"></p>
+<h1 id="渐进性分析与数值仿真结果"><a href="#渐进性分析与数值仿真结果" class="headerlink" title="渐进性分析与数值仿真结果"></a>渐进性分析与数值仿真结果</h1><p><br/>β-expansion可以转化为贝努力卷积（Bernoulli Convolution）概念。贝努力卷积定义了概率测度</p>
+<p>$${ {v}<em>{\lambda }}&#x3D;\sum\limits</em>{i&#x3D;1}^{+\infty }{ { {b}_{i}}}{ {\beta }^{i}}$$</p>
+<p>假设$B&#x3D;\left( …,{ {b}<em>{1}},{ {b}</em>{0}} \right)$是二进制独立随机序列，满足</p>
+<p>$$\Pr \left{ { {b}<em>{i}}&#x3D;1 \right}&#x3D;\Pr \left{ { {b}</em>{i}}&#x3D;0 \right}&#x3D;0.5,\forall i$$</p>
+<p>测度${ {v}<em>{\lambda }}$要么是绝对连续的，要么是奇异的。我们需要的正是${ {v}</em>{\lambda }}$的绝对连续，使得在无限长的序列上能够进行全排列。令$\beta &#x3D;{ {2}^{ {1}&#x2F;{k};}}$，已经证明当$k&#x3D;4$时，即$\beta \text{&#x3D;}1.1892$时，满足绝对连续的必要条件。这与上表中的观察一致。</p>
+<p>图3则从仿真结果上表明β-expansion与高斯近似的性能相同。</p>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184439317.png" title="图 3 Comparison of PW algorithm with β= 1.1892 and Gaussian approximation for different block-length N (code length in number of code bits). Simulation assumptions are: BLER = 0.001, QPSK modulation, AWGN channel, successive cancellation list (SCL) decoder with list size 8 and extra 19-bit CRC."/>
+
+<p>至此，从理论分析到仿真结果，充分论证了β-expansion算法的可行性和优越性。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><br/>[1] C. Schurch, “A partial Order for the Synthesized Channels of a Polar Code, ISIT 2016.<br>[2] 3GPP, R1-167209, Polar code design and rate matching, Huawei, HiSilicon.<br>[3] β-expansion A Theoretical Framework for Fast and Recursive Construction of Polar Codes, Huawei.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/" title="Polar Code（20）Beta-expansion">https://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/11/nr-v100-l1-index/" rel="prev" title="5G-NR物理层协议v1.0.0">
+                  <i class="fa fa-chevron-left"></i> 5G-NR物理层协议v1.0.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/10/20/polar-code-21-3gpp-ran1-90/" rel="next" title="Polar Code（21）3GPP RAN1#90">
+                  Polar Code（21）3GPP RAN1#90 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"1b33a484e449e03a2825380e0d1312f8"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

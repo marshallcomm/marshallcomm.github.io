@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Marshall注：本博文重点关注了与polar code相关的比特级处理。  物理信道映射上行下行通用流程来自MAC层&#x2F;向MAC层输出的数据和控制流经过编&#x2F;解码，通过无线传输链路提供传输和控制服务。信道编码方案是错误检测、错误纠正、速率匹配、交织以及传输信道或控制信息向物理信道映射&#x2F;从物理信道到传输信道控制信息解析或分离的组合方案。 CRC计算CRC计算单元的输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G-NR复用与信道编码v1.0.0">
+<meta property="og:url" content="https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="Marshall注：本博文重点关注了与polar code相关的比特级处理。  物理信道映射上行下行通用流程来自MAC层&#x2F;向MAC层输出的数据和控制流经过编&#x2F;解码，通过无线传输链路提供传输和控制服务。信道编码方案是错误检测、错误纠正、速率匹配、交织以及传输信道或控制信息向物理信道映射&#x2F;从物理信道到传输信道控制信息解析或分离的组合方案。 CRC计算CRC计算单元的输入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224129593.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224305482.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224439978.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224919697.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/225102168.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/225628499.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230721744.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230838961.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230901215.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230923898.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230947989.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/083917955.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084010857.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084158930.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084308555.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084452223.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084546055.png">
+<meta property="article:published_time" content="2017-09-10T14:23:31.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:45:40.573Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="2017-09">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224129593.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/","path":"2017/09/10/nr-v100-l1-multiplexing-coding/","title":"5G-NR复用与信道编码v1.0.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G-NR复用与信道编码v1.0.0 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93%E6%98%A0%E5%B0%84"><span class="nav-number">1.</span> <span class="nav-text">物理信道映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">上行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">下行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">通用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CRC%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.</span> <span class="nav-text">CRC计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A0%81%E5%9D%97%E5%88%86%E6%AE%B5%E5%92%8CCRC%E6%B7%BB%E5%8A%A0"><span class="nav-number">2.2.</span> <span class="nav-text">码块分段和CRC添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LDPC%E7%A0%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">LDPC码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">信道编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Polar-coding"><span class="nav-number">2.3.1.</span> <span class="nav-text">Polar coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LDPC%E7%A0%81-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">LDPC码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D"><span class="nav-number">2.4.</span> <span class="nav-text">速率匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#polar-code%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D"><span class="nav-number">2.4.1.</span> <span class="nav-text">polar code速率匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E5%9D%97%E4%BA%A4%E7%BB%87"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">子块交织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E9%80%89%E6%8B%A9"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">比特选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E4%BA%A4%E7%BB%87"><span class="nav-number">2.4.1.3.</span> <span class="nav-text">比特交织</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LDPC-code%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D"><span class="nav-number">2.4.2.</span> <span class="nav-text">LDPC code速率匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A0%81%E5%9D%97%E7%BA%A7%E8%81%94"><span class="nav-number">2.5.</span> <span class="nav-text">码块级联</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E4%BC%A0%E8%BE%93%E4%BF%A1%E9%81%93%E5%92%8C%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">上行传输信道和控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93"><span class="nav-number">3.1.</span> <span class="nav-text">随机接入信道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">3.2.</span> <span class="nav-text">上行共享信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%9D%97CRC%E6%B7%BB%E5%8A%A0"><span class="nav-number">3.2.1.</span> <span class="nav-text">传输块CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A0%81%E5%9D%97%E5%88%86%E6%AE%B5%E5%8F%8ACRC%E6%B7%BB%E5%8A%A0"><span class="nav-number">3.2.2.</span> <span class="nav-text">码块分段及CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UL-SCH%E7%9A%84%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">3.2.3.</span> <span class="nav-text">UL-SCH的信道编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-1"><span class="nav-number">3.2.4.</span> <span class="nav-text">速率匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A0%81%E5%9D%97%E7%BA%A7%E8%81%94-1"><span class="nav-number">3.2.5.</span> <span class="nav-text">码块级联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%92%8C%E6%8E%A7%E5%88%B6%E5%A4%8D%E7%94%A8"><span class="nav-number">3.2.6.</span> <span class="nav-text">数据和控制复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E4%BA%A4%E7%BB%87"><span class="nav-number">3.2.7.</span> <span class="nav-text">信道交织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.</span> <span class="nav-text">上行控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PUCCH%E4%B8%8A%E7%9A%84%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.1.</span> <span class="nav-text">PUCCH上的控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UCI%E6%AF%94%E7%89%B9%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">UCI比特序列生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CRC%E6%B7%BB%E5%8A%A0"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">CRC添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UCI%E7%9A%84%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">UCI的信道编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-2"><span class="nav-number">3.3.1.4.</span> <span class="nav-text">速率匹配</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PUSCH%E4%B8%8A%E7%9A%84%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.3.2.</span> <span class="nav-text">PUSCH上的控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UCI%E6%AF%94%E7%89%B9%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-1"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">UCI比特序列生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CRC%E6%B7%BB%E5%8A%A0-1"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">CRC添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UCI%E7%9A%84%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81-1"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">UCI的信道编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-3"><span class="nav-number">3.3.2.4.</span> <span class="nav-text">速率匹配</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E4%BC%A0%E8%BE%93%E5%92%8C%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">4.</span> <span class="nav-text">下行传输和控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%BF%E6%92%AD%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">广播信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%9D%97CRC%E6%B7%BB%E5%8A%A0-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">传输块CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81-1"><span class="nav-number">4.1.2.</span> <span class="nav-text">信道编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-4"><span class="nav-number">4.1.3.</span> <span class="nav-text">速率匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93%E5%92%8C%E5%AF%BB%E5%91%BC%E4%BF%A1%E9%81%93"><span class="nav-number">4.2.</span> <span class="nav-text">下行共享信道和寻呼信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%9D%97CRC%E6%B7%BB%E5%8A%A0-2"><span class="nav-number">4.2.1.</span> <span class="nav-text">传输块CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A0%81%E5%9D%97%E5%88%86%E6%AE%B5%E5%8F%8ACRC%E6%B7%BB%E5%8A%A0-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">码块分段及CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81-2"><span class="nav-number">4.2.3.</span> <span class="nav-text">信道编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-5"><span class="nav-number">4.2.4.</span> <span class="nav-text">速率匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">4.3.</span> <span class="nav-text">下行控制信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCI%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.3.1.</span> <span class="nav-text">DCI格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRC%E6%B7%BB%E5%8A%A0-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">CRC添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81-3"><span class="nav-number">4.3.3.</span> <span class="nav-text">信道编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87%E5%8C%B9%E9%85%8D-6"><span class="nav-number">4.3.4.</span> <span class="nav-text">速率匹配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="5G-NR复用与信道编码v1.0.0 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G-NR复用与信道编码v1.0.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-09-10 22:23:31" itemprop="dateCreated datePublished" datetime="2017-09-10T22:23:31+08:00">2017-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:45:40" itemprop="dateModified" datetime="2018-10-21T13:45:40+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>Marshall注：本博文重点关注了与polar code相关的比特级处理。</p>
+</blockquote>
+<h1 id="物理信道映射"><a href="#物理信道映射" class="headerlink" title="物理信道映射"></a>物理信道映射</h1><h2 id="上行"><a href="#上行" class="headerlink" title="上行"></a>上行</h2><h2 id="下行"><a href="#下行" class="headerlink" title="下行"></a>下行</h2><h1 id="通用流程"><a href="#通用流程" class="headerlink" title="通用流程"></a>通用流程</h1><p><br/>来自MAC层&#x2F;向MAC层输出的数据和控制流经过编&#x2F;解码，通过无线传输链路提供传输和控制服务。信道编码方案是错误检测、错误纠正、速率匹配、交织以及传输信道或控制信息向物理信道映射&#x2F;从物理信道到传输信道控制信息解析或分离的组合方案。</p>
+<h2 id="CRC计算"><a href="#CRC计算" class="headerlink" title="CRC计算"></a>CRC计算</h2><p><br/>CRC计算单元的输入比特为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，奇偶校验比特为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $。$ A $是输入序列的长度，$ L $是校验比特数目。校验比特由下列循环生成多项式之一产生：</p>
+<ul>
+<li>$ { {g}_{\text{CRC24A}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{18}}+{ {D}^{17}}+{ {D}^{14}}+{ {D}^{11}}+{ {D}^{10}}+{ {D}^{7}}+{ {D}^{6}}+{ {D}^{5}}+{ {D}^{4}}+{ {D}^{3}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
+<li>$ { {g}_{\text{CRC24B}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{6}}+{ {D}^{5}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
+<li>$ { {g}_{\text{CRC24C}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{21}}+{ {D}^{20}}+{ {D}^{17}}+{ {D}^{15}}+{ {D}^{13}}+{ {D}^{12}}+{ {D}^{8}}+{ {D}^{4}}+{ {D}^{2}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
+<li>$ { {g}_{\text{CRC16}}}\left( D \right)&#x3D;[{ {D}^{16}}+{ {D}^{12}}+{ {D}^{5}}+D+1] $，CRC长度$ L&#x3D;16 $</li>
+</ul>
+<span id="more"></span>
+
+<p>编码以系统方式进行，这意味着在二元域GF（2）中，多项式：</p>
+<p>$$ { {a}<em>{0}}{ {D}^{A+L-1}}+{ {a}</em>{1}}{ {D}^{A+L-2}}+…+{ {a}<em>{A-1}}{ {D}^{L}}+{ {p}</em>{0}}{ {D}^{L-1}}+{ {p}<em>{1}}{ {D}^{L-2}}+…+{ {p}</em>{L-2}}{ {D}^{1}}+{ {p}_{L-1}} $$</p>
+<p>除以相应的CRC生成多项式时，余数等于0。</p>
+<p>添加CRC之后的比特序列表示为$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}<em>{B-1}} $，其中$ { {b}</em>{0}},{ {b}<em>{1}},{ {b}</em>{2}},{ {b}<em>{3}},…,{ {b}</em>{B-1}} $。$ { {a}<em>{k}} $和$ { {b}</em>{k}} $的关系如下：</p>
+<p>$ { {b}<em>{k}}&#x3D;{ {a}</em>{k}} $，对于$ k&#x3D;0,1,2,…,A-1 $</p>
+<p>$ { {b}<em>{k}}&#x3D;{ {p}</em>{k-A}} $，对于$ k&#x3D;A,A+1,A+2,…,A+L-1 $</p>
+<h2 id="码块分段和CRC添加"><a href="#码块分段和CRC添加" class="headerlink" title="码块分段和CRC添加"></a>码块分段和CRC添加</h2><h3 id="LDPC码"><a href="#LDPC码" class="headerlink" title="LDPC码"></a>LDPC码</h3><p><br/>码块分段单元的输入序列为$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}<em>{B-1}} $，其中$ B&gt;0 $]。如果$ B $大于最大码块大小$ { {K}</em>{\text{cb}}} $，则输入序列要进行分段操作，并且每个分段后的码块要添加一个$ L&#x3D;24 $的CRC序列。最大码块大小为：</p>
+<ul>
+<li>$ { {K}_{\text{cb}}}&#x3D;8448 $。</li>
+</ul>
+<p>码块总数C根据以下方法计算得到：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224129593.png" alt="mark"></p>
+<p>当$ C\ne 0 $时，码块分段的输出比特为$ { {c}<em>{r0}},{ {c}</em>{r1}},{ {c}<em>{r2}},{ {c}</em>{r3}},…,{ {c}<em>{r\left( { {K}</em>{r}}-1 \right)}} $，其中$ 0\le r&lt;C $为码块号，$ { {K}_{r}} $是码块$r$中的比特数。</p>
+<p>每个码块中的比特数为（仅适用于$ C\ne 0 $的情况）：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224305482.png" alt="mark"></p>
+<blockquote>
+<p>注：蓝色高亮部分是华为批注：K+ and K_ are kept for now. May update after TBS is finalized.</p>
+</blockquote>
+<p>在Table 5.3.2-1中所有列举的集合中找到Z的最小值，表示为$ { {Z}<em>{c}} $。$ { {K}</em>{b}}\cdot { {Z}<em>{c}}\ge { {K}</em>{+}} $且对于LDPC BG#1有$ K&#x3D;22{ {Z}<em>{c}} $，对于LDPC BG#2有$ K&#x3D;10{ {Z}</em>{c}} $。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224439978.png" alt="mark"></p>
+<h2 id="信道编码"><a href="#信道编码" class="headerlink" title="信道编码"></a>信道编码</h2><h3 id="Polar-coding"><a href="#Polar-coding" class="headerlink" title="Polar coding"></a>Polar coding</h3><p><br/>对于给定的码块，信道编码器的输入序列为$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}<em>{K-1}} $，其中$ K $是编码器的输入比特数。编码后的比特序列表示为$ { {d}</em>{0}},{ {d}<em>{1}},{ {d}</em>{2}},…,{ {d}_{N-1}} $，其中$ N&#x3D;{ {2}^{n}} $并且$n$的值由下列方法决定： </p>
+<p>$ E $表示速率匹配输出序列长度，由2.4.1节给出；</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/224919697.png" alt="mark"></p>
+<p>比特序列$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}<em>{K-1}} $采用下列方法被交织成比特序列$ c</em>{0}^{‘},c_{1}^{‘},c_{2}^{‘},c_{3}^{‘},…,c_{K-1}^{‘} $:</p>
+<p>$ { { {c}’}<em>{k}}&#x3D;{ {c}</em>{\Pi \left( k \right)}} $，$ k&#x3D;0,1,…,K-1 $</p>
+<p>其中交织pattern $ \Pi \left( k \right) $由下列方法确定：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/225102168.png" alt="mark"></p>
+<p>其中$ \Pi <em>{IL}^{\max }\left( m \right) $由Table 5.3.1-1和$ K</em>{IL}^{\max } $给定。</p>
+<blockquote>
+<p>华为批注：The value of $ K_{IL}^{\max } $ equals to Kmax &#x3D; max(140, max DCI payload size in Rel-15 + 20) + 24. The value of  $ K_{IL}^{\max } $ should be the number of elements in Table 5.3.1-1, in the end. According to the current Tabel 5.3.1-1, $ K_{IL}^{\max }&#x3D;224 $.</p>
+</blockquote>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/225628499.png" alt="mark"></p>
+<blockquote>
+<p>华为批注：Contents of this table will be updated. Current working assumption is the pattern for nFAR&#x3D;21 in R1-1712167.</p>
+</blockquote>
+<p>Polar序列$ \mathbf{Q}<em>{0}^{ { {N}</em>{\max }}-1}&#x3D;\left{ Q_{0}^{ { {N}<em>{\max }}},Q</em>{1}^{ { {N}<em>{\max }}},…,Q</em>{ { {N}<em>{\max }}-1}^{ { {N}</em>{\max }}} \right} $由Table5.3.1-2给定，其中$ 0\le Q_{i}^{ { {N}<em>{\max }}}\le { {N}</em>{\max }}-1 $表示Polar编码前的一个比特索引，其中$ i&#x3D;0,1,…,N-1 $，$ { {N}<em>{\max }}&#x3D;1024 $。Polar序列$ \mathbf{Q}</em>{0}^{ { {N}<em>{\max }}-1} $按可靠性升序排列$ W\left( Q</em>{0}^{ { {N}<em>{\max }}} \right)&lt;W\left( Q</em>{1}^{ { {N}<em>{\max }}} \right)&lt;…&lt;W\left( Q</em>{ { {N}<em>{\max }}-1}^{ { {N}</em>{\max }}} \right) $，其中$ W\left( Q_{i}^{ { {N}<em>{\max }}} \right) $表示比特索引$ Q</em>{i}^{ { {N}_{\max }}} $的可靠性。</p>
+<p>对任意码块编码为$ N $比特，都使用相同的Polar序列$ \mathbf{Q}<em>{0}^{N-1}&#x3D;\left{ Q</em>{0}^{N},Q_{1}^{N},Q_{2}^{N},…,Q_{N-1}^{N} \right} $。Polar序列$ \mathbf{Q}<em>{0}^{N-1} $是Polar序列$ \mathbf{Q}</em>{0}^{ { {N}<em>{\max }}-1} $的子集，即值小于$ N $的所有$ Q</em>{i}^{ { {N}<em>{\max }}} $元素，并且按可靠性升序排列$ W\left( Q</em>{0}^{N} \right)&lt;W\left( Q_{1}^{N} \right)&lt;W\left( Q_{2}^{N} \right)&lt;…&lt;W\left( Q_{N-1}^{N} \right) $。</p>
+<p>$ \mathbf{\bar{Q}}<em>{I}^{N} $是Polar序列$ \mathbf{Q}</em>{0}^{N-1} $中的一组比特索引，$ \mathbf{\bar{Q}}<em>{F}^{N} $是Polar序列$ \mathbf{Q}</em>{0}^{N-1} $中其他比特的索引，其中$ \mathbf{\bar{Q}}<em>{I}^{N} $和$ \mathbf{\bar{Q}}</em>{F}^{N} $由2.4.1.1节给定，$ \left| \mathbf{\bar{Q}}<em>{I}^{N} \right|&#x3D;K+{ {n}</em>{PC}} $，$ \left| \mathbf{\bar{Q}}<em>{F}^{N} \right|&#x3D;N-\left| \mathbf{\bar{Q}}</em>{I}^{N} \right| $，$ { {n}_{PC}} $是奇偶校验比特数。</p>
+<p>$ { {\mathbf{G}}<em>{N}}&#x3D;{ {\left( { {\mathbf{G}}</em>{2}} \right)}^{\otimes n}} $表示矩阵$ { {\mathbf{G}}<em>{2}} $的$n$次克罗内克积，其中$ { {\mathbf{G}}</em>{2}}&#x3D;\left[ \begin{matrix}<br>   1 &amp; 0  \<br>   1 &amp; 1  \<br>\end{matrix} \right] $。</p>
+<p>$ { {\mathbf{g}}<em>{j}} $表示矩阵$ { {\mathbf{G}}</em>{N}} $的第$ j $行，比特索引$ j&#x3D;0,1,…,N-1 $。$ w\left( { {\mathbf{g}}<em>{j}} \right) $表示$ { {\mathbf{g}}</em>{j}} $的行重，即$ { {\mathbf{g}}<em>{j}} $中1的个数。奇偶校验比特的索引集合表示为$ \mathbf{Q}</em>{PC}^{N} $，其中$ \left| \mathbf{Q}<em>{PC}^{N} \right|&#x3D;{ {n}</em>{PC}} $。$ \left( { {n}<em>{PC}}-n</em>{PC}^{wm} \right) $个奇偶校验比特位于$ \mathbf{\bar{Q}}<em>{I}^{N} $中的$ \left( { {n}</em>{PC}}-n_{PC}^{wm} \right) $个最不可靠的比特索引。其他$ n_{PC}^{wm} $个奇偶校验比特位于$ \mathbf{\tilde{Q}}<em>{I}^{N} $中行重最小的比特索引，其中$ \mathbf{\tilde{Q}}</em>{I}^{N} $表示$ \mathbf{\bar{Q}}<em>{I}^{N} $中$ \left( \left| \mathbf{\bar{Q}}</em>{I}^{N} \right|-{ {n}<em>{PC}} \right) $个最可靠的比特索引；如果$ \mathbf{\tilde{Q}}</em>{I}^{N} $中具有相同最小行重的比特索引大于$ n_{PC}^{wm} $，则其他$ n_{PC}^{wm} $个奇偶校验比特位于$ \mathbf{\tilde{Q}}<em>{I}^{N} $中可靠性最高且行重最小的$ n</em>{PC}^{wm} $个比特索引。</p>
+<p>根据下列方法生成序列$ \mathbf{u}&#x3D;\left[ { {u}<em>{0}}\text{ }{ {u}</em>{1}}\text{ }{ {u}<em>{2}}\text{ }…\text{ }{ {u}</em>{N-1}} \right] $：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230721744.png" alt="mark"></p>
+<blockquote>
+<p>注：粉色部分为华为批注：Need further agreements on how to set the values for frozen bits.</p>
+</blockquote>
+<p>通过$ \mathbf{d}&#x3D;\mathbf{u}{ {\mathbf{G}}<em>{n}} $编码器得到输出序列，表示为$ \mathbf{d}&#x3D;\left[ { {d}</em>{0}}\text{ }{ {d}<em>{1}}\text{ }{ {d}</em>{2}}\text{ }…\text{ }{ {d}_{N-1}} \right] $。编码在二元域GF（2）进行。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230838961.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230901215.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230923898.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/230947989.png" alt="mark"></p>
+<h3 id="LDPC码-1"><a href="#LDPC码-1" class="headerlink" title="LDPC码"></a>LDPC码</h3><h2 id="速率匹配"><a href="#速率匹配" class="headerlink" title="速率匹配"></a>速率匹配</h2><p><br/>Polar code速率匹配包括子块交织、比特收集和比特交织。速率匹配的输入序列为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},…,{ {d}</em>{N-1}} $，输出序列表示为$ { {f}<em>{0}},{ {f}</em>{1}},{ {f}<em>{2}},…,{ {f}</em>{E-1}} $。</p>
+<h3 id="polar-code速率匹配"><a href="#polar-code速率匹配" class="headerlink" title="polar code速率匹配"></a>polar code速率匹配</h3><h4 id="子块交织"><a href="#子块交织" class="headerlink" title="子块交织"></a>子块交织</h4><p><br/>编码比特$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},…,{ {d}</em>{N-1}} $就是子块交织器的输入比特。编码比特$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},…,{ {d}</em>{N-1}} $被分为32个子块。子块交织器的输出比特为$ { {y}<em>{0}},{ {y}</em>{1}},{ {y}<em>{2}},…,{ {y}</em>{N-1}} $，用以下方式生成：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/083917955.png" alt="mark"></p>
+<p>其中子块交织pattern $ P\left( i \right) $由Table 5.4.1.1-1给定。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084010857.png" alt="mark"></p>
+<p>比特索引集合$ \mathbf{\bar{Q}}<em>{I}^{N} $和$ \mathbf{\bar{Q}}</em>{F}^{N} $由下列方法确定，其中$ K $，$ { {n}<em>{PC}} $和$ \mathbf{Q}</em>{0}^{N-1} $由2.3.1节定义：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084158930.png" alt="mark"></p>
+<h4 id="比特选择"><a href="#比特选择" class="headerlink" title="比特选择"></a>比特选择</h4><p><br/>$E$表示速率匹配输出序列的长度，速率匹配输出序列为$ { {e}_{k}} $，$ k&#x3D;0,1,2,…,E-1 $由以下方法产生：</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084308555.png" alt="mark"></p>
+<h4 id="比特交织"><a href="#比特交织" class="headerlink" title="比特交织"></a>比特交织</h4><p><br/>比特序列$ { {e}<em>{0}},{ {e}</em>{1}},{ {e}<em>{2}},…,{ {e}</em>{E-1}} $通过以下方法被交织为比特序列$ { {f}<em>{0}},{ {f}</em>{1}},{ {f}<em>{2}},…,{ {f}</em>{E-1}} $：</p>
+<p>$ T $表示满足$ T\left( T+1 \right)&#x2F;2\ge E $的最小整数；</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084452223.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/084546055.png" alt="mark"></p>
+<h3 id="LDPC-code速率匹配"><a href="#LDPC-code速率匹配" class="headerlink" title="LDPC code速率匹配"></a>LDPC code速率匹配</h3><h2 id="码块级联"><a href="#码块级联" class="headerlink" title="码块级联"></a>码块级联</h2><h1 id="上行传输信道和控制信息"><a href="#上行传输信道和控制信息" class="headerlink" title="上行传输信道和控制信息"></a>上行传输信道和控制信息</h1><h2 id="随机接入信道"><a href="#随机接入信道" class="headerlink" title="随机接入信道"></a>随机接入信道</h2><h2 id="上行共享信道"><a href="#上行共享信道" class="headerlink" title="上行共享信道"></a>上行共享信道</h2><h3 id="传输块CRC添加"><a href="#传输块CRC添加" class="headerlink" title="传输块CRC添加"></a>传输块CRC添加</h3><p><br/>每个上行共享信道（UL-SCH）传输块都通过一个CRC来提供错误检测。</p>
+<p>使用整个传输块来计算CRC校验比特。送到L1的一个传输块的比特表示为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，校验比特为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $，其中$A$是传输块大小，$L$是校验比特数。按照TS 38.321规范中的定义，最低顺序信息比特$ { {a}_{0}} $被映射到最高有效位。</p>
+<p>校验比特按照2.1节的描述进行计算并添加到UL-SCH传输块中，若$ A&gt;3824 $则设置$L$为24比特，使用生成多项式$ { {g}<em>{\text{CRC24A}}}\left( D \right) $；否则设置$ L $为16比特，使用生成多项式$ { {g}</em>{\text{CRC16}}}\left( D \right) $。</p>
+<h3 id="码块分段及CRC添加"><a href="#码块分段及CRC添加" class="headerlink" title="码块分段及CRC添加"></a>码块分段及CRC添加</h3><p><br/>码块分段的输入比特流记为$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}_{B-1}} $，其中$B$表示传输块的比特数目（包含CRC）。</p>
+<p>码块分段及CRC添加根据2.2.1节中描述进行。</p>
+<p>码块分段之后的比特流记为$ { {c}<em>{r0}},{ {c}</em>{r1}},{ {c}<em>{r2}},{ {c}</em>{r3}},…,{ {c}<em>{r\left( { {K}</em>{r}}-1 \right)}} $，其中$ r $是码块号，$ { {K}_{r}} $是码块$ r $的比特数。</p>
+<h3 id="UL-SCH的信道编码"><a href="#UL-SCH的信道编码" class="headerlink" title="UL-SCH的信道编码"></a>UL-SCH的信道编码</h3><p><br/>码块比特流送至信道编码模块。码块中的比特表示为$ { {c}<em>{r0}},{ {c}</em>{r1}},{ {c}<em>{r2}},{ {c}</em>{r3}},…,{ {c}<em>{r\left( { {K}</em>{r}}-1 \right)}} $，其中$r$是码块号，$ { {K}_{r}} $是码块$ r $的比特数。码块的总数表示为$ C $，每个码块根据2.3.2节的描述独立地进行LDPC编码。</p>
+<p>编码之后的比特流表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},…,{ {d}</em>{N-1}} $，其中对于LDPC BG#1，有$ N&#x3D;66{ {Z}<em>{c}} $；对于LDPC BG#2，有$ N&#x3D;50{ {Z}</em>{c}} $。$ { {Z}_{c}} $的值由2.2.1节给定。</p>
+<h3 id="速率匹配-1"><a href="#速率匹配-1" class="headerlink" title="速率匹配"></a>速率匹配</h3><h3 id="码块级联-1"><a href="#码块级联-1" class="headerlink" title="码块级联"></a>码块级联</h3><h3 id="数据和控制复用"><a href="#数据和控制复用" class="headerlink" title="数据和控制复用"></a>数据和控制复用</h3><h3 id="信道交织"><a href="#信道交织" class="headerlink" title="信道交织"></a>信道交织</h3><h2 id="上行控制信息"><a href="#上行控制信息" class="headerlink" title="上行控制信息"></a>上行控制信息</h2><h3 id="PUCCH上的控制信息"><a href="#PUCCH上的控制信息" class="headerlink" title="PUCCH上的控制信息"></a>PUCCH上的控制信息</h3><h4 id="UCI比特序列生成"><a href="#UCI比特序列生成" class="headerlink" title="UCI比特序列生成"></a>UCI比特序列生成</h4><blockquote>
+<p>[Editor notes: This section will capture how to generate the UCI bit stream $ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}_{A-1}} $.]</p>
+</blockquote>
+<h4 id="CRC添加"><a href="#CRC添加" class="headerlink" title="CRC添加"></a>CRC添加</h4><p><br/>如果UCI负载大小$ A\ge { {A}<em>{0}} $，整个负载都用于计算CRC校验比特。负载比特表示为$ { {a}</em>{0}},{ {a}<em>{1}},{ {a}</em>{2}},{ {a}<em>{3}},…,{ {a}</em>{A-1}} $，校验比特表示为$ { {p}<em>{0}},{ {p}</em>{1}},{ {p}<em>{2}},{ {p}</em>{3}},…,{ {p}_{L-1}} $，其中$A$是UCI负载大小，$L$是校验比特数。</p>
+<blockquote>
+<p>华为注：$ { {A}_{0}} $的值有待进一步确定。</p>
+</blockquote>
+<p>校验比特按照2.1节的描述进行计算并添加，并设置$ L $为X比特，得到添加CRC后的比特序列$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}_{B-1}} $，其中$ B&#x3D;A+L $。</p>
+<blockquote>
+<p>对于X的值，华为注：Depending on further agreements, different CRC lengths may be applied for different payload sizes.</p>
+</blockquote>
+<blockquote>
+<p>[Editor notes: need to define the relationship between $ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}<em>{B-1}} $ and $ { {c}</em>{0}},{ {c}<em>{1}},{ {c}</em>{2}},{ {c}<em>{3}},…,{ {c}</em>{K-1}} $.]</p>
+</blockquote>
+<h4 id="UCI的信道编码"><a href="#UCI的信道编码" class="headerlink" title="UCI的信道编码"></a>UCI的信道编码</h4><p><br/>信息比特流送至信道编码模块。信息比特流表示为$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}_{K-1}} $，其中$ K $是比特数。</p>
+<p>如果$ 12\le K\le 22 $，则信息比特根据2.3.1节通过Polar进行编码，若$ E-K&gt;192 $，则设置$ { {n}<em>{\max }}&#x3D;10 $，$ { {I}</em>{IL}}&#x3D;0 $，$ { {n}<em>{PC}}&#x3D;3 $，$ n</em>{PC}^{wm}&#x3D;1 $；<br>若$ E-K\le 192 $，则设置$ n_{PC}^{wm}&#x3D;0 $，其中$E$是由3.3.1.4节给定的速率匹配输出序列长度。 </p>
+<blockquote>
+<p>关于$ 12\le K\le 22 $，华为批注：Need to capture the agreements for K &lt; 12 in the future.</p>
+</blockquote>
+<p>如果$ K&gt;22 $，则信息比特根据2.3.1节通过Polar进行编码，设置$ { {n}<em>{\max }}&#x3D;10 $，$ { {I}</em>{IL}}&#x3D;0 $，$ { {n}<em>{PC}}&#x3D;0 $，$ n</em>{PC}^{wm}&#x3D;0 $。</p>
+<p>编码之后的比特流表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},{ {d}</em>{3}},…,{ {d}_{N-1}} $，其中$N$是编码比特数。</p>
+<h4 id="速率匹配-2"><a href="#速率匹配-2" class="headerlink" title="速率匹配"></a>速率匹配</h4><h3 id="PUSCH上的控制信息"><a href="#PUSCH上的控制信息" class="headerlink" title="PUSCH上的控制信息"></a>PUSCH上的控制信息</h3><h4 id="UCI比特序列生成-1"><a href="#UCI比特序列生成-1" class="headerlink" title="UCI比特序列生成"></a>UCI比特序列生成</h4><blockquote>
+<p>[Editor notes: This section will capture how to generate the UCI bit stream $ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}_{A-1}} $.]</p>
+</blockquote>
+<h4 id="CRC添加-1"><a href="#CRC添加-1" class="headerlink" title="CRC添加"></a>CRC添加</h4><p><br/>如果UCI负载大小$ A\ge { {A}<em>{0}} $，整个负载都用于计算CRC校验比特。负载比特表示为$ { {a}</em>{0}},{ {a}<em>{1}},{ {a}</em>{2}},{ {a}<em>{3}},…,{ {a}</em>{A-1}} $，校验比特表示为$ { {p}<em>{0}},{ {p}</em>{1}},{ {p}<em>{2}},{ {p}</em>{3}},…,{ {p}_{L-1}} $，其中$A$是UCI负载大小，$L$是校验比特数。</p>
+<blockquote>
+<p>华为注：$ { {A}_{0}} $的值有待进一步确定。</p>
+</blockquote>
+<p>校验比特按照2.1节的描述进行计算并添加，并设置$L$为X比特，得到添加CRC后的比特序列$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}_{B-1}} $，其中$ B&#x3D;A+L $。</p>
+<blockquote>
+<p>对于X的值，华为注：Depending on further agreements, different CRC lengths may be applied for different payload sizes.</p>
+</blockquote>
+<blockquote>
+<p>[Editor notes: need to define the relationship between $ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}<em>{B-1}} $ and $ { {c}</em>{0}},{ {c}<em>{1}},{ {c}</em>{2}},{ {c}<em>{3}},…,{ {c}</em>{K-1}} $.]</p>
+</blockquote>
+<h4 id="UCI的信道编码-1"><a href="#UCI的信道编码-1" class="headerlink" title="UCI的信道编码"></a>UCI的信道编码</h4><p><br/>信息比特流送至信道编码模块。信息比特流表示为$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}_{K-1}} $，其中$ K $是比特数。</p>
+<p>如果$ 12\le K\le 22 $，则信息比特根据2.3.1节通过Polar进行编码，若$ E-K&gt;192 $，则设置$ { {n}<em>{\max }}&#x3D;10 $，$ { {I}</em>{IL}}&#x3D;0 $，$ { {n}<em>{PC}}&#x3D;3 $，$ n</em>{PC}^{wm}&#x3D;1 $；若$ E-K\le 192 $，则设置$ n_{PC}^{wm}&#x3D;0 $，其中$E$是由3.3.2.4节给定的速率匹配输出序列长度。 </p>
+<blockquote>
+<p>关于$ 12\le K\le 22 $，华为批注：Need to capture the agreements for K &lt; 12 in the future.</p>
+</blockquote>
+<p>如果$ K&gt;22 $，则信息比特根据2.3.1节通过Polar进行编码，设置$ { {n}<em>{\max }}&#x3D;10 $，$ { {I}</em>{IL}}&#x3D;0 $，$ { {n}<em>{PC}}&#x3D;0 $，$ n</em>{PC}^{wm}&#x3D;0 $。</p>
+<p>编码之后的比特流表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},{ {d}</em>{3}},…,{ {d}_{N-1}} $，其中$N$是编码比特数。</p>
+<h4 id="速率匹配-3"><a href="#速率匹配-3" class="headerlink" title="速率匹配"></a>速率匹配</h4><h1 id="下行传输和控制信息"><a href="#下行传输和控制信息" class="headerlink" title="下行传输和控制信息"></a>下行传输和控制信息</h1><h2 id="广播信息"><a href="#广播信息" class="headerlink" title="广播信息"></a>广播信息</h2><p><br/>Figure 7.1-1给出了BCH传输信道的处理结构。到达编码单元的数据，每80ms最多有一个传输块，其编码流程如下：</p>
+<ul>
+<li><pre><code>向传输块添加CRC
+</code></pre>
+<ul>
+<li><pre><code>信道编码
+</code></pre>
+<ul>
+<li><pre><code>速率匹配
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>华为批注：Will add the figure later.</p>
+</blockquote>
+<h3 id="传输块CRC添加-1"><a href="#传输块CRC添加-1" class="headerlink" title="传输块CRC添加"></a>传输块CRC添加</h3><p><br/>BCH传输块都通过CRC来进行错误检测。</p>
+<p>使用整个传输块来计算CRC校验比特。（*华为批注：This sentence may be updated depending on further agreements, e.g. if some PBCH payload bits are not used to generate CRC bits.*）送到L1的一个传输块的比特表示为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，校验比特为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $，其中$A$是传输块大小，$L$是校验比特数。按照TS 38.321规范中的定义，最低顺序信息比特$ { {a}_{0}} $被映射到最高有效位。</p>
+<p>校验比特按照2.1节的描述进行计算并添加到BCH传输块中，设置$ L $为24比特，使用生成多项式$ { {g}<em>{\text{CRC24C}}}\left( D \right) $，得到添加CRC后的序列为$ { {b}</em>{0}},{ {b}<em>{1}},{ {b}</em>{2}},{ {b}<em>{3}},…,{ {b}</em>{B-1}} $，其中$ B&#x3D;A+L $。</p>
+<blockquote>
+<p>[Editor notes: need to define the relationship between   and  , pending on further agreements.]</p>
+</blockquote>
+<h3 id="信道编码-1"><a href="#信道编码-1" class="headerlink" title="信道编码"></a>信道编码</h3><p><br/>信息比特送至信道编码模块。信息比特表示为$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}<em>{K-1}} $，其中$K$为比特数。它们根据2.3.1节进行Polar编码，设置$ { {n}</em>{\max }}&#x3D;9 $，$ { {I}<em>{IL}}&#x3D;1 $，$ { {n}</em>{PC}}&#x3D;0 $，$ n_{PC}^{wm}&#x3D;0 $。</p>
+<p>编码之后的比特序列表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},{ {d}</em>{3}},…,{ {d}_{N-1}} $，其中$N$为编码比特数。</p>
+<h3 id="速率匹配-4"><a href="#速率匹配-4" class="headerlink" title="速率匹配"></a>速率匹配</h3><h2 id="下行共享信道和寻呼信道"><a href="#下行共享信道和寻呼信道" class="headerlink" title="下行共享信道和寻呼信道"></a>下行共享信道和寻呼信道</h2><h3 id="传输块CRC添加-2"><a href="#传输块CRC添加-2" class="headerlink" title="传输块CRC添加"></a>传输块CRC添加</h3><p><br/>每个传输块都通过CRC来进行错误检测。</p>
+<p>使用整个传输块来计算CRC校验比特。送到L1的一个传输块的比特表示为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，校验比特为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $，其中$A$是传输块大小，$L$是校验比特数。按照TS 38.321规范中的定义，最低顺序信息比特$ { {a}_{0}} $被映射到最高有效位。</p>
+<p>校验比特按照2.1节的描述进行计算并添加到UL-SCH传输块中，若$ A&gt;3824 $，则设置$ L $为24比特，使用生成多项式$ { {g}<em>{\text{CRC24A}}}\left( D \right) $；否则设置$ L $为16比特，使用生成多项式$ { {g}</em>{\text{CRC16}}}\left( D \right) $。</p>
+<h3 id="码块分段及CRC添加-1"><a href="#码块分段及CRC添加-1" class="headerlink" title="码块分段及CRC添加"></a>码块分段及CRC添加</h3><p><br/>码块分段的输入比特流记为$ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}_{B-1}} $，其中$ B $表示传输块的比特数目（包含CRC）。</p>
+<p>码块分段及CRC添加根据2.2.1节中描述进行。</p>
+<p>码块分段之后的比特流记为$ { {c}<em>{r0}},{ {c}</em>{r1}},{ {c}<em>{r2}},{ {c}</em>{r3}},…,{ {c}<em>{r\left( { {K}</em>{r}}-1 \right)}} $，其中$r$是码块号，$ { {K}_{r}} $是码块$r$的比特数。</p>
+<h3 id="信道编码-2"><a href="#信道编码-2" class="headerlink" title="信道编码"></a>信道编码</h3><p><br/>码块比特流送至信道编码模块。码块中的比特表示为$ { {c}<em>{r0}},{ {c}</em>{r1}},{ {c}<em>{r2}},{ {c}</em>{r3}},…,{ {c}<em>{r\left( { {K}</em>{r}}-1 \right)}} $，其中$r$是码块号，$ { {K}_{r}} $是码块$r$的比特数。码块的总数表示为$ C $，每个码块根据2.3.2节的描述独立地进行LDPC编码。</p>
+<p>编码之后的比特流表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},…,{ {d}</em>{N-1}} $，其中对于LDPC BG#1，有$ N&#x3D;66{ {Z}<em>{c}} $；对于LDPC BG#2，有$ N&#x3D;50{ {Z}</em>{c}} $。$ { {Z}_{c}} $的值由2.2.1节给定。</p>
+<h3 id="速率匹配-5"><a href="#速率匹配-5" class="headerlink" title="速率匹配"></a>速率匹配</h3><h2 id="下行控制信息"><a href="#下行控制信息" class="headerlink" title="下行控制信息"></a>下行控制信息</h2><p><br/>DCI传输下行和上行调度信息，对非周期CQI报告的请求，或对一个小区和RNTI的上行功率控制命令。</p>
+<blockquote>
+<p>华为批注：This sentence will be updated later, pending on other agreed usages of DCI.</p>
+</blockquote>
+<p>Figure 7.3-1给出了DCI的处理结构。编码流程如下：</p>
+<ul>
+<li><pre><code>信息单元复用
+</code></pre>
+<ul>
+<li><pre><code>CRC添加
+</code></pre>
+<ul>
+<li><pre><code>信道编码
+</code></pre>
+<ul>
+<li><pre><code>速率匹配
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>华为批注：Will add the figure later.</p>
+</blockquote>
+<h3 id="DCI格式"><a href="#DCI格式" class="headerlink" title="DCI格式"></a>DCI格式</h3><h3 id="CRC添加-2"><a href="#CRC添加-2" class="headerlink" title="CRC添加"></a>CRC添加</h3><p><br/>DCI传输通过CRC进行错误检测。</p>
+<p>使用整个DCI负载计算CRC校验比特。DCI负载比特表示为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，校验比特表示为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $，其中$ A $为DCI负载比特大小，$ L $为校验比特数。</p>
+<p>校验比特按照2.1节的描述进行计算并添加，并设置$L$为24比特，使用生成多项式$ { {g}<em>{\text{CRC24C}}}\left( D \right) $，得到添加CRC后的比特序列$ { {b}</em>{0}},{ {b}<em>{1}},{ {b}</em>{2}},{ {b}<em>{3}},…,{ {b}</em>{B-1}} $，其中$ B&#x3D;A+L $。</p>
+<blockquote>
+<p>[Editor notes: need to define the relationship between $ { {b}<em>{0}},{ {b}</em>{1}},{ {b}<em>{2}},{ {b}</em>{3}},…,{ {b}<em>{B-1}} $ and $ { {c}</em>{0}},{ {c}<em>{1}},{ {c}</em>{2}},{ {c}<em>{3}},…,{ {c}</em>{K-1}} $, pending on further agreements.]</p>
+</blockquote>
+<h3 id="信道编码-3"><a href="#信道编码-3" class="headerlink" title="信道编码"></a>信道编码</h3><p><br/>信息比特送至信道编码模块。信息比特表示为$ { {c}<em>{0}},{ {c}</em>{1}},{ {c}<em>{2}},{ {c}</em>{3}},…,{ {c}<em>{K-1}} $，其中$ K $是信息比特数，它们根据2.3.1节进行Polar编码，并设置$ { {n}</em>{\max }}&#x3D;9 $，$ { {I}<em>{IL}}&#x3D;1 $，$ { {n}</em>{PC}}&#x3D;0 $，$ n_{PC}^{wm}&#x3D;0 $。</p>
+<p>编码之后的比特序列表示为$ { {d}<em>{0}},{ {d}</em>{1}},{ {d}<em>{2}},{ {d}</em>{3}},…,{ {d}_{N-1}} $，其中$N$为编码比特数。</p>
+<h3 id="速率匹配-6"><a href="#速率匹配-6" class="headerlink" title="速率匹配"></a>速率匹配</h3><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a><br><a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a><br><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/" title="5G-NR复用与信道编码v1.0.0">https://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/2017-09/" rel="tag"># 2017-09</a>
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/09/nr-v100-l1-channel-modulation-dl/" rel="prev" title="5G-NR物理信道与调制-下行链路v1.0.0">
+                  <i class="fa fa-chevron-left"></i> 5G-NR物理信道与调制-下行链路v1.0.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/11/nr-v100-l1-procedure-control/" rel="next" title="5G-NR物理层过程（控制）v1.0.0">
+                  5G-NR物理层过程（控制）v1.0.0 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"4dc6a22d93f75ac450ec263d724080f1"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="Polar Code（13）信道极化">
+<meta property="og:url" content="https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170505/114130398.jpg">
+<meta property="article:published_time" content="2017-05-04T08:28:28.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:50:55.092Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="Polar Code">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170505/114130398.jpg">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/","path":"2017/05/04/Polar-Code-13-channel-polarization/","title":"Polar Code（13）信道极化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Polar Code（13）信道极化 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Polar Code（13）信道极化 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polar Code（13）信道极化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-04 16:28:28" itemprop="dateCreated datePublished" datetime="2017-05-04T16:28:28+08:00">2017-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:50:55" itemprop="dateModified" datetime="2018-10-21T13:50:55+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Polar-Code/" itemprop="url" rel="index"><span itemprop="name">Polar Code</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170505/114130398.jpg" title="图 1 信道${W_{4}}$" />
+
+<span id="more"></span>
+
+<p><strong>1、</strong> 信道极化是一种现象，把它看作一种原理，而极化码编码则是对这一原理的应用。理解极化码可以分两部分，一部分是理论，一部分是应用。</p>
+<p><strong>2、</strong> 从图上看，信道极化过程是一目了然的。但从数学上看，信道极化要分两个阶段，第一阶段是信道联合，第二阶段就是信道分裂。信道分裂是信道极化的一部分。</p>
+<p><strong>3、</strong> 信道极化作为一种原理，它也有它的结构。它的结构就是：原本$N$条平行线，互不相交，谁和谁都没有联系，换句话说，是$N$条原始信道的独立副本；经过各种连线、模二加，连来连去，连成了现在的样子；现在是$N$条线彼此都有联系。这个过程就是信道联合，把原本相互独立的$N$条细线扭成一条粗线。</p>
+<p><strong>4、</strong> 信道联合是从宏观的角度观察，把信道极化过程看作一个整体，输入是$N$比特，输出也是$N$比特。经过联合的信道总是以整体的形式表达，如联合信道${ {W}<em>{4}}:{ {X}^{4}}\to { {Y}^{4}}$，以及联合信道的转移概率${ {W}</em>{4}}\left( y_{1}^{4}|u_{1}^{4} \right)$。</p>
+<p><strong>5、</strong> 但只有信道联合是不够的，你无法确知各个子信道的输入和输出是什么关系。这就需要对信道极化过程有一个微观的表达，这个微观表达是通过信道分裂过程来实现的。到信道联合这一步还看不出“极化”的概念，必须经过信道分裂才能体现出极化现象。</p>
+<p><strong>6、</strong> 信道分裂使已经扭成一条粗线的联合信道又重新一条一条地展现在世人面前，就好比两条绳子打结（信道联合），然后再区分出两端谁是谁（信道分裂）。经过分裂的信道总是以单个的形式表达，如分裂子信道$W_{N}^{\left( i \right)}:X\to { {Y}^{N}}\times { {X}^{i-1}}$，以及分裂子信道的转移概率$W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)$。</p>
+<p><strong>7、</strong> 宏观和微观合在一起就构成了对信道极化过程的完整表达。我们的目的不只是观其大概，更要搞清楚各个子信道，求分裂子信道的转移概率。<a href="http://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/">《Polar Code（12）B-DMC对称容量》</a>一文中提到，输入符号概率、输出符号概率和转移概率完整地定义了一种信道。不搞清楚各分裂子信道的转移概率就无法完成对分裂信道的定义。从以下定义式就可以看出联合信道和分裂子信道的关系了：</p>
+<p>$$\begin{align}<br>W_{N}^{\left( i \right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}<em>{i}} \right)\triangleq \sum\limits</em>{u_{i+1}^{N}\in { {X}^{N-i}}}{\frac{1}{ { {2}^{N-1}}}{ {W}<em>{N}}\left( y</em>{1}^{N}|u_{1}^{N} \right)}<br>\end{align}$$</p>
+<p><strong>8、</strong> 但式（1）是不易求的。观察图1，整个信道极化过程恰好是一种递归形式。因此用两个递归式来计算各个分裂子信道的转移概率：</p>
+<p>$$\begin{align}<br>W_{N}^{\left( 2i-1 \right)}\left( y_{1}^{N},u_{1}^{2i-2}|{ {u}<em>{2i-1}} \right)&#x3D;\sum\limits</em>{ { {u}<em>{2i}}}{\frac{1}{2}W</em>{ {N}&#x2F;{2};}^{\left( i \right)}\left( y_{1}^{ {N}&#x2F;{2};},u_{1,o}^{2i-2}\oplus u_{1,e}^{2i-2}|{ {u}<em>{2i-1}}\oplus { {u}</em>{2i}} \right)\cdot W_{ {N}&#x2F;{2};}^{\left( i \right)}\left( y_{ {N}&#x2F;{2};+1}^{N},u_{1,e}^{2i-2}|{ {u}_{2i}} \right)}<br>\end{align}$$</p>
+<p>$$\begin{align}<br>W_{N}^{\left( 2i \right)}\left( y_{1}^{N},u_{1}^{2i-1}|{ {u}<em>{2i}} \right)&#x3D;\frac{1}{2}W</em>{ {N}&#x2F;{2};}^{\left( i \right)}\left( y_{1}^{ {N}&#x2F;{2};},u_{1,o}^{2i-2}\oplus u_{1,e}^{2i-2}|{ {u}<em>{2i-1}}\oplus { {u}</em>{2i}} \right)\cdot W_{ {N}&#x2F;{2};}^{\left( i \right)}\left( y_{ {N}&#x2F;{2};+1}^{N},u_{1,e}^{2i-2}|{ {u}_{2i}} \right)<br>\end{align}$$</p>
+<p><strong>9、</strong> 求得各个分裂子信道的转移概率有什么用？在实际编译码中并没有直接用。当我在3月12日那个时间点上写<a href="http://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">《Polar Code（5）编码之信道转移概率》</a>的时候，认为转移概率是有用的，并且认为在编码端和译码端都会直接使用，至少对于BEC信道计算巴氏参数时会直接使用。但随着研究的深入，尤其在研究了密度进化和高斯近似之后，对此的认识得到了更新：</p>
+<ol>
+<li>转移概率是有用的，但并不直接使用，而是使用两个转移概率的之比的对数，即对数似然比（LLR）;</li>
+<li>高斯近似法令转移概率为服从高斯分布的随机变量，并使用对数似然比，直接规避了计算（2）式和（3）式，所以转移概率的两个式子就沦为了铺路者；</li>
+<li>但式（2~3）的递归形式是十分有用的，译码时计算LLR就利用这种递归形式。</li>
+</ol>
+<p>有关高斯近似详见<a href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">《Polar Code（8）高斯近似》</a>，而<a href="http://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">《Polar Code（5）编码之信道转移概率》</a>通过分析转移概率的计算过程也能更好的理解编码过程。</p>
+<p><strong>10、</strong> 编码。极化码是对信道极化原理的应用。然而编码过程又是基于另一套思路，它沿着线性分组码的编码思路，用生成矩阵的方式产生极化码。而生成矩阵的构造又体现着信道极化的原理，用递归形式来构造生成矩阵。</p>
+<p>书不尽言，言不尽意。以上几点，是我对信道极化的理解。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/" title="Polar Code（13）信道极化">https://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Polar-Code/" rel="tag"># Polar Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/" rel="prev" title="Polar Code（12）B-DMC对称容量">
+                  <i class="fa fa-chevron-left"></i> Polar Code（12）B-DMC对称容量
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/15/polar-code-14-3gpp-ran1-88b/" rel="next" title="Polar Code（14）3GPP RAN1#88bis">
+                  Polar Code（14）3GPP RAN1#88bis <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"c4b9e782eaafbd04ac82e5c2ea8cf2ae"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

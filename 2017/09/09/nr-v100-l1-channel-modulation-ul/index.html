@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="上接《NR物理信道与调制》上行链路 上行链路概述物理信道概述上行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：  物理上行共享信道（PUSCH）   物理上行控制信道（PUCCH）   物理随机接入信道（PRACH）        物理信号概述上行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：  解调参考信号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G-NR物理信道与调制-上行链路v1.0.0">
+<meta property="og:url" content="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="上接《NR物理信道与调制》上行链路 上行链路概述物理信道概述上行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：  物理上行共享信道（PUSCH）   物理上行控制信道（PUCCH）   物理随机接入信道（PRACH）        物理信号概述上行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：  解调参考信号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/172437037.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/180222320.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/180832948.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/190959609.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/191029404.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/191117976.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/192118412.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/192207337.png">
+<meta property="article:published_time" content="2017-09-09T09:16:48.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:45:04.938Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="2017-09">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/172437037.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/","path":"2017/09/09/nr-v100-l1-channel-modulation-ul/","title":"5G-NR物理信道与调制-上行链路v1.0.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G-NR物理信道与调制-上行链路v1.0.0 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">上行链路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">物理信道概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.2.</span> <span class="nav-text">物理信号概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.2.</span> <span class="nav-text">物理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93"><span class="nav-number">1.3.</span> <span class="nav-text">物理信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%B8%8A%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">物理上行共享信道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%82%E6%98%A0%E5%B0%84"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">层映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E9%A2%84%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">变换预编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">预编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E5%88%B0%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">映射到物理资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%B8%8A%E8%A1%8C%E6%8E%A7%E5%88%B6%E4%BF%A1%E9%81%93"><span class="nav-number">1.3.2.</span> <span class="nav-text">物理上行控制信道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PUCCH%E6%A0%BC%E5%BC%8F0"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">PUCCH格式0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E9%80%89%E6%8B%A9"><span class="nav-number">1.3.2.1.1.</span> <span class="nav-text">序列选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E5%88%B0%E8%B5%84%E6%BA%90%E5%85%83%E7%B4%A0"><span class="nav-number">1.3.2.1.2.</span> <span class="nav-text">映射到资源元素</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUCCH%E6%A0%BC%E5%BC%8F1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">PUCCH格式1</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E8%B0%83%E5%88%B6"><span class="nav-number">1.3.2.2.1.</span> <span class="nav-text">序列调制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E5%88%B0%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90-1"><span class="nav-number">1.3.2.2.2.</span> <span class="nav-text">映射到物理资源</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUCCH%E6%A0%BC%E5%BC%8F2"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">PUCCH格式2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUCCH%E6%A0%BC%E5%BC%8F3"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">PUCCH格式3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUCCH%E6%A0%BC%E5%BC%8F4"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">PUCCH格式4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93"><span class="nav-number">1.3.3.</span> <span class="nav-text">物理随机接入信道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E5%88%B0%E7%89%A9%E7%90%86%E5%85%83%E7%B4%A0"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">映射到物理元素</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7"><span class="nav-number">1.4.</span> <span class="nav-text">物理信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7"><span class="nav-number">1.4.1.</span> <span class="nav-text">参考信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E4%BA%8EPUSCH%E7%9A%84DM-RS"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">用于PUSCH的DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-1"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="nav-number">1.4.1.1.2.</span> <span class="nav-text">资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E4%BD%8D%E8%B7%9F%E8%B8%AA%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">相位跟踪参考信号</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-2"><span class="nav-number">1.4.1.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-1"><span class="nav-number">1.4.1.2.2.</span> <span class="nav-text">资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E4%BA%8EPUCCH%E7%9A%84DM-RS"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">用于PUCCH的DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E4%BA%8EPUCCH%E6%A0%BC%E5%BC%8F1%E7%9A%84DM-RS"><span class="nav-number">1.4.1.3.1.</span> <span class="nav-text">用于PUCCH格式1的DM-RS</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A2%E6%B5%8B%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">探测参考信号</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-3"><span class="nav-number">1.4.1.4.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-2"><span class="nav-number">1.4.1.4.2.</span> <span class="nav-text">资源映射</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="5G-NR物理信道与调制-上行链路v1.0.0 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G-NR物理信道与调制-上行链路v1.0.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-09-09 17:16:48" itemprop="dateCreated datePublished" datetime="2017-09-09T17:16:48+08:00">2017-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:45:04" itemprop="dateModified" datetime="2018-10-21T13:45:04+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF">上接《NR物理信道与调制》上行链路</a></p>
+<h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>上行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：</p>
+<ul>
+<li><pre><code>物理上行共享信道（PUSCH）
+</code></pre>
+<ul>
+<li><pre><code>物理上行控制信道（PUCCH）
+</code></pre>
+<ul>
+<li><pre><code>物理随机接入信道（PRACH）
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>上行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：</p>
+<ul>
+<li><pre><code>解调参考信号（Demodulation reference signals，DM-RS）
+</code></pre>
+<ul>
+<li><pre><code>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）
+</code></pre>
+<ul>
+<li><pre><code>探测参考信号（Sounding reference signal，SRS）
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="物理资源"><a href="#物理资源" class="headerlink" title="物理资源"></a>物理资源</h2><p><br/>本规范定义了下列用于上行链路的天线端口：</p>
+<ul>
+<li><pre><code>Antenna ports starting with 1000 for DM-RS associated with PUSCH
+</code></pre>
+<ul>
+<li><pre><code>Antenna ports starting with 2000 for DM-RS associated with PUCCH
+</code></pre>
+<ul>
+<li><pre><code>Antenna ports starting with 3000 for SRS
+</code></pre>
+<ul>
+<li><pre><code>Antenna port 4000 for PRACH
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="物理信道"><a href="#物理信道" class="headerlink" title="物理信道"></a>物理信道</h2><h3 id="物理上行共享信道"><a href="#物理上行共享信道" class="headerlink" title="物理上行共享信道"></a>物理上行共享信道</h3><h4 id="加扰"><a href="#加扰" class="headerlink" title="加扰"></a>加扰</h4><p><br/>对于每个码字$q$，比特块${ {b}^{(q)}}(0),…,{ {b}^{(q)}}(M_{\text{bit}}^{(q)}-1)$应当在调制前被加扰，其中$M_{\text{bit}}^{(q)}$是在物理信道上传输的码字$q$的比特数，加扰后的比特块为${ {\tilde{b}}^{(q)}}(0),…,{ {\tilde{b}}^{(q)}}(M_{\text{bit}}^{\text{(q)}}-1)$。根据如下公式进行加扰</p>
+<p>$${ {\tilde{b}}^{(q)}}(i)&#x3D;\left( { {b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2$$</p>
+<p>其中加扰序列${ {c}^{(q)}}(i)$由2.2节中给定。</p>
+<blockquote>
+<p>注：RAN1还没有正式同意PUSCH加扰部分的内容，3.3.1.1和3.3.1.2节可能需要重新调整。</p>
+</blockquote>
+<h4 id="调制"><a href="#调制" class="headerlink" title="调制"></a>调制</h4><p><br/>对于每个码字$q$，加扰比特块${ {\tilde{b}}^{(q)}}(0),…,{ {\tilde{b}}^{(q)}}(M_{\text{bit}}^{\text{(q)}}-1)$根据Table 6.3.1.2-1中的调制方式进行调制，具体调制方法见2.1节，得到复值调制符号块${ {d}^{(q)}}(0),…,{ {d}^{(q)}}(M_{\text{symb}}^{\text{(q)}}-1)$。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/172437037.png" alt="mark"></p>
+<h4 id="层映射"><a href="#层映射" class="headerlink" title="层映射"></a>层映射</h4><p><br/>每个码字的复值调制符号根据Table 7.3.1.3-1最多映射到4个层。码字$q$ 的复值调制符号${ {d}^{(q)}}(0),…,{ {d}^{(q)}}(M_{\text{symb}}^{\text{(q)}}-1)$被映射到层$x(i)&#x3D;{ {\left[ \begin{matrix}<br>   { {x}^{(0)}}(i) &amp; … &amp; { {x}^{(\upsilon -1)}}(i)  \<br>\end{matrix} \right]}^{T}}$，$i&#x3D;0,1,…,M_{\text{symb}}^{\text{layer}}-1$，其中$\upsilon $是层数，$M_{\text{symb}}^{\text{layer}}$是每层的调制符号数。</p>
+<h4 id="变换预编码"><a href="#变换预编码" class="headerlink" title="变换预编码"></a>变换预编码</h4><p><br/>如果变换预编码（transform precoding）不可用，对于层$\lambda &#x3D;0,1,…,\upsilon -1$有${ {y}^{(\lambda )}}(i)&#x3D;{ {x}^{(\lambda )}}(i)$。</p>
+<p>如果变换预编码可用，$\upsilon &#x3D;1$且复值符号块${ {x}^{(0)}}(0),…,{ {x}^{(0)}}(M_{\text{symb}}^{\text{layer}}-1)$对于单层$\lambda &#x3D;0$被分为${M_{\text{symb}}^{\text{layer}}}&#x2F;{M_{\text{sc}}^{\text{PUSCH}}};$个集合，每个集合对应于一个OFDM符号。变换预编码根据如下公式进行</p>
+<p>$$ \begin{align}<br> \nonumber &amp; { {y}^{(0)}}(l\cdot M_{\text{sc}}^{\text{PUSCH}}+k)&#x3D;\frac{1}{\sqrt{M_{\text{sc}}^{\text{PUSCH}}}}\sum\limits_{i&#x3D;0}^{M_{\text{sc}}^{\text{PUSCH}}-1}{ { {x}^{(0)}}(l\cdot M_{\text{sc}}^{\text{PUSCH}}+i){ {e}^{-j\frac{2\pi ik}{M_{\text{sc}}^{\text{PUSCH}}}}}} \<br> \nonumber &amp; k&#x3D;0,…,M_{\text{sc}}^{\text{PUSCH}}-1 \<br> \nonumber &amp; l&#x3D;0,…,{M_{\text{symb}}^{\text{layer}}}&#x2F;{M_{\text{sc}}^{\text{PUSCH}}};-1<br>\end{align}$$</p>
+<p>得到复值符号块${ {y}^{(0)}}(0),…,{ {y}^{(0)}}(M_{\text{symb}}^{\text{layer}}-1)$。$M_{\text{sc}}^{\text{PUSCH}}&#x3D;M_{\text{RB}}^{\text{PUSCH}}\cdot N_{\text{sc}}^{\text{RB}}$，其中$M_{\text{RB}}^{\text{PUSCH}}$表示PUSCH就RB而言的带宽，并且满足</p>
+<p>$$M_{\text{RB}}^{\text{PUSCH}}&#x3D;{ {2}^{ { {\alpha }<em>{2}}}}\cdot { {3}^{ { {\alpha }</em>{3}}}}\cdot { {5}^{ { {\alpha }<em>{5}}}}\le N</em>{\text{RB}}^{\text{UL}}$$</p>
+<p>其中${ {\alpha }<em>{2}},{ {\alpha }</em>{3}},{ {\alpha }_{5}}$是非负整数集合。</p>
+<h4 id="预编码"><a href="#预编码" class="headerlink" title="预编码"></a>预编码</h4><p><br/>根据如下公式对向量块${ {\left[ \begin{matrix}<br>   { {y}^{(0)}}(i) &amp; … &amp; { {y}^{(\upsilon -1)}}(i)  \<br>\end{matrix} \right]}^{T}}$，$i&#x3D;0,1,…,M_{\text{symb}}^{\text{layer}}-1$进行预编码</p>
+<p>$$\left[ \begin{matrix}<br>   { {z}^{(0)}}(i)  \<br>   \vdots   \<br>   { {z}^{(P-1)}}(i)  \<br>\end{matrix} \right]&#x3D;W\left[ \begin{matrix}<br>   { {y}^{(0)}}(i)  \<br>   \vdots   \<br>   { {y}^{(\upsilon -1)}}(i)  \<br>\end{matrix} \right]$$</p>
+<p>其中$i&#x3D;0,1,…,M_{\text{symb}}^{\text{ap}}-1$，$M_{\text{symb}}^{\text{ap}}&#x3D;M_{\text{symb}}^{\text{layer}}$。</p>
+<p>对基于非码本的传输，预编码矩阵$W$在TS 38.214规范中得到。</p>
+<p>对基于码本的传输，预编码矩阵$W$由Table 6.3.1.5-1给定，其中TPMI索引由调度上行传输的DCI中获得。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/180222320.png" alt="mark"></p>
+<h4 id="映射到物理资源"><a href="#映射到物理资源" class="headerlink" title="映射到物理资源"></a>映射到物理资源</h4><p><br/>为满足TS 38.213规范对PUSCH传输功率${ {P}<em>{\text{PUSCH}}}$的要求，对于PUSCH传输所使用的每个天线端口，复值符号块${ {z}^{(p)}}(0),…,{ {z}^{(p)}}(M</em>{\text{symb}}^{\text{ap}}-1)$应当乘以一个幅值因子${ {\beta }<em>{\text{PUSCH}}}$，然后从${ {z}^{(p)}}(0)$开始依次映射到RE ${ {\left( k,l \right)}</em>{p,\mu }}$上，并且RE满足如下条件：</p>
+<ul>
+<li><pre><code>它们位于用于传输所分配的资源中，且
+</code></pre>
+<ul>
+<li><pre><code>它们不用于DM-RS相关的传输
+</code></pre>
+<ul>
+<li><pre><code>they are not in the OFDM symbols used for transmission of the associated DM-RS in case of transform precoding not enabled.
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>If transform precoding is not enabled, the mapping to resource elements ${ {\left( k,l \right)}<em>{p,\mu }}$ not reserved for other purposes shall be in increasing order of first the antenna port index $p$, then  the index $k$ over the assigned physical resource blocks, and then the index $l$, starting with $l&#x3D;{ {l}</em>{0}}$.（注： ${ {l}_{0}}$ is the start of UL transmission. Need some reference to 213&#x2F;214）</p>
+<h3 id="物理上行控制信道"><a href="#物理上行控制信道" class="headerlink" title="物理上行控制信道"></a>物理上行控制信道</h3><p><br/>PUCCH支持多种格式，如Table 6.3.2-1所示。对于单个UE，支持采用格式0或格式2的2个PUCCH同时传输，或支持采用格式1或格式3的其中一个PUCCH与采用格式0或格式2的其中一个PUCCH同时传输。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/180832948.png" alt="mark"></p>
+<h4 id="PUCCH格式0"><a href="#PUCCH格式0" class="headerlink" title="PUCCH格式0"></a>PUCCH格式0</h4><h5 id="序列选择"><a href="#序列选择" class="headerlink" title="序列选择"></a>序列选择</h5><p><br/>定义一组序列$\left{ \begin{matrix}<br>   { {x}<em>{0}}(n) &amp; { {x}</em>{1}}(n) &amp; { {x}<em>{2}}(n) &amp; { {x}</em>{3}}(n)  \<br>\end{matrix} \right}$，每组序列长度为12。</p>
+<p>比特块$b(0),…,b({ {M}<em>{\text{bit}}}-1)$其中${ {M}</em>{\text{bit}}}\in \left{ 1,2 \right}$是PUCCH传输的比特数，根据下式选择序列</p>
+<p>$$\begin{align}<br> \nonumber &amp; y(n)&#x3D;{ {x}<em>{j}}(n) \<br> \nonumber &amp; j&#x3D;\sum\nolimits</em>{i&#x3D;0}^{ { {M}_{\text{bit}}}-1}{b(i)\cdot { {2}^{i}}}<br>\end{align}$$</p>
+<h5 id="映射到资源元素"><a href="#映射到资源元素" class="headerlink" title="映射到资源元素"></a>映射到资源元素</h5><p><br/>为满足TS 38.213规范对PUCCH传输功率${ {P}<em>{\text{PUCCH,0}}}$的要求，序列$y(n)$应当乘以一个幅值因子${ {\beta }</em>{\text{PUCCH,0}}}$。在天线端口$p&#x3D;2000$，先按$k$，再按$l$的递增顺序从$y(0)$开始映射到RE ${ {\left( k,l \right)}_{p,\mu }}$。</p>
+<h4 id="PUCCH格式1"><a href="#PUCCH格式1" class="headerlink" title="PUCCH格式1"></a>PUCCH格式1</h4><h5 id="序列调制"><a href="#序列调制" class="headerlink" title="序列调制"></a>序列调制</h5><p><br/>比特块$b(0),…,b({ {M}<em>{\text{bit}}}-1)$按照2.1节所述的方法进行调制，若${ {M}</em>{\text{bit}}}&#x3D;1$，则使用BPSK，若${ {M}_{\text{bit}}}&#x3D;2$，则使用QPSK，得到一个复值符号$d(0)$。</p>
+<p>复值符号$d(0)$应根据下式乘以一个序列$r_{u,v}^{({ {\alpha }_{p}})}(n)$</p>
+<p>$${ {y}^{(p)}}(n)&#x3D;d(0)\cdot r_{u,v}^{({ {\alpha }<em>{p}})}(n),\text{          }n&#x3D;0,1,…,N</em>{\text{seq}}^{\text{PUCCH}}-1$$</p>
+<p>复值符号${ {y}^{(p)}}(0),…,{ {y}^{(p)}}(N_{\text{seq}}^{\text{PUCCH}}-1)$应根据下式采用正交序列${ {w}<em>{n</em>{\text{oc}}^{\text{(}p\text{)}}}}(i)$进行块扩展（block-wise spread）</p>
+<p>$${ {z}^{(p)}}\left( m\cdot N_{\text{seq}}^{\text{PUCCH}}+n \right)&#x3D;{ {w}<em>{n</em>{\text{oc}}^{\text{(}p\text{)}}}}(m)\cdot { {y}^{(p)}}\left( n \right)$$</p>
+<p>其中</p>
+<p>$$\begin{align}<br> \nonumber &amp; m&#x3D;0,…,N_{\text{SF}}^{\text{PUCCH}}-1 \<br> \nonumber &amp; n&#x3D;0,…,N_{\text{seq}}^{\text{PUCCH}}-1 \<br>\end{align}$$</p>
+<h5 id="映射到物理资源-1"><a href="#映射到物理资源-1" class="headerlink" title="映射到物理资源"></a>映射到物理资源</h5><p><br/>为满足TS 38.213规范对PUCCH传输功率${ {P}<em>{\text{PUCCH,1}}}$的要求，序列${ {z}^{(p)}}(n)$应当乘以一个幅值因子${ {\beta }</em>{\text{PUCCH,1}}}$，序列从${ {z}^{(p)}}(0)$开始映射到RE ${ {\left( k,l \right)}_{p,\mu }}$，RE满足下列所有条件：</p>
+<ul>
+<li><pre><code>它们位于用于传输的RB中，
+</code></pre>
+<ul>
+<li><pre><code>它们不用于DM-RS相关的传输
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>The mapping to resource elements ${ {\left( k,l \right)}_{p,\mu }}$ not reserved for other purposes shall be in increasing order of first the index $k$ over the assigned physical resource blocks, and then the index $l$. </p>
+<h4 id="PUCCH格式2"><a href="#PUCCH格式2" class="headerlink" title="PUCCH格式2"></a>PUCCH格式2</h4><h4 id="PUCCH格式3"><a href="#PUCCH格式3" class="headerlink" title="PUCCH格式3"></a>PUCCH格式3</h4><h4 id="PUCCH格式4"><a href="#PUCCH格式4" class="headerlink" title="PUCCH格式4"></a>PUCCH格式4</h4><h3 id="物理随机接入信道"><a href="#物理随机接入信道" class="headerlink" title="物理随机接入信道"></a>物理随机接入信道</h3><h4 id="序列生成"><a href="#序列生成" class="headerlink" title="序列生成"></a>序列生成</h4><p><br/>随机接入前导${ {x}_{u,v}}(n)$应根据下式生成</p>
+<p>$$\begin{align}<br> \nonumber &amp; { {x}<em>{u,v}}(n)&#x3D;{ {x}</em>{u}}((n+{ {C}<em>{v}})\bmod { {L}</em>{\text{RA}}}) \<br> \nonumber &amp; { {x}<em>{u}}(i)&#x3D;{ {e}^{-j\frac{\pi ui(i+1)}{ { {L}</em>{\text{RA}}}}}},i&#x3D;0,1,…,{ {L}_{\text{RA}}}-1<br>\end{align}$$</p>
+<p>频域符号表示应根据下式生成</p>
+<p>$${ {y}<em>{u,v}}(n)&#x3D;\sum\limits</em>{m&#x3D;0}^{ { {L}<em>{\text{RA}}}-1}{ { {x}</em>{u,v}}(m)\cdot { {e}^{-j\frac{2\pi mn}{ { {L}_{\text{RA}}}}}}}$$</p>
+<p>其中${ {L}<em>{\text{RA}}}&#x3D;839$或${ {L}</em>{\text{RA}}}&#x3D;[127or139]$根据前导格式确定，前导格式由Tables 6.3.3.1-1和6.3.3.1-2给定。</p>
+<p>循环移位${ {C}_{v}}$给定为</p>
+<p>$$\begin{align}<br>  \nonumber &amp; C{}<em>{v}&#x3D;\left{ \begin{array}{*{35}{l}}<br>   v{ {N}</em>{\text{CS}}} &amp; \text{v}&#x3D;\text{0,1,}…\text{,}\left\lfloor { { {L}<em>{\text{RA}}}}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor -1,{ {N}<em>{\text{CS}}}\ne 0 &amp; \text{for unrestricted sets}  \<br>   \text{0} &amp; { {N}</em>{\text{CS}}}&#x3D;0 &amp; \text{for unrestricted sets}  \<br>   { {d}<em>{\text{start}}}\left\lfloor {v}&#x2F;{n</em>{\text{shift}}^{\text{RA}}}; \right\rfloor +\left( v\bmod n_{\text{shift}}^{\text{RA}} \right){ {N}<em>{\text{CS}}} &amp; v&#x3D;0,1,…,w-1 &amp; \text{for restricted sets type A and B}  \<br>   { { {\bar{\bar{d}}}}</em>{\text{start}}}+\left( v-w \right){ {N}<em>{\text{CS}}} &amp; v&#x3D;w,…,w+\bar{\bar{n}}</em>{\text{shift}}^{\text{RA}}-1 &amp; \text{for restricted sets type B}  \<br>   { { {\bar{\bar{\bar{d}}}}}<em>{\text{start}}}+\left( v-w-\bar{\bar{n}}</em>{\text{shift}}^{\text{RA}} \right){ {N}<em>{\text{CS}}} &amp; v&#x3D;w+\bar{\bar{n}}</em>{\text{shift}}^{\text{RA}},…,w+\bar{\bar{n}}<em>{\text{shift}}^{\text{RA}}+\bar{\bar{\bar{n}}}</em>{\text{shift}}^{\text{RA}}-1 &amp; \text{for restricted sets type B}  \<br>\end{array} \right. \<br> \nonumber &amp; w&#x3D;n_{\text{shift}}^{\text{RA}}n_{\text{group}}^{\text{RA}}+\bar{n}_{\text{shift}}^{\text{RA}}<br>\end{align}$$</p>
+<p>其中${ {N}_{\text{CS}}}$在Table 6.3.3.1-3中给定，高层参数<em>restrictedSetConfig</em>决定了受限集合的类型，6.3.3.1-1和6.3.3.1-2指示了对不同前导格式的受限集合的类型。</p>
+<p>变量${ {d}_{u}}$给定为</p>
+<p>$${ {d}<em>{u}}&#x3D;\left{ \begin{array}{*{35}{l}}<br>   q &amp; 0\le q&lt;{ { {L}</em>{\text{RA}}}}&#x2F;{2};  \<br>   { {L}_{\text{RA}}}-q &amp; \text{otherwise}  \<br>\end{array} \right.$$</p>
+<p>其中$q$是满足$\left( qu \right)\bmod { {L}<em>{\text{RA}}}&#x3D;1$的最小非负整数。循环移位的受限集合参数依赖于${ {d}</em>{u}}$。</p>
+<ul>
+<li>对于${ {N}<em>{\text{CS}}}\le { {d}</em>{u}}&lt;{ { {L}_{\text{RA}}}}&#x2F;{3}; $</li>
+</ul>
+<p>$$ \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}<em>{\text{start}}}&#x3D;2{ {d}</em>{u}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {L}<em>{\text{RA}}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {({ {L}</em>{\text{RA}}}-2{ {d}<em>{u}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}})}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right)<br>\end{align}<br>$$</p>
+<ul>
+<li>对于 ${ { {L}<em>{\text{RA}}}}&#x2F;{3};\le { {d}</em>{u}}\le {({ {L}<em>{\text{RA}}}-{ {N}</em>{\text{CS}}})}&#x2F;{2}; $</li>
+</ul>
+<p>$$ \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {({ {L}<em>{\text{RA}}}-2{ {d}</em>{u}})}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;{ {L}<em>{\text{RA}}}-2{ {d}</em>{u}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\min \left( \max \left( \left\lfloor {({ {d}</em>{u}}-n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}})}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right),n_{\text{shift}}^{\text{RA}} \right)<br>\end{align}<br>$$</p>
+<p>对于受限集合类型B，参数规定为：</p>
+<ul>
+<li>对于$ { {N}<em>{\text{CS}}}\le { {d}</em>{u}}&lt;{ { {L}_{\text{RA}}}}&#x2F;{5}; $</li>
+</ul>
+<p>$$ \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}<em>{\text{start}}}&#x3D;4{ {d}</em>{u}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {L}<em>{\text{RA}}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {({ {L}</em>{\text{RA}}}-4{ {d}<em>{u}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}})}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right)<br>\end{align}<br>$$</p>
+<ul>
+<li>对于$ { { {L}<em>{\text{RA}}}}&#x2F;{5};\le { {d}</em>{u}}\le {\left( { {L}<em>{\text{RA}}}-{ {N}</em>{\text{CS}}} \right)}&#x2F;{\text{4}}; $</li>
+</ul>
+<p>$$<br> \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {\left( { {L}<em>{\text{RA}}}-4{ {d}</em>{u}} \right)}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;{ {L}<em>{\text{RA}}}-4{ {d}</em>{u}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\min \left( \max \left( \left\lfloor {({ {d}</em>{u}}-n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}})}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right),n_{\text{shift}}^{\text{RA}} \right)<br>\end{align}<br>$$</p>
+<ul>
+<li>对于$ {({ {L}<em>{\text{RA}}}+{ {N}</em>{\text{CS}}})}&#x2F;{4};\le { {d}<em>{u}}&lt;{2{ {L}</em>{\text{RA}}}}&#x2F;{7}; $</li>
+</ul>
+<p>$$<br> \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {(4{ {d}<em>{u}}-{ {L}</em>{\text{RA}}})}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;4{ {d}<em>{u}}-{ {L}</em>{\text{RA}}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{d}}}}</em>{\text{start}}}&#x3D;{ {L}<em>{\text{RA}}}-3{ {d}</em>{u}}+n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}}+\bar{n}</em>{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}</em>{\text{start}}}&#x3D;{ {L}<em>{\text{RA}}}-2{ {d}</em>{u}}+n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}}+\bar{\bar{n}}</em>{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {\left( { {L}</em>{\text{RA}}}-3{ {d}<em>{u}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right) \<br> \nonumber &amp; \bar{\bar{n}}<em>{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {\min \left( { {d}</em>{u}}-n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}},4{ {d}</em>{u}}-{ {L}<em>{\text{RA}}}-\bar{n}</em>{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{\bar{\bar{n}}}<em>{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {\left( \left( 1-\min \left( 1,\bar{n}</em>{\text{shift}}^{\text{RA}} \right) \right)\left( { {d}<em>{u}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}} \right)+\min \left( 1,\bar{n}</em>{\text{shift}}^{\text{RA}} \right)\left( 4{ {d}<em>{u}}-{ {L}</em>{\text{RA}}}-\bar{n}<em>{\text{shift}}^{\text{RA}}{ {N}</em>{\text{CS}}} \right) \right)}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor -\bar{\bar{n}}</em>{\text{shift}}^{\text{RA}}<br>\end{align}<br>$$</p>
+<ul>
+<li>对于$ {2{ {L}<em>{\text{RA}}}}&#x2F;{7};\le { {d}</em>{u}}\le {({ {L}<em>{\text{RA}}}-{ {N}</em>{\text{CS}}})}&#x2F;{3}; $</li>
+</ul>
+<p>$$<br> \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {({ {L}<em>{\text{RA}}}-3{ {d}</em>{u}})}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;{ {L}<em>{\text{RA}}}-3{ {d}</em>{u}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{d}}}}</em>{\text{start}}}&#x3D;{ {d}<em>{u}}+n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}}+\bar{n}</em>{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}</em>{\text{start}}}&#x3D;0 \<br> \nonumber &amp; n_{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {\left( 4{ {d}</em>{u}}-{ {L}<em>{\text{RA}}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right) \<br> \nonumber &amp; \bar{\bar{n}}<em>{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {\min \left( { {d}</em>{u}}-n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}},{ {L}</em>{\text{RA}}}-3{ {d}<em>{u}}-\bar{n}</em>{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{\bar{\bar{n}}}_{\text{shift}}^{\text{RA}}&#x3D;0<br>\end{align}<br>$$</p>
+<ul>
+<li>对于$ {({ {L}<em>{\text{RA}}}+{ {N}</em>{\text{CS}}})}&#x2F;{3};\le { {d}<em>{u}}&lt;{2{ {L}</em>{\text{RA}}}}&#x2F;{5}; $</li>
+</ul>
+<p>$$<br> \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {(3{ {d}<em>{u}}-{ {N}</em>{\text{ZC}}})}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;3{ {d}<em>{u}}-{ {N}</em>{\text{ZC}}}+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{d}}}}</em>{\text{start}}}&#x3D;0 \<br> \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}<em>{\text{start}}}&#x3D;0 \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor { { {d}<em>{u}}}&#x2F;{ { {d}</em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}<em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {\left( { {L}</em>{\text{RA}}}-2{ {d}<em>{u}}-n</em>{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right) \<br> \nonumber &amp; \bar{\bar{n}}<em>{\text{shift}}^{\text{RA}}&#x3D;0 \<br> \nonumber &amp; \bar{\bar{\bar{n}}}</em>{\text{shift}}^{\text{RA}}&#x3D;0<br>\end{align}<br>$$</p>
+<ul>
+<li>对于$ {2{ {L}<em>{\text{RA}}}}&#x2F;{5};\le { {d}</em>{u}}\le {({ {L}<em>{\text{RA}}}-{ {N}</em>{\text{CS}}})}&#x2F;{2}; $</li>
+</ul>
+<p>$$<br> \begin{align}<br>  \nonumber &amp; n_{\text{shift}}^{\text{RA}}&#x3D;\left\lfloor {({ {N}<em>{\text{ZC}}}-2{ {d}</em>{u}})}&#x2F;{ { {N}<em>{\text{CS}}}}; \right\rfloor  \<br> \nonumber &amp; { {d}</em>{\text{start}}}&#x3D;2({ {N}<em>{\text{ZC}}}-2{ {d}</em>{u}})+n_{\text{shift}}^{\text{RA}}{ {N}<em>{\text{CS}}} \<br> \nonumber &amp; { { {\bar{\bar{d}}}}</em>{\text{start}}}&#x3D;0 \<br> \nonumber &amp; { { {\bar{\bar{\bar{d}}}}}<em>{\text{start}}}&#x3D;0 \<br> \nonumber &amp; n</em>{\text{group}}^{\text{RA}}&#x3D;\left\lfloor {({ {L}<em>{\text{RA}}}-{ {d}</em>{u}})}&#x2F;{ { {d}<em>{\text{start}}}}; \right\rfloor  \<br> \nonumber &amp; \bar{n}</em>{\text{shift}}^{\text{RA}}&#x3D;\max \left( \left\lfloor {\left( 3{ {d}<em>{u}}-{ {L}</em>{\text{RA}}}-n_{\text{group}}^{\text{RA}}{ {d}<em>{\text{start}}} \right)}&#x2F;{ { {N}</em>{\text{CS}}}}; \right\rfloor ,0 \right) \<br> \nonumber &amp; \bar{\bar{n}}<em>{\text{shift}}^{\text{RA}}&#x3D;0 \<br> \nonumber &amp; \bar{\bar{\bar{n}}}</em>{\text{shift}}^{\text{RA}}&#x3D;0<br>\end{align}<br>$$</p>
+<p>对于其他所有的$ { {d}_{u}} $值，受限集合不存在循环移位。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/190959609.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/191029404.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/191117976.png" alt="mark"></p>
+<h4 id="映射到物理元素"><a href="#映射到物理元素" class="headerlink" title="映射到物理元素"></a>映射到物理元素</h4><p><br/>前导序列应根据下式映射到物理资源</p>
+<p>$$ \begin{align}<br>  \nonumber &amp; a_{k}^{(p,\text{RA})}&#x3D;{ {\beta }<em>{\text{PRACH}}}{ {y}</em>{u,v}}(k) \<br> \nonumber &amp; k&#x3D;0,1,…,{ {L}_{\text{RA}}}-1<br>\end{align}<br>$$</p>
+<p>其中$ { {\beta }<em>{\text{PRACH}}} $是幅值因子，为满足TS 38.213规范对PRACH传输功率$ { {P}</em>{\text{PRACH}}} $的要求，前导序列应乘以$ { {\beta }_{\text{PRACH}}} $，$ p&#x3D;4000 $是天线端口。基带信号应根据2.3节使用Table 6.3.3.1-1或Table 6.3.3.1-2的参数生成。</p>
+<h2 id="物理信号"><a href="#物理信号" class="headerlink" title="物理信号"></a>物理信号</h2><h3 id="参考信号"><a href="#参考信号" class="headerlink" title="参考信号"></a>参考信号</h3><h4 id="用于PUSCH的DM-RS"><a href="#用于PUSCH的DM-RS" class="headerlink" title="用于PUSCH的DM-RS"></a>用于PUSCH的DM-RS</h4><h5 id="序列生成-1"><a href="#序列生成-1" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>若对PUSCH的转换预编码不启用，则参考信号序列$ r(m) $根据下式生成</p>
+<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<p>其中伪随机序列$ c(i) $在《NR物理信道与调制》2.2节中定义。</p>
+<p>若对PUSCH的转换预编码启用，则参考信息$ r(m) $根据下式生成</p>
+<p>$$ r(m)&#x3D;{ {e}^{-j\frac{\pi qm(m+1)}{L}}} $$</p>
+<blockquote>
+<p>Note: Agreement says “Support ZC-sequence for UL DFT-S-OFDM DMRS” but unclear if this refers to the sequences in LTE (ZC-derived&#x2F;computer generated) or “pure” ZC.</p>
+</blockquote>
+<h5 id="资源映射"><a href="#资源映射" class="headerlink" title="资源映射"></a>资源映射</h5><p><br/>PUSCH DM-RS根据type 1或type 2映射到物理资源，DM-RS的类型由高层参数<em>UL-DMRS-config-type</em>给定。</p>
+<p>UE应根据以下规则将序列$ r(m) $映射到REs</p>
+<ul>
+<li>if transform precoding is not enabled,</li>
+</ul>
+<p>$$ \begin{align}<br>  \nonumber &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{DMRS}}}{ {w}</em>{\text{f}}}\left( { {k}’} \right)\cdot { {w}<em>{\text{t}}}\left( { {l}’} \right)\cdot r\left( 2m+{k}’+{ {m}</em>{0}} \right) \<br> \nonumber &amp; k&#x3D;\left{ \begin{matrix}<br>   { {k}<em>{\text{0}}}+4m+2{k}’+\Delta  &amp; \text{Configuration type 1}  \<br>   { {k}</em>{\text{0}}}+6m+{k}’+\Delta  &amp; \text{Configuration type 2}  \<br>\end{matrix} \right. \<br> \nonumber &amp; {k}’&#x3D;0,1 \<br> \nonumber &amp; l&#x3D;\bar{l}+{l}’<br>\end{align}<br>$$</p>
+<ul>
+<li>if transform precoding is enabled</li>
+</ul>
+<p>$$ \begin{align}<br>  \nonumber &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{DMRS}}}{ {w}</em>{\text{f}}}\left( { {k}’} \right)\cdot { {w}<em>{\text{t}}}\left( { {l}’} \right)\cdot r\left( 2m+{k}’+{ {m}</em>{0}} \right) \<br> \nonumber &amp; k&#x3D;{ {k}_{\text{0}}}+4m+2{k}’+\Delta  \<br> \nonumber &amp; {k}’&#x3D;0,1 \<br>\nonumber  &amp; l&#x3D;\bar{l}+{l}’<br>\end{align}<br>$$</p>
+<p>其中$l$是指相对于PUSCH传输的起始，$ { {w}<em>{\text{f}}}\left( { {k}’} \right) $，$ { {w}</em>{\text{f}}}\left( { {k}’} \right) $，和$ \Delta  $在Tables 6.4.1.1.2-1 and 6.4.1.1.2-2中给定。</p>
+<p>时域索引$ {l}’ $和所支持的天线端口$p$根据Table 6.4.1.1.2-3中的DM-RS duration确定。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/192118412.png" alt="mark"></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/192207337.png" alt="mark"></p>
+<h4 id="相位跟踪参考信号"><a href="#相位跟踪参考信号" class="headerlink" title="相位跟踪参考信号"></a>相位跟踪参考信号</h4><h5 id="序列生成-2"><a href="#序列生成-2" class="headerlink" title="序列生成"></a>序列生成</h5><h5 id="资源映射-1"><a href="#资源映射-1" class="headerlink" title="资源映射"></a>资源映射</h5><h4 id="用于PUCCH的DM-RS"><a href="#用于PUCCH的DM-RS" class="headerlink" title="用于PUCCH的DM-RS"></a>用于PUCCH的DM-RS</h4><h5 id="用于PUCCH格式1的DM-RS"><a href="#用于PUCCH格式1的DM-RS" class="headerlink" title="用于PUCCH格式1的DM-RS"></a>用于PUCCH格式1的DM-RS</h5><h4 id="探测参考信号"><a href="#探测参考信号" class="headerlink" title="探测参考信号"></a>探测参考信号</h4><h5 id="序列生成-3"><a href="#序列生成-3" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>探测参考信号序列根据下式生成</p>
+<p>$$ r\left( m \right)&#x3D;r_{u,v}^{(\alpha )}\left( m \right) $$</p>
+<p>其中$ r_{u,v}^{(\alpha )}\left( n \right) $]由XXX给定。</p>
+<h5 id="资源映射-2"><a href="#资源映射-2" class="headerlink" title="资源映射"></a>资源映射</h5><p><br/>探测参考信号应在上行天线端口$ 3000+i $上发送，其中$ i $是$ i&#x3D;0 $或$ i&#x3D;0,1 $或$ i&#x3D;0,1,2,3 $其中之一。</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a><br><a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a><br><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a><br><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/" title="5G-NR物理信道与调制-上行链路v1.0.0">https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/2017-09/" rel="tag"># 2017-09</a>
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/09/nr-v100-l1-channel-modulation/" rel="prev" title="5G-NR物理信道与调制v1.0.0">
+                  <i class="fa fa-chevron-left"></i> 5G-NR物理信道与调制v1.0.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/09/nr-v100-l1-channel-modulation-dl/" rel="next" title="5G-NR物理信道与调制-下行链路v1.0.0">
+                  5G-NR物理信道与调制-下行链路v1.0.0 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"e0e12eca89b51752a12716c6910a8aad"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

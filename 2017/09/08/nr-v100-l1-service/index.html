@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PingFang+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="物理层的服务和功能概述物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5G-NR物理层提供的服务v1.0.0">
+<meta property="og:url" content="https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/index.html">
+<meta property="og:site_name" content="Marshall">
+<meta property="og:description" content="物理层的服务和功能概述物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png">
+<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png">
+<meta property="article:published_time" content="2017-09-08T07:06:40.000Z">
+<meta property="article:modified_time" content="2018-10-21T05:46:29.574Z">
+<meta property="article:author" content="Marshall">
+<meta property="article:tag" content="2017-09">
+<meta property="article:tag" content="5G-NR">
+<meta property="article:tag" content="3GPP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png">
+
+
+<link rel="canonical" href="https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/","path":"2017/09/08/nr-v100-l1-service/","title":"5G-NR物理层提供的服务v1.0.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>5G-NR物理层提供的服务v1.0.0 | Marshall</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?8abce461480fd6278fb829e039e83852"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Marshall</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Comm. Tech. Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">物理层的服务和功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">L1功能概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UE%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">UE的物理层模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">上行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.1.</span> <span class="nav-text">上行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">随机接入信道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">下行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">下行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.2.</span> <span class="nav-text">广播信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E5%91%BC%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.3.</span> <span class="nav-text">寻呼信道</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parallel-transmission-of-simultaneous-Physical-channels-and-SRS"><span class="nav-number">3.</span> <span class="nav-text">Parallel transmission of simultaneous Physical channels and SRS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.2.</span> <span class="nav-text">下行链路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E6%8F%90%E4%BE%9B%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">物理层提供的测量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UE%E6%B5%8B%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">UE测量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marshall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marshall">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marshall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="5G-NR物理层提供的服务v1.0.0 | Marshall">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5G-NR物理层提供的服务v1.0.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-09-08 15:06:40" itemprop="dateCreated datePublished" datetime="2017-09-08T15:06:40+08:00">2017-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-10-21 13:46:29" itemprop="dateModified" datetime="2018-10-21T13:46:29+08:00">2018-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/5G-NR/" itemprop="url" rel="index"><span itemprop="name">5G-NR</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="物理层的服务和功能"><a href="#物理层的服务和功能" class="headerlink" title="物理层的服务和功能"></a>物理层的服务和功能</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>物理层向高层提供数据传输服务。</p>
+<p>这些服务的接入是通过使用MAC子层的传输信道实现的。</p>
+<p>传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（<em>注：这句话有待进一步讨论</em>）。</p>
+<span id="more"></span>
+
+<h2 id="L1功能概述"><a href="#L1功能概述" class="headerlink" title="L1功能概述"></a>L1功能概述</h2><p><br/>正如3GPP TS 38.201规范中所提到的，物理层向高层提供数据传输服务。为了提供数据传输服务，物理层预期执行以下功能：</p>
+<ul>
+<li><pre><code>传输信道的差错检测并指示给高层
+</code></pre>
+<ul>
+<li><pre><code>传输信道的前向纠错（FEC）编码/解码
+</code></pre>
+<ul>
+<li><pre><code>混合自动重传请求（HARQ）软合并
+</code></pre>
+<ul>
+<li><pre><code>编码的传输信道到物理信道的速率匹配
+</code></pre>
+<ul>
+<li><pre><code>编码的传输信道到物理信道的映射
+</code></pre>
+<ul>
+<li><pre><code>物理信道的功率加权
+</code></pre>
+<ul>
+<li><pre><code>物理信道的调制和解调
+</code></pre>
+<ul>
+<li><pre><code>频域和时间同步
+</code></pre>
+<ul>
+<li><pre><code>无线特性测量并指示给高层
+</code></pre>
+<ul>
+<li><pre><code>MIMO天线处理
+</code></pre>
+<ul>
+<li><pre><code>射频处理
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>对于每个传输信道，L1功能的建模详见2.1和2.2节。</p>
+<h1 id="UE的物理层模型"><a href="#UE的物理层模型" class="headerlink" title="UE的物理层模型"></a>UE的物理层模型</h1><p><br/>5G-NR物理层模型capture以下与物理层相关的特性：</p>
+<ul>
+<li><pre><code>向下传递到物理层或从物理层上传道高层数据的结构；
+</code></pre>
+<ul>
+<li><pre><code>高层能够配置物理层的方法；
+</code></pre>
+<ul>
+<li><pre><code>物理层向高层提供不同的指示（错误指示，信道质量指示等）
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="上行链路模型"><a href="#上行链路模型" class="headerlink" title="上行链路模型"></a>上行链路模型</h2><h3 id="上行共享信道"><a href="#上行共享信道" class="headerlink" title="上行共享信道"></a>上行共享信道</h3><p><br/>上行共享信道（UL-SCH）传输的物理层模型基于PUSCH物理层处理的相应链路。如Figure 5.1.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
+<ul>
+<li><pre><code>高层数据传到或来自物理层
+</code></pre>
+<ul>
+<li><pre><code>CRC和传输块错误指示
+</code></pre>
+<ul>
+<li><pre><code>FEC和速率匹配
+</code></pre>
+<ul>
+<li><pre><code>数据调制
+</code></pre>
+<ul>
+<li><pre><code>映射到物理资源
+</code></pre>
+<ul>
+<li><pre><code>多天线处理
+</code></pre>
+<ul>
+<li><pre><code>L1控制信令的支持
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png" title="Figure 5.1.1-1: Physical-layer model for UL-SCH transmission" />
+
+<h3 id="随机接入信道"><a href="#随机接入信道" class="headerlink" title="随机接入信道"></a>随机接入信道</h3><p><br/>随机接入信道传输的物理层模型通过PRACH前导格式来表征。PRACH前导格式由循环前缀，前导和保护时间间隔组成。</p>
+<h2 id="下行链路模型"><a href="#下行链路模型" class="headerlink" title="下行链路模型"></a>下行链路模型</h2><h3 id="下行共享信道"><a href="#下行共享信道" class="headerlink" title="下行共享信道"></a>下行共享信道</h3><p><br/>下行共享信道传输的物理层模型基于PDSCH物理层处理的相应链路。如Figure 5.2.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
+<ul>
+<li><pre><code>高层数据传到或来自物理层
+</code></pre>
+<ul>
+<li><pre><code>CRC和传输块错误指示
+</code></pre>
+<ul>
+<li><pre><code>FEC和速率匹配
+</code></pre>
+<ul>
+<li><pre><code>数据调制
+</code></pre>
+<ul>
+<li><pre><code>映射到物理资源
+</code></pre>
+<ul>
+<li><pre><code>多天线处理
+</code></pre>
+<ul>
+<li><pre><code>L1控制信令的支持
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png" title="Figure 5.2.1-1: Physical-layer model for DL-SCH transmission" />
+
+<h3 id="广播信道"><a href="#广播信道" class="headerlink" title="广播信道"></a>广播信道</h3><p><br/>广播信道传输的物理层模型由一个固定预定义的传输格式来表征。BCH每80ms一个传输块。广播信道的物理层模型基于PBCH物理层处理的相应链路，如Figure 5.2.2-1所示。</p>
+<ul>
+<li><pre><code>高层数据传到或来自物理层
+</code></pre>
+<ul>
+<li><pre><code>CRC和传输块错误指示
+</code></pre>
+<ul>
+<li><pre><code>FEC和速配匹配
+</code></pre>
+<ul>
+<li><pre><code>数据调制
+</code></pre>
+<ul>
+<li><pre><code>映射到物理资源
+</code></pre>
+<ul>
+<li><pre><code>多天线处理
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png" title="Figure 5.2.2-1: Physical-layer model for BCH transmission" />
+
+<h3 id="寻呼信道"><a href="#寻呼信道" class="headerlink" title="寻呼信道"></a>寻呼信道</h3><h1 id="Parallel-transmission-of-simultaneous-Physical-channels-and-SRS"><a href="#Parallel-transmission-of-simultaneous-Physical-channels-and-SRS" class="headerlink" title="Parallel transmission of simultaneous Physical channels and SRS"></a>Parallel transmission of simultaneous Physical channels and SRS</h1><p><br/>This clause describes the requirements from the UE to send and receive on multiple Physical and Transport Channels and SRS simultaneously depending on the service capabilities and requirements.</p>
+<h2 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h2><h2 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h2><h1 id="物理层提供的测量"><a href="#物理层提供的测量" class="headerlink" title="物理层提供的测量"></a>物理层提供的测量</h1><h2 id="UE测量"><a href="#UE测量" class="headerlink" title="UE测量"></a>UE测量</h2><p><br/>UE测量的列表和定义提供在3GPP TS 38.215中。</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a><br><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a><br><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Marshall
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/" title="5G-NR物理层提供的服务v1.0.0">https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/2017-09/" rel="tag"># 2017-09</a>
+              <a href="/tags/5G-NR/" rel="tag"># 5G-NR</a>
+              <a href="/tags/3GPP/" rel="tag"># 3GPP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/08/nr-v100-general-description/" rel="prev" title="5G-NR物理层概述v1.0.0">
+                  <i class="fa fa-chevron-left"></i> 5G-NR物理层概述v1.0.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/09/nr-v100-l1-channel-modulation/" rel="next" title="5G-NR物理信道与调制v1.0.0">
+                  5G-NR物理信道与调制v1.0.0 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marshall</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"marshallcomm","repo":"comments","client_id":"5292b230fffb00675d06","client_secret":"6705ad3451d389244184d486864a7dbdefb7fa38","admin_user":"marshallcomm","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"29ceebf365c7aa5055a8b53b118f0f78"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
