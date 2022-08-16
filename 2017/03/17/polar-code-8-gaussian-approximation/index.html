@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言通过系列文章《Polar Code（1~7）》大致梳理了Polar Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文《Polar Code（4）编码之极化信道可靠性估计》中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC再次扩展">
+    <meta name="description" content="前言 通过系列文章《Polar Code（1~7）》大致梳理了Polar Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文《Polar Code（4）编码之极化信道可靠性估计》中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Polar Code（8）高斯近似">
 <meta property="og:url" content="https://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="前言通过系列文章《Polar Code（1~7）》大致梳理了Polar Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文《Polar Code（4）编码之极化信道可靠性估计》中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC再次扩展">
+<meta property="og:description" content="前言 通过系列文章《Polar Code（1~7）》大致梳理了Polar Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文《Polar Code（4）编码之极化信道可靠性估计》中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183242980.png">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183501206.png">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Polar%E7%BC%96%E7%A0%81%E4%B8%AD%E7%9A%84%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC"><span class="nav-number">2.</span> <span class="nav-text">Polar编码中的高斯近似</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC%E5%81%87%E8%AE%BE"><span class="nav-number">2.1.</span> <span class="nav-text">高斯近似假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E5%8F%91%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">我发现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84AGA"><span class="nav-number">2.3.</span> <span class="nav-text">改进的AGA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E5%AD%90%E4%BF%A1%E9%81%93%E9%94%99%E8%AF%AF%E6%A6%82%E7%8E%87"><span class="nav-number">2.4.</span> <span class="nav-text">极化子信道错误概率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Polar%E8%AF%91%E7%A0%81%E4%B8%AD%E7%9A%84%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC"><span class="nav-number">3.</span> <span class="nav-text">Polar译码中的高斯近似</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#polar%E7%BC%96%E7%A0%81%E4%B8%AD%E7%9A%84%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC"><span class="nav-number">2.</span> <span class="nav-text">Polar编码中的高斯近似</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC%E5%81%87%E8%AE%BE"><span class="nav-number">2.1.</span> <span class="nav-text">高斯近似假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E5%8F%91%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">我发现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84aga"><span class="nav-number">2.3.</span> <span class="nav-text">改进的AGA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E5%AD%90%E4%BF%A1%E9%81%93%E9%94%99%E8%AF%AF%E6%A6%82%E7%8E%87"><span class="nav-number">2.4.</span> <span class="nav-text">极化子信道错误概率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#polar%E8%AF%91%E7%A0%81%E4%B8%AD%E7%9A%84%E9%AB%98%E6%96%AF%E8%BF%91%E4%BC%BC"><span class="nav-number">3.</span> <span class="nav-text">Polar译码中的高斯近似</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -287,61 +287,189 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>通过系列文章《Polar Code（1~7）》大致梳理了Polar Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文<a href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar Code（4）编码之极化信道可靠性估计》</a>中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC再次扩展到了BAWGNC。本文将梳理高斯近似在Polar Code编码和译码中的具体应用。</p>
+        <h1 id="前言">前言</h1>
+<p><br/>通过系列文章《Polar Code（1~7）》大致梳理了Polar
+Code从编码到译码的基本原理和算法步骤。本文回过头再来谈一谈高斯近似。高斯近似已在前文<a
+href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar
+Code（4）编码之极化信道可靠性估计》</a>中有所介绍。对于Polar码的研究从BEC到一般类型的B-DMC，再到BAWGNC，越来越从理想走向实际。密度进化法把BEC扩展到了所有类型的B-DMC，高斯近似法则把B-DMC再次扩展到了BAWGNC。本文将梳理高斯近似在Polar
+Code编码和译码中的具体应用。</p>
 <span id="more"></span>
-
-<h1 id="Polar编码中的高斯近似"><a href="#Polar编码中的高斯近似" class="headerlink" title="Polar编码中的高斯近似"></a>Polar编码中的高斯近似</h1><p><br/>高斯近似<sup>[1]</sup>是对密度进化的简化处理方法，早已广泛应用于LDPC码。<strong>高斯近似在Polar Code编码中用于信道的可靠性估计</strong><sup>[2]</sup>，即估计各个极化信道的错误概率。应用高斯近似法的基本前提是满足<strong>对称性条件</strong>，因为这正是密度进化法必须满足的条件。如果接收符号对数似然比的概率密度函数满足$f\left( x \right)&#x3D;f\left( -x \right){ {e}^{x}}$，那么高斯分布的均值$m$和方差${ {\sigma }^{2}}$具有如下关系：${ {\sigma }^{2}}&#x3D;2m$。由于高斯分布本身可以根据其均值和方差完全决定，所以在高斯近似假设条件下，只需要跟踪信息的均值变化就可以知道概率密度的变化。同时定义高斯变量的等效SNR为${ { {m}^{2}}}&#x2F;{ { {\sigma }^{2}}};$，所以SNR为${m}&#x2F;{2};$，跟踪均值也相当于跟踪SNR。</p>
-<p>对于方差为${ {\sigma }^{2}}$的BAWGN信道$W$，源比特序列用BPSK调制，其概率密度函数为</p>
-<p>$$\begin{align}<br>p\left( y|x \right)&#x3D;\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{ {e}^{-\frac{ { {\left( y-\left( 1-2x \right) \right)}^{2}}}{2{ {\sigma }^{2}}}}}<br>\end{align}$$</p>
+<h1 id="polar编码中的高斯近似">Polar编码中的高斯近似</h1>
+<p><br/>高斯近似<sup>[1]</sup>是对密度进化的简化处理方法，早已广泛应用于LDPC码。<strong>高斯近似在Polar
+Code编码中用于信道的可靠性估计</strong><sup>[2]</sup>，即估计各个极化信道的错误概率。应用高斯近似法的基本前提是满足<strong>对称性条件</strong>，因为这正是密度进化法必须满足的条件。如果接收符号对数似然比的概率密度函数满足<span
+class="math inline">\(f\left( x \right)=f\left( -x \right){
+{e}^{x}}\)</span>，那么高斯分布的均值<span
+class="math inline">\(m\)</span>和方差<span class="math inline">\({
+{\sigma }^{2}}\)</span>具有如下关系：<span class="math inline">\({
+{\sigma
+}^{2}}=2m\)</span>。由于高斯分布本身可以根据其均值和方差完全决定，所以在高斯近似假设条件下，只需要跟踪信息的均值变化就可以知道概率密度的变化。同时定义高斯变量的等效SNR为<span
+class="math inline">\({ { {m}^{2}}}/{ { {\sigma
+}^{2}}}\;\)</span>，所以SNR为<span
+class="math inline">\({m}/{2}\;\)</span>，跟踪均值也相当于跟踪SNR。</p>
+<p>对于方差为<span class="math inline">\({ {\sigma
+}^{2}}\)</span>的BAWGN信道<span
+class="math inline">\(W\)</span>，源比特序列用BPSK调制，其概率密度函数为</p>
+<p><span class="math display">\[\begin{align}
+p\left( y|x \right)=\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{ {e}^{-\frac{
+{ {\left( y-\left( 1-2x \right) \right)}^{2}}}{2{ {\sigma }^{2}}}}}
+\end{align}\]</span></p>
 <p>接收符号 的对数似然比（LLR）定义为</p>
-<p>$$\begin{align}<br>L\left( y \right)&#x3D;\ln \frac{p\left( y|0 \right)}{p\left( y|1 \right)}&#x3D;\frac{2y}{ { {\sigma }^{2}}}<br>\end{align}$$</p>
-<p>由于此时信道满足了对称性条件，那么译码错误概率与传输的码字无关，因此不失一般性，我们可以假设码字为全零发送，则LLR是服从均值为$\frac{2}{ { {\sigma }^{2}}}$，方差为$\frac{4}{ { {\sigma }^{2}}}$的高斯分布。</p>
-<h2 id="高斯近似假设"><a href="#高斯近似假设" class="headerlink" title="高斯近似假设"></a>高斯近似假设</h2><p><br/><strong>GA assumption</strong>：每个子信道的LLR都服从方差为均值2倍的高斯分布，即</p>
-<p>$$\begin{align}<br>L_{N}^{\left( i \right)}\sim N\left( m_{N}^{\left( i \right)},2m_{N}^{\left( i \right)} \right)<br>\end{align}$$</p>
-<p>其中，$m_{1}^{\left( 1 \right)}&#x3D;\frac{2}{ { {\sigma }^{2}}}$。</p>
-<p>基于这样的高斯近似假设，唯一需要考虑的问题就是如何计算均值。根据密度进化中的设定，令$a_{N}^{\left( i \right)}$表示$L_{N}^{\left( i \right)}\left( y_{1}^{N},0_{1}^{i-1} \right)$的概率密度函数，那么$a_{N}^{\left( i \right)}$是服从$N\left( m_{N}^{\left( i \right)},2m_{N}^{\left( i \right)} \right)$的高斯分布。再根据高斯近似的构造理论，将密度进化的计算转化为对均值$m_{N}^{\left( i \right)}$的递归计算：</p>
-<p>$$\begin{align}<br>m_{2N}^{\left( 2i\text{-}1 \right)}&#x3D;{ {\varphi }^{-1}}\left( 1-{ {\left[ 1-\varphi \left( m_{N}^{\left( i \right)} \right) \right]}^{2}} \right)<br>\end{align}$$</p>
-<p>$$\begin{align}<br>m_{2N}^{\left( 2i \right)}&#x3D;2m_{N}^{\left( i \right)}<br>\end{align}$$</p>
-<p>$$\begin{align}<br>m_{1}^{\left( 1 \right)}&#x3D;{2}&#x2F;{ { {\sigma }^{2}}};<br>\end{align}$$</p>
+<p><span class="math display">\[\begin{align}
+L\left( y \right)=\ln \frac{p\left( y|0 \right)}{p\left( y|1
+\right)}=\frac{2y}{ { {\sigma }^{2}}}
+\end{align}\]</span></p>
+<p>由于此时信道满足了对称性条件，那么译码错误概率与传输的码字无关，因此不失一般性，我们可以假设码字为全零发送，则LLR是服从均值为<span
+class="math inline">\(\frac{2}{ { {\sigma }^{2}}}\)</span>，方差为<span
+class="math inline">\(\frac{4}{ { {\sigma
+}^{2}}}\)</span>的高斯分布。</p>
+<h2 id="高斯近似假设">高斯近似假设</h2>
+<p><br/><strong>GA
+assumption</strong>：每个子信道的LLR都服从方差为均值2倍的高斯分布，即</p>
+<p><span class="math display">\[\begin{align}
+L_{N}^{\left( i \right)}\sim N\left( m_{N}^{\left( i
+\right)},2m_{N}^{\left( i \right)} \right)
+\end{align}\]</span></p>
+<p>其中，<span class="math inline">\(m_{1}^{\left( 1 \right)}=\frac{2}{
+{ {\sigma }^{2}}}\)</span>。</p>
+<p>基于这样的高斯近似假设，唯一需要考虑的问题就是如何计算均值。根据密度进化中的设定，令<span
+class="math inline">\(a_{N}^{\left( i \right)}\)</span>表示<span
+class="math inline">\(L_{N}^{\left( i \right)}\left(
+y_{1}^{N},0_{1}^{i-1} \right)\)</span>的概率密度函数，那么<span
+class="math inline">\(a_{N}^{\left( i \right)}\)</span>是服从<span
+class="math inline">\(N\left( m_{N}^{\left( i \right)},2m_{N}^{\left( i
+\right)}
+\right)\)</span>的高斯分布。再根据高斯近似的构造理论，将密度进化的计算转化为对均值<span
+class="math inline">\(m_{N}^{\left( i \right)}\)</span>的递归计算：</p>
+<p><span class="math display">\[\begin{align}
+m_{2N}^{\left( 2i\text{-}1 \right)}={ {\varphi }^{-1}}\left( 1-{ {\left[
+1-\varphi \left( m_{N}^{\left( i \right)} \right) \right]}^{2}} \right)
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+m_{2N}^{\left( 2i \right)}=2m_{N}^{\left( i \right)}
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+m_{1}^{\left( 1 \right)}={2}/{ { {\sigma }^{2}}}\;
+\end{align}\]</span></p>
 <p>其中函数</p>
-<p>$$\begin{align}<br>\varphi \left( x \right)&#x3D;\left{ \begin{matrix}<br>   1-\frac{1}{\sqrt{4\pi x}}\int_{-\infty }^{\infty }{\tanh \frac{u}{2}\cdot \exp \left( -\frac{ { {\left( u-x \right)}^{2}}}{4x} \right)du,x&gt;0}  \<br>   1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,x&#x3D;0  \<br>\end{matrix} \right.<br>\end{align}$$</p>
-<p>$\varphi \left( x \right)$在$\left[ 0,\infty  \right)$上连续单调递减，$\varphi \left( 0 \right)\text{&#x3D;}1$，$\varphi \left( +\infty  \right)\text{&#x3D;0}$，其反函数用${ {\varphi }^{-1}}\left( x \right)$表示。一般情况下，函数$\varphi \left( x \right)$可以使用如下GA近似式（AGA）<sup>[1]</sup>计算</p>
-<p>$$\begin{align}<br>\varphi \left( x \right)&#x3D;\left{ \begin{matrix}<br>   \sqrt{\frac{\pi }{x}}\left( 1-\frac{10}{7x} \right)\exp \left( -\frac{x}{4} \right),x\ge 10  \<br>   \exp \left( -0.4527{ {x}^{0.86}}+0.0218 \right),0&lt;x&lt;10  \<br>\end{matrix} \right.<br>\end{align}$$</p>
-<h2 id="我发现的问题"><a href="#我发现的问题" class="headerlink" title="我发现的问题"></a>我发现的问题</h2><p><br/><strong>注意式（8）的第二个式子中0.86应当是个正数</strong>，其出处在Sae-Young Chung于2001年发表的论文<sup>[1]</sup>中，如图1所示。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183242980.png" title="图 1 phi(x) in Sae-Young Chung’s Paper" />
-
-<p>许多中文文献虽然同样引用了这篇论文，但$\gamma $值却是-0.86。这些使用-0.86的文献不乏最近一两年（2015、2016）的硕博士论文，这里并不一一举例，仅就事论事地指出这个问题可能值得商榷。由于密度进化和高斯近似在LDPC码中早已应用，也可以举一个关于LDPC码早已成书的例子，在2008年出版的《LDPC码理论与应用》<sup>[3]</sup>一书中，在120页就使用了-0.86，如图2所示。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183501206.png" title="图 2 《LDPC码理论与应用》P120" />
-
-<p>下面就比较一下0.86和-0.86对$\varphi \left( x \right)$函数的影响有何不同，如图2和图3所示。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183630103.bmp" title="图 3 gamma取0.86时，$\varphi \left( x \right)$的曲线" />
-
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183715241.bmp" title="图 4 gamma取-0.86时，$\varphi \left( x \right)$的曲线" />
-
-<p>$x\ge 10$的范围是完全相同的；不同的地方就在于$0&lt;x&lt;10$。这会影响均值的取值，从而影响LLR的概率密度。这一点很重要，涉及到仿真参数的配置和仿真性能。</p>
-<p>关于这一点就说到这里，<strong>我的结论是：gamma的取值还是回到Sae-Young Chung的原始论文，取值为正0.86。</strong></p>
-<h2 id="改进的AGA"><a href="#改进的AGA" class="headerlink" title="改进的AGA"></a>改进的AGA</h2><p><br/>高斯近似是对密度进化的简化，既然是简化，就会以损失一部分性能为代价。幸运的是，这代价很小，是可以接受的范围，如图2所说，高斯近似与密度进化的信道参数极限值仅相差$0.3%\sim 1.2%$。但式（7）计算起来稍显复杂，于是Sae-Young Chung提出了对高斯近似的近似式（Approximate version of GA，AGA），也就是式（8）。</p>
-<p>不过对于Polar Code，当码长$N$很长时，由于式（8）的计算误差会带来很大的性能损失，于是Jincheng Dai等人提出了改进的AGA。文献[4]采用累积对数误差（cumulative-logarithmic error，CLE）来定量评估AGA在对数域上的余补误差，提出了新的两段式估计函数</p>
-<p>$$\begin{align}<br>{ {\varphi }_{AGA-2}}\left( x \right)&#x3D;\left{ \begin{matrix}<br>   { {e}^{0.0116{ {x}^{2}}-0.4212x}},\ 0&lt;x\le a  \<br>   { {e}^{-0.2944x-0.3169}},\ a&lt;x  \<br>\end{matrix} \right.<br>\end{align}$$</p>
-<p>其中，临界点$a&#x3D;7.0633$。与此同时，还提出了一种适合于Polar Code，特别是对于长码的三段式估计函数</p>
-<p>$$\begin{align}<br>{ {\varphi }_{AGA-3}}\left( x \right)\text{&#x3D;}\left{ \begin{matrix}<br>   { {e}^{0.06725{ {x}^{2}}-0.4908x}},\ 0&lt;x\le a  \<br>   { {e}^{-0.4527{ {x}^{0.86}}+0.0218}},\ a&lt;x\le b  \<br>   { {e}^{-0.2832x-0.4254}},\ b&lt;x  \<br>\end{matrix} \right.<br>\end{align}$$</p>
-<p>其中，临界点$a&#x3D;0.6357,b&#x3D;9.2254$。</p>
+<p><span class="math display">\[\begin{align}
+\varphi \left( x \right)=\left\{ \begin{matrix}
+   1-\frac{1}{\sqrt{4\pi x}}\int_{-\infty }^{\infty }{\tanh
+\frac{u}{2}\cdot \exp \left( -\frac{ { {\left( u-x \right)}^{2}}}{4x}
+\right)du,x&gt;0}  \\
+   1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,x=0  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p><span class="math inline">\(\varphi \left( x \right)\)</span>在<span
+class="math inline">\(\left[ 0,\infty
+\right)\)</span>上连续单调递减，<span class="math inline">\(\varphi
+\left( 0 \right)\text{=}1\)</span>，<span class="math inline">\(\varphi
+\left( +\infty \right)\text{=0}\)</span>，其反函数用<span
+class="math inline">\({ {\varphi }^{-1}}\left( x
+\right)\)</span>表示。一般情况下，函数<span
+class="math inline">\(\varphi \left( x
+\right)\)</span>可以使用如下GA近似式（AGA）<sup>[1]</sup>计算</p>
+<p><span class="math display">\[\begin{align}
+\varphi \left( x \right)=\left\{ \begin{matrix}
+   \sqrt{\frac{\pi }{x}}\left( 1-\frac{10}{7x} \right)\exp \left(
+-\frac{x}{4} \right),x\ge 10  \\
+   \exp \left( -0.4527{ {x}^{0.86}}+0.0218 \right),0&lt;x&lt;10  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<h2 id="我发现的问题">我发现的问题</h2>
+<p><br/><strong>注意式（8）的第二个式子中0.86应当是个正数</strong>，其出处在Sae-Young
+Chung于2001年发表的论文<sup>[1]</sup>中，如图1所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183242980.png" title="图 1 phi(x) in Sae-Young Chung’s Paper" /></p>
+<p>许多中文文献虽然同样引用了这篇论文，但$$值却是-0.86。这些使用-0.86的文献不乏最近一两年（2015、2016）的硕博士论文，这里并不一一举例，仅就事论事地指出这个问题可能值得商榷。由于密度进化和高斯近似在LDPC码中早已应用，也可以举一个关于LDPC码早已成书的例子，在2008年出版的《LDPC码理论与应用》<sup>[3]</sup>一书中，在120页就使用了-0.86，如图2所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183501206.png" title="图 2 《LDPC码理论与应用》P120" /></p>
+<p>下面就比较一下0.86和-0.86对<span class="math inline">\(\varphi \left(
+x \right)\)</span>函数的影响有何不同，如图2和图3所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183630103.bmp" title="图 3 gamma取0.86时，$\varphi \left( x \right)$的曲线" /></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183715241.bmp" title="图 4 gamma取-0.86时，$\varphi \left( x \right)$的曲线" /></p>
+<p><span class="math inline">\(x\ge
+10\)</span>的范围是完全相同的；不同的地方就在于<span
+class="math inline">\(0&lt;x&lt;10\)</span>。这会影响均值的取值，从而影响LLR的概率密度。这一点很重要，涉及到仿真参数的配置和仿真性能。</p>
+<p>关于这一点就说到这里，<strong>我的结论是：gamma的取值还是回到Sae-Young
+Chung的原始论文，取值为正0.86。</strong></p>
+<h2 id="改进的aga">改进的AGA</h2>
+<p><br/>高斯近似是对密度进化的简化，既然是简化，就会以损失一部分性能为代价。幸运的是，这代价很小，是可以接受的范围，如图2所说，高斯近似与密度进化的信道参数极限值仅相差<span
+class="math inline">\(0.3%\sim
+1.2%\)</span>。但式（7）计算起来稍显复杂，于是Sae-Young
+Chung提出了对高斯近似的近似式（Approximate version of
+GA，AGA），也就是式（8）。</p>
+<p>不过对于Polar Code，当码长<span
+class="math inline">\(N\)</span>很长时，由于式（8）的计算误差会带来很大的性能损失，于是Jincheng
+Dai等人提出了改进的AGA。文献[4]采用累积对数误差（cumulative-logarithmic
+error，CLE）来定量评估AGA在对数域上的余补误差，提出了新的两段式估计函数</p>
+<p><span class="math display">\[\begin{align}
+{ {\varphi }_{AGA-2}}\left( x \right)=\left\{ \begin{matrix}
+   { {e}^{0.0116{ {x}^{2}}-0.4212x}},\ 0&lt;x\le a  \\
+   { {e}^{-0.2944x-0.3169}},\ a&lt;x  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>其中，临界点<span
+class="math inline">\(a=7.0633\)</span>。与此同时，还提出了一种适合于Polar
+Code，特别是对于长码的三段式估计函数</p>
+<p><span class="math display">\[\begin{align}
+{ {\varphi }_{AGA-3}}\left( x \right)\text{=}\left\{ \begin{matrix}
+   { {e}^{0.06725{ {x}^{2}}-0.4908x}},\ 0&lt;x\le a  \\
+   { {e}^{-0.4527{ {x}^{0.86}}+0.0218}},\ a&lt;x\le b  \\
+   { {e}^{-0.2832x-0.4254}},\ b&lt;x  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>其中，临界点<span
+class="math inline">\(a=0.6357,b=9.2254\)</span>。</p>
 <p>通过式（4~6）、式（9）或式（10）即可递归求出各极化信道的均值。</p>
 <blockquote>
-<p>${ {\varphi }_{AGA-2}}\left( x \right)$的反函数详见<a href="http://marshallcomm.cn/2017/11/02/answer-polar-code-ga-inverse-phix/">《Answer-Polar Code-高斯近似之$\varphi \left( x \right)$反函数》</a>。</p>
+<p><span class="math inline">\({ {\varphi }_{AGA-2}}\left( x
+\right)\)</span>的反函数详见<a
+href="http://marshallcomm.cn/2017/11/02/answer-polar-code-ga-inverse-phix/">《Answer-Polar
+Code-高斯近似之<span class="math inline">\(\varphi \left( x
+\right)\)</span>反函数》</a>。</p>
 </blockquote>
-<h2 id="极化子信道错误概率"><a href="#极化子信道错误概率" class="headerlink" title="极化子信道错误概率"></a>极化子信道错误概率</h2><p><br/>根据式（3）的高斯近似假设，各个极化子信道的错误概率为</p>
-<p>$$\begin{align}<br>{ {P}<em>{e}}\left( W</em>{N}^{\left( i \right)} \right)&#x3D;Q\left( \frac{m_{N}^{\left( i \right)}}{\sqrt{2m_{N}^{\left( i \right)}}} \right)&#x3D;Q\left( \sqrt{\frac{m_{N}^{\left( i \right)}}{2}} \right)<br>\end{align}$$</p>
-<p>其中$Q\left( x \right)&#x3D;\frac{1}{\sqrt{2\pi }}\int_{x}^{+\infty }{ { {e}^{-\frac{ { {t}^{2}}}{2}}}}dt$为余补误差函数。</p>
-<p>至此，高斯近似在Polar Code编码中的使命就完成了。接下来就是<a href="http://marshallcomm.cn/2017/03/05/polar-code-3-encoding-example/">《Polar Code（3）编码实例》</a>中的第二步比特混合了。</p>
-<h1 id="Polar译码中的高斯近似"><a href="#Polar译码中的高斯近似" class="headerlink" title="Polar译码中的高斯近似"></a>Polar译码中的高斯近似</h1><p><br/>在接收端译码时，首先要计算如图5最右端所示的信道对数似然比$L_{1}^{\left( 1 \right)}\left( { {y}<em>{j}} \right)$。假设接收端的接收序列为$y</em>{1}^{N}$，直接由式（2）即可依次计算出：</p>
-<p>$$\begin{align}<br>L_{1}^{\left( 1 \right)}\left( { {y}<em>{j}} \right)&#x3D;\ln \frac{W\left( y|0 \right)}{W\left( y|1 \right)}&#x3D;\frac{2{ {y}</em>{j}}}{ { {\sigma }^{2}}}<br>\end{align}$$</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183715242.png" title="图 5 $L_{1}^{\left( 1 \right)}\left( { {y}_{j}} \right)$" />
-
+<h2 id="极化子信道错误概率">极化子信道错误概率</h2>
+<p><br/>根据式（3）的高斯近似假设，各个极化子信道的错误概率为</p>
+<p><span class="math display">\[\begin{align}
+{ {P}_{e}}\left( W_{N}^{\left( i \right)} \right)=Q\left(
+\frac{m_{N}^{\left( i \right)}}{\sqrt{2m_{N}^{\left( i \right)}}}
+\right)=Q\left( \sqrt{\frac{m_{N}^{\left( i \right)}}{2}} \right)
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(Q\left( x \right)=\frac{1}{\sqrt{2\pi
+}}\int_{x}^{+\infty }{ { {e}^{-\frac{ {
+{t}^{2}}}{2}}}}dt\)</span>为余补误差函数。</p>
+<p>至此，高斯近似在Polar Code编码中的使命就完成了。接下来就是<a
+href="http://marshallcomm.cn/2017/03/05/polar-code-3-encoding-example/">《Polar
+Code（3）编码实例》</a>中的第二步比特混合了。</p>
+<h1 id="polar译码中的高斯近似">Polar译码中的高斯近似</h1>
+<p><br/>在接收端译码时，首先要计算如图5最右端所示的信道对数似然比<span
+class="math inline">\(L_{1}^{\left( 1 \right)}\left( { {y}_{j}}
+\right)\)</span>。假设接收端的接收序列为<span
+class="math inline">\(y_{1}^{N}\)</span>，直接由式（2）即可依次计算出：</p>
+<p><span class="math display">\[\begin{align}
+L_{1}^{\left( 1 \right)}\left( { {y}_{j}} \right)=\ln \frac{W\left( y|0
+\right)}{W\left( y|1 \right)}=\frac{2{ {y}_{j}}}{ { {\sigma }^{2}}}
+\end{align}\]</span></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170317/183715242.png" title="图 5 $L_{1}^{\left( 1 \right)}\left( { {y}_{j}} \right)$" /></p>
 <p>接下来就可以利用LLR递归式依次计算各个节点的LLR值了。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><br/>转移概率，多么重要的信道参数。高斯近似，多么重要的估计方法。有了这两点，就可以把Polar Code编码和译码各个环节串联起来。在编码端，通过高斯近似估计子信道错误概率，扬长避短，择其善者而传信息，避其不善者而冻结。然后比特混合，构造生成矩阵，终成一列极化码。在译码端，还是通过高斯近似估计信道对数似然值，构造判决函数，或深度优先或广度优先，逐比特判决，从而估计出源比特序列。</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><br/>[1] Chung S Y, Richardson T J, Urbanke R L. Analysis of sum-product decoding of low-density parity-check codes using a Gaussian approximation[J]. IEEE Transactions on Information Theory, 2001, 47(2):657-670.<br>[2] Trifonov P. Efficient Design and Decoding of Polar Codes[J]. IEEE Transactions on Communications, 2012, 60(11):3221-3227.<br>[3] 袁东风, 张海刚. LDPC码理论与应用[M]. 人民邮电出版社, 2008.<br>[4] Dai J, Niu K, Si Z, et al. Evaluation and Optimization of Gaussian Approximation for Polar Codes[J]. Proceedings of the American Society for Information Science &amp; Technology, 2016, 51(1):1-2.</p>
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/08/04/polar-code-17-gaussian-approximation2/">《Polar Code（17）高斯近似（2）》</a><br><a href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar Code（4）编码之极化信道可靠性估计》</a></p>
+<h1 id="总结">总结</h1>
+<p><br/>转移概率，多么重要的信道参数。高斯近似，多么重要的估计方法。有了这两点，就可以把Polar
+Code编码和译码各个环节串联起来。在编码端，通过高斯近似估计子信道错误概率，扬长避短，择其善者而传信息，避其不善者而冻结。然后比特混合，构造生成矩阵，终成一列极化码。在译码端，还是通过高斯近似估计信道对数似然值，构造判决函数，或深度优先或广度优先，逐比特判决，从而估计出源比特序列。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><br/>[1] Chung S Y, Richardson T J, Urbanke R L. Analysis of
+sum-product decoding of low-density parity-check codes using a Gaussian
+approximation[J]. IEEE Transactions on Information Theory, 2001,
+47(2):657-670. [2] Trifonov P. Efficient Design and Decoding of Polar
+Codes[J]. IEEE Transactions on Communications, 2012, 60(11):3221-3227.
+[3] 袁东风, 张海刚. LDPC码理论与应用[M]. 人民邮电出版社, 2008. [4] Dai
+J, Niu K, Si Z, et al. Evaluation and Optimization of Gaussian
+Approximation for Polar Codes[J]. Proceedings of the American Society
+for Information Science &amp; Technology, 2016, 51(1):1-2.</p>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/08/04/polar-code-17-gaussian-approximation2/">《Polar
+Code（17）高斯近似（2）》</a> <a
+href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar
+Code（4）编码之极化信道可靠性估计》</a></p>
 
     </div>
 

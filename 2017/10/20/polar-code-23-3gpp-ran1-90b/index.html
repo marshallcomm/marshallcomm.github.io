@@ -22,23 +22,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。 Remaining issues of code construction关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。 关于CRC masking的比特数，本次会议达成如下结论：  RN">
+    <meta name="description" content="前言 2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。 Remaining issues of code construction 关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。 关于CRC masking的比特数，本次会议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Polar Code（23）3GPP RAN1#90bis">
 <meta property="og:url" content="https://marshallcomm.cn/2017/10/20/polar-code-23-3gpp-ran1-90b/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="前言2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。 Remaining issues of code construction关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。 关于CRC masking的比特数，本次会议达成如下结论：  RN">
+<meta property="og:description" content="前言 2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。 Remaining issues of code construction 关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。 关于CRC masking的比特数，本次会议">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195541238.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195618581.png">
 <meta property="article:published_time" content="2017-10-20T11:43:08.000Z">
 <meta property="article:modified_time" content="2018-10-21T05:52:54.151Z">
 <meta property="article:author" content="Marshall">
 <meta property="article:tag" content="Polar Code">
 <meta property="article:tag" content="3GPP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png">
 
 
 <link rel="canonical" href="https://marshallcomm.cn/2017/10/20/polar-code-23-3gpp-ran1-90b/">
@@ -153,7 +149,9 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Remaining-issues-of-code-construction"><span class="nav-number">2.</span> <span class="nav-text">Remaining issues of code construction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Remaining-details-of-DL-channel-interleaver"><span class="nav-number">3.</span> <span class="nav-text">Remaining details of DL channel interleaver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other"><span class="nav-number">4.</span> <span class="nav-text">Other</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#remaining-issues-of-code-construction"><span class="nav-number">2.</span> <span class="nav-text">Remaining issues of code
+construction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#remaining-details-of-dl-channel-interleaver"><span class="nav-number">3.</span> <span class="nav-text">Remaining details
+of DL channel interleaver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other"><span class="nav-number">4.</span> <span class="nav-text">Other</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,21 +284,53 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。</p>
-<h1 id="Remaining-issues-of-code-construction"><a href="#Remaining-issues-of-code-construction" class="headerlink" title="Remaining issues of code construction"></a>Remaining issues of code construction</h1><p><br/>关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。</p>
+        <h1 id="前言">前言</h1>
+<p><br/>2017年10月9~13日，3GPP
+RAN1#90bis会议在布拉格召开。本次会议对Polar
+coding的遗留问题继续进行讨论。</p>
+<h1 id="remaining-issues-of-code-construction">Remaining issues of code
+construction</h1>
+<p><br/>关于code
+construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC
+masking。</p>
 <p>关于CRC masking的比特数，本次会议达成如下结论：</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png" alt="mark"></p>
-<p>RNTI隐含在PDCCH的最后${ {N}<em>{RNTI}}$个CRC bits上，${ {N}</em>{RNTI}}$就是RNTI的比特数。工作假设认为${ {N}_{RNTI}}&#x3D;16$。</p>
-<p>RAN1通知RAN2，PDCCH信道编码对RNTI的承载能力可达到17 bits，也可能是21 bits。RAN1要求RAN2在确定RNTI长度时通知RAN1。</p>
-<h1 id="Remaining-details-of-DL-channel-interleaver"><a href="#Remaining-details-of-DL-channel-interleaver" class="headerlink" title="Remaining details of DL channel interleaver"></a>Remaining details of DL channel interleaver</h1><p><br/><a href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/#Remaining-details-of-rate-matching">3GPP RAN1 adhoc#3</a>会议中信道交织一节提到，是否进行下行信道交织。本次会议明确结论：不采用下行信道交织。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195541238.png" alt="mark"></p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>RNTI隐含在PDCCH的最后<span class="math inline">\({
+{N}_{RNTI}}\)</span>个CRC bits上，<span class="math inline">\({
+{N}_{RNTI}}\)</span>就是RNTI的比特数。工作假设认为<span
+class="math inline">\({ {N}_{RNTI}}=16\)</span>。</p>
+<p>RAN1通知RAN2，PDCCH信道编码对RNTI的承载能力可达到17 bits，也可能是21
+bits。RAN1要求RAN2在确定RNTI长度时通知RAN1。</p>
+<h1 id="remaining-details-of-dl-channel-interleaver">Remaining details
+of DL channel interleaver</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/#Remaining-details-of-rate-matching">3GPP
+RAN1
+adhoc#3</a>会议中信道交织一节提到，是否进行下行信道交织。本次会议明确结论：不采用下行信道交织。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195541238.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <span id="more"></span>
-
-<h1 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h1><p><br/>对于较大的上行控制信息（UCI）要进行分段操作。本次会议达成如下结论：</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195618581.png" alt="mark"></p>
-<p>UCI要分为相同大小的两段（如需要，则在第一个分段的开始处插入零）。是否进行分段的阈值根据K和R确定，例如K&gt;&#x3D;threshold且R&lt;&#x3D;threshold。threshold的值待定。</p>
+<h1 id="other">Other</h1>
+<p><br/>对于较大的上行控制信息（UCI）要进行分段操作。本次会议达成如下结论：</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195618581.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>UCI要分为相同大小的两段（如需要，则在第一个分段的开始处插入零）。是否进行分段的阈值根据K和R确定，例如K&gt;=threshold且R&lt;=threshold。threshold的值待定。</p>
 <p>先对第一个分段进行CRC添加，然后使用与第一个分段相同的CRC多项式对第二个段进行CRC添加。（也就是两个分段采用相同的CRC多项式。）</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><br/>[1] Draft_Minutes_report_RAN1#90b_v010</p>
+<h1 id="参考资料">参考资料</h1>
+<p><br/>[1] Draft_Minutes_report_RAN1#90b_v010</p>
 
     </div>
 

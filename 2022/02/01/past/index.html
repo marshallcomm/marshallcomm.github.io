@@ -22,21 +22,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本文源于《矩阵分析与应用》的这样一句话：  如何运用矩阵求逆引理得到 PAST 算法，书中省略了推导过程。今尝试推导如下。 考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection Approximation Subspace Tracking，PAST）。 特征子空间的跟踪与更新问题转化">
+    <meta name="description" content="本文源于《矩阵分析与应用》的这样一句话：  如何运用矩阵求逆引理得到 PAST 算法，书中省略了推导过程。今尝试推导如下。 考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection Approximation Subspace Tracking，PAST）。 特征子空间的跟踪与">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PAST 算法详细推导">
 <meta property="og:url" content="https://marshallcomm.cn/2022/02/01/past/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="本文源于《矩阵分析与应用》的这样一句话：  如何运用矩阵求逆引理得到 PAST 算法，书中省略了推导过程。今尝试推导如下。 考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection Approximation Subspace Tracking，PAST）。 特征子空间的跟踪与更新问题转化">
+<meta property="og:description" content="本文源于《矩阵分析与应用》的这样一句话：  如何运用矩阵求逆引理得到 PAST 算法，书中省略了推导过程。今尝试推导如下。 考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection Approximation Subspace Tracking，PAST）。 特征子空间的跟踪与">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131075538766.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131125829051.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220201110216312.png">
 <meta property="article:published_time" content="2022-02-01T03:31:14.000Z">
 <meta property="article:modified_time" content="2022-08-14T14:39:36.825Z">
 <meta property="article:author" content="Marshall">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131075538766.png">
 
 
 <link rel="canonical" href="https://marshallcomm.cn/2022/02/01/past/">
@@ -151,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E5%8F%B7%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="nav-number">1.</span> <span class="nav-text">什么是信号子空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E5%AD%90%E7%A9%BA%E9%97%B4%E4%B8%8E%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">信号子空间与投影矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%B0%8F%E5%8C%96%E9%97%AE%E9%A2%98%E8%A7%A3%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">极小化问题解的形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%AD%90%E7%A9%BA%E9%97%B4%E5%88%86%E6%9E%90%E5%88%B0-PAST-%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">从子空间分析到 PAST 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PAST-%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">5.</span> <span class="nav-text">PAST 算法推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84-1%EF%BC%9A%E7%9F%A9%E9%98%B5%E6%B1%82%E9%80%86%E5%BC%95%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">附 1：矩阵求逆引理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84-2%EF%BC%9A%E7%BB%B4%E7%BA%B3%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">附 2：维纳滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E5%8F%B7%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="nav-number">1.</span> <span class="nav-text">什么是信号子空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E5%AD%90%E7%A9%BA%E9%97%B4%E4%B8%8E%E6%8A%95%E5%BD%B1%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">信号子空间与投影矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%B0%8F%E5%8C%96%E9%97%AE%E9%A2%98%E8%A7%A3%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">极小化问题解的形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%AD%90%E7%A9%BA%E9%97%B4%E5%88%86%E6%9E%90%E5%88%B0-past-%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">从子空间分析到 PAST 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#past-%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">5.</span> <span class="nav-text">PAST 算法推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84-1%E7%9F%A9%E9%98%B5%E6%B1%82%E9%80%86%E5%BC%95%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">附 1：矩阵求逆引理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84-2%E7%BB%B4%E7%BA%B3%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">附 2：维纳滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -285,89 +281,309 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>本文源于《矩阵分析与应用》的这样一句话：</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131075538766.png"></p>
-<p>如何运用矩阵求逆引理得到 PAST 算法，书中省略了推导过程。今尝试推导如下。</p>
-<p>考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection Approximation Subspace Tracking，PAST）。</p>
+<p><img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131075538766.png" /></p>
+<p>如何运用矩阵求逆引理得到 PAST
+算法，书中省略了推导过程。今尝试推导如下。</p>
+<p>考虑特征子空间的跟踪与更新问题，「投影逼近」是解决此问题的一个方法。将特征子空间的确定当作一个无约束最优化问题来求解，称为「投影逼近子空间跟踪」（Projection
+Approximation Subspace Tracking，PAST）。</p>
 <p>特征子空间的跟踪与更新问题转化为以 J(W) 为目标函数的极小化问题</p>
-<p>$$<br>J(W) &#x3D; E{|| x - WW^Hx||^2}<br>$$<br>其中，$x$ 是 $n \times 1$ 观测数据向量，$W$ 是 $n \times r$ 矩阵。求矩阵 $W$ 使得目标函数达到全局极小点 $\text{min}J(W)$ 。</p>
-<p>已被证明，当 $W$ 的列向量张成的子空间等于信号子空间时，目标函数 $J(W)$ 达到全局极小点。所谓「子空间跟踪」其跟踪的就是能够使 $W$ 成为信号子空间的 $W$。</p>
-<h2 id="什么是信号子空间"><a href="#什么是信号子空间" class="headerlink" title="什么是信号子空间"></a>什么是信号子空间</h2><p>何种情况下 $W$ 会成为信号子空间？这与 PAST 算法本身无关，而属于子空间分析方法中的内容。在子空间分析中，观测数据向量 $x$ 的自相关矩阵表示为 $R &#x3D; E{xx^H}$，对相关矩阵进行特征值分解 $R &#x3D; U \Sigma U^H$。矩阵 $U$ 的列向量分为两个部分 $U &#x3D; [U_S, U_G] &#x3D; [u_1, u_2, …, u_r, u_{r+1}, …, u_n]$。自相关矩阵的 $r$ 个主特征向量 $U_S &#x3D; [u_1, u_2, …, u_r]$ 张成的子空间即为<strong>观测数据空间的信号子空间</strong>，剩余的 $n-r$ 个次特征向量 $U_G &#x3D; [u_{r+1}, …, u_n]$ 张成的子空间即为<strong>观测数据空间的噪声子空间</strong>。</p>
+<p><span class="math display">\[
+J(W) = E\{|| x - WW^Hx||^2\}
+\]</span> 其中，<span class="math inline">\(x\)</span> 是 <span
+class="math inline">\(n \times 1\)</span> 观测数据向量，<span
+class="math inline">\(W\)</span> 是 <span class="math inline">\(n \times
+r\)</span> 矩阵。求矩阵 <span class="math inline">\(W\)</span>
+使得目标函数达到全局极小点 <span
+class="math inline">\(\text{min}J(W)\)</span> 。</p>
+<p>已被证明，当 <span class="math inline">\(W\)</span>
+的列向量张成的子空间等于信号子空间时，目标函数 <span
+class="math inline">\(J(W)\)</span>
+达到全局极小点。所谓「子空间跟踪」其跟踪的就是能够使 <span
+class="math inline">\(W\)</span> 成为信号子空间的 <span
+class="math inline">\(W\)</span>。</p>
+<h2 id="什么是信号子空间">什么是信号子空间</h2>
+<p>何种情况下 <span class="math inline">\(W\)</span>
+会成为信号子空间？这与 PAST
+算法本身无关，而属于子空间分析方法中的内容。在子空间分析中，观测数据向量
+<span class="math inline">\(x\)</span> 的自相关矩阵表示为 <span
+class="math inline">\(R = E\{xx^H\}\)</span>，对相关矩阵进行特征值分解
+<span class="math inline">\(R = U \Sigma U^H\)</span>。矩阵 <span
+class="math inline">\(U\)</span> 的列向量分为两个部分 <span
+class="math inline">\(U = [U_S, U_G] = [u_1, u_2, ..., u_r, u_{r+1},
+..., u_n]\)</span>。自相关矩阵的 <span class="math inline">\(r\)</span>
+个主特征向量 <span class="math inline">\(U_S = [u_1, u_2, ...,
+u_r]\)</span>
+张成的子空间即为<strong>观测数据空间的信号子空间</strong>，剩余的 <span
+class="math inline">\(n-r\)</span> 个次特征向量 <span
+class="math inline">\(U_G = [u_{r+1}, ..., u_n]\)</span>
+张成的子空间即为<strong>观测数据空间的噪声子空间</strong>。</p>
 <span id="more"></span>
-
-<h2 id="信号子空间与投影矩阵"><a href="#信号子空间与投影矩阵" class="headerlink" title="信号子空间与投影矩阵"></a>信号子空间与投影矩阵</h2><p>信号子空间与噪声子空间是正交的，即有 $\text{Span}{u_1, u_2, …, u_r} \perp \text{Span}{u_{r+1}, …, u_n}$。由于 $U$ 是酉矩阵，因此有</p>
-<p>$$<br>UU^H &#x3D; U_S U_S^H + U_G U_G^H &#x3D; I<br>$$</p>
+<h2 id="信号子空间与投影矩阵">信号子空间与投影矩阵</h2>
+<p>信号子空间与噪声子空间是正交的，即有 <span
+class="math inline">\(\text{Span}\{u_1, u_2, ..., u_r\} \perp
+\text{Span}\{u_{r+1}, ..., u_n\}\)</span>。由于 <span
+class="math inline">\(U\)</span> 是酉矩阵，因此有</p>
+<p><span class="math display">\[
+UU^H = U_S U_S^H + U_G U_G^H = I
+\]</span></p>
 <p>定义<strong>信号子空间上的投影矩阵</strong>为</p>
-<p>$$<br>P_S &#x3D; U_S (U_S^H U_S)^{-1} U_S^H<br>$$<br>只有当满足正交性约束条件 $U_S^H U_S &#x3D; I$ 时，信号子空间上的投影矩阵可简化为 $P_S &#x3D; U_S U_S^H$。于是，$P_Sx &#x3D;  U_S U_S^Hx$ 为向量 $x$ 在信号子空间上的投影。</p>
+<p><span class="math display">\[
+P_S = U_S (U_S^H U_S)^{-1} U_S^H
+\]</span> 只有当满足正交性约束条件 <span class="math inline">\(U_S^H U_S
+= I\)</span> 时，信号子空间上的投影矩阵可简化为 <span
+class="math inline">\(P_S = U_S U_S^H\)</span>。于是，<span
+class="math inline">\(P_Sx = U_S U_S^Hx\)</span> 为向量 <span
+class="math inline">\(x\)</span> 在信号子空间上的投影。</p>
 <p>同理，定义<strong>噪声子空间上的投影矩阵</strong>为</p>
-<p>$$<br>P_G &#x3D; U_G (U_G^H U_G)^{-1} U_G^H<br>$$<br>只有当满足正交性约束条件 $U_G^H U_G &#x3D; I$ 时，噪声子空间上的投影矩阵可简化为 $P_G &#x3D; U_G U_G^H$。于是，$P_Gx &#x3D;  U_G U_G^Hx$ 为向量 $x$ 在噪声子空间上的投影。</p>
-<p>由于信号子空间与噪声子空间具有正交关系，因此 $P_S$ 和 $P_G$ 互为正交投影矩阵，即 $P_S + P_G &#x3D; I$。因此 $P_G &#x3D; (I - P_S)x$ 还表示向量 $x$ 在信号子空间上的<strong>正交投影</strong>。 </p>
-<p>另有如下子空间分析的引理，其中 $P_{H_1}$ 是到子空间 $H_1$ 的投影矩阵，$P_{H_2}$ 是到子空间 $H_2$ 的投影矩阵。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131125829051.png"></p>
+<p><span class="math display">\[
+P_G = U_G (U_G^H U_G)^{-1} U_G^H
+\]</span> 只有当满足正交性约束条件 <span class="math inline">\(U_G^H U_G
+= I\)</span> 时，噪声子空间上的投影矩阵可简化为 <span
+class="math inline">\(P_G = U_G U_G^H\)</span>。于是，<span
+class="math inline">\(P_Gx = U_G U_G^Hx\)</span> 为向量 <span
+class="math inline">\(x\)</span> 在噪声子空间上的投影。</p>
+<p>由于信号子空间与噪声子空间具有正交关系，因此 <span
+class="math inline">\(P_S\)</span> 和 <span
+class="math inline">\(P_G\)</span> 互为正交投影矩阵，即 <span
+class="math inline">\(P_S + P_G = I\)</span>。因此 <span
+class="math inline">\(P_G = (I - P_S)x\)</span> 还表示向量 <span
+class="math inline">\(x\)</span>
+在信号子空间上的<strong>正交投影</strong>。</p>
+<p>另有如下子空间分析的引理，其中 <span
+class="math inline">\(P_{H_1}\)</span> 是到子空间 <span
+class="math inline">\(H_1\)</span> 的投影矩阵，<span
+class="math inline">\(P_{H_2}\)</span> 是到子空间 <span
+class="math inline">\(H_2\)</span> 的投影矩阵。</p>
+<p><img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220131125829051.png" /></p>
 <p>此引理表明，若一个矩阵等于另一个矩阵右乘一个正交矩阵，则这两个矩阵等价或张成相同的列空间。这就引出了第二个约束条件，即齐次性约束条件。</p>
-<h2 id="极小化问题解的形式"><a href="#极小化问题解的形式" class="headerlink" title="极小化问题解的形式"></a>极小化问题解的形式</h2><p>对于目标函数 $J(W)$，若矩阵 $W$ 满足 1）正交性约束条件 $W^H W &#x3D; I$，2）齐次性约束条件 $J(W) &#x3D; J(WQ)$，其中 $Q$ 为 $r \times r$ 任意正交矩阵，则极小化问题 $\text{min} J(W)$ 的解不是一个 $W$ 矩阵，而是由 $WQ$ 组成的矩阵集合。</p>
-<h2 id="从子空间分析到-PAST-算法"><a href="#从子空间分析到-PAST-算法" class="headerlink" title="从子空间分析到 PAST 算法"></a>从子空间分析到 PAST 算法</h2><p>PAST 算法给出了求解极小化问题 $\text{min} J(W)$ 的方法。已被证明，当且仅当 $W &#x3D; U_r Q$，其中 $Q$ 是 $r \times r$ 任意酉矩阵，而 $U_r$ 是 $n \times r$ 矩阵，其 $r$ 个列向量是自相关矩阵 $R &#x3D; E{xx^H}$ 的 $r$ 个主特征向量，则 $W$ 的列向量张成的子空间为信号子空间，此时目标函数 $J(W)$ 达到全局极小值。</p>
-<p>更重要的是，这一结论的得出并不事先假定有任何约束条件，而是在目标函数 $J(W)$ 达到极小值时自动满足 1）正交性约束条件 $W^H W &#x3D; I$，2）齐次性约束条件 $J(W) &#x3D; J(WQ)$。这就是为什么说，原本具有正交性约束和齐次性的极小化问题可以等价为一个无约束的最优化问题。如此一来，求极小化问题 $\text{min} J(W)$ 的解即转化为求自相关矩阵的 $r$ 个主特征向量。</p>
-<p>然而在实际应用中，自相关矩阵是随时间变化的，其特征值和特征向量也是随时间变化的。跟踪时变信号子空间 $W$ 的一个办法是采用递推最小二乘法。</p>
-<h2 id="PAST-算法推导"><a href="#PAST-算法推导" class="headerlink" title="PAST 算法推导"></a>PAST 算法推导</h2><p>定义指数加权的目标函数<br>$$<br>\begin{equation}  \tag{1}<br>\begin{aligned}<br>    J_1(W(t)) &amp;&#x3D; \sum_{i &#x3D; 1}^{t} \beta^{t - i} ||x(i) - W(t)W^H(t)x(i)||^2 \<br>    &amp;&#x3D;  \sum_{i &#x3D; 1}^{t} \beta^{t - i} ||x(i) - W(t)y(i)||^2<br>\end{aligned}<br>\end{equation}<br>$$</p>
-<p>其中，$y(i) &#x3D; W(t) x(i)$。</p>
-<p>由自适应滤波理论知，极小化问题 $\text{min} J_1(W)$ 的最优解为维纳滤波器。</p>
-<p>$$<br>W(t) &#x3D; C_{xy}(t) C_{yy}^{-1}(t) \tag{2}<br>$$</p>
-<p>其中，互相关矩阵 $C_{xy}(t)$ 和自相关矩阵 $C_{yy}(t)$ 可以递推得到</p>
-<p>$$<br>C_{xy}(t) &#x3D; \sum_{i &#x3D; 1}^{t} \beta^{t - i} x(i) y^H(t) &#x3D; \beta C_{xy}(t - 1) + x(t) y^H(t) \tag{3}<br>$$</p>
-<p>$$<br>C_{yy}(t) &#x3D; \sum_{i &#x3D; 1}^{t} \beta^{t - i} y(i) y^H(t) &#x3D; \beta C_{yy}(t - 1) + y(t) y^H(t) \tag{4}<br>$$</p>
+<h2 id="极小化问题解的形式">极小化问题解的形式</h2>
+<p>对于目标函数 <span class="math inline">\(J(W)\)</span>，若矩阵 <span
+class="math inline">\(W\)</span> 满足 1）正交性约束条件 <span
+class="math inline">\(W^H W = I\)</span>，2）齐次性约束条件 <span
+class="math inline">\(J(W) = J(WQ)\)</span>，其中 <span
+class="math inline">\(Q\)</span> 为 <span class="math inline">\(r \times
+r\)</span> 任意正交矩阵，则极小化问题 <span
+class="math inline">\(\text{min} J(W)\)</span> 的解不是一个 <span
+class="math inline">\(W\)</span> 矩阵，而是由 <span
+class="math inline">\(WQ\)</span> 组成的矩阵集合。</p>
+<h2 id="从子空间分析到-past-算法">从子空间分析到 PAST 算法</h2>
+<p>PAST 算法给出了求解极小化问题 <span class="math inline">\(\text{min}
+J(W)\)</span> 的方法。已被证明，当且仅当 <span class="math inline">\(W =
+U_r Q\)</span>，其中 <span class="math inline">\(Q\)</span> 是 <span
+class="math inline">\(r \times r\)</span> 任意酉矩阵，而 <span
+class="math inline">\(U_r\)</span> 是 <span class="math inline">\(n
+\times r\)</span> 矩阵，其 <span class="math inline">\(r\)</span>
+个列向量是自相关矩阵 <span class="math inline">\(R = E\{xx^H\}\)</span>
+的 <span class="math inline">\(r\)</span> 个主特征向量，则 <span
+class="math inline">\(W\)</span>
+的列向量张成的子空间为信号子空间，此时目标函数 <span
+class="math inline">\(J(W)\)</span> 达到全局极小值。</p>
+<p>更重要的是，这一结论的得出并不事先假定有任何约束条件，而是在目标函数
+<span class="math inline">\(J(W)\)</span> 达到极小值时自动满足
+1）正交性约束条件 <span class="math inline">\(W^H W =
+I\)</span>，2）齐次性约束条件 <span class="math inline">\(J(W) =
+J(WQ)\)</span>。这就是为什么说，原本具有正交性约束和齐次性的极小化问题可以等价为一个无约束的最优化问题。如此一来，求极小化问题
+<span class="math inline">\(\text{min} J(W)\)</span>
+的解即转化为求自相关矩阵的 <span class="math inline">\(r\)</span>
+个主特征向量。</p>
+<p>然而在实际应用中，自相关矩阵是随时间变化的，其特征值和特征向量也是随时间变化的。跟踪时变信号子空间
+<span class="math inline">\(W\)</span>
+的一个办法是采用递推最小二乘法。</p>
+<h2 id="past-算法推导">PAST 算法推导</h2>
+<p>定义指数加权的目标函数 <span class="math display">\[
+\begin{equation}  \tag{1}
+\begin{aligned}
+    J_1(W(t)) &amp;= \sum_{i = 1}^{t} \beta^{t - i} ||x(i) -
+W(t)W^H(t)x(i)||^2 \\
+    &amp;=  \sum_{i = 1}^{t} \beta^{t - i} ||x(i) - W(t)y(i)||^2
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>其中，<span class="math inline">\(y(i) = W(t) x(i)\)</span>。</p>
+<p>由自适应滤波理论知，极小化问题 <span class="math inline">\(\text{min}
+J_1(W)\)</span> 的最优解为维纳滤波器。</p>
+<p><span class="math display">\[
+W(t) = C_{xy}(t) C_{yy}^{-1}(t) \tag{2}
+\]</span></p>
+<p>其中，互相关矩阵 <span class="math inline">\(C_{xy}(t)\)</span>
+和自相关矩阵 <span class="math inline">\(C_{yy}(t)\)</span>
+可以递推得到</p>
+<p><span class="math display">\[
+C_{xy}(t) = \sum_{i = 1}^{t} \beta^{t - i} x(i) y^H(t) = \beta C_{xy}(t
+- 1) + x(t) y^H(t) \tag{3}
+\]</span></p>
+<p><span class="math display">\[
+C_{yy}(t) = \sum_{i = 1}^{t} \beta^{t - i} y(i) y^H(t) = \beta C_{yy}(t
+- 1) + y(t) y^H(t) \tag{4}
+\]</span></p>
 <p>对式（4）应用矩阵求逆引理，令</p>
-<p>$$<br>\begin{equation} \tag{5}<br>\begin{aligned}<br>    A &amp;&#x3D; C_{yy}(t) \<br>    B^{-1} &amp;&#x3D; \beta C_{yy}(t - 1) \<br>    C &amp;&#x3D;  y(t) \<br>    D &amp;&#x3D; 1<br>\end{aligned}<br>\end{equation}<br>$$</p>
+<p><span class="math display">\[
+\begin{equation} \tag{5}
+\begin{aligned}
+    A &amp;= C_{yy}(t) \\
+    B^{-1} &amp;= \beta C_{yy}(t - 1) \\
+    C &amp;=  y(t) \\
+    D &amp;= 1
+\end{aligned}
+\end{equation}  
+\]</span></p>
 <p>则相关矩阵的逆矩阵为</p>
-<p>$$<br>C_{yy}^{-1}(t) &#x3D; \beta^{-1} C_{yy}^{-1}(t - 1) -  \frac{\beta^{-1} C_{yy}^{-1}(t - 1)  y(t) · \beta^{-1} y^H(t) C_{yy}^{-1}(t - 1)}{1 + \beta^{-1} y^H(t) C_{yy}^{-1}(t - 1) y(t)}  \tag{6}<br>$$</p>
-<p>令 $P(t) &#x3D; C_{yy}^{-1}(t)$，则上式可重写为</p>
-<p>$$<br>P(t) &#x3D; \beta^{-1} P(t - 1) - \frac{\beta^{-1} P(t - 1) y(t)}{1 + \beta^{-1} y^H(t) P(t - 1) y(t)} · \beta^{-1} y^H(t) P(t - 1) \tag{7}<br>$$</p>
-<p>令 </p>
-<p>$$<br>g(t) &#x3D; \frac{\beta^{-1} P(t - 1) y(t)}{1 + \beta^{-1} y^H(t) P(t - 1) y(t)} \tag{8}<br>$$</p>
+<p><span class="math display">\[
+C_{yy}^{-1}(t) = \beta^{-1} C_{yy}^{-1}(t - 1) -  \frac{\beta^{-1}
+C_{yy}^{-1}(t - 1)  y(t) · \beta^{-1} y^H(t) C_{yy}^{-1}(t - 1)}{1 +
+\beta^{-1} y^H(t) C_{yy}^{-1}(t - 1) y(t)}  \tag{6}
+\]</span></p>
+<p>令 <span class="math inline">\(P(t) =
+C_{yy}^{-1}(t)\)</span>，则上式可重写为</p>
+<p><span class="math display">\[
+P(t) = \beta^{-1} P(t - 1) - \frac{\beta^{-1} P(t - 1) y(t)}{1 +
+\beta^{-1} y^H(t) P(t - 1) y(t)} · \beta^{-1} y^H(t) P(t - 1) \tag{7}
+\]</span></p>
+<p>令</p>
+<p><span class="math display">\[
+g(t) = \frac{\beta^{-1} P(t - 1) y(t)}{1 + \beta^{-1} y^H(t) P(t - 1)
+y(t)} \tag{8}
+\]</span></p>
 <p>带入式（7）可得</p>
-<p>$$<br>P(t) &#x3D; \beta^{-1} P(t - 1) -  \beta^{-1}  g(t) y^H(t) P(t-1) \tag{9}<br>$$</p>
+<p><span class="math display">\[
+P(t) = \beta^{-1} P(t - 1) -  \beta^{-1}  g(t) y^H(t) P(t-1) \tag{9}
+\]</span></p>
 <p>另外整理式（8）可得</p>
-<p>$$<br>\begin{equation} \tag{10}<br>\begin{aligned}<br>g(t) &amp;&#x3D; \beta^{-1} P(t - 1) y(t) - \beta^{-1} g(t) y^H(t) P(t - 1) y(t) \<br>&amp;&#x3D; [\beta^{-1} P(t - 1) - \beta^{-1} g(t) y^H(t) P(t - 1)] y(t) \<br>&amp;&#x3D; P(t) y(t)<br>\end{aligned}<br>\end{equation}<br>$$</p>
-<p>式（8~10）导出了增益向量 $g(t) &#x3D; P(t) y(t)$，后面将会再次用到它。现继续整理式（7）得</p>
-<p>$$<br>P(t) &#x3D; \beta^{-1} P(t - 1) - \frac{P(t - 1) y(t)}{\beta + y^H(t) P(t - 1) y(t)} · \beta^{-1} y^H(t) P(t - 1) \tag{11}<br>$$</p>
-<p>令 $h(t) &#x3D; P(t - 1) y(t)$，由于自相关矩阵是 Hermitian 矩阵，亦有 $h^H(t) &#x3D; y^H(t) P(t - 1)$，则上式可重写为</p>
-<p>$$<br>P(t) &#x3D; \beta^{-1} P(t - 1) -  \beta^{-1} \frac{h(t)}{\beta + y^H(t) h(t)} h^H(t) \tag{12}<br>$$</p>
-<p>令 $\alpha(t) &#x3D; \beta +  y^H(t) h(t)$，则式（12）可重写为</p>
-<p>$$<br>P(t) &#x3D; \beta^{-1} [P(t - 1) - h(t) h^H(t) &#x2F; \alpha(t)] \tag{13}<br>$$</p>
-<p>式（11 ~ 13）导出了自相关矩阵的逆矩阵 $P(t)$ 的计算式。</p>
-<p>下面使用  $P(t) &#x3D; C_{yy}^{-1}(t)$ 和式（3）将式（2）重写为</p>
-<p>$$<br>\begin{equation}  \tag{14}<br>\begin{aligned}<br>W(t) &amp;&#x3D; C_{xy}(t) C_{yy}^{-1}(t)  \<br>&amp;&#x3D; C_{xy}(t) P(t) \<br>&amp;&#x3D; [\beta C_{xy}(t - 1) + x(t) y^H(t)] P(t) \<br>&amp;&#x3D; \beta C_{xy}(t -1) P(t)  +  x(t) y^H(t) P(t)<br>\end{aligned}<br>\end{equation}<br>$$<br>将式（13）带入上式右边第一项得</p>
-<p>$$<br>\begin{equation}  \tag{15}<br>\begin{aligned}<br>W(t) &amp;&#x3D; \beta C_{xy}(t -1){\beta^{-1} [P(t - 1) - h(t) h^H(t) &#x2F; \alpha(t)]}   +  x(t) y^H(t) P(t)\<br>&amp;&#x3D; C_{xy}(t - 1) P(t - 1)  - C_{xy}(t - 1) h(t) h^H(t) &#x2F; \alpha(t)  + x(t) y^H(t) P(t) \<br>&amp;&#x3D; C_{xy}(t - 1) P(t - 1)  - C_{xy}(t - 1) P(t - 1) y(t) h^H(t)  &#x2F; \alpha(t)  + x(t) y^H(t) P(t) \<br>&amp;&#x3D; W(t -1) - W(t -1) y(t) h^H(t)  &#x2F; \alpha(t) +  x(t) y^H(t) P(t)<br>\end{aligned}<br>\end{equation}<br>$$</p>
-<p>前面由式（10）导出增益向量 $g(t) &#x3D;  P(t) y(t)$，等式两边同时取共轭转置有</p>
-<p>$$<br>g^H(t) &#x3D; y^H(t) P^H(t) &#x3D; y^H(t) P(t) \tag{16}<br>$$</p>
+<p><span class="math display">\[
+\begin{equation} \tag{10}
+\begin{aligned}
+g(t) &amp;= \beta^{-1} P(t - 1) y(t) - \beta^{-1} g(t) y^H(t) P(t - 1)
+y(t) \\
+&amp;= [\beta^{-1} P(t - 1) - \beta^{-1} g(t) y^H(t) P(t - 1)] y(t) \\
+&amp;= P(t) y(t)
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>式（8~10）导出了增益向量 <span class="math inline">\(g(t) = P(t)
+y(t)\)</span>，后面将会再次用到它。现继续整理式（7）得</p>
+<p><span class="math display">\[
+P(t) = \beta^{-1} P(t - 1) - \frac{P(t - 1) y(t)}{\beta + y^H(t) P(t -
+1) y(t)} · \beta^{-1} y^H(t) P(t - 1) \tag{11}
+\]</span></p>
+<p>令 <span class="math inline">\(h(t) = P(t - 1)
+y(t)\)</span>，由于自相关矩阵是 Hermitian 矩阵，亦有 <span
+class="math inline">\(h^H(t) = y^H(t) P(t -
+1)\)</span>，则上式可重写为</p>
+<p><span class="math display">\[
+P(t) = \beta^{-1} P(t - 1) -  \beta^{-1} \frac{h(t)}{\beta + y^H(t)
+h(t)} h^H(t) \tag{12}
+\]</span></p>
+<p>令 <span class="math inline">\(\alpha(t) = \beta + y^H(t)
+h(t)\)</span>，则式（12）可重写为</p>
+<p><span class="math display">\[
+P(t) = \beta^{-1} [P(t - 1) - h(t) h^H(t) / \alpha(t)] \tag{13}
+\]</span></p>
+<p>式（11 ~ 13）导出了自相关矩阵的逆矩阵 <span
+class="math inline">\(P(t)\)</span> 的计算式。</p>
+<p>下面使用 <span class="math inline">\(P(t) = C_{yy}^{-1}(t)\)</span>
+和式（3）将式（2）重写为</p>
+<p><span class="math display">\[
+\begin{equation}  \tag{14}
+\begin{aligned}
+W(t) &amp;= C_{xy}(t) C_{yy}^{-1}(t)  \\
+&amp;= C_{xy}(t) P(t) \\
+&amp;= [\beta C_{xy}(t - 1) + x(t) y^H(t)] P(t) \\
+&amp;= \beta C_{xy}(t -1) P(t)  +  x(t) y^H(t) P(t)
+\end{aligned}
+\end{equation}
+\]</span> 将式（13）带入上式右边第一项得</p>
+<p><span class="math display">\[
+\begin{equation}  \tag{15}
+\begin{aligned}
+W(t) &amp;= \beta C_{xy}(t -1)\{\beta^{-1} [P(t - 1) - h(t) h^H(t) /
+\alpha(t)]\}   +  x(t) y^H(t) P(t)\\
+&amp;= C_{xy}(t - 1) P(t - 1)  - C_{xy}(t - 1) h(t) h^H(t) /
+\alpha(t)  + x(t) y^H(t) P(t) \\
+&amp;= C_{xy}(t - 1) P(t - 1)  - C_{xy}(t - 1) P(t - 1) y(t) h^H(t)  /
+\alpha(t)  + x(t) y^H(t) P(t) \\
+&amp;= W(t -1) - W(t -1) y(t) h^H(t)  / \alpha(t) +  x(t) y^H(t) P(t)
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>前面由式（10）导出增益向量 <span class="math inline">\(g(t) = P(t)
+y(t)\)</span>，等式两边同时取共轭转置有</p>
+<p><span class="math display">\[
+g^H(t) = y^H(t) P^H(t) = y^H(t) P(t) \tag{16}
+\]</span></p>
 <p>此外由式（12）可导出增益向量的另一种计算式</p>
-<p>$$<br>g(t) &#x3D; h(t) &#x2F; \alpha(t) \tag{17}<br>$$</p>
+<p><span class="math display">\[
+g(t) = h(t) / \alpha(t) \tag{17}
+\]</span></p>
 <p>对上式两边同时取共轭转置有</p>
-<p>$$<br>g^H(t) &#x3D; h^H(t) &#x2F; \alpha(t) &#x3D; [h(t) &#x2F; \alpha(t)]^H \tag{18}<br>$$</p>
+<p><span class="math display">\[
+g^H(t) = h^H(t) / \alpha(t) = [h(t) / \alpha(t)]^H \tag{18}
+\]</span></p>
 <p>将式（16）和式（18）带入式（15）有</p>
-<p>$$<br>\begin{equation}  \tag{19}<br>\begin{aligned}<br>W(t) &amp;&#x3D;  W(t -1) - W(t -1) y(t) g^H(t) + x(t) g^H(t) \<br>&amp;&#x3D; W(t -1) + [x(t) - W(t -1) y(t)] g^H(t) \<br>&amp;&#x3D; W(t -1) + e(t) g^H(t) \<br>&amp;&#x3D; W(t -1) + e(t) [h(t) &#x2F; \alpha(t)]^H<br>\end{aligned}<br>\end{equation}<br>$$</p>
+<p><span class="math display">\[
+\begin{equation}  \tag{19}
+\begin{aligned}
+W(t) &amp;=  W(t -1) - W(t -1) y(t) g^H(t) + x(t) g^H(t) \\
+&amp;= W(t -1) + [x(t) - W(t -1) y(t)] g^H(t) \\
+&amp;= W(t -1) + e(t) g^H(t) \\
+&amp;= W(t -1) + e(t) [h(t) / \alpha(t)]^H
+\end{aligned}
+\end{equation}
+\]</span></p>
 <p>其中</p>
-<p>$$<br>e(t) &#x3D; x(t) - W(t -1) y(t) \tag{20}<br>$$</p>
+<p><span class="math display">\[
+e(t) = x(t) - W(t -1) y(t) \tag{20}
+\]</span></p>
 <p>整理以上各式得到 PAST 算法核心计算式如下：</p>
-<p>$y(i) &#x3D; W^H(t) x(i)$</p>
-<p>$h(t) &#x3D; P(t - 1) y(t)$</p>
-<p>$\alpha(t) &#x3D; \beta +  y^H(t) h(t)$</p>
-<p>$g(t) &#x3D; h(t) &#x2F; \alpha(t)$</p>
-<p>$P(t) &#x3D; \beta^{-1} [P(t - 1) - h(t) h^H(t) &#x2F; \alpha(t)]$</p>
-<p>$e(t) &#x3D; x(t) - W(t -1) y(t)$</p>
-<p>$W(t) &#x3D; W(t -1) + e(t) [h(t) &#x2F; \alpha(t)]^H$</p>
-<p>上述过程也是 RLS 滤波器计算过程，而使用 RLS 方法来递归地计算 PAST，其关键一步是用 $W^H(i -1) x(i)$ 来替代 $W^H(t) x(i)$，于是有 $y(t) &#x3D; W^H(t - 1) x(t)$。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220201110216312.png"></p>
-<h2 id="附-1：矩阵求逆引理"><a href="#附-1：矩阵求逆引理" class="headerlink" title="附 1：矩阵求逆引理"></a>附 1：矩阵求逆引理</h2><p>设 A 和 B 是两个 M x M 正定阵，它们之间的关系为</p>
-<p>$$<br>\mathbf{A} &#x3D; \mathbf{B}^{-1} + \mathbf{C} \mathbf{D}^{-1} \mathbf{C}^H<br>$$</p>
-<p>其中 D 是 N x N 正定阵，C 是 M x N 矩阵。根据矩阵求逆引理，A 的逆矩阵表示为</p>
-<p>$$<br>\mathbf{A}^{-1} &#x3D; \mathbf{B} - \mathbf{BC} \left(\mathbf{D} + \mathbf{C}^HBC \right)^{-1} \mathbf{C}^H \mathbf{B}<br>$$</p>
-<h2 id="附-2：维纳滤波器"><a href="#附-2：维纳滤波器" class="headerlink" title="附 2：维纳滤波器"></a>附 2：维纳滤波器</h2><p>PAST 算法源于子空间分析中的极小化问题 $\text{min} J(W)$ ，同时也可视为求解最优线性 FIR 滤波器问题，因此 PAST 算法的实现可利用维纳滤波器的结论。</p>
+<p><span class="math inline">\(y(i) = W^H(t) x(i)\)</span></p>
+<p><span class="math inline">\(h(t) = P(t - 1) y(t)\)</span></p>
+<p><span class="math inline">\(\alpha(t) = \beta + y^H(t)
+h(t)\)</span></p>
+<p><span class="math inline">\(g(t) = h(t) / \alpha(t)\)</span></p>
+<p><span class="math inline">\(P(t) = \beta^{-1} [P(t - 1) - h(t) h^H(t)
+/ \alpha(t)]\)</span></p>
+<p><span class="math inline">\(e(t) = x(t) - W(t -1) y(t)\)</span></p>
+<p><span class="math inline">\(W(t) = W(t -1) + e(t) [h(t) /
+\alpha(t)]^H\)</span></p>
+<p>上述过程也是 RLS 滤波器计算过程，而使用 RLS 方法来递归地计算
+PAST，其关键一步是用 <span class="math inline">\(W^H(i -1) x(i)\)</span>
+来替代 <span class="math inline">\(W^H(t) x(i)\)</span>，于是有 <span
+class="math inline">\(y(t) = W^H(t - 1) x(t)\)</span>。</p>
+<p><img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220201/image-20220201110216312.png" /></p>
+<h2 id="附-1矩阵求逆引理">附 1：矩阵求逆引理</h2>
+<p>设 A 和 B 是两个 M x M 正定阵，它们之间的关系为</p>
+<p><span class="math display">\[
+\mathbf{A} = \mathbf{B}^{-1} + \mathbf{C} \mathbf{D}^{-1} \mathbf{C}^H
+\]</span></p>
+<p>其中 D 是 N x N 正定阵，C 是 M x N 矩阵。根据矩阵求逆引理，A
+的逆矩阵表示为</p>
+<p><span class="math display">\[
+\mathbf{A}^{-1} = \mathbf{B} - \mathbf{BC} \left(\mathbf{D} +
+\mathbf{C}^HBC \right)^{-1} \mathbf{C}^H \mathbf{B}
+\]</span></p>
+<h2 id="附-2维纳滤波器">附 2：维纳滤波器</h2>
+<p>PAST 算法源于子空间分析中的极小化问题 <span
+class="math inline">\(\text{min} J(W)\)</span>
+，同时也可视为求解最优线性 FIR 滤波器问题，因此 PAST
+算法的实现可利用维纳滤波器的结论。</p>
 <p>维纳霍夫方程的矩阵形式表示为</p>
-<p>$$<br>\mathbf{R w_o} &#x3D; \mathbf{p}<br>$$</p>
-<p>其中 $\mathbf{R} &#x3D; \mathbb{E} [\mathbf{uu^H}]$ 为滤波器抽头输入向量的自相关矩阵，$\mathbf{p} &#x3D; \mathbb{E} [\mathbf{u}(n) d^*(n)]$ 为滤波器输入向量 $\mathbf{u}$ 与期望响应 $d(n)$ 的互相关向量。</p>
+<p><span class="math display">\[
+\mathbf{R w_o} = \mathbf{p}
+\]</span></p>
+<p>其中 <span class="math inline">\(\mathbf{R} = \mathbb{E}
+[\mathbf{uu^H}]\)</span> 为滤波器抽头输入向量的自相关矩阵，<span
+class="math inline">\(\mathbf{p} = \mathbb{E} [\mathbf{u}(n)
+d^*(n)]\)</span> 为滤波器输入向量 <span
+class="math inline">\(\mathbf{u}\)</span> 与期望响应 <span
+class="math inline">\(d(n)\)</span> 的互相关向量。</p>
 <p>最优线性 FIR 滤波器抽头权向量为</p>
-<p>$$<br>\mathbf{w_o} &#x3D; \mathbf{R}^{-1}  \mathbf{p}<br>$$</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>张贤达. 矩阵分析与应用（第2版）. 清华大学出版社, 2013.</p>
+<p><span class="math display">\[
+\mathbf{w_o} = \mathbf{R}^{-1}  \mathbf{p}
+\]</span></p>
+<h2 id="references">References</h2>
+<p>张贤达. 矩阵分析与应用（第2版）. 清华大学出版社, 2013.</p>
 
     </div>
 

@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是5G NR控制">
+    <meta name="description" content="前言 RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是5G">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Polar Code（14）3GPP RAN1#88bis">
 <meta property="og:url" content="https://marshallcomm.cn/2017/05/15/polar-code-14-3gpp-ran1-88b/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="前言RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是5G NR控制">
+<meta property="og:description" content="前言 RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是5G">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/094419143.jpg">
 <meta property="article:published_time" content="2017-05-15T01:25:33.000Z">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-construction"><span class="nav-number">2.</span> <span class="nav-text">Code construction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequence-design"><span class="nav-number">3.</span> <span class="nav-text">Sequence design</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#code-construction"><span class="nav-number">2.</span> <span class="nav-text">Code construction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sequence-design"><span class="nav-number">3.</span> <span class="nav-text">Sequence design</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -284,17 +284,39 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
-<p>言归正传，从3GPP RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code construction，二是Sequence design。</p>
+        <h1 id="前言">前言</h1>
+<p><br/>RAN1#87次会议已将Polar
+code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G
+NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar
+code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar
+code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
+<p>言归正传，从3GPP
+RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code
+construction，二是Sequence design。</p>
 <span id="more"></span>
-
-<h1 id="Code-construction"><a href="#Code-construction" class="headerlink" title="Code construction"></a>Code construction</h1><p><br/>Code construction讨论的是编码结构，犹如一个盒子，$k$比特输入，$N$比特输出。只要这个盒子的内部结构确定，输入任意$k$个信息比特，都可以得到$N$比特的极化码编码序列。这个编码结构简略地说就是“<strong>J+J’检错比特 + basic polar</strong>”的控制信道编码结构。J bits是CRC，主要用于错误检测，但也可以用于辅助译码。J’ bits用于辅助译码。</p>
-<p>根据Arikan的结论，极化码在码长趋于无穷长时，由于信道极化完全而能够达到香农容量。但实际的码长是有限长的，采用SC&#x2F;SCL译码算法并不能达到理想的译码性能。添加一些检错比特以辅助译码，则能够以较低的复杂度提高译码检错能力，从而提高译码性能。3GPP所讨论的主要是基于辅助的极化码方案，目前有CRC-polar、PC-polar和Hash-polar三种方案，甚至是它们的组合。所以J’ bits可以是CRC或PC或Hash code，或它们的组合。</p>
-<p>此外，极化码编码结构要考虑Early termination，在不降低BLRE性能或增加时延的前提下，不必等到译出全部比特才去判断该码字是否正确，而是在译出一部分比特的时候就可以提前发现错误。这样做的好处，一是在译码过程中能够尽早发现译码错误，减少译码复杂度；二是对于控制信道可以减少盲检测的数量。</p>
-<h1 id="Sequence-design"><a href="#Sequence-design" class="headerlink" title="Sequence design"></a>Sequence design</h1><p><br/>Sequence design涉及极化码信息比特和冻结比特位置的选择问题。对极化码而言，由于信道极化特性，某些比特位置（子信道）总是比其他比特位置更可靠。构造极化码时，需要一个基于可靠性度量的比特位置顺序序列（ordered sequence），指示信息比特和检错比特放置在可靠性较高的比特位置上，冻结比特放置在可靠性较低的比特位置上。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/094419143.jpg" title="The structure of Polar codes for NR" />
-
-<p>上图红色方框表示的序列就是ordered sequence。有了“<strong>J+J’检错比特 + basic polar</strong>”的编码结构，加上指示信息比特&#x2F;冻结比特位置的<strong>ordered sequence</strong>，最后加上<strong>速率匹配方案</strong>以突破码长$N$必须为2的幂次方的限制，最终构成了一套适用于NR-PDCCH的极化码编码方案。</p>
+<h1 id="code-construction">Code construction</h1>
+<p><br/>Code construction讨论的是编码结构，犹如一个盒子，<span
+class="math inline">\(k\)</span>比特输入，<span
+class="math inline">\(N\)</span>比特输出。只要这个盒子的内部结构确定，输入任意<span
+class="math inline">\(k\)</span>个信息比特，都可以得到<span
+class="math inline">\(N\)</span>比特的极化码编码序列。这个编码结构简略地说就是“<strong>J+J'检错比特
++ basic polar</strong>”的控制信道编码结构。J
+bits是CRC，主要用于错误检测，但也可以用于辅助译码。J'
+bits用于辅助译码。</p>
+<p>根据Arikan的结论，极化码在码长趋于无穷长时，由于信道极化完全而能够达到香农容量。但实际的码长是有限长的，采用SC/SCL译码算法并不能达到理想的译码性能。添加一些检错比特以辅助译码，则能够以较低的复杂度提高译码检错能力，从而提高译码性能。3GPP所讨论的主要是基于辅助的极化码方案，目前有CRC-polar、PC-polar和Hash-polar三种方案，甚至是它们的组合。所以J'
+bits可以是CRC或PC或Hash code，或它们的组合。</p>
+<p>此外，极化码编码结构要考虑Early
+termination，在不降低BLRE性能或增加时延的前提下，不必等到译出全部比特才去判断该码字是否正确，而是在译出一部分比特的时候就可以提前发现错误。这样做的好处，一是在译码过程中能够尽早发现译码错误，减少译码复杂度；二是对于控制信道可以减少盲检测的数量。</p>
+<h1 id="sequence-design">Sequence design</h1>
+<p><br/>Sequence
+design涉及极化码信息比特和冻结比特位置的选择问题。对极化码而言，由于信道极化特性，某些比特位置（子信道）总是比其他比特位置更可靠。构造极化码时，需要一个基于可靠性度量的比特位置顺序序列（ordered
+sequence），指示信息比特和检错比特放置在可靠性较高的比特位置上，冻结比特放置在可靠性较低的比特位置上。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/094419143.jpg" title="The structure of Polar codes for NR" /></p>
+<p>上图红色方框表示的序列就是ordered sequence。有了“<strong>J+J'检错比特
++ basic
+polar</strong>”的编码结构，加上指示信息比特/冻结比特位置的<strong>ordered
+sequence</strong>，最后加上<strong>速率匹配方案</strong>以突破码长<span
+class="math inline">\(N\)</span>必须为2的幂次方的限制，最终构成了一套适用于NR-PDCCH的极化码编码方案。</p>
 <p>关于Sequence design，本次会议并没有达成任何实质性结论。</p>
 
     </div>

@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。 从基本的高斯信道说起，对于一个BAWGN信道，其接收符号$y$表示为： $$\begin{align}y&#x3D;s+z\end{align}$$ 其中$z$为服从$N\left( 0,{ {\sigma }^{2}} \right)$的高斯白噪声，$s$为调制符号，调制方式采用BPSK。$s&#x3D;">
+    <meta name="description" content="“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。 从基本的高斯信道说起，对于一个BAWGN信道，其接收符号\(y\)表示为： \[\begin{align} y&#x3D;s+z \end{align}\] 其中\(z\)为服从\(N\left( 0,{ {\sigma }^{2}} \right)\)的高斯白噪声，\(s\)为调制符号，调制方式采用BP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Polar Code（17）高斯近似（2）">
 <meta property="og:url" content="https://marshallcomm.cn/2017/08/04/polar-code-17-gaussian-approximation2/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。 从基本的高斯信道说起，对于一个BAWGN信道，其接收符号$y$表示为： $$\begin{align}y&#x3D;s+z\end{align}$$ 其中$z$为服从$N\left( 0,{ {\sigma }^{2}} \right)$的高斯白噪声，$s$为调制符号，调制方式采用BPSK。$s&#x3D;">
+<meta property="og:description" content="“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。 从基本的高斯信道说起，对于一个BAWGN信道，其接收符号\(y\)表示为： \[\begin{align} y&#x3D;s+z \end{align}\] 其中\(z\)为服从\(N\left( 0,{ {\sigma }^{2}} \right)\)的高斯白噪声，\(s\)为调制符号，调制方式采用BP">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-08-04T07:51:43.000Z">
 <meta property="article:modified_time" content="2022-08-14T07:43:04.961Z">
@@ -149,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">相关链接：</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">相关链接：</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -283,22 +283,70 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。</p>
-<p>从基本的高斯信道说起，对于一个BAWGN信道，其接收符号$y$表示为：</p>
-<p>$$\begin{align}<br>y&#x3D;s+z<br>\end{align}$$</p>
-<p>其中$z$为服从$N\left( 0,{ {\sigma }^{2}} \right)$的高斯白噪声，$s$为调制符号，调制方式采用BPSK。$s&#x3D;1-2x$或者$s&#x3D;2x-1$取决于怎样定义BPSK映射。若定义BPSK映射规则为：</p>
-<p>\begin{align}<br>s&#x3D;\left{ \begin{matrix}<br>   +1,\ \ x&#x3D;0  \<br>   -1,\ \ x&#x3D;1  \<br>\end{matrix} \right.<br>\end{align}</p>
-<p>其中$x\in \left{ 0,1 \right}$为编码比特，则接收符号$y$重写为：</p>
-<p>$$\begin{align}<br>y&#x3D;\left( 1-2x \right)+z<br>\end{align}$$</p>
+<p>从基本的高斯信道说起，对于一个BAWGN信道，其接收符号<span
+class="math inline">\(y\)</span>表示为：</p>
+<p><span class="math display">\[\begin{align}
+y=s+z
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(z\)</span>为服从<span
+class="math inline">\(N\left( 0,{ {\sigma }^{2}}
+\right)\)</span>的高斯白噪声，<span
+class="math inline">\(s\)</span>为调制符号，调制方式采用BPSK。<span
+class="math inline">\(s=1-2x\)</span>或者<span
+class="math inline">\(s=2x-1\)</span>取决于怎样定义BPSK映射。若定义BPSK映射规则为：</p>
+<p><span class="math display">\[\begin{align}
+s=\left\{ \begin{matrix}
+   +1,\ \ x=0  \\
+   -1,\ \ x=1  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(x\in \left\{ 0,1
+\right\}\)</span>为编码比特，则接收符号<span
+class="math inline">\(y\)</span>重写为：</p>
+<p><span class="math display">\[\begin{align}
+y=\left( 1-2x \right)+z
+\end{align}\]</span></p>
 <span id="more"></span>
-
-<p>下面考察接收符号$y$的对数似然比LLR：</p>
-<p>$$\begin{align}<br>LLR\left( y \right)&#x3D;\ln \frac{p\left( y|x&#x3D;0 \right)}{p\left( y|x&#x3D;1 \right)}&#x3D;\ln \frac{\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{ {e}^{-\frac{ { {\left[ y-\left( 1-2x \right) \right]}^{\ 2}}}{2{ {\sigma }^{2}}}|x&#x3D;0}}}{\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{ {e}^{-\frac{\left[ y-\left( 1-2x \right) \right]{ {\ }^{2}}}{2{ {\sigma }^{2}}}|x&#x3D;1}}}&#x3D;\frac{2}{ { {\sigma }^{2}}}y<br>\end{align}$$</p>
-<p>接收符号$y$是服从$N\left( a,{ {\sigma }^{2}} \right)$的高斯随机变量，$a&#x3D;E\left( y \right)$为$y$的均值，而$LLR\left( y \right)$也是一个高斯随机变量，其均值和方差取决于接收符号$y$的均值和方差。</p>
-<p>$y$因$z$是随机变量而成为随机变量，$LLR\left( y \right)$又因$y$是随机变量而成为随机变量。已知$z\sim N\left( 0,{ {\sigma }^{2}} \right)$。</p>
-<p>文献[1]指出信道输出的均值与调制方式有关，在BPSK下，$y$的均值$a&#x3D;\pm 1$。但文献[2]指出$y\sim N\left( 0,{ {\sigma }^{2}} \right)$，可见$y$的均值为0。那么$y$的均值到底是多少？</p>
-<p>我在8月份思考这个问题的时候也正是卡在这里。虽然我给出了自己的解释，现在看来，过去的解释有些荒诞。现在重新回到原点，博文暂时加上<a href="http://marshallcomm.cn/tags/%E5%AD%98%E7%96%91/">存疑</a>的标签。</p>
-<p>#参考文献<br><br/>[1] 吴道龙. 极化码构造与译码算法研究[D]. 西安电子科技大学, 2016.<br>[2] 陈凯. 极化编码理论与实用方案研究[D]. 北京邮电大学, 2014.</p>
-<h1 id="相关链接："><a href="#相关链接：" class="headerlink" title="相关链接："></a>相关链接：</h1><p><br/><a href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar Code（4）编码之极化信道可靠性估计》</a><br><a href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">《Polar Code（8）高斯近似》</a></p>
+<p>下面考察接收符号<span
+class="math inline">\(y\)</span>的对数似然比LLR：</p>
+<p><span class="math display">\[\begin{align}
+LLR\left( y \right)=\ln \frac{p\left( y|x=0 \right)}{p\left( y|x=1
+\right)}=\ln \frac{\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{ {e}^{-\frac{
+{ {\left[ y-\left( 1-2x \right) \right]}^{\ 2}}}{2{ {\sigma
+}^{2}}}|x=0}}}{\frac{1}{\sqrt{2\pi { {\sigma }^{2}}}}{
+{e}^{-\frac{\left[ y-\left( 1-2x \right) \right]{ {\ }^{2}}}{2{ {\sigma
+}^{2}}}|x=1}}}=\frac{2}{ { {\sigma }^{2}}}y
+\end{align}\]</span></p>
+<p>接收符号<span class="math inline">\(y\)</span>是服从<span
+class="math inline">\(N\left( a,{ {\sigma }^{2}}
+\right)\)</span>的高斯随机变量，<span class="math inline">\(a=E\left( y
+\right)\)</span>为<span class="math inline">\(y\)</span>的均值，而<span
+class="math inline">\(LLR\left( y
+\right)\)</span>也是一个高斯随机变量，其均值和方差取决于接收符号<span
+class="math inline">\(y\)</span>的均值和方差。</p>
+<p><span class="math inline">\(y\)</span>因<span
+class="math inline">\(z\)</span>是随机变量而成为随机变量，<span
+class="math inline">\(LLR\left( y \right)\)</span>又因<span
+class="math inline">\(y\)</span>是随机变量而成为随机变量。已知<span
+class="math inline">\(z\sim N\left( 0,{ {\sigma }^{2}}
+\right)\)</span>。</p>
+<p>文献[1]指出信道输出的均值与调制方式有关，在BPSK下，<span
+class="math inline">\(y\)</span>的均值<span class="math inline">\(a=\pm
+1\)</span>。但文献[2]指出<span class="math inline">\(y\sim N\left( 0,{
+{\sigma }^{2}} \right)\)</span>，可见<span
+class="math inline">\(y\)</span>的均值为0。那么<span
+class="math inline">\(y\)</span>的均值到底是多少？</p>
+<p>我在8月份思考这个问题的时候也正是卡在这里。虽然我给出了自己的解释，现在看来，过去的解释有些荒诞。现在重新回到原点，博文暂时加上<a
+href="http://marshallcomm.cn/tags/%E5%AD%98%E7%96%91/">存疑</a>的标签。</p>
+<p>#参考文献 <br/>[1] 吴道龙. 极化码构造与译码算法研究[D].
+西安电子科技大学, 2016. [2] 陈凯. 极化编码理论与实用方案研究[D].
+北京邮电大学, 2014.</p>
+<h1 id="相关链接">相关链接：</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar
+Code（4）编码之极化信道可靠性估计》</a> <a
+href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">《Polar
+Code（8）高斯近似》</a></p>
 
     </div>
 

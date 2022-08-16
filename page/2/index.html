@@ -267,30 +267,74 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="PDCCH"><a href="#PDCCH" class="headerlink" title="PDCCH"></a>PDCCH</h1><h2 id="CCE"><a href="#CCE" class="headerlink" title="CCE"></a>CCE</h2><p><br/>PDCCH由一个或多个控制信道单元（control-channel element，CCE）组成，见Table 7.3.2.1-1。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171230/110738019.png" alt="mark"></p>
-<h2 id="CORESET"><a href="#CORESET" class="headerlink" title="CORESET"></a>CORESET</h2><p><br/>控制资源集（control-resource set，CORESET）由$ N_{\text{RB}}^{\text{CORESET}} $个频域RBs和$ N_{\text{symb}}^{\text{CORESET}}\in \left{ 1,2,3 \right} $个时域符号组成，$ N_{\text{RB}}^{\text{CORESET}} $的值由高层参数 <em>CORESET-freq-dom</em> 给定，$ N_{\text{symb}}^{\text{CORESET}} $的值由高层参数 <em>CORESET-time-dur</em> 给定，其中仅当高层参数 <em>DL-DMRS-typeA-pos&#x3D;3</em> 时才支持$ N_{\text{symb}}^{\text{CORESET}}&#x3D;3 $。</p>
-<p>1个CCE由6个资源粒子组（resource-element group，REG）组成，1个REG等于1个OFDM符号上的1个RB。CORESET内的REGs以时域优先的方式按升序编号，从CORESET中第1个OFDM符号且编号最小的RB以0开始编号。</p>
+          <h1 id="pdcch">PDCCH</h1>
+<h2 id="cce">CCE</h2>
+<p><br/>PDCCH由一个或多个控制信道单元（control-channel
+element，CCE）组成，见Table 7.3.2.1-1。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171230/110738019.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="coreset">CORESET</h2>
+<p><br/>控制资源集（control-resource set，CORESET）由$ N_{}^{} <span
+class="math inline">\(个频域RBs和\)</span> N_{}^{}{ 1,2,3 } <span
+class="math inline">\(个时域符号组成，\)</span> N_{}^{} <span
+class="math inline">\(的值由高层参数 *CORESET-freq-dom* 给定，\)</span>
+N_{}^{} <span class="math inline">\(的值由高层参数 *CORESET-time-dur*
+给定，其中仅当高层参数 *DL-DMRS-typeA-pos=3* 时才支持\)</span> N_{}^{}=3
+$。</p>
+<p>1个CCE由6个资源粒子组（resource-element
+group，REG）组成，1个REG等于1个OFDM符号上的1个RB。CORESET内的REGs以时域优先的方式按升序编号，从CORESET中第1个OFDM符号且编号最小的RB以0开始编号。</p>
 <p>UE可配置多个CORESETs，每个CORESET仅对应一种CCE-to-REG映射。</p>
-<p>CORESET中CCE-to-REG映射可以是交织的或非交织的，这由高层参数 <em>CORESET-CCE-REG-mapping-type</em> 来配置，并且由REG捆绑（REG bundle）来描述：</p>
+<p>CORESET中CCE-to-REG映射可以是交织的或非交织的，这由高层参数
+<em>CORESET-CCE-REG-mapping-type</em> 来配置，并且由REG捆绑（REG
+bundle）来描述：</p>
 <ul>
-<li>REG bundle $ i $ 定义为一组REGs $ \left{ iL,iL+1,…,iL+L-1 \right} $，其中$ L $是REG bundle大小，$ i&#x3D;0,1,…,{N_{\text{REG}}^{\text{CORESET}}}&#x2F;{L};-1 $，且$ N_{\text{REG}}^{\text{CORESET}}&#x3D;N_{\text{RB}}^{\text{CORESET}}N_{\text{symb}}^{\text{CORESET}} $是CORESET中REG的数目； </li>
-<li>CCE $ j $由一组REG bundles $ \left{ f({6j}&#x2F;{L};),f({6j}&#x2F;{L};+1),…,f({6j}&#x2F;{L};+{6}&#x2F;{L};-1) \right} $组成，其中$ f(\cdot ) $是交织器</li>
+<li>REG bundle $ i $ 定义为一组REGs $ { iL,iL+1,...,iL+L-1 } <span
+class="math inline">\(，其中\)</span> L <span
+class="math inline">\(是REG bundle大小，\)</span>
+i=0,1,...,{N_{}^{}}/{L};-1 <span class="math inline">\(，且\)</span>
+N_{}<sup>{}=N_{}</sup>{}N_{}^{} $是CORESET中REG的数目；</li>
+<li>CCE $ j $由一组REG bundles $ {
+f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
+class="math inline">\(组成，其中\)</span> f() $是交织器</li>
 </ul>
-<p>对于非交织CEE-to-REG映射，$ L&#x3D;6 $且$ f(j)&#x3D;j $。</p>
-<p>对于交织CEE-to-REG映射，当$ N_{\text{symb}}^{\text{CORESET}}&#x3D;1 $时，有$ L\in \left{ 2,6 \right} $；当$ N_{\text{symb}}^{\text{CORESET}}\in \left{ 2,3 \right} $时，有$ L\in \left{ N_{\text{symb}}^{\text{CORSET}},6 \right} $，其中$ L $由高层参数<em>CORESET-REG-bundle-size</em>配置。交织器定义为</p>
-<p>$$ \begin{align}<br> \nonumber &amp; f(j)&#x3D;\left( rC+c+{ {n}<em>{\text{shift}}} \right)\bmod \left( {N</em>{\text{REG}}^{\text{CORESET}}}&#x2F;{L}; \right) \<br> \nonumber &amp; j&#x3D;cR+r \<br>\nonumber  &amp; r&#x3D;0,1,…,R-1 \<br> \nonumber &amp; c&#x3D;0,1,…,C-1 \<br> \nonumber &amp; C&#x3D;\left\lceil {N_{\text{REG}}^{\text{CORESET}}}&#x2F;{\left( LR \right)}; \right\rceil<br>\end{align}<br>$$</p>
-<p>其中$ R\in \left{ 2,3,6 \right} $由高层参数 <em>CORESET-interleaver-size</em> 给定，且</p>
+<p>对于非交织CEE-to-REG映射，$ L=6 <span
+class="math inline">\(且\)</span> f(j)=j $。</p>
+<p>对于交织CEE-to-REG映射，当$ N_{}^{}=1 <span
+class="math inline">\(时，有\)</span> L{ 2,6 } <span
+class="math inline">\(；当\)</span> N_{}^{}{ 2,3 } <span
+class="math inline">\(时，有\)</span> L{ N_{}^{},6 } <span
+class="math inline">\(，其中\)</span> L
+$由高层参数<em>CORESET-REG-bundle-size</em>配置。交织器定义为</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; f(j)=\left( rC+c+{ {n}_{\text{shift}}} \right)\bmod
+\left( {N_{\text{REG}}^{\text{CORESET}}}/{L}\; \right) \\
+\nonumber &amp; j=cR+r \\
+\nonumber  &amp; r=0,1,...,R-1 \\
+\nonumber &amp; c=0,1,...,C-1 \\
+\nonumber &amp; C=\left\lceil {N_{\text{REG}}^{\text{CORESET}}}/{\left(
+LR \right)}\; \right\rceil   
+\end{align}
+\]</span></p>
+<p>其中$ R{ 2,3,6 } $由高层参数 <em>CORESET-interleaver-size</em>
+给定，且</p>
 <ul>
-<li>$ { {n}<em>{\text{shift}}} $是物理层小区ID $ N</em>{\text{ID}}^{\text{cell}} $ 的函数</li>
-<li>$ { {n}_{\text{shift}}}\in \left{ 0,1,…,274 \right} $是高层参数 <em>CORESET-shift-index</em> 的函数</li>
+<li>$ { {n}<em>{}} $是物理层小区ID $ N</em>{}^{} $ 的函数</li>
+<li>$ { {n}_{}}{ 0,1,...,274 } $是高层参数 <em>CORESET-shift-index</em>
+的函数</li>
 </ul>
 <p>UE可假定（频域预编码颗粒度）</p>
 <ul>
-<li>如果高层参数 <em>CORESET-precoder-granularity</em> 等于CORESET-REG-bundle-size，则在REG bundle中，在频域上使用相同的预编码；</li>
-<li>如果高层参数 <em>CORESET-precoder-granularity</em> 等于CORESET频域大小，则在CORESET中的连续RBs内的所有REGs中，在频域上使用相同的预编码</li>
+<li>如果高层参数 <em>CORESET-precoder-granularity</em>
+等于CORESET-REG-bundle-size，则在REG
+bundle中，在频域上使用相同的预编码；</li>
+<li>如果高层参数 <em>CORESET-precoder-granularity</em>
+等于CORESET频域大小，则在CORESET中的连续RBs内的所有REGs中，在频域上使用相同的预编码</li>
 </ul>
-<p>对于PBCH配置的CORESET，$ L&#x3D;6 $。</p>
+<p>对于PBCH配置的CORESET，$ L=6 $。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -377,11 +421,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="PRACH"><a href="#PRACH" class="headerlink" title="PRACH"></a>PRACH</h1><h2 id="序列生成"><a href="#序列生成" class="headerlink" title="序列生成"></a>序列生成</h2><p><br/>随机接入前导$ { {x}_{u,v}}(n) $应根据以下方式生成</p>
-<p>$$ \begin{align}<br> \nonumber &amp; { {x}<em>{u,v}}(n)&#x3D;{ {x}</em>{u}}((n+{ {C}<em>{v}})\bmod { {L}</em>{\text{RA}}}) \<br> \nonumber  &amp; { {x}<em>{u}}(i)&#x3D;{ {e}^{-j\frac{\pi ui(i+1)}{ { {L}</em>{\text{RA}}}}}},i&#x3D;0,1,…,{ {L}_{\text{RA}}}-1<br>\end{align}<br>$$</p>
+          <h1 id="prach">PRACH</h1>
+<h2 id="序列生成">序列生成</h2>
+<p><br/>随机接入前导$ { {x}_{u,v}}(n) $应根据以下方式生成</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; { {x}_{u,v}}(n)={ {x}_{u}}((n+{ {C}_{v}})\bmod {
+{L}_{\text{RA}}}) \\
+\nonumber  &amp; { {x}_{u}}(i)={ {e}^{-j\frac{\pi ui(i+1)}{ {
+{L}_{\text{RA}}}}}},i=0,1,...,{ {L}_{\text{RA}}}-1  
+\end{align}
+\]</span></p>
 <p>从而进一步生成频域表示</p>
-<p>$$ { {y}<em>{u,v}}(n)&#x3D;\sum\limits</em>{m&#x3D;0}^{ { {L}<em>{\text{RA}}}-1}{ { {x}</em>{u,v}}(m)\cdot { {e}^{-j\frac{2\pi mn}{ { {L}_{\text{RA}}}}}}} $$</p>
-<p>其中$ { {L}<em>{\text{RA}}}&#x3D;839 $或$ { {L}</em>{\text{RA}}}&#x3D;139 $取决于表6.3.3.1-1和6.3.3.1-2给定的PRACH前导格式。序列号$ u $根据表6.3.3.1-3和6.3.3.1-4由高层参数 <em>PRACHRootSequenceIndex</em> 获得。</p>
+<p><span class="math display">\[ { {y}_{u,v}}(n)=\sum\limits_{m=0}^{ {
+{L}_{\text{RA}}}-1}{ { {x}_{u,v}}(m)\cdot { {e}^{-j\frac{2\pi mn}{ {
+{L}_{\text{RA}}}}}}} \]</span></p>
+<p>其中$ { {L}<em>{}}=839 <span class="math inline">\(或\)</span> {
+{L}</em>{}}=139 <span
+class="math inline">\(取决于表6.3.3.1-1和6.3.3.1-2给定的PRACH前导格式。序列号\)</span>
+u $根据表6.3.3.1-3和6.3.3.1-4由高层参数 <em>PRACHRootSequenceIndex</em>
+获得。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -468,10 +526,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>在5G NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS&#x2F;PBCH block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。</p>
-<h1 id="同步信号（SS）"><a href="#同步信号（SS）" class="headerlink" title="同步信号（SS）"></a>同步信号（SS）</h1><h2 id="物理层小区ID"><a href="#物理层小区ID" class="headerlink" title="物理层小区ID"></a>物理层小区ID</h2><p><br/>1008个唯一的物理层小区ID根据如下公式确定</p>
-<p>$$ N_{\text{ID}}^{\text{cell}}&#x3D;3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}} $$</p>
-<p>其中$ N_{\text{ID}}^{\text{(1)}}\in \left{ 0,1,…,335 \right} $，$ N_{\text{ID}}^{\text{(2)}}\in \left{ 0,1,2 \right} $。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>在5G
+NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS/PBCH
+block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。</p>
+<h1 id="同步信号ss">同步信号（SS）</h1>
+<h2 id="物理层小区id">物理层小区ID</h2>
+<p><br/>1008个唯一的物理层小区ID根据如下公式确定</p>
+<p><span class="math display">\[
+N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
+\]</span></p>
+<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(，\)</span>
+N_{}^{}{ 0,1,2 } $。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -552,12 +618,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>本文可能是最后一篇<a href="http://marshallcomm.cn/tags/Polar-Code/">Polar Code</a>系列文章，用以结束2017年对极化码的研究。</p>
+          <p>本文可能是最后一篇<a
+href="http://marshallcomm.cn/tags/Polar-Code/">Polar
+Code</a>系列文章，用以结束2017年对极化码的研究。</p>
 <p>极化码和无线信道的特征是相关联的，这是极化码有别于其他信道编码的一个特点。其他信道编码通常编码就是编码，信道就是信道，两者是独立的。然而决定极化码子信道可靠性的因素有两个，一是它自身的结构（“蝶形图”结构），二是无线信道特征（表征参数可以是SNR或转移概率）。</p>
 <p>第一个概念是“信道极化”，如果比特信道采用这种“蝶形图”方法构造，那么导致的结果就是一些子信道的容量趋于1，另一些子信道的容量趋于0。这种向两级分化的现象就是信道极化现象。</p>
-<p>第二个概念是线性分组码，线性分组码可以通过生成矩阵相乘的方式得到编码，$\mathbf{x}&#x3D;\mathbf{uG}$。</p>
-<p>若将这两个概念融合在一起，利用了信息极化原理的线性分组码自然就成为“极化码”。如何利用？可视化的解释是“蝶形图”结构，数学化的解释是$\mathbf{x}&#x3D;\mathbf{uG}$，$\mathbf{G}&#x3D;{ {\mathbf{F}}^{\otimes n}}$。两种解释完全等价，信道极化过程体现在生成矩阵$\mathbf{G}$里。</p>
-<p>码长N一旦确定，那么“蝶形图”的结构就确定了，或者说，生成矩阵$\mathbf{G}$就唯一确定了。而生成矩阵一旦确定，剩下的事儿就是构造输入序列的顺序了。</p>
+<p>第二个概念是线性分组码，线性分组码可以通过生成矩阵相乘的方式得到编码，<span
+class="math inline">\(\mathbf{x}=\mathbf{uG}\)</span>。</p>
+<p>若将这两个概念融合在一起，利用了信息极化原理的线性分组码自然就成为“极化码”。如何利用？可视化的解释是“蝶形图”结构，数学化的解释是<span
+class="math inline">\(\mathbf{x}=\mathbf{uG}\)</span>，<span
+class="math inline">\(\mathbf{G}={ {\mathbf{F}}^{\otimes
+n}}\)</span>。两种解释完全等价，信道极化过程体现在生成矩阵<span
+class="math inline">\(\mathbf{G}\)</span>里。</p>
+<p>码长N一旦确定，那么“蝶形图”的结构就确定了，或者说，生成矩阵<span
+class="math inline">\(\mathbf{G}\)</span>就唯一确定了。而生成矩阵一旦确定，剩下的事儿就是构造输入序列的顺序了。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -644,9 +718,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h1><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><h1 id="Definitions-symbols-and-abbreviations"><a href="#Definitions-symbols-and-abbreviations" class="headerlink" title="Definitions, symbols and abbreviations"></a>Definitions, symbols and abbreviations</h1><h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位$ { {T}<em>{\text{c}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}</em>{\max }}\cdot { {N}<em>{\text{f}}} \right)}; $，其中$ \Delta { {f}</em>{\max }}&#x3D;480\cdot { {10}^{3}}\text{ Hz} $，$ { {N}<em>{\text{f}}}&#x3D;4096 $。常量$ \kappa &#x3D;{ { {T}</em>{\text{s}}}}&#x2F;{ { {T}<em>{\text{c}}}};&#x3D;64 $，其中$ { {T}</em>{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}<em>{\text{ref}}}\cdot { {N}</em>{\text{f,ref}}} \right)}; $，$ \Delta { {f}<em>{\text{ref}}}&#x3D;15\cdot { {10}^{3}}\text{ Hz} $，$ { {N}</em>{\text{f,ref}}}&#x3D;2048 $。</p>
-<h2 id="参数集"><a href="#参数集" class="headerlink" title="参数集"></a>参数集</h2><p><br/>如Table 4.2-1所示，NR支持多种OFDM参数集。部分载波带宽（carrier bandwidth part，BWP）的$\mu  $和CP由高层参数给定，其中下行链路由 <em>DL_BWP_mu</em> 和 <em>DL_BWP_cp</em> 给定，上行链路由 <em>UL_BWP_mu</em> 和 <em>UL_BWP_cp</em> 给定。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171217/103110923.png" alt="mark"></p>
+          <h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and
+abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位$
+{ {T}<em>{}}={1}/{( )}; <span class="math inline">\(，其中\)</span> =480
+<span class="math inline">\(，\)</span> { {N}</em>{}}=4096 <span
+class="math inline">\(。常量\)</span> ={ { {T}<em>{}}}/{ {
+{T}</em>{}}};=64 <span class="math inline">\(，其中\)</span> {
+{T}<em>{}}={1}/{( )}; <span class="math inline">\(，\)</span> =15 <span
+class="math inline">\(，\)</span> { {N}</em>{}}=2048 $。</p>
+<h2 id="参数集">参数集</h2>
+<p><br/>如Table 4.2-1所示，NR支持多种OFDM参数集。部分载波带宽（carrier
+bandwidth part，BWP）的$$和CP由高层参数给定，其中下行链路由
+<em>DL_BWP_mu</em> 和 <em>DL_BWP_cp</em> 给定，上行链路由
+<em>UL_BWP_mu</em> 和 <em>UL_BWP_cp</em> 给定。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171217/103110923.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
           <!--noindex-->
           <!--/noindex-->
         
@@ -733,9 +828,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/><a href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">《Polar Code（8）高斯近似》</a>中$\varphi \left( x \right)$的反函数，计算式（8）比较困难，而式（9）、式（10）比较容易。本文以式（9）为例详述$\varphi \left( x \right)$的反函数。</p>
-<p>$$\begin{align}<br> { {\varphi }_{AGA-2}}\left( x \right)&#x3D;\left{ \begin{matrix}<br>   { {e}^{0.0116{ {x}^{2}}-0.4212x}},\ 0&lt;x\le 7.0633  \<br>   { {e}^{-0.2944x-0.3169}},\ x&gt;7.0633  \<br>\end{matrix} \right.<br>\end{align}$$</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171102/145443437.png" alt="mark"></p>
+          <h1 id="前言">前言</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">《Polar
+Code（8）高斯近似》</a>中<span class="math inline">\(\varphi \left( x
+\right)\)</span>的反函数，计算式（8）比较困难，而式（9）、式（10）比较容易。本文以式（9）为例详述<span
+class="math inline">\(\varphi \left( x \right)\)</span>的反函数。</p>
+<p><span class="math display">\[\begin{align}
+{ {\varphi }_{AGA-2}}\left( x \right)=\left\{ \begin{matrix}
+   { {e}^{0.0116{ {x}^{2}}-0.4212x}},\ 0&lt;x\le 7.0633  \\
+   { {e}^{-0.2944x-0.3169}},\ x&gt;7.0633  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171102/145443437.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
           <!--noindex-->
           <!--/noindex-->
         
@@ -822,19 +932,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>上接<a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF">《5G-NR物理信道与调制v1.1.0》下行链路</a></p>
-<h1 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h1><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><h1 id="Definitions-symbols-and-abbreviations"><a href="#Definitions-symbols-and-abbreviations" class="headerlink" title="Definitions, symbols and abbreviations"></a>Definitions, symbols and abbreviations</h1><h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h1 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h1><h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><p><br/><a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
-<h1 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
+          <p>上接<a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#下行链路">《5G-NR物理信道与调制v1.1.0》下行链路</a></p>
+<h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and
+abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h1 id="通用函数">通用函数</h1>
+<h1 id="上行链路">上行链路</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
+<h1 id="下行链路">下行链路</h1>
+<h2 id="概述">概述</h2>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
 <ul>
 <li>物理下行共享信道（PDSCH）</li>
 <li>物理广播信道（PBCH）</li>
 <li>物理下行控制信道（PDCCH）</li>
 </ul>
-<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
 <ul>
 <li>解调参考信号（Demodulation reference signals，DM-RS）</li>
 <li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
-<li>信道状态信息参考信号（Channel-state information reference signal，CSI-RS）</li>
+<li>信道状态信息参考信号（Channel-state information reference
+signal，CSI-RS）</li>
 <li>主同步信号（Primary synchronization signal，PSS）</li>
 <li>辅同步信号（Secondary synchronization signal，SSS）</li>
 </ul>
@@ -924,14 +1048,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>上接<a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF">《5G-NR物理信道与调制v1.1.0》上行链路</a></p>
-<h1 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h1><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><h1 id="Definitions-symbols-and-abbreviations"><a href="#Definitions-symbols-and-abbreviations" class="headerlink" title="Definitions, symbols and abbreviations"></a>Definitions, symbols and abbreviations</h1><h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h1 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h1><h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>上行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：</p>
+          <p>上接<a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#上行链路">《5G-NR物理信道与调制v1.1.0》上行链路</a></p>
+<h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and
+abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h1 id="通用函数">通用函数</h1>
+<h1 id="上行链路">上行链路</h1>
+<h2 id="概述">概述</h2>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>上行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：</p>
 <ul>
 <li>物理上行共享信道（PUSCH）</li>
 <li>物理上行控制信道（PUCCH）</li>
 <li>物理随机接入信道（PRACH）</li>
 </ul>
-<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>上行物理信号是物理层使用的，但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：</p>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>上行物理信号是物理层使用的，但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：</p>
 <ul>
 <li>解调参考信号（Demodulation reference signals，DM-RS）</li>
 <li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
@@ -1024,12 +1159,39 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p><strong>Marshall：</strong>5G NR物理层规范已更新到<a href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>，本文整理了38.211规范v1.1.0版，同时宣告<a href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>过时。</p>
+<p><strong>Marshall：</strong>5G NR物理层规范已更新到<a
+href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>，本文整理了38.211规范v1.1.0版，同时宣告<a
+href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>过时。</p>
 </blockquote>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/151427236.png" alt="mark"></p>
-<h1 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h1><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><h1 id="Definitions-symbols-and-abbreviations"><a href="#Definitions-symbols-and-abbreviations" class="headerlink" title="Definitions, symbols and abbreviations"></a>Definitions, symbols and abbreviations</h1><h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位${ {T}<em>{\text{c}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}</em>{\max }}\cdot { {N}<em>{\text{f}}} \right)};$，其中$\Delta { {f}</em>{\max }}&#x3D;480\cdot { {10}^{3}}\text{ Hz}$，${ {N}<em>{\text{f}}}&#x3D;4096$。常数$\kappa &#x3D;{ { {T}</em>{\text{s}}}}&#x2F;{ { {T}<em>{\text{c}}}};&#x3D;64$，其中${ {T}</em>{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}<em>{\text{ref}}}\cdot { {N}</em>{\text{f,ref}}} \right)};$，$\Delta { {f}<em>{\text{ref}}}&#x3D;15\cdot { {10}^{3}}\text{ Hz}$，${ {N}</em>{\text{f,ref}}}&#x3D;2048$。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171023/151427236.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and
+abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，时域中各个域的大小表示为若干时间单位<span
+class="math inline">\({ {T}_{\text{c}}}={1}/{\left( \Delta { {f}_{\max
+}}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\max }}=480\cdot { {10}^{3}}\text{
+Hz}\)</span>，<span class="math inline">\({
+{N}_{\text{f}}}=4096\)</span>。常数<span class="math inline">\(\kappa ={
+{ {T}_{\text{s}}}}/{ { {T}_{\text{c}}}}\;=64\)</span>，其中<span
+class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta {
+{f}_{\text{ref}}}\cdot { {N}_{\text{f,ref}}} \right)}\;\)</span>，<span
+class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot {
+{10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({
+{N}_{\text{f,ref}}}=2048\)</span>。</p>
 <blockquote>
-<p>${ {T}<em>{\text{s}}}$是LTE的采样间隔，为了不引起混淆，NR的采样间隔用新的符号${ {T}</em>{c}}$命名，${ {T}<em>{c}}&#x3D;64{ {T}</em>{s}}$。</p>
+<p><span class="math inline">\({
+{T}_{\text{s}}}\)</span>是LTE的采样间隔，为了不引起混淆，NR的采样间隔用新的符号<span
+class="math inline">\({ {T}_{c}}\)</span>命名，<span
+class="math inline">\({ {T}_{c}}=64{ {T}_{s}}\)</span>。</p>
 </blockquote>
           <!--noindex-->
           <!--/noindex-->
@@ -1117,14 +1279,40 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>2017年10月9~13日，3GPP RAN1#90bis会议在布拉格召开。本次会议对Polar coding的遗留问题继续进行讨论。</p>
-<h1 id="Remaining-issues-of-code-construction"><a href="#Remaining-issues-of-code-construction" class="headerlink" title="Remaining issues of code construction"></a>Remaining issues of code construction</h1><p><br/>关于code construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC masking。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>2017年10月9~13日，3GPP
+RAN1#90bis会议在布拉格召开。本次会议对Polar
+coding的遗留问题继续进行讨论。</p>
+<h1 id="remaining-issues-of-code-construction">Remaining issues of code
+construction</h1>
+<p><br/>关于code
+construction只剩下3个议题悬而未决：冻结比特的赋值问题，加扰方式以及CRC
+masking。</p>
 <p>关于CRC masking的比特数，本次会议达成如下结论：</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png" alt="mark"></p>
-<p>RNTI隐含在PDCCH的最后${ {N}<em>{RNTI}}$个CRC bits上，${ {N}</em>{RNTI}}$就是RNTI的比特数。工作假设认为${ {N}_{RNTI}}&#x3D;16$。</p>
-<p>RAN1通知RAN2，PDCCH信道编码对RNTI的承载能力可达到17 bits，也可能是21 bits。RAN1要求RAN2在确定RNTI长度时通知RAN1。</p>
-<h1 id="Remaining-details-of-DL-channel-interleaver"><a href="#Remaining-details-of-DL-channel-interleaver" class="headerlink" title="Remaining details of DL channel interleaver"></a>Remaining details of DL channel interleaver</h1><p><br/><a href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/#Remaining-details-of-rate-matching">3GPP RAN1 adhoc#3</a>会议中信道交织一节提到，是否进行下行信道交织。本次会议明确结论：不采用下行信道交织。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195541238.png" alt="mark"></p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195052712.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>RNTI隐含在PDCCH的最后<span class="math inline">\({
+{N}_{RNTI}}\)</span>个CRC bits上，<span class="math inline">\({
+{N}_{RNTI}}\)</span>就是RNTI的比特数。工作假设认为<span
+class="math inline">\({ {N}_{RNTI}}=16\)</span>。</p>
+<p>RAN1通知RAN2，PDCCH信道编码对RNTI的承载能力可达到17 bits，也可能是21
+bits。RAN1要求RAN2在确定RNTI长度时通知RAN1。</p>
+<h1 id="remaining-details-of-dl-channel-interleaver">Remaining details
+of DL channel interleaver</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/#Remaining-details-of-rate-matching">3GPP
+RAN1
+adhoc#3</a>会议中信道交织一节提到，是否进行下行信道交织。本次会议明确结论：不采用下行信道交织。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/195541238.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
           <!--noindex-->
           <!--/noindex-->
         

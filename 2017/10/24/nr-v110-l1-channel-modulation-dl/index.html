@@ -22,24 +22,13 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="上接《5G-NR物理信道与调制v1.1.0》下行链路 ScopeReferencesDefinitions, symbols and abbreviations帧结构与物理资源通用函数上行链路5G-NR物理信道与调制-上行链路v1.1.0 下行链路概述物理信道概述下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：  物理下行共享信道（PDSCH）">
+    <meta name="description" content="上接《5G-NR物理信道与调制v1.1.0》下行链路 Scope References Definitions, symbols and abbreviations 帧结构与物理资源 通用函数 上行链路 5G-NR物理信道与调制-上行链路v1.1.0 下行链路 概述 物理信道概述 下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5G-NR物理信道与调制-下行链路v1.1.0">
 <meta property="og:url" content="https://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="上接《5G-NR物理信道与调制v1.1.0》下行链路 ScopeReferencesDefinitions, symbols and abbreviations帧结构与物理资源通用函数上行链路5G-NR物理信道与调制-上行链路v1.1.0 下行链路概述物理信道概述下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：  物理下行共享信道（PDSCH）">
+<meta property="og:description" content="上接《5G-NR物理信道与调制v1.1.0》下行链路 Scope References Definitions, symbols and abbreviations 帧结构与物理资源 通用函数 上行链路 5G-NR物理信道与调制-上行链路v1.1.0 下行链路 概述 物理信道概述 下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171024/194746226.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130637932.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130648907.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/132353562.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135602719.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135635903.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135708921.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135739647.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135803943.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/141325803.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/142651702.png">
 <meta property="article:published_time" content="2017-10-24T11:37:33.000Z">
 <meta property="article:modified_time" content="2018-10-21T05:46:52.584Z">
 <meta property="article:author" content="Marshall">
@@ -47,7 +36,6 @@
 <meta property="article:tag" content="3GPP">
 <meta property="article:tag" content="2017-10">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171024/194746226.png">
 
 
 <link rel="canonical" href="https://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/">
@@ -162,7 +150,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Definitions-symbols-and-abbreviations"><span class="nav-number">3.</span> <span class="nav-text">Definitions, symbols and abbreviations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">帧结构与物理资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">通用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">6.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">7.</span> <span class="nav-text">下行链路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.1.</span> <span class="nav-text">物理信道概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.2.</span> <span class="nav-text">物理信号概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">7.2.</span> <span class="nav-text">物理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93"><span class="nav-number">7.3.</span> <span class="nav-text">物理信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PDSCH"><span class="nav-number">7.3.1.</span> <span class="nav-text">PDSCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0"><span class="nav-number">7.3.1.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6"><span class="nav-number">7.3.1.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%82%E6%98%A0%E5%B0%84"><span class="nav-number">7.3.1.3.</span> <span class="nav-text">层映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E7%BC%96%E7%A0%81"><span class="nav-number">7.3.1.4.</span> <span class="nav-text">预编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="nav-number">7.3.1.5.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PDCCH"><span class="nav-number">7.3.2.</span> <span class="nav-text">PDCCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%BF%A1%E9%81%93%E5%8D%95%E5%85%83%EF%BC%88CCE%EF%BC%89"><span class="nav-number">7.3.2.1.</span> <span class="nav-text">控制信道单元（CCE）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E8%B5%84%E6%BA%90%E9%9B%86%EF%BC%88CORESET%EF%BC%89"><span class="nav-number">7.3.2.2.</span> <span class="nav-text">控制资源集（CORESET）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0-1"><span class="nav-number">7.3.2.3.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6-1"><span class="nav-number">7.3.2.4.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-1"><span class="nav-number">7.3.2.5.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PBCH"><span class="nav-number">7.3.3.</span> <span class="nav-text">PBCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0-2"><span class="nav-number">7.3.3.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6-2"><span class="nav-number">7.3.3.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-2"><span class="nav-number">7.3.3.3.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.</span> <span class="nav-text">物理信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.1.</span> <span class="nav-text">参考信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PDSCH-DM-RS"><span class="nav-number">7.4.1.1.</span> <span class="nav-text">PDSCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">7.4.1.1.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-3"><span class="nav-number">7.4.1.1.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PDSCH-PT-RS"><span class="nav-number">7.4.1.2.</span> <span class="nav-text">PDSCH PT-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-1"><span class="nav-number">7.4.1.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-4"><span class="nav-number">7.4.1.2.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PDCCH-DM-RS"><span class="nav-number">7.4.1.3.</span> <span class="nav-text">PDCCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-2"><span class="nav-number">7.4.1.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-5"><span class="nav-number">7.4.1.3.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PBCH-DM-RS"><span class="nav-number">7.4.1.4.</span> <span class="nav-text">PBCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-3"><span class="nav-number">7.4.1.4.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-6"><span class="nav-number">7.4.1.4.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSI-RS"><span class="nav-number">7.4.1.5.</span> <span class="nav-text">CSI-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-4"><span class="nav-number">7.4.1.5.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-7"><span class="nav-number">7.4.1.5.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TRS"><span class="nav-number">7.4.1.6.</span> <span class="nav-text">TRS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-5"><span class="nav-number">7.4.1.6.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-8"><span class="nav-number">7.4.1.6.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.2.</span> <span class="nav-text">同步信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E5%B0%8F%E5%8C%BAID"><span class="nav-number">7.4.2.1.</span> <span class="nav-text">物理层小区ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PSS"><span class="nav-number">7.4.2.2.</span> <span class="nav-text">PSS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-6"><span class="nav-number">7.4.2.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-9"><span class="nav-number">7.4.2.2.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSS"><span class="nav-number">7.4.2.3.</span> <span class="nav-text">SSS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-7"><span class="nav-number">7.4.2.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-10"><span class="nav-number">7.4.2.3.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SS-x2F-PBCH-Block"><span class="nav-number">7.4.3.</span> <span class="nav-text">SS&#x2F;PBCH Block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SS-x2F-PBCH%E5%9D%97%E7%9A%84%E6%97%B6%E9%A2%91%E5%9F%9F%E7%BB%93%E6%9E%84"><span class="nav-number">7.4.3.1.</span> <span class="nav-text">SS&#x2F;PBCH块的时频域结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SS-x2F-PBCH%E5%9D%97%E5%86%85PSS%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.1.</span> <span class="nav-text">SS&#x2F;PBCH块内PSS的映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SS-x2F-PBCH%E5%9D%97%E5%86%85SSS%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.2.</span> <span class="nav-text">SS&#x2F;PBCH块内SSS的映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SS-x2F-PBCH%E5%9D%97%E5%86%85PBCH%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.3.</span> <span class="nav-text">SS&#x2F;PBCH块内PBCH的映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SS-x2F-PBCH%E5%9D%97%E7%9A%84%E6%97%B6%E5%9F%9F%E4%BD%8D%E7%BD%AE"><span class="nav-number">7.4.3.2.</span> <span class="nav-text">SS&#x2F;PBCH块的时域位置</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#definitions-symbols-and-abbreviations"><span class="nav-number">3.</span> <span class="nav-text">Definitions, symbols and
+abbreviations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">帧结构与物理资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">通用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">6.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">7.</span> <span class="nav-text">下行链路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.1.</span> <span class="nav-text">物理信道概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7%E6%A6%82%E8%BF%B0"><span class="nav-number">7.1.2.</span> <span class="nav-text">物理信号概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">7.2.</span> <span class="nav-text">物理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93"><span class="nav-number">7.3.</span> <span class="nav-text">物理信道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pdsch"><span class="nav-number">7.3.1.</span> <span class="nav-text">PDSCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0"><span class="nav-number">7.3.1.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6"><span class="nav-number">7.3.1.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%82%E6%98%A0%E5%B0%84"><span class="nav-number">7.3.1.3.</span> <span class="nav-text">层映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E7%BC%96%E7%A0%81"><span class="nav-number">7.3.1.4.</span> <span class="nav-text">预编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="nav-number">7.3.1.5.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pdcch"><span class="nav-number">7.3.2.</span> <span class="nav-text">PDCCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%BF%A1%E9%81%93%E5%8D%95%E5%85%83cce"><span class="nav-number">7.3.2.1.</span> <span class="nav-text">控制信道单元（CCE）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E8%B5%84%E6%BA%90%E9%9B%86coreset"><span class="nav-number">7.3.2.2.</span> <span class="nav-text">控制资源集（CORESET）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0-1"><span class="nav-number">7.3.2.3.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6-1"><span class="nav-number">7.3.2.4.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-1"><span class="nav-number">7.3.2.5.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pbch"><span class="nav-number">7.3.3.</span> <span class="nav-text">PBCH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%89%B0-2"><span class="nav-number">7.3.3.1.</span> <span class="nav-text">加扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%88%B6-2"><span class="nav-number">7.3.3.2.</span> <span class="nav-text">调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-2"><span class="nav-number">7.3.3.3.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.</span> <span class="nav-text">物理信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.1.</span> <span class="nav-text">参考信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pdsch-dm-rs"><span class="nav-number">7.4.1.1.</span> <span class="nav-text">PDSCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">7.4.1.1.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-3"><span class="nav-number">7.4.1.1.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pdsch-pt-rs"><span class="nav-number">7.4.1.2.</span> <span class="nav-text">PDSCH PT-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-1"><span class="nav-number">7.4.1.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-4"><span class="nav-number">7.4.1.2.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pdcch-dm-rs"><span class="nav-number">7.4.1.3.</span> <span class="nav-text">PDCCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-2"><span class="nav-number">7.4.1.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-5"><span class="nav-number">7.4.1.3.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pbch-dm-rs"><span class="nav-number">7.4.1.4.</span> <span class="nav-text">PBCH DM-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-3"><span class="nav-number">7.4.1.4.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-6"><span class="nav-number">7.4.1.4.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#csi-rs"><span class="nav-number">7.4.1.5.</span> <span class="nav-text">CSI-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-4"><span class="nav-number">7.4.1.5.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-7"><span class="nav-number">7.4.1.5.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#trs"><span class="nav-number">7.4.1.6.</span> <span class="nav-text">TRS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-5"><span class="nav-number">7.4.1.6.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-8"><span class="nav-number">7.4.1.6.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.4.2.</span> <span class="nav-text">同步信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E5%B0%8F%E5%8C%BAid"><span class="nav-number">7.4.2.1.</span> <span class="nav-text">物理层小区ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pss"><span class="nav-number">7.4.2.2.</span> <span class="nav-text">PSS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-6"><span class="nav-number">7.4.2.2.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-9"><span class="nav-number">7.4.2.2.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sss"><span class="nav-number">7.4.2.3.</span> <span class="nav-text">SSS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90-7"><span class="nav-number">7.4.2.3.1.</span> <span class="nav-text">序列生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84-10"><span class="nav-number">7.4.2.3.2.</span> <span class="nav-text">物理资源映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sspbch-block"><span class="nav-number">7.4.3.</span> <span class="nav-text">SS&#x2F;PBCH Block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sspbch%E5%9D%97%E7%9A%84%E6%97%B6%E9%A2%91%E5%9F%9F%E7%BB%93%E6%9E%84"><span class="nav-number">7.4.3.1.</span> <span class="nav-text">SS&#x2F;PBCH块的时频域结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sspbch%E5%9D%97%E5%86%85pss%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.1.</span> <span class="nav-text">SS&#x2F;PBCH块内PSS的映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sspbch%E5%9D%97%E5%86%85sss%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.2.</span> <span class="nav-text">SS&#x2F;PBCH块内SSS的映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sspbch%E5%9D%97%E5%86%85pbch%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">7.4.3.1.3.</span> <span class="nav-text">SS&#x2F;PBCH块内PBCH的映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sspbch%E5%9D%97%E7%9A%84%E6%97%B6%E5%9F%9F%E4%BD%8D%E7%BD%AE"><span class="nav-number">7.4.3.2.</span> <span class="nav-text">SS&#x2F;PBCH块的时域位置</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -295,189 +284,549 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>上接<a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF">《5G-NR物理信道与调制v1.1.0》下行链路</a></p>
-<h1 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h1><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><h1 id="Definitions-symbols-and-abbreviations"><a href="#Definitions-symbols-and-abbreviations" class="headerlink" title="Definitions, symbols and abbreviations"></a>Definitions, symbols and abbreviations</h1><h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h1 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h1><h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><p><br/><a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
-<h1 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
+        <p>上接<a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/#下行链路">《5G-NR物理信道与调制v1.1.0》下行链路</a></p>
+<h1 id="scope">Scope</h1>
+<h1 id="references">References</h1>
+<h1 id="definitions-symbols-and-abbreviations">Definitions, symbols and
+abbreviations</h1>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h1 id="通用函数">通用函数</h1>
+<h1 id="上行链路">上行链路</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
+<h1 id="下行链路">下行链路</h1>
+<h2 id="概述">概述</h2>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>下行链路物理信道对应于一组资源粒子（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
 <ul>
 <li>物理下行共享信道（PDSCH）</li>
 <li>物理广播信道（PBCH）</li>
 <li>物理下行控制信道（PDCCH）</li>
 </ul>
-<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
 <ul>
 <li>解调参考信号（Demodulation reference signals，DM-RS）</li>
 <li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
-<li>信道状态信息参考信号（Channel-state information reference signal，CSI-RS）</li>
+<li>信道状态信息参考信号（Channel-state information reference
+signal，CSI-RS）</li>
 <li>主同步信号（Primary synchronization signal，PSS）</li>
 <li>辅同步信号（Secondary synchronization signal，SSS）</li>
 </ul>
 <span id="more"></span>
-
-<h2 id="物理资源"><a href="#物理资源" class="headerlink" title="物理资源"></a>物理资源</h2><p><br/>当接收下行链路发送的数据时，UE应假定采用第4章定义的帧结构和物理资源。</p>
+<h2 id="物理资源">物理资源</h2>
+<p><br/>当接收下行链路发送的数据时，UE应假定采用第4章定义的帧结构和物理资源。</p>
 <p>定义下列天线端口用于下行链路：</p>
 <ul>
 <li>PDSCH相关的DM-RS使用以1000为起始的天线端口</li>
 <li>PDCCH相关的DM-RS使用以2000为起始的天线端口</li>
 <li>CSI-RS使用以3000为起始的天线端口</li>
-<li>SS&#x2F;PBCH块传输使用以4000为起始的天线端口</li>
+<li>SS/PBCH块传输使用以4000为起始的天线端口</li>
 </ul>
-<h2 id="物理信道"><a href="#物理信道" class="headerlink" title="物理信道"></a>物理信道</h2><h3 id="PDSCH"><a href="#PDSCH" class="headerlink" title="PDSCH"></a>PDSCH</h3><h4 id="加扰"><a href="#加扰" class="headerlink" title="加扰"></a>加扰</h4><p><br/>对于每个码字$ q $，UE应假定比特块$ { {b}^{(q)}}(0),…,{ {b}^{(q)}}(M_{\text{bit}}^{(q)}-1) $，其中$ M_{\text{bit}}^{(q)} $物理信道发送的码字$ q $的比特数，在调制之前被加扰，根据以下方式得到加扰比特块$ { {\tilde{b}}^{(q)}}(0),…,{ {\tilde{b}}^{(q)}}(M_{\text{bit}}^{\text{(q)}}-1) $</p>
-<p>$$ { {\tilde{b}}^{(q)}}(i)&#x3D;\left( { {b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 $$</p>
+<h2 id="物理信道">物理信道</h2>
+<h3 id="pdsch">PDSCH</h3>
+<h4 id="加扰">加扰</h4>
+<p><br/>对于每个码字$ q <span
+class="math inline">\(，UE应假定比特块\)</span> { {b}^{(q)}}(0),...,{
+{b}<sup>{(q)}}(M_{}</sup>{(q)}-1) <span
+class="math inline">\(，其中\)</span> M_{}^{(q)} <span
+class="math inline">\(物理信道发送的码字\)</span> q <span
+class="math inline">\(的比特数，在调制之前被加扰，根据以下方式得到加扰比特块\)</span>
+{ {}^{(q)}}(0),...,{ {}<sup>{(q)}}(M_{}</sup>{}-1) $</p>
+<p><span class="math display">\[ { {\tilde{b}}^{(q)}}(i)=\left( {
+{b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 \]</span></p>
 <p>其中加扰序列$ { {c}^{(q)}}(i) $由5.2节给定。</p>
-<h4 id="调制"><a href="#调制" class="headerlink" title="调制"></a>调制</h4><p><br/>对于每个码字$ q $，UE应假定加扰比特块$ { {\tilde{b}}^{(q)}}(0),…,{ {\tilde{b}}^{(q)}}(M_{\text{bit}}^{\text{(q)}}-1) $按照5.1节的描述进行调制，调制方案详见Table 7.3.1.2-1，得到复值调制符号块$ { {d}^{(q)}}(0),…,{ {d}^{(q)}}(M_{\text{symb}}^{\text{(q)}}-1) $。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171024/194746226.png" alt="mark"></p>
-<h4 id="层映射"><a href="#层映射" class="headerlink" title="层映射"></a>层映射</h4><p><br/>UE应假定每个码字的复值调制符号根据Table 7.3.1.3-1被映射到1个或多个层。码字$ q $的复值调制符号$ { {d}^{(q)}}(0),…,{ {d}^{(q)}}(M_{\text{symb}}^{\text{(q)}}-1) $应被映射到层$ x(i)&#x3D;{ {\left[ \begin{matrix}<br>   { {x}^{(0)}}(i) &amp; … &amp; { {x}^{(\upsilon -1)}}(i)  \<br>\end{matrix} \right]}^{T}} $，$ i&#x3D;0,1,…,M_{\text{symb}}^{\text{layer}}-1 $，其中$ \upsilon  $是层数，$ M_{\text{symb}}^{\text{layer}} $是每层的调制符号数。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130637932.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130648907.png" alt="mark"></p>
-<h4 id="预编码"><a href="#预编码" class="headerlink" title="预编码"></a>预编码</h4><p><br/>预编码是透明的，</p>
-<p>$$ \left[ \begin{matrix}<br>   \vdots   \<br>   { {y}^{(p)}}(i)  \<br>   \vdots   \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   { {x}^{(0)}}(i)  \<br>   \vdots   \<br>   { {x}^{(\upsilon -1)}}(i)  \<br>\end{matrix} \right]<br>$$</p>
-<p>其中$ P&#x3D;\upsilon  $。</p>
-<h4 id="物理资源映射"><a href="#物理资源映射" class="headerlink" title="物理资源映射"></a>物理资源映射</h4><p><br/>UE应假定用于物理信道传输的每个天线端口，复值符号块$ { {y}^{(p)}}(0),…,{ {y}^{(p)}}(M_{\text{symb}}^{\text{ap}}-1) $符合TS38.214中的下行功率分配规定，并从$ { {y}^{(p)}}(0) $开始映射到资源粒子$ \left( k,l \right) $，这些REs应满足下列所有条件：</p>
+<h4 id="调制">调制</h4>
+<p><br/>对于每个码字$ q <span
+class="math inline">\(，UE应假定加扰比特块\)</span> { {}^{(q)}}(0),...,{
+{}<sup>{(q)}}(M_{}</sup>{}-1) <span
+class="math inline">\(按照5.1节的描述进行调制，调制方案详见Table
+7.3.1.2-1，得到复值调制符号块\)</span> { {d}^{(q)}}(0),...,{
+{d}<sup>{(q)}}(M_{}</sup>{}-1) $。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171024/194746226.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="层映射">层映射</h4>
+<p><br/>UE应假定每个码字的复值调制符号根据Table
+7.3.1.3-1被映射到1个或多个层。码字$ q <span
+class="math inline">\(的复值调制符号\)</span> { {d}^{(q)}}(0),...,{
+{d}<sup>{(q)}}(M_{}</sup>{}-1) <span
+class="math inline">\(应被映射到层\)</span> x(i)={ {}^{T}} <span
+class="math inline">\(，\)</span> i=0,1,...,M_{}^{}-1 <span
+class="math inline">\(，其中\)</span> <span
+class="math inline">\(是层数，\)</span> M_{}^{}
+$是每层的调制符号数。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130637932.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/130648907.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="预编码">预编码</h4>
+<p><br/>预编码是透明的，</p>
+<p><span class="math display">\[ \left[ \begin{matrix}
+   \vdots   \\
+   { {y}^{(p)}}(i)  \\
+   \vdots   \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   { {x}^{(0)}}(i)  \\
+   \vdots   \\
+   { {x}^{(\upsilon -1)}}(i)  \\
+\end{matrix} \right]
+\]</span></p>
+<p>其中$ P=$。</p>
+<h4 id="物理资源映射">物理资源映射</h4>
+<p><br/>UE应假定用于物理信道传输的每个天线端口，复值符号块$ {
+{y}^{(p)}}(0),...,{ {y}<sup>{(p)}}(M_{}</sup>{}-1) <span
+class="math inline">\(符合TS38.214中的下行功率分配规定，并从\)</span> {
+{y}^{(p)}}(0) <span class="math inline">\(开始映射到资源粒子\)</span> (
+k,l ) $，这些REs应满足下列所有条件：</p>
 <ul>
 <li>它们在已分配的用于传输的RB中</li>
 <li>根据TS38.214中5.1.2.2.3节，它们被声明为可用于PDSCH</li>
 <li>根据7.4.1.5节，它们不能用于CSI-RS</li>
-<li>根据TS38.214中5.1节，它们不为SS&#x2F;PBCH保留</li>
+<li>根据TS38.214中5.1节，它们不为SS/PBCH保留</li>
 </ul>
-<p>映射过程中不保留用于其他目的资源粒子$ { {\left( k,l \right)}<em>{p,\mu }} $，并按递增顺序先$k$后$l$映射，起始符号$ l&#x3D;{ {l}</em>{0}} $根据TS38.213的描述得到。</p>
-<p>UE可假定在一个PRB bundle内在频域上使用相同的预编码，1个PRB bundle由2个或4个PRBs组成，PRB bundle基于绝对资源格进行定义。PRB bundle大小如果由高层参数配置，那么由参数<em>PDSCH-bundle-size</em>进行配置，否则通过DCI调度传输配置。</p>
-<h3 id="PDCCH"><a href="#PDCCH" class="headerlink" title="PDCCH"></a>PDCCH</h3><h4 id="控制信道单元（CCE）"><a href="#控制信道单元（CCE）" class="headerlink" title="控制信道单元（CCE）"></a>控制信道单元（CCE）</h4><p><br/>PDCCH有1个或多个CCE组成，如Table 7.3.2.1-1所示。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/132353562.png" alt="mark"></p>
-<h4 id="控制资源集（CORESET）"><a href="#控制资源集（CORESET）" class="headerlink" title="控制资源集（CORESET）"></a>控制资源集（CORESET）</h4><p><br/>控制资源集（CORESET）在频域上由$ N_{\text{RB}}^{\text{CORESET}} $个RB组成，在时域上由$ N_{\text{symb}}^{\text{CORESET}}\in \left{ 1,2,3 \right} $个符号组成。$ N_{\text{RB}}^{\text{CORESET}} $由高层参数<em>CORESET-freq-dom</em>给定，$ N_{\text{symb}}^{\text{CORESET}} $由高层参数<em>CORESET-time-dur</em>给定。仅当高层参数<em>DL-DMRS-typeA-pos</em> &#x3D; 3时，支持$ N_{\text{symb}}^{\text{CORESET}}&#x3D;3 $。</p>
+<p>映射过程中不保留用于其他目的资源粒子$ { {( k,l )}<em>{p,}} <span
+class="math inline">\(，并按递增顺序先\)</span>k<span
+class="math inline">\(后\)</span>l<span
+class="math inline">\(映射，起始符号\)</span> l={ {l}</em>{0}}
+$根据TS38.213的描述得到。</p>
+<p>UE可假定在一个PRB bundle内在频域上使用相同的预编码，1个PRB
+bundle由2个或4个PRBs组成，PRB bundle基于绝对资源格进行定义。PRB
+bundle大小如果由高层参数配置，那么由参数<em>PDSCH-bundle-size</em>进行配置，否则通过DCI调度传输配置。</p>
+<h3 id="pdcch">PDCCH</h3>
+<h4 id="控制信道单元cce">控制信道单元（CCE）</h4>
+<p><br/>PDCCH有1个或多个CCE组成，如Table 7.3.2.1-1所示。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/132353562.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="控制资源集coreset">控制资源集（CORESET）</h4>
+<p><br/>控制资源集（CORESET）在频域上由$ N_{}^{} <span
+class="math inline">\(个RB组成，在时域上由\)</span> N_{}^{}{ 1,2,3 }
+<span class="math inline">\(个符号组成。\)</span> N_{}^{} <span
+class="math inline">\(由高层参数*CORESET-freq-dom*给定，\)</span>
+N_{}^{} <span
+class="math inline">\(由高层参数*CORESET-time-dur*给定。仅当高层参数*DL-DMRS-typeA-pos*
+= 3时，支持\)</span> N_{}^{}=3 $。</p>
 <p>1个CCE由6个REGs组成，1个REG等于1个OFDM符号上的1个RB。CORESET内的REGs按时域优先的顺序编号，从第1个OFDM符号且最低编号的RB以0开始编号。</p>
 <p>UE可配置多个CORESETs，每个CORESET只与一个种CCE-to-REG映射关联。</p>
-<p>在CORESET内，CCE-to-REG映射可以交织也可以不交织，这由高层参数<em>CORESET-Trans-type</em>来配置，并且由REG bundles来描述：</p>
+<p>在CORESET内，CCE-to-REG映射可以交织也可以不交织，这由高层参数<em>CORESET-Trans-type</em>来配置，并且由REG
+bundles来描述：</p>
 <ul>
-<li>REG bundle $i$ 定义为一组REGs $ \left{ iL,iL+1,…,iL+L-1 \right} $，其中REG bundle大小$ L $由高层参数<em>CORESET-REG-bundle-size</em>来配置，$ i&#x3D;0,1,…,{N_{\text{REG}}^{\text{CORESET}}}&#x2F;{L};-1 $是CORESET内REGs的数目。</li>
-<li>CCE $j$ 由REG bundles $ \left{ f({6j}&#x2F;{L};),f({6j}&#x2F;{L};+1),…,f({6j}&#x2F;{L};+{6}&#x2F;{L};-1) \right} $组成，其中$ f(\cdot ) $是交织器。</li>
+<li>REG bundle <span class="math inline">\(i\)</span> 定义为一组REGs $ {
+iL,iL+1,...,iL+L-1 } <span class="math inline">\(，其中REG
+bundle大小\)</span> L <span
+class="math inline">\(由高层参数*CORESET-REG-bundle-size*来配置，\)</span>
+i=0,1,...,{N_{}^{}}/{L};-1 $是CORESET内REGs的数目。</li>
+<li>CCE <span class="math inline">\(j\)</span> 由REG bundles $ {
+f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
+class="math inline">\(组成，其中\)</span> f() $是交织器。</li>
 </ul>
-<p>对于非交织的CCE-to-REG映射，有$ L&#x3D;6 $且$ f(j)&#x3D;j $。</p>
-<p>对于交织的CCE-to-REG映射，对于$ N_{\text{symb}}^{\text{CORESET}}&#x3D;1 $，有$ L\in \left{ 2,6 \right} $；对于$ N_{\text{symb}}^{\text{CORESET}}\in \left{ 2,3 \right} $，有$ L\in \left{ N_{\text{symb}}^{\text{CORSET}},6 \right} $。</p>
+<p>对于非交织的CCE-to-REG映射，有$ L=6 <span
+class="math inline">\(且\)</span> f(j)=j $。</p>
+<p>对于交织的CCE-to-REG映射，对于$ N_{}^{}=1 <span
+class="math inline">\(，有\)</span> L{ 2,6 } <span
+class="math inline">\(；对于\)</span> N_{}^{}{ 2,3 } <span
+class="math inline">\(，有\)</span> L{ N_{}^{},6 } $。</p>
 <p>UE可假定</p>
 <ul>
-<li>如果高层参数<em>CORESET-wideband-bundle</em>没有对CORESET进行设置，那么在1个REG bundle内的频域上使用相同的预编码</li>
+<li>如果高层参数<em>CORESET-wideband-bundle</em>没有对CORESET进行设置，那么在1个REG
+bundle内的频域上使用相同的预编码</li>
 <li>如果高层参数<em>CORESET-wideband-bundle</em>对CORESET进行了设置，那么在整个CORESET内的频域上使用相同的预编码</li>
 </ul>
-<h4 id="加扰-1"><a href="#加扰-1" class="headerlink" title="加扰"></a>加扰</h4><h4 id="调制-1"><a href="#调制-1" class="headerlink" title="调制"></a>调制</h4><p><br/>UE应假定比特块$ \tilde{b}(0),…,\tilde{b}({ {M}<em>{\text{bit}}}-1) $按照5.1.3节的描述进行QPSK调制，得到复值调制符号块$ d(0),…,d({ {M}</em>{\text{symb}}}-1) $。</p>
-<h4 id="物理资源映射-1"><a href="#物理资源映射-1" class="headerlink" title="物理资源映射"></a>物理资源映射</h4><p><br/>UE应假定复值调制符号块$ d(0),…,d({ {M}<em>{\text{symb}}}-1) $乘以一个幅值因子$ { {\beta }</em>{\text{PDCCH}}} $，并在用于监测PDCCH的CCEs上先$ l $后$k$按递增顺序映射到资源粒子$ { {\left( k,l \right)}_{p,\mu }} $。</p>
-<h3 id="PBCH"><a href="#PBCH" class="headerlink" title="PBCH"></a>PBCH</h3><h4 id="加扰-2"><a href="#加扰-2" class="headerlink" title="加扰"></a>加扰</h4><p><br/>UE应假定比特块$ { {b}^{(q)}}(0),…,{ {b}^{(q)}}(M_{\text{bit}}^{(q)}-1) $，其中$ { {M}<em>{\text{bit}}} $是PBCH发送的比特数，应根据以下方式在调制之前进行加扰，得到加扰比特块$ \tilde{b}(0),…,\tilde{b}({ {M}</em>{\text{bit}}}-1) $</p>
-<p>$$ { {\tilde{b}}^{(q)}}(i)&#x3D;\left( { {b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 $$</p>
+<h4 id="加扰-1">加扰</h4>
+<h4 id="调制-1">调制</h4>
+<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
+class="math inline">\(按照5.1.3节的描述进行QPSK调制，得到复值调制符号块\)</span>
+d(0),...,d({ {M}</em>{}}-1) $。</p>
+<h4 id="物理资源映射-1">物理资源映射</h4>
+<p><br/>UE应假定复值调制符号块$ d(0),...,d({ {M}<em>{}}-1) <span
+class="math inline">\(乘以一个幅值因子\)</span> { {}</em>{}} <span
+class="math inline">\(，并在用于监测PDCCH的CCEs上先\)</span> l <span
+class="math inline">\(后\)</span>k<span
+class="math inline">\(按递增顺序映射到资源粒子\)</span> { {( k,l
+)}_{p,}} $。</p>
+<h3 id="pbch">PBCH</h3>
+<h4 id="加扰-2">加扰</h4>
+<p><br/>UE应假定比特块$ { {b}^{(q)}}(0),...,{
+{b}<sup>{(q)}}(M_{}</sup>{(q)}-1) <span
+class="math inline">\(，其中\)</span> { {M}<em>{}} <span
+class="math inline">\(是PBCH发送的比特数，应根据以下方式在调制之前进行加扰，得到加扰比特块\)</span>
+(0),...,({ {M}</em>{}}-1) $</p>
+<p><span class="math display">\[ { {\tilde{b}}^{(q)}}(i)=\left( {
+{b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 \]</span></p>
 <p>其中加扰序列$ { {c}^{(q)}}(i) $由5.2节给定。</p>
-<h4 id="调制-2"><a href="#调制-2" class="headerlink" title="调制"></a>调制</h4><p><br/>UE应假定比特块$ \tilde{b}(0),…,\tilde{b}({ {M}<em>{\text{bit}}}-1) $按照5.1节的描述进行QPSK调制，得到复值调制符号块$ { {d}</em>{\text{PBCH}}}(0),…,{ {d}<em>{\text{PBCH}}}({ {M}</em>{\text{symb}}}-1) $。</p>
-<h4 id="物理资源映射-2"><a href="#物理资源映射-2" class="headerlink" title="物理资源映射"></a>物理资源映射</h4><p><br/>物理资源映射在7.4.3节中描述。</p>
-<h2 id="物理信号"><a href="#物理信号" class="headerlink" title="物理信号"></a>物理信号</h2><h3 id="参考信号"><a href="#参考信号" class="headerlink" title="参考信号"></a>参考信号</h3><h4 id="PDSCH-DM-RS"><a href="#PDSCH-DM-RS" class="headerlink" title="PDSCH DM-RS"></a>PDSCH DM-RS</h4><h5 id="序列生成"><a href="#序列生成" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
-<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<h4 id="调制-2">调制</h4>
+<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
+class="math inline">\(按照5.1节的描述进行QPSK调制，得到复值调制符号块\)</span>
+{ {d}</em>{}}(0),...,{ {d}<em>{}}({ {M}</em>{}}-1) $。</p>
+<h4 id="物理资源映射-2">物理资源映射</h4>
+<p><br/>物理资源映射在7.4.3节中描述。</p>
+<h2 id="物理信号">物理信号</h2>
+<h3 id="参考信号">参考信号</h3>
+<h4 id="pdsch-dm-rs">PDSCH DM-RS</h4>
+<h5 id="序列生成">序列生成</h5>
+<p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
 <p>其中伪随机序列$ c(i) $在5.2节中定义。</p>
-<h5 id="物理资源映射-3"><a href="#物理资源映射-3" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>UE应假定PDSCH DM-RS根据高层参数<em>DL-DMRS-config-type</em>给定的类型1或类型2进行物理资源映射。</p>
+<h5 id="物理资源映射-3">物理资源映射</h5>
+<p><br/>UE应假定PDSCH
+DM-RS根据高层参数<em>DL-DMRS-config-type</em>给定的类型1或类型2进行物理资源映射。</p>
 <p>UE应假定序列$ r(m) $根据以下方式进行物理资源映射</p>
-<p>$$ \begin{align}<br>  \nonumber &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{DMRS}}}{ {w}</em>{\text{f}}}\left( { {k}’} \right)\cdot { {w}<em>{\text{t}}}\left( { {l}’} \right)\cdot r\left( 2m+{k}’+{ {m}</em>{0}} \right) \<br> \nonumber &amp; k&#x3D;\left{ \begin{array}{*{35}{l}}<br>   { {k}<em>{\text{0}}}+4m+2{k}’+\Delta  &amp; \text{Configuration type 1}  \<br>   { {k}</em>{\text{0}}}+6m+{k}’+\Delta  &amp; \text{Configuration type 2}  \<br>\end{array} \right. \<br>\nonumber &amp; {k}’&#x3D;0,1 \<br>\nonumber  &amp; l&#x3D;\left{ { {l}_{0}},\bar{l} \right}+{l}’<br>\end{align}<br>$$</p>
-<p>其中$ { {w}<em>{\text{f}}}\left( { {k}’} \right) $，$ { {w}</em>{\text{t}}}\left( { {l}’} \right) $和$ \Delta  $由Tables 7.4.1.1.2-1和7.4.1.1.2-2给定。</p>
-<p>第1个DM-RS符号的参考点$l$和位置$ { {l}_{0}} $依赖于映射类型（mapping type）：</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{DMRS}}}{
+{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
+{l}&#39;} \right)\cdot r\left( 2m+{k}&#39;+{ {m}_{0}} \right) \\
+\nonumber &amp; k=\left\{ \begin{array}{*{35}{l}}
+   { {k}_{\text{0}}}+4m+2{k}&#39;+\Delta  &amp; \text{Configuration type
+1}  \\
+   { {k}_{\text{0}}}+6m+{k}&#39;+\Delta  &amp; \text{Configuration type
+2}  \\
+\end{array} \right. \\
+\nonumber &amp; {k}&#39;=0,1 \\
+\nonumber  &amp; l=\left\{ { {l}_{0}},\bar{l} \right\}+{l}&#39;  
+\end{align}
+\]</span></p>
+<p>其中$ { {w}<em>{}}( { {k}'} ) <span class="math inline">\(，\)</span>
+{ {w}</em>{}}( { {l}'} ) <span class="math inline">\(和\)</span>
+$由Tables 7.4.1.1.2-1和7.4.1.1.2-2给定。</p>
+<p>第1个DM-RS符号的参考点<span class="math inline">\(l\)</span>和位置$ {
+{l}_{0}} $依赖于映射类型（mapping type）：</p>
 <ul>
-<li>对于PDSCH映射类型A：<ul>
+<li>对于PDSCH映射类型A：
+<ul>
 <li>$ l $定义为起始时隙</li>
-<li>如果高层参数<em>DL-DMRS-typeA-pos</em> &#x3D; 3，则$ { {l}<em>{0}}&#x3D;3 $；否则，$ { {l}</em>{0}}&#x3D;2 $</li>
-</ul>
-</li>
-<li>对于PDSCH映射类型B:<ul>
+<li>如果高层参数<em>DL-DMRS-typeA-pos</em> = 3，则$ { {l}<em>{0}}=3
+<span class="math inline">\(；否则，\)</span> { {l}</em>{0}}=2 $</li>
+</ul></li>
+<li>对于PDSCH映射类型B:
+<ul>
 <li>$ l $定义为被调度的PDSCH资源的起始</li>
-<li>$ { {l}_{0}}&#x3D;0 $</li>
+<li>$ { {l}_{0}}=0 $</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>附加的DM-RS符号的位置由 和时隙内最后一个用于PDSCH的OFDM符号确定，详见Tables 7.4.1.1.2-3和7.4.1.1.2-4。</p>
-<p>时域索引$ {l}’ $和所支持的天线端口$ p $根据<em>DL-DMRS-len</em>和Table 7.4.1.1.2-5得到。</p>
-<p>在未给定CSI-RS或TRS配置的情况下，UE应假定PDSCH DM-RS和SS&#x2F;PBCH块是关于多普勒频移、平均时延、时延扩展和空间RX准共定位的（quasi co-located）。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135602719.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135635903.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135708921.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135739647.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135803943.png" alt="mark"></p>
-<h4 id="PDSCH-PT-RS"><a href="#PDSCH-PT-RS" class="headerlink" title="PDSCH PT-RS"></a>PDSCH PT-RS</h4><h5 id="序列生成-1"><a href="#序列生成-1" class="headerlink" title="序列生成"></a>序列生成</h5><h5 id="物理资源映射-4"><a href="#物理资源映射-4" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>UE应假定仅当高层参数<em>DL-PTRS-presen</em>t指示PT-RS被使用时，PT-RS仅呈现在用于PDSCH的RB中。</p>
+<p>附加的DM-RS符号的位置由
+和时隙内最后一个用于PDSCH的OFDM符号确定，详见Tables
+7.4.1.1.2-3和7.4.1.1.2-4。</p>
+<p>时域索引$ {l}' <span
+class="math inline">\(和所支持的天线端口\)</span> p
+$根据<em>DL-DMRS-len</em>和Table 7.4.1.1.2-5得到。</p>
+<p>在未给定CSI-RS或TRS配置的情况下，UE应假定PDSCH
+DM-RS和SS/PBCH块是关于多普勒频移、平均时延、时延扩展和空间RX准共定位的（quasi
+co-located）。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135602719.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135635903.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135708921.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135739647.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/135803943.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="pdsch-pt-rs">PDSCH PT-RS</h4>
+<h5 id="序列生成-1">序列生成</h5>
+<h5 id="物理资源映射-4">物理资源映射</h5>
+<p><br/>UE应假定仅当高层参数<em>DL-PTRS-presen</em>t指示PT-RS被使用时，PT-RS仅呈现在用于PDSCH的RB中。</p>
 <p>如果PT-RS呈现，UE应假定PDSCH PT-RS按以下方式映射到物理资源</p>
-<p>$$ \begin{align}<br>  \nonumber &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{PTRS}}}r(m) \<br> \nonumber &amp; l&#x3D;{ {l}</em>{\text{DMRS}}}+1+{ {L}_{\text{PTRS}}}\cdot {l}’ \<br> \nonumber &amp; l’&#x3D;0,1,2,…<br>\end{align}<br>$$</p>
-<p>在每$ { {K}_{\text{PTRS}}} $个被调度的RBs中，当满足下列条件时，PT-RS在最低编号的被调度的RB上传输</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{PTRS}}}r(m) \\
+\nonumber &amp; l={ {l}_{\text{DMRS}}}+1+{ {L}_{\text{PTRS}}}\cdot
+{l}&#39; \\
+\nonumber &amp; l&#39;=0,1,2,...  
+\end{align}
+\]</span></p>
+<p>在每$ { {K}_{}}
+$个被调度的RBs中，当满足下列条件时，PT-RS在最低编号的被调度的RB上传输</p>
 <ul>
 <li>$ l $在被分配的用于传输PDSCH的OFDM符号内</li>
-<li>资源粒子$ \left( k,l \right) $不用于DM-RS</li>
+<li>资源粒子$ ( k,l ) $不用于DM-RS</li>
 </ul>
 <p>其中</p>
 <ul>
-<li>$k$是RB内的子载波索引</li>
-<li>对于1个符号的DM-RS，有$ { {l}<em>{\text{DM-RS}}}&#x3D;{ {l}</em>{0}} $；对于2个符号的DM-RS，有$ { {l}<em>{\text{DM-RS}}}&#x3D;{ {l}</em>{0}}+1 $，其中$ { {l}_{0}}+1 $在7.4.1.1.2中定义</li>
-<li>$ { {K}_{\text{PTRS}}}\in \left{ 2,4 \right} $由TS38.214给定</li>
-<li>$ { {L}_{\text{PT-RS}}}\in \left{ 1,2,4 \right} $由TS38.214给定</li>
+<li><span class="math inline">\(k\)</span>是RB内的子载波索引</li>
+<li>对于1个符号的DM-RS，有$ { {l}<em>{}}={ {l}</em>{0}} <span
+class="math inline">\(；对于2个符号的DM-RS，有\)</span> { {l}<em>{}}={
+{l}</em>{0}}+1 <span class="math inline">\(，其中\)</span> { {l}_{0}}+1
+$在7.4.1.1.2中定义</li>
+<li>$ { {K}_{}}{ 2,4 } $由TS38.214给定</li>
+<li>$ { {L}_{}}{ 1,2,4 } $由TS38.214给定</li>
 </ul>
-<h4 id="PDCCH-DM-RS"><a href="#PDCCH-DM-RS" class="headerlink" title="PDCCH DM-RS"></a>PDCCH DM-RS</h4><h5 id="序列生成-2"><a href="#序列生成-2" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
-<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<h4 id="pdcch-dm-rs">PDCCH DM-RS</h4>
+<h5 id="序列生成-2">序列生成</h5>
+<p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
 <p>其中伪随机序列$ c(i) $在5.2节中定义。</p>
-<h5 id="物理资源映射-5"><a href="#物理资源映射-5" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>UE应假定序列$ r(m) $根据以下方式映射到物理资源</p>
-<p>$$ a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }_{\text{DMRS}}}\cdot r\left( m \right) $$</p>
-<p>其中$ k&#x3D;1,5,9 $，$ l&#x3D;0 $分别是在一组REGs内的频域和时域索引，这组REGs等于</p>
+<h5 id="物理资源映射-5">物理资源映射</h5>
+<p><br/>UE应假定序列$ r(m) $根据以下方式映射到物理资源</p>
+<p><span class="math display">\[ a_{k,l}^{(p,\mu )}={ {\beta
+}_{\text{DMRS}}}\cdot r\left( m \right) \]</span></p>
+<p>其中$ k=1,5,9 <span class="math inline">\(，\)</span> l=0
+$分别是在一组REGs内的频域和时域索引，这组REGs等于</p>
 <ul>
 <li>如果高层参数<em>CORESET-wideband-bundle</em>没有对CORESET进行设置，那么这组REGs是UE尝试译码的构成PDCCH的REGs</li>
 <li>如果高层参数<em>CORESET-wideband-bundle</em>对CORESET进行了设置，那么这组REGs是UE尝试译码的在整个CORESET内的所有REGs</li>
 </ul>
-<h4 id="PBCH-DM-RS"><a href="#PBCH-DM-RS" class="headerlink" title="PBCH DM-RS"></a>PBCH DM-RS</h4><h5 id="序列生成-3"><a href="#序列生成-3" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>UE应假定用于SS&#x2F;PBCH块的参考信号序列$ r(m) $定义为</p>
-<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
-<p>其中$ c(n) $由5.2节给定。加扰序列生成器应在每个SS&#x2F;PBCH块的开始处通过小区ID $ N_{\text{ID}}^{\text{cell}} $和$ { {n}_{\text{t}}} $被初始化，SS&#x2F;PBCH块时间索引由PBCH DM-RS承载。</p>
-<h5 id="物理资源映射-6"><a href="#物理资源映射-6" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>物理资源映射在7.4.3节中定义。</p>
-<h4 id="CSI-RS"><a href="#CSI-RS" class="headerlink" title="CSI-RS"></a>CSI-RS</h4><h5 id="序列生成-4"><a href="#序列生成-4" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
-<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<h4 id="pbch-dm-rs">PBCH DM-RS</h4>
+<h5 id="序列生成-3">序列生成</h5>
+<p><br/>UE应假定用于SS/PBCH块的参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中$ c(n)
+$由5.2节给定。加扰序列生成器应在每个SS/PBCH块的开始处通过小区ID $
+N_{}^{} <span class="math inline">\(和\)</span> { {n}_{}}
+$被初始化，SS/PBCH块时间索引由PBCH DM-RS承载。</p>
+<h5 id="物理资源映射-6">物理资源映射</h5>
+<p><br/>物理资源映射在7.4.3节中定义。</p>
+<h4 id="csi-rs">CSI-RS</h4>
+<h5 id="序列生成-4">序列生成</h5>
+<p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
 <p>其中伪随机序列$ c(i) $在5.2节中定义。</p>
-<h5 id="物理资源映射-7"><a href="#物理资源映射-7" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>对于每个CSI-RS成员配置，UE应假定序列$ r(m) $按以下方式映射到物理资源</p>
-<p>$$ \begin{align}<br> \nonumber &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{CSIRS}}}{ {w}</em>{\text{f}}}\left( { {k}’} \right)\cdot { {w}_{\text{t}}}\left( { {l}’} \right)\cdot r\left( m \right) \<br> \nonumber&amp; k&#x3D;\bar{k}+{k}’ \<br> \nonumber&amp; l&#x3D;\bar{l}+{l}’<br>\end{align}<br>$$</p>
+<h5 id="物理资源映射-7">物理资源映射</h5>
+<p><br/>对于每个CSI-RS成员配置，UE应假定序列$ r(m)
+$按以下方式映射到物理资源</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{CSIRS}}}{
+{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
+{l}&#39;} \right)\cdot r\left( m \right) \\
+\nonumber&amp; k=\bar{k}+{k}&#39; \\
+\nonumber&amp; l=\bar{l}+{l}&#39;  
+\end{align}
+\]</span></p>
 <p>下列情况除外</p>
 <ul>
 <li>与所配置的CORESET重叠的REs应从CSI-RS发送中排除</li>
 </ul>
-<p>$ {k}’ $和$ {l}’ $由Table 7.4.1.5.2-1和<br>$ { {w}<em>{\text{f}}}\left( { {k}’} \right),{ {w}</em>{\text{t}}}\left( { {l}’} \right)\in \left{ \left[ \begin{matrix}<br>   +1 &amp; +1  \<br>\end{matrix} \right],\left[ \begin{matrix}<br>   +1 &amp; -1  \<br>\end{matrix} \right],\left[ \begin{matrix}<br>   -1 &amp; +1  \<br>\end{matrix} \right],\left[ \begin{matrix}<br>   -1 &amp; -1  \<br>\end{matrix} \right] \right}<br>$确定。</p>
-<p>时域位置$ l $定义为起始时隙，其中$ \bar{l}\in \left{ 5,6,12,13 \right} $是时隙内CSI-RS的起始符号位置，$ \bar{l} $由高层参数<em>CSI-RS-ResourceMapping</em>配置。</p>
-<p>除单端口之外，频域位置由位图$ \left[ { {b}<em>{5}}\cdots { {b}</em>{0}} \right]or\left[ { {b}<em>{11}}\cdots { {b}</em>{0}} \right] $通过高层参数<em>CSI-RS-ResourceMapping</em>给定，Table 7.4.1.5.2-1中的$ { {k}<em>{i}} $对应于位图中从$ { {b}</em>{0}} $开始的第$i$个集合点，$ { {k}<em>{i}} $的值由$ { {k}</em>{i}}&#x3D;\left[ 1or2 \right]f\left( i \right) $给定，其中$ f\left( i \right) $是第$i$个集合点的位图中的比特号。CSI-RS频域位置在所配置的PRBs上重复。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/141325803.png" alt="mark"></p>
-<h4 id="TRS"><a href="#TRS" class="headerlink" title="TRS"></a>TRS</h4><h5 id="序列生成-5"><a href="#序列生成-5" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
-<p>$$ r(m)&#x3D;\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right) $$</p>
+<p>$ {k}' <span class="math inline">\(和\)</span> {l}' $由Table
+7.4.1.5.2-1和 $ { {w}<em>{}}( { {k}'} ),{ {w}</em>{}}( { {l}'} ){ ,,,}
+$确定。</p>
+<p>时域位置$ l <span class="math inline">\(定义为起始时隙，其中\)</span>
+{l}{ 5,6,12,13 } <span
+class="math inline">\(是时隙内CSI-RS的起始符号位置，\)</span> {l}
+$由高层参数<em>CSI-RS-ResourceMapping</em>配置。</p>
+<p>除单端口之外，频域位置由位图$ or<span
+class="math inline">\(通过高层参数*CSI-RS-ResourceMapping*给定，Table
+7.4.1.5.2-1中的\)</span> { {k}<em>{i}} <span
+class="math inline">\(对应于位图中从\)</span> { {b}</em>{0}} <span
+class="math inline">\(开始的第\)</span>i<span
+class="math inline">\(个集合点，\)</span> { {k}<em>{i}} <span
+class="math inline">\(的值由\)</span> { {k}</em>{i}}=f( i ) <span
+class="math inline">\(给定，其中\)</span> f( i ) <span
+class="math inline">\(是第\)</span>i$个集合点的位图中的比特号。CSI-RS频域位置在所配置的PRBs上重复。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/141325803.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="trs">TRS</h4>
+<h5 id="序列生成-5">序列生成</h5>
+<p><br/>UE应假定参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
 <p>其中伪随机序列$ c(i) $在5.2节中定义。</p>
-<h5 id="物理资源映射-8"><a href="#物理资源映射-8" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>TRS（tracking reference signal） burst由4个OFDM符号组成，在2个连续时隙内发送。</p>
+<h5 id="物理资源映射-8">物理资源映射</h5>
+<p><br/>TRS（tracking reference signal）
+burst由4个OFDM符号组成，在2个连续时隙内发送。</p>
 <p>UE应假定TRS在1个burst中根据以下方式映射到物理资源</p>
-<p>$$ \begin{align}<br>\nonumber  &amp; a_{k,l}^{(p,\mu )}&#x3D;{ {\beta }<em>{\text{TRS}}}r(m) \<br>\nonumber  &amp; k&#x3D;4m+{ {k}</em>{0}}<br>\end{align}<br>$$</p>
-<p>The UE may assume that a TRS burst is quasi co-located with respect to delay spread, average delay, Doppler shift, and Doppler spread with the PDSCH DM-RS.</p>
-<h3 id="同步信号"><a href="#同步信号" class="headerlink" title="同步信号"></a>同步信号</h3><h4 id="物理层小区ID"><a href="#物理层小区ID" class="headerlink" title="物理层小区ID"></a>物理层小区ID</h4><p><br/>NR有1008个唯一的物理层小区ID，根据下式得到</p>
-<p>$$ N_{\text{ID}}^{\text{cell}}&#x3D;3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}} $$</p>
-<p>其中$ N_{\text{ID}}^{\text{(1)}}\in \left{ 0,1,…,335 \right} $且$ N_{\text{ID}}^{\text{(2)}}\in \left{ 0,1,2 \right} $。</p>
-<h4 id="PSS"><a href="#PSS" class="headerlink" title="PSS"></a>PSS</h4><h5 id="序列生成-6"><a href="#序列生成-6" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>主同步信号序列$ { {d}_{\text{PSS}}}(n) $定义为</p>
-<p>$$ \begin{align}<br>  \nonumber &amp; { {d}<em>{\text{PSS}}}\left( n \right)&#x3D;1-2x\left( m \right) \<br> \nonumber &amp; m&#x3D;\left( n+43N</em>{\text{ID}}^{\text{(2)}} \right)\bmod 127 \<br> \nonumber &amp; 0\le n&lt;127<br>\end{align}<br>$$</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber  &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{TRS}}}r(m) \\
+\nonumber  &amp; k=4m+{ {k}_{0}}  
+\end{align}
+\]</span></p>
+<p>The UE may assume that a TRS burst is quasi co-located with respect
+to delay spread, average delay, Doppler shift, and Doppler spread with
+the PDSCH DM-RS.</p>
+<h3 id="同步信号">同步信号</h3>
+<h4 id="物理层小区id">物理层小区ID</h4>
+<p><br/>NR有1008个唯一的物理层小区ID，根据下式得到</p>
+<p><span class="math display">\[
+N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
+\]</span></p>
+<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(且\)</span>
+N_{}^{}{ 0,1,2 } $。</p>
+<h4 id="pss">PSS</h4>
+<h5 id="序列生成-6">序列生成</h5>
+<p><br/>主同步信号序列$ { {d}_{}}(n) $定义为</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { {d}_{\text{PSS}}}\left( n \right)=1-2x\left( m
+\right) \\
+\nonumber &amp; m=\left( n+43N_{\text{ID}}^{\text{(2)}} \right)\bmod 127
+\\
+\nonumber &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
 <p>其中</p>
-<p>$$ x\left( i+7 \right)&#x3D;\left( x\left( i+4 \right)+x\left( i \right) \right)\bmod 2 $$</p>
+<p><span class="math display">\[ x\left( i+7 \right)=\left( x\left( i+4
+\right)+x\left( i \right) \right)\bmod 2 \]</span></p>
 <p>且</p>
-<p>$$ \left[ \begin{matrix}<br>   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right) &amp; x\left( 3 \right) \nonumber &amp; x\left( 2 \right) &amp; x\left( 1 \right) &amp; x\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \<br>\end{matrix} \right]<br>$$</p>
-<h5 id="物理资源映射-9"><a href="#物理资源映射-9" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>物理资源映射在7.4.3节描述。</p>
-<h4 id="SSS"><a href="#SSS" class="headerlink" title="SSS"></a>SSS</h4><h5 id="序列生成-7"><a href="#序列生成-7" class="headerlink" title="序列生成"></a>序列生成</h5><p><br/>辅同步信号序列$ { {d}_{\text{SSS}}}(n) $定义为</p>
-<p>$$ \begin{align}<br> \nonumber  &amp; { {d}<em>{\text{SSS}}}\left( n \right)&#x3D;\left[ 1-2{ {x}</em>{0}}\left( \left( n+{ {m}<em>{0}} \right)\bmod 127 \right) \right]\left[ 1-2{ {x}</em>{1}}\left( \left( n+{ {m}<em>{1}} \right)\bmod 127 \right) \right] \<br>\nonumber  &amp; { {m}</em>{0}}&#x3D;15\left\lfloor \frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor +5N_{\text{ID}}^{\text{(2)}} \<br> \nonumber &amp; { {m}<em>{1}}&#x3D;N</em>{\text{ID}}^{\text{(1)}}\bmod 112 \<br> \nonumber &amp; 0\le n&lt;127<br>\end{align}<br>$$</p>
+<p><span class="math display">\[ \left[ \begin{matrix}
+   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right)
+&amp; x\left( 3 \right) \nonumber &amp; x\left( 2 \right) &amp; x\left(
+1 \right) &amp; x\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \\
+\end{matrix} \right]
+\]</span></p>
+<h5 id="物理资源映射-9">物理资源映射</h5>
+<p><br/>物理资源映射在7.4.3节描述。</p>
+<h4 id="sss">SSS</h4>
+<h5 id="序列生成-7">序列生成</h5>
+<p><br/>辅同步信号序列$ { {d}_{}}(n) $定义为</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber  &amp; { {d}_{\text{SSS}}}\left( n \right)=\left[ 1-2{
+{x}_{0}}\left( \left( n+{ {m}_{0}} \right)\bmod 127 \right)
+\right]\left[ 1-2{ {x}_{1}}\left( \left( n+{ {m}_{1}} \right)\bmod 127
+\right) \right] \\
+\nonumber  &amp; { {m}_{0}}=15\left\lfloor
+\frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor
++5N_{\text{ID}}^{\text{(2)}} \\
+\nonumber &amp; { {m}_{1}}=N_{\text{ID}}^{\text{(1)}}\bmod 112 \\
+\nonumber &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
 <p>其中</p>
-<p>$$ \begin{align}<br> \nonumber  &amp; { {x}<em>{0}}\left( i+7 \right)&#x3D;\left( { {x}</em>{0}}\left( i+4 \right)+x{}<em>{0}\left( i \right) \right)\bmod 2 \<br>\nonumber  &amp; { {x}</em>{1}}\left( i+7 \right)&#x3D;\left( { {x}<em>{1}}\left( i+1 \right)+x{}</em>{1}\left( i \right) \right)\bmod 2<br>\end{align}<br>$$</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber  &amp; { {x}_{0}}\left( i+7 \right)=\left( { {x}_{0}}\left(
+i+4 \right)+x{}_{0}\left( i \right) \right)\bmod 2 \\
+\nonumber  &amp; { {x}_{1}}\left( i+7 \right)=\left( { {x}_{1}}\left(
+i+1 \right)+x{}_{1}\left( i \right) \right)\bmod 2  
+\end{align}
+\]</span></p>
 <p>且</p>
-<p>$$ \begin{align}<br>  \nonumber &amp; \left[ \begin{matrix}<br>   { {x}<em>{0}}\left( 6 \right) &amp; { {x}</em>{0}}\left( 5 \right) &amp; { {x}<em>{0}}\left( 4 \right) &amp; { {x}</em>{0}}\left( 3 \right) &amp; { {x}<em>{0}}\left( 2 \right) &amp; { {x}</em>{0}}\left( 1 \right) &amp; { {x}<em>{0}}\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \<br>\end{matrix} \right] \<br>\nonumber  &amp; \left[ \begin{matrix}<br>   { {x}</em>{1}}\left( 6 \right) &amp; { {x}<em>{1}}\left( 5 \right) &amp; { {x}</em>{1}}\left( 4 \right) &amp; { {x}<em>{1}}\left( 3 \right) &amp; { {x}</em>{1}}\left( 2 \right) &amp; { {x}<em>{1}}\left( 1 \right) &amp; { {x}</em>{1}}\left( 0 \right)  \<br>\end{matrix} \right]&#x3D;\left[ \begin{matrix}<br>   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \<br>\end{matrix} \right]<br>\end{align}<br>$$</p>
-<h5 id="物理资源映射-10"><a href="#物理资源映射-10" class="headerlink" title="物理资源映射"></a>物理资源映射</h5><p><br/>物理资源映射在7.4.3节描述。</p>
-<h3 id="SS-x2F-PBCH-Block"><a href="#SS-x2F-PBCH-Block" class="headerlink" title="SS&#x2F;PBCH Block"></a>SS&#x2F;PBCH Block</h3><h4 id="SS-x2F-PBCH块的时频域结构"><a href="#SS-x2F-PBCH块的时频域结构" class="headerlink" title="SS&#x2F;PBCH块的时频域结构"></a>SS&#x2F;PBCH块的时频域结构</h4><p><br/>在时域上，1个SS&#x2F;PBCH块由4个OFDM符号组成，在SS&#x2F;PBCH块内符号按增序从0到3编号，其中PSS、SSS、PBCH以及和PBCH相关的DM-RS位于不同的符号，详见Table 7.4.3.1-1。</p>
-<p>在频域上，1个SS&#x2F;PBCH块由288个连续子载波组成，在SS&#x2F;PBCH块内子载波按增序从0到287编号。SS&#x2F;PBCH块内的子载波$k$对应于资源块$ n_{\text{PRB}}^{\text{SSB}} $的子载波$ n_{\text{PRB}}^{\text{SSB}}N_{\text{sc}}^{\text{RB}}+{ {k}<em>{0}} $，其中$ { {k}</em>{0}}\in \left{ \text{0, 1, 2, }…\text{, 11} \right} $。</p>
-<p>对于1个SS&#x2F;PBCH块，UE应假定</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; \left[ \begin{matrix}
+   { {x}_{0}}\left( 6 \right) &amp; { {x}_{0}}\left( 5 \right) &amp; {
+{x}_{0}}\left( 4 \right) &amp; { {x}_{0}}\left( 3 \right) &amp; {
+{x}_{0}}\left( 2 \right) &amp; { {x}_{0}}\left( 1 \right) &amp; {
+{x}_{0}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right] \\
+\nonumber  &amp; \left[ \begin{matrix}
+   { {x}_{1}}\left( 6 \right) &amp; { {x}_{1}}\left( 5 \right) &amp; {
+{x}_{1}}\left( 4 \right) &amp; { {x}_{1}}\left( 3 \right) &amp; {
+{x}_{1}}\left( 2 \right) &amp; { {x}_{1}}\left( 1 \right) &amp; {
+{x}_{1}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right]  
+\end{align}
+\]</span></p>
+<h5 id="物理资源映射-10">物理资源映射</h5>
+<p><br/>物理资源映射在7.4.3节描述。</p>
+<h3 id="sspbch-block">SS/PBCH Block</h3>
+<h4 id="sspbch块的时频域结构">SS/PBCH块的时频域结构</h4>
+<p><br/>在时域上，1个SS/PBCH块由4个OFDM符号组成，在SS/PBCH块内符号按增序从0到3编号，其中PSS、SSS、PBCH以及和PBCH相关的DM-RS位于不同的符号，详见Table
+7.4.3.1-1。</p>
+<p>在频域上，1个SS/PBCH块由288个连续子载波组成，在SS/PBCH块内子载波按增序从0到287编号。SS/PBCH块内的子载波<span
+class="math inline">\(k\)</span>对应于资源块$ n_{}^{} <span
+class="math inline">\(的子载波\)</span> n_{}<sup>{}N_{}</sup>{}+{
+{k}<em>{0}} <span class="math inline">\(，其中\)</span> { {k}</em>{0}}{
+... } $。</p>
+<p>对于1个SS/PBCH块，UE应假定</p>
 <ul>
-<li>天线端口$ p&#x3D;4000 $</li>
-<li>子载波间隔配置$ \mu \in \left{ 0,1,3,4 \right} $</li>
+<li>天线端口$ p=4000 $</li>
+<li>子载波间隔配置$ { 0,1,3,4 } $</li>
 <li>PSS、SSS和PBCH具有相同的CP长度和子载波间隔</li>
 </ul>
-<p>UE应假定在SS&#x2F;PBCH burst set内的同一块时间索引下发送的SS&#x2F;PBCH blocks是关于多普勒扩展、多普勒频移、平均增益、平均时延和空间RX参数准共定位的。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/142651702.png" alt="mark"></p>
-<h5 id="SS-x2F-PBCH块内PSS的映射"><a href="#SS-x2F-PBCH块内PSS的映射" class="headerlink" title="SS&#x2F;PBCH块内PSS的映射"></a>SS&#x2F;PBCH块内PSS的映射</h5><p><br/>UE应假定PSS符号序列$ { {d}<em>{\text{PSS}}}(0),…,{ {d}</em>{\text{PSS}}}(126) $乘以一个幅值因子$ { {\beta }<em>{\text{SS}}} $，以符合TS38.213对PSS功率分配的规定，并按$k$的递增顺序映射到资源粒子$ { {\left( k,l \right)}</em>{p,\mu }} $，其中$k$和$l$在Table 7.4.3.1-1中给定，$k$和$l$分别表示SS&#x2F;PBCH块内的频域和时域索引。</p>
-<h5 id="SS-x2F-PBCH块内SSS的映射"><a href="#SS-x2F-PBCH块内SSS的映射" class="headerlink" title="SS&#x2F;PBCH块内SSS的映射"></a>SS&#x2F;PBCH块内SSS的映射</h5><p><br/>UE应假定SSS符号序列$ { {d}<em>{\text{SSS}}}(0),…,{ {d}</em>{\text{SSS}}}(126) $乘以一个幅值因子$ { {\beta }<em>{\text{SS}}} $，以符合TS38.213对SSS功率分配的规定，并按$k$的递增顺序映射到资源粒子$ { {\left( k,l \right)}</em>{p,\mu }} $，其中$k$和$l$在Table 7.4.3.1-1中给定，$k$和$l$分别表示SS&#x2F;PBCH块内的频域和时域索引。</p>
-<h5 id="SS-x2F-PBCH块内PBCH的映射"><a href="#SS-x2F-PBCH块内PBCH的映射" class="headerlink" title="SS&#x2F;PBCH块内PBCH的映射"></a>SS&#x2F;PBCH块内PBCH的映射</h5><p><br/>UE应假定PBCH复值符号序列$ { {d}<em>{\text{PBCH}}}(0),…,{ {d}</em>{\text{PBCH}}}({ {M}<em>{\text{symb}}}-1) $乘以一个幅值因子$ { {\beta }</em>{\text{ }!!\grave{\ }!!\text{ PBCH}}} $，以符合TS38.213对PBCH功率分配的规定，并从$ { {d}<em>{\text{PBCH}}}(0) $开始映射到资源粒子$ { {\left( k,l \right)}</em>{p,\mu }} $，这些REs满足下列条件：</p>
+<p>UE应假定在SS/PBCH burst set内的同一块时间索引下发送的SS/PBCH
+blocks是关于多普勒扩展、多普勒频移、平均增益、平均时延和空间RX参数准共定位的。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171026/142651702.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h5 id="sspbch块内pss的映射">SS/PBCH块内PSS的映射</h5>
+<p><br/>UE应假定PSS符号序列$ { {d}<em>{}}(0),...,{ {d}</em>{}}(126)
+<span class="math inline">\(乘以一个幅值因子\)</span> { {}<em>{}} <span
+class="math inline">\(，以符合TS38.213对PSS功率分配的规定，并按\)</span>k<span
+class="math inline">\(的递增顺序映射到资源粒子\)</span> { {( k,l
+)}</em>{p,}} <span class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l<span class="math inline">\(在Table
+7.4.3.1-1中给定，\)</span>k<span
+class="math inline">\(和\)</span>l$分别表示SS/PBCH块内的频域和时域索引。</p>
+<h5 id="sspbch块内sss的映射">SS/PBCH块内SSS的映射</h5>
+<p><br/>UE应假定SSS符号序列$ { {d}<em>{}}(0),...,{ {d}</em>{}}(126)
+<span class="math inline">\(乘以一个幅值因子\)</span> { {}<em>{}} <span
+class="math inline">\(，以符合TS38.213对SSS功率分配的规定，并按\)</span>k<span
+class="math inline">\(的递增顺序映射到资源粒子\)</span> { {( k,l
+)}</em>{p,}} <span class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l<span class="math inline">\(在Table
+7.4.3.1-1中给定，\)</span>k<span
+class="math inline">\(和\)</span>l$分别表示SS/PBCH块内的频域和时域索引。</p>
+<h5 id="sspbch块内pbch的映射">SS/PBCH块内PBCH的映射</h5>
+<p><br/>UE应假定PBCH复值符号序列$ { {d}<em>{}}(0),...,{ {d}</em>{}}({
+{M}<em>{}}-1) <span class="math inline">\(乘以一个幅值因子\)</span> {
+{}</em>{!!!!}} <span
+class="math inline">\(，以符合TS38.213对PBCH功率分配的规定，并从\)</span>
+{ {d}<em>{}}(0) <span class="math inline">\(开始映射到资源粒子\)</span>
+{ {( k,l )}</em>{p,}} $，这些REs满足下列条件：</p>
 <ul>
 <li>它们不用于PBCH DM-RS</li>
 </ul>
-<p>映射过程中不保留用于其他目的资源粒子$ { {\left( k,l \right)}_{p,\mu }} $，并按递增顺序先$ k $后$l$映射，其中$k$和$l$分别是SS&#x2F;PBCH块内的频域和时域索引，并由Table 7.4.3.1-1给定。</p>
-<p>UE应假定SS&#x2F;PBCH块的DM-RS复值符号序列$ { {r}<em>{l}}(0),…,{ {r}</em>{l}}(143) $乘以一个幅值因子$ \beta <em>{\text{PBCH}}^{\text{DMRS}} $，以符合TS38.213对PBCH DM-RS功率分配的规定，并按递增顺序先$ k $后$l$映射到资源粒子$ { {\left( k,l \right)}</em>{p,\mu }} $，其中$k$和$l$分别是SS&#x2F;PBCH块内的频域和时域索引，并由Table 7.4.3.1-1给定，其中$ v&#x3D;N_{\text{ID}}^{\text{cell}}\bmod 4 $。</p>
-<h4 id="SS-x2F-PBCH块的时域位置"><a href="#SS-x2F-PBCH块的时域位置" class="headerlink" title="SS&#x2F;PBCH块的时域位置"></a>SS&#x2F;PBCH块的时域位置</h4><p><br/>UE应对可能的时域位置上的SS&#x2F;PBCH块进行监测，在TS38.213中描述。</p>
+<p>映射过程中不保留用于其他目的资源粒子$ { {( k,l )}_{p,}} <span
+class="math inline">\(，并按递增顺序先\)</span> k <span
+class="math inline">\(后\)</span>l<span
+class="math inline">\(映射，其中\)</span>k<span
+class="math inline">\(和\)</span>l$分别是SS/PBCH块内的频域和时域索引，并由Table
+7.4.3.1-1给定。</p>
+<p>UE应假定SS/PBCH块的DM-RS复值符号序列$ { {r}<em>{l}}(0),...,{
+{r}</em>{l}}(143) <span class="math inline">\(乘以一个幅值因子\)</span>
+<em>{}^{} <span class="math inline">\(，以符合TS38.213对PBCH
+DM-RS功率分配的规定，并按递增顺序先\)</span> k <span
+class="math inline">\(后\)</span>l<span
+class="math inline">\(映射到资源粒子\)</span> { {( k,l )}</em>{p,}}
+<span class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l<span
+class="math inline">\(分别是SS/PBCH块内的频域和时域索引，并由Table
+7.4.3.1-1给定，其中\)</span> v=N_{}^{} $。</p>
+<h4 id="sspbch块的时域位置">SS/PBCH块的时域位置</h4>
+<p><br/>UE应对可能的时域位置上的SS/PBCH块进行监测，在TS38.213中描述。</p>
 
     </div>
 

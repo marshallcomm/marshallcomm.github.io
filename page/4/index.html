@@ -269,13 +269,23 @@
     <div class="post-body" itemprop="articleBody">
           <p><br/>5G-NR物理层协议由如下7个规范构成。</p>
 <ul>
-<li>[1]	<a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">3GPP TS 38.201: “NR物理层概述”</a></li>
-<li>[2]	<a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">3GPP TS 38.202: “NR物理层提供的服务”</a></li>
-<li>[3]	<a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">3GPP TS 38.211: “NR物理信道与调制”</a></li>
-<li>[4]	<a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">3GPP TS 38.212: “NR复用与信道编码”</a></li>
-<li>[5]	<a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">3GPP TS 38.213: “NR物理层过程（控制）”</a></li>
-<li>[6]	3GPP TS 38.214: “NR物理层过程（数据）”</li>
-<li>[7]	3GPP TS 38.215: “NR物理层测量”</li>
+<li>[1] <a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">3GPP
+TS 38.201: “NR物理层概述”</a></li>
+<li>[2] <a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">3GPP TS
+38.202: “NR物理层提供的服务”</a></li>
+<li>[3] <a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">3GPP
+TS 38.211: “NR物理信道与调制”</a></li>
+<li>[4] <a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">3GPP
+TS 38.212: “NR复用与信道编码”</a></li>
+<li>[5] <a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">3GPP
+TS 38.213: “NR物理层过程（控制）”</a></li>
+<li>[6] 3GPP TS 38.214: “NR物理层过程（数据）”</li>
+<li>[7] 3GPP TS 38.215: “NR物理层测量”</li>
 </ul>
 <p>其中[1]是概述性文档，其他六个是具体规范文档。与LTE规范不同的是，物理层提供的服务单独为一个文档，物理层过程一分为二，分为控制和数据两个部分。</p>
           <!--noindex-->
@@ -364,8 +374,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>本文对论文“A Comparative Study of Polar Code Constructions for the AWGN Channel”进行解读。</p>
-<h1 id="极化码构造"><a href="#极化码构造" class="headerlink" title="极化码构造"></a>极化码构造</h1><p><br/>论文首先锁定了讨论的范围是<strong>极化码构造</strong>。极化码是线性分组码，极化码的码长N一旦确定，其生成矩阵随之确定；此时，比特信道的选择就完全地定义了一个极化码，不同的比特信道位置，其对应的编码结果不同。因此将比特信道的选择过程称为<strong>“极化码构造”（polar code construction）</strong>。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>本文对论文“A Comparative Study of Polar Code Constructions for
+the AWGN Channel”进行解读。</p>
+<h1 id="极化码构造">极化码构造</h1>
+<p><br/>论文首先锁定了讨论的范围是<strong>极化码构造</strong>。极化码是线性分组码，极化码的码长N一旦确定，其生成矩阵随之确定；此时，比特信道的选择就完全地定义了一个极化码，不同的比特信道位置，其对应的编码结果不同。因此将比特信道的选择过程称为<strong>“极化码构造”（polar
+code construction）</strong>。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -452,10 +466,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>本文源于<a href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">《Polar Code（6）SC译码算法》</a>评论区的讨论，受到启发后重新梳理了关于巴氏参数法、高斯近似、degign-snr的认识。</p>
-<h1 id="极化码构造原则"><a href="#极化码构造原则" class="headerlink" title="极化码构造原则"></a>极化码构造原则</h1><p><br/>Arikan在论文[1]指出极化码构造原则：</p>
+          <h1 id="前言">前言</h1>
+<p><br/>本文源于<a
+href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">《Polar
+Code（6）SC译码算法》</a>评论区的讨论，受到启发后重新梳理了关于巴氏参数法、高斯近似、degign-snr的认识。</p>
+<h1 id="极化码构造原则">极化码构造原则</h1>
+<p><br/>Arikan在论文[1]指出极化码构造原则：</p>
 <blockquote>
-<p><strong>Polar code construction rule</strong>. To construct an $\left( N,K \right)$ polar code for a B-DMC $W$, we select $A$ as the subset of indices $A\subset \left{ 1,…,N \right}$ such that $\left| A \right|&#x3D;K$ and for each $i\in A$, the value $Z\left( W_{N}^{\left( i \right)} \right)$ is among the smallest $K$ values in the set $\left{ Z\left( W_{N}^{\left( i \right)} \right):j&#x3D;1,…,N \right}$. The choice of the frozen vector $f_{1}^{\left| { {A}^{c}} \right|}$ is unspecified; any choice $\left( A,f_{1}^{\left| { {A}^{c}} \right|} \right)$ defines a polar code.</p>
+<p><strong>Polar code construction rule</strong>. To construct an <span
+class="math inline">\(\left( N,K \right)\)</span> polar code for a B-DMC
+<span class="math inline">\(W\)</span>, we select <span
+class="math inline">\(A\)</span> as the subset of indices <span
+class="math inline">\(A\subset \left\{ 1,...,N \right\}\)</span> such
+that <span class="math inline">\(\left| A \right|=K\)</span> and for
+each <span class="math inline">\(i\in A\)</span>, the value <span
+class="math inline">\(Z\left( W_{N}^{\left( i \right)} \right)\)</span>
+is among the smallest <span class="math inline">\(K\)</span> values in
+the set <span class="math inline">\(\left\{ Z\left( W_{N}^{\left( i
+\right)} \right):j=1,...,N \right\}\)</span>. The choice of the frozen
+vector <span class="math inline">\(f_{1}^{\left| { {A}^{c}}
+\right|}\)</span> is unspecified; any choice <span
+class="math inline">\(\left( A,f_{1}^{\left| { {A}^{c}} \right|}
+\right)\)</span> defines a polar code.</p>
 </blockquote>
           <!--noindex-->
           <!--/noindex-->
@@ -544,12 +576,29 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>“假设全零发送”，这个看似简单以至于在许多论文里都一笔带过的假设，却引发了最近的一段思考。</p>
-<p>从基本的高斯信道说起，对于一个BAWGN信道，其接收符号$y$表示为：</p>
-<p>$$\begin{align}<br>y&#x3D;s+z<br>\end{align}$$</p>
-<p>其中$z$为服从$N\left( 0,{ {\sigma }^{2}} \right)$的高斯白噪声，$s$为调制符号，调制方式采用BPSK。$s&#x3D;1-2x$或者$s&#x3D;2x-1$取决于怎样定义BPSK映射。若定义BPSK映射规则为：</p>
-<p>\begin{align}<br>s&#x3D;\left{ \begin{matrix}<br>   +1,\ \ x&#x3D;0  \<br>   -1,\ \ x&#x3D;1  \<br>\end{matrix} \right.<br>\end{align}</p>
-<p>其中$x\in \left{ 0,1 \right}$为编码比特，则接收符号$y$重写为：</p>
-<p>$$\begin{align}<br>y&#x3D;\left( 1-2x \right)+z<br>\end{align}$$</p>
+<p>从基本的高斯信道说起，对于一个BAWGN信道，其接收符号<span
+class="math inline">\(y\)</span>表示为：</p>
+<p><span class="math display">\[\begin{align}
+y=s+z
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(z\)</span>为服从<span
+class="math inline">\(N\left( 0,{ {\sigma }^{2}}
+\right)\)</span>的高斯白噪声，<span
+class="math inline">\(s\)</span>为调制符号，调制方式采用BPSK。<span
+class="math inline">\(s=1-2x\)</span>或者<span
+class="math inline">\(s=2x-1\)</span>取决于怎样定义BPSK映射。若定义BPSK映射规则为：</p>
+<p><span class="math display">\[\begin{align}
+s=\left\{ \begin{matrix}
+   +1,\ \ x=0  \\
+   -1,\ \ x=1  \\
+\end{matrix} \right.
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(x\in \left\{ 0,1
+\right\}\)</span>为编码比特，则接收符号<span
+class="math inline">\(y\)</span>重写为：</p>
+<p><span class="math display">\[\begin{align}
+y=\left( 1-2x \right)+z
+\end{align}\]</span></p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -637,11 +686,16 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>本博客使用了第三方评论系统，网易云跟帖将在2017年8月1日关闭，也就是说云跟帖倒闭了。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170727/101036290.png" alt="mark"></p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170727/101036290.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <p>今天更换了评论系统，朋友们可以继续留言。但遗憾是，由于新的评论系统不支持数据导入，意味着从前所有的评论数据将丢失。</p>
 <p>评论系统对一个博客来说还是比较重要的，它给人们提供了交流的平台。在过去的几个月里，许多研究极化码的朋友在博客里参与讨论，我也从中获益良多。许多朋友也指出我的错误，我了解到以后也一一改正，使文章更完善。</p>
 <p>感谢所有曾经参与评论的朋友。</p>
-<hr>
+<hr />
 <p>2017年8月22日更新</p>
 <p>适用来必力评论系统一段时间，由于服务器在韩国，评论加载速度太慢，还是弃用了。切换到畅言评论系统，如果畅言不倒闭，今后就一直使用了。</p>
 
@@ -728,8 +782,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>3GPP RAN1 ad hoc#2会议于6月27~30日在青岛召开。关于Polar Code达成如下结论：</p>
-<h1 id="Code-construction"><a href="#Code-construction" class="headerlink" title="Code construction"></a>Code construction</h1><p><br/> <img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170704/102252079.png" alt="mark"></p>
+          <p>3GPP RAN1 ad hoc#2会议于6月27~30日在青岛召开。关于Polar
+Code达成如下结论：</p>
+<h1 id="code-construction">Code construction</h1>
+<p><br/> <img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170704/102252079.png"
+alt="mark" /></p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -816,8 +874,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>3GPP标准化会议于5月15~19日在杭州召开。本周在杭州参加3GPP RAN1 #89次会议，亲历了5G标准化进程中的一个时间点。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095532334.JPG" title="3GPP RAN1#89 主会场（杭州）" />
+          <h1 id="前言">前言</h1>
+<p><br/>3GPP标准化会议于5月15~19日在杭州召开。本周在杭州参加3GPP RAN1
+#89次会议，亲历了5G标准化进程中的一个时间点。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/095532334.JPG" title="3GPP RAN1#89 主会场（杭州）" /></p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -904,8 +964,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>RAN1#87次会议已将Polar code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
-<p>言归正传，从3GPP RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code construction，二是Sequence design。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>RAN1#87次会议已将Polar
+code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G
+NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar
+code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar
+code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
+<p>言归正传，从3GPP
+RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code
+construction，二是Sequence design。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -992,7 +1059,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170505/114130398.jpg" title="图 1 信道${W_{4}}$" />
+          <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170505/114130398.jpg" title="图 1 信道${W_{4}}$" /></p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -1079,8 +1146,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>任何一本信息论书籍讲到离散信道容量时都会涉及形如$I\left( X;Y \right)&#x3D;\sum\limits_{i,j}{ { {p}<em>{i}}{ {p}</em>{ij}}\log \frac{ { {p}<em>{ij}}}{ { {q}</em>{j}}}}$的公式。但这个公式，我理解是经过转化得来的，不是直接得到的。怎么转化呢？请继续阅读。</p>
-<p>输入符号概率${ {p}<em>{i}}&#x3D;p\left( { {x}</em>{i}} \right)$，输出符号概率${ {q}<em>{j}}&#x3D;q\left( { {y}</em>{j}} \right)$，输入符号到输出符号的转移概率${ {p}<em>{ij}}&#x3D;p\left( { {y}</em>{j}}|{ {x}_{i}} \right)$，这三种概率完全地表达了一个信道。对于信道容量，第一个概念是互信息量。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>任何一本信息论书籍讲到离散信道容量时都会涉及形如<span
+class="math inline">\(I\left( X;Y \right)=\sum\limits_{i,j}{ { {p}_{i}}{
+{p}_{ij}}\log \frac{ { {p}_{ij}}}{ {
+{q}_{j}}}}\)</span>的公式。但这个公式，我理解是经过转化得来的，不是直接得到的。怎么转化呢？请继续阅读。</p>
+<p>输入符号概率<span class="math inline">\({ {p}_{i}}=p\left( { {x}_{i}}
+\right)\)</span>，输出符号概率<span class="math inline">\({
+{q}_{j}}=q\left( { {y}_{j}}
+\right)\)</span>，输入符号到输出符号的转移概率<span
+class="math inline">\({ {p}_{ij}}=p\left( { {y}_{j}}|{ {x}_{i}}
+\right)\)</span>，这三种概率完全地表达了一个信道。对于信道容量，第一个概念是互信息量。</p>
           <!--noindex-->
           <!--/noindex-->
         

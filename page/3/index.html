@@ -267,10 +267,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>Polar coding大部分内容已在<a href="http://marshallcomm.cn/2017/10/20/polar-code-21-3gpp-ran1-90/">3GPP RAN1#90</a>会议中确定下来。2017年9月18~21日，3GPP RAN1 adhoc#3会议在日本名古屋召开，对Polar coding遗留的问题继续进行讨论。</p>
-<h1 id="Downlink-code-construction"><a href="#Downlink-code-construction" class="headerlink" title="Downlink code construction"></a>Downlink code construction</h1><p><br/>本次会议达成如下结论：</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/172619575.png" alt="mark"></p>
-<p>确认了<a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">38.212v1.0.0协议</a>中关于CRC添加和交织器的工作假设。目前协议假设下行控制信息（DCI）载荷最大为200 bits，即Kmax&#x3D;200。日后正式确定下来的Kmax值应小于200。</p>
+          <h1 id="前言">前言</h1>
+<p><br/>Polar coding大部分内容已在<a
+href="http://marshallcomm.cn/2017/10/20/polar-code-21-3gpp-ran1-90/">3GPP
+RAN1#90</a>会议中确定下来。2017年9月18~21日，3GPP RAN1
+adhoc#3会议在日本名古屋召开，对Polar coding遗留的问题继续进行讨论。</p>
+<h1 id="downlink-code-construction">Downlink code construction</h1>
+<p><br/>本次会议达成如下结论：</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171020/172619575.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>确认了<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">38.212v1.0.0协议</a>中关于CRC添加和交织器的工作假设。目前协议假设下行控制信息（DCI）载荷最大为200
+bits，即Kmax=200。日后正式确定下来的Kmax值应小于200。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -357,10 +369,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/>我一直有意将<a href="http://marshallcomm.cn/categories/Polar-Code/">Polar Code</a>系列和<a href="http://marshallcomm.cn/categories/3GPP-PolarCode/">3GPP_PolarCode</a>系列区分开，因此把它们放在不同的分类里，虽然它们都是关于polar code的文章，但前者关注极化码编译码算法本身，而后者关注极化码在5G标准化中的进展。前者更偏于理论研究，参考资料多是paper，后者更注重实际应用，参考资料多是3GPP proposal或Technical Specification（技术规范）。这可看作是polar code发展的两条线，有时这两条线又相交重叠，相互促进。如果你熟悉LTE system，那么<a href="http://marshallcomm.cn/categories/3GPP-PolarCode/">3GPP_PolarCode</a>系列则更容易理解。3GPP里的极化码是控制信道框架下的信道编码，它的上一步骤是CRC添加，它的下一步是速率匹配，这个过程在LTE system里也是如此。</p>
-<p>3GPP RAN1#90会议于8月21~25日在布拉格召开。会议达成的结论已在3GPP Rel-15技术规范v1.0.0版本中体现，详见<a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-index/">《5G物理层协议V100》</a>。</p>
-<p>截止到本次会议，polar coding一个比较完整的编码方案已经形成，从CRC计算到极化码编码，再到速率匹配方案都基本确定了，并已将本次会议达成的结论体现在v1.0.0版本协议的<a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">《5G-NR复用与信道编码》</a>中。</p>
-<p>本文结合本次会议达成的结论和v1.0.0版本协议的<a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">《5G-NR复用与信道编码》</a>，对Polar coding过程进行比较全面的梳理。5G控制信道编码的基本流程：</p>
+          <h1 id="前言">前言</h1>
+<p><br/>我一直有意将<a
+href="http://marshallcomm.cn/categories/Polar-Code/">Polar
+Code</a>系列和<a
+href="http://marshallcomm.cn/categories/3GPP-PolarCode/">3GPP_PolarCode</a>系列区分开，因此把它们放在不同的分类里，虽然它们都是关于polar
+code的文章，但前者关注极化码编译码算法本身，而后者关注极化码在5G标准化中的进展。前者更偏于理论研究，参考资料多是paper，后者更注重实际应用，参考资料多是3GPP
+proposal或Technical Specification（技术规范）。这可看作是polar
+code发展的两条线，有时这两条线又相交重叠，相互促进。如果你熟悉LTE
+system，那么<a
+href="http://marshallcomm.cn/categories/3GPP-PolarCode/">3GPP_PolarCode</a>系列则更容易理解。3GPP里的极化码是控制信道框架下的信道编码，它的上一步骤是CRC添加，它的下一步是速率匹配，这个过程在LTE
+system里也是如此。</p>
+<p>3GPP RAN1#90会议于8月21~25日在布拉格召开。会议达成的结论已在3GPP
+Rel-15技术规范v1.0.0版本中体现，详见<a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-index/">《5G物理层协议V100》</a>。</p>
+<p>截止到本次会议，polar
+coding一个比较完整的编码方案已经形成，从CRC计算到极化码编码，再到速率匹配方案都基本确定了，并已将本次会议达成的结论体现在v1.0.0版本协议的<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">《5G-NR复用与信道编码》</a>中。</p>
+<p>本文结合本次会议达成的结论和v1.0.0版本协议的<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">《5G-NR复用与信道编码》</a>，对Polar
+coding过程进行比较全面的梳理。5G控制信道编码的基本流程：</p>
 <ul>
 <li>CRC添加</li>
 <li>信道编码</li>
@@ -452,9 +480,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><br/><strong>高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。</strong></p>
-<p>文献[1]首先揭示了极化码合成信道（synthesized channels）之间的偏序（Partial Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1 #86次会议上，华为提出了用极化权重（Polarization Weight，PW）来表征AWGN信道下极化码合成信道可靠性的算法[2]。这两项独立的研究似乎不谋而合，促使华为进一步进行理论扩展，追求AWGN信道下极化码的快速构造方法。这就是本博文所要介绍的β-expansion[3]。</p>
-<p>文献[3]首先介绍了通用偏序（Universal Partial Order，UPO）的两个重要性质：嵌套和对称。这两个性质是能够采用递归方式构造极化码序列的基础。然后介绍了PW方法，其中β参数需要慎重地选择，其值的大小直接决定了合成信道的顺序。最后用大量的篇幅论证了β的最佳取值为1.1892，即$\beta &#x3D;{ {2}^{ {1}&#x2F;{4};}}$。无论是渐进性分析，还是数值仿真结果都证实β-expansion方法以低复杂度获得了与GA相同的性能。</p>
+          <h1 id="前言">前言</h1>
+<p><br/><strong>高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。</strong></p>
+<p>文献[1]首先揭示了极化码合成信道（synthesized
+channels）之间的偏序（Partial
+Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1
+#86次会议上，华为提出了用极化权重（Polarization
+Weight，PW）来表征AWGN信道下极化码合成信道可靠性的算法[2]。这两项独立的研究似乎不谋而合，促使华为进一步进行理论扩展，追求AWGN信道下极化码的快速构造方法。这就是本博文所要介绍的β-expansion[3]。</p>
+<p>文献[3]首先介绍了通用偏序（Universal Partial
+Order，UPO）的两个重要性质：嵌套和对称。这两个性质是能够采用递归方式构造极化码序列的基础。然后介绍了PW方法，其中β参数需要慎重地选择，其值的大小直接决定了合成信道的顺序。最后用大量的篇幅论证了β的最佳取值为1.1892，即<span
+class="math inline">\(\beta ={ {2}^{
+{1}/{4}\;}}\)</span>。无论是渐进性分析，还是数值仿真结果都证实β-expansion方法以低复杂度获得了与GA相同的性能。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -542,10 +578,28 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>3GPP 5G 物理层规范共有7个文档：</p>
-<p><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">3GPP TS 38.201: “NR物理层概述”</a><br><a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">3GPP TS 38.202: “NR物理层提供的服务”</a><br><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">3GPP TS 38.211: “NR物理信道与调制”</a><br><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">3GPP TS 38.212: “NR复用与信道编码”</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">3GPP TS 38.213: “NR物理层过程（控制）”</a><br>3GPP TS 38.214: “NR物理层过程（数据）”<br>3GPP TS 38.215: “NR物理层测量”</p>
-<p>本系列博文较全面地呈现了<a href="http://marshallcomm.cn/tags/2017-09/"><strong>3GPP Rel-15 V1.0.0 (2017-09)</strong></a>版本前5份规范的各个章节。其中“NR复用与信道编码”规范只关注了与polar code相关的比特级处理，LDPC码相关处理待日后整理。</p>
-<hr>
-<p>是时候开启一个新的系列了。前面已写有两个系列，一是<a href="http://marshallcomm.cn/categories/Polar-Code/">极化码技术系列</a> ，二是<a href="http://marshallcomm.cn/categories/3GPP-PolarCode/">极化码在3GPP标准化的进展系列</a>。今天开启的是<a href="http://marshallcomm.cn/categories/5G-NR/">5G-NR系列</a>。</p>
+<p><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">3GPP
+TS 38.201: “NR物理层概述”</a> <a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">3GPP TS
+38.202: “NR物理层提供的服务”</a> <a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">3GPP
+TS 38.211: “NR物理信道与调制”</a> <a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">3GPP
+TS 38.212: “NR复用与信道编码”</a> <a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">3GPP
+TS 38.213: “NR物理层过程（控制）”</a> 3GPP TS 38.214:
+“NR物理层过程（数据）” 3GPP TS 38.215: “NR物理层测量”</p>
+<p>本系列博文较全面地呈现了<a
+href="http://marshallcomm.cn/tags/2017-09/"><strong>3GPP Rel-15 V1.0.0
+(2017-09)</strong></a>版本前5份规范的各个章节。其中“NR复用与信道编码”规范只关注了与polar
+code相关的比特级处理，LDPC码相关处理待日后整理。</p>
+<hr />
+<p>是时候开启一个新的系列了。前面已写有两个系列，一是<a
+href="http://marshallcomm.cn/categories/Polar-Code/">极化码技术系列</a>
+，二是<a
+href="http://marshallcomm.cn/categories/3GPP-PolarCode/">极化码在3GPP标准化的进展系列</a>。今天开启的是<a
+href="http://marshallcomm.cn/categories/5G-NR/">5G-NR系列</a>。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -632,36 +686,38 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="同步过程"><a href="#同步过程" class="headerlink" title="同步过程"></a>同步过程</h1><h2 id="小区搜索"><a href="#小区搜索" class="headerlink" title="小区搜索"></a>小区搜索</h2><p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
-<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS 38.211中定义。</p>
-<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS&#x2F;PBCH块。</p>
-<p>对于半帧中的SS&#x2F;PBCH块，候选SS&#x2F;PBCH块的OFDM 符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
+          <h1 id="同步过程">同步过程</h1>
+<h2 id="小区搜索">小区搜索</h2>
+<p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
+<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS
+38.211中定义。</p>
+<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS/PBCH块。</p>
+<p>对于半帧中的SS/PBCH块，候选SS/PBCH块的OFDM
+符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
 <ul>
-<li><pre><code>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引&#123;2, 8&#125; + 14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6 GHz，有n=0, 1, 2, 3。
-</code></pre>
-<ul>
-<li><pre><code>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引&#123;4, 8, 16, 20&#125; + 28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6 GHz，有n=0, 1。
-</code></pre>
-<ul>
-<li><pre><code>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引&#123;2, 8&#125; + 14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6 GHz，有n=0, 1, 2, 3。
-</code></pre>
-<ul>
-<li><pre><code>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引&#123;4, 8, 16, 20&#125; + 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16, 17, 18。
-</code></pre>
-<ul>
-<li><pre><code>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引&#123;8, 12, 16, 20, 32, 36, 40, 44&#125; + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8。
-</code></pre>
-</li>
+<li>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20} +
+28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20}
++ 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12,
+13, 15, 16, 17, 18。</li>
+<li>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{8, 12, 16, 20,
+32, 36, 40, 44} + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7,
+8。</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>一个半帧中的候选SS&#x2F;PBCH块在时域上以升序从0到$ L-1 ]$进行编号。对于$ L&#x3D;4 $或$ L&gt;4 $，UE应根据与每个半帧内SS&#x2F;PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS&#x2F;PBCH块索引的2或3个LSB比特。对于$ L&#x3D;64 $，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS&#x2F;PBCH块索引的3 个MSB比特。</p>
+<p>一个半帧中的候选SS/PBCH块在时域上以升序从0到$ L-1 ]<span
+class="math inline">\(进行编号。对于\)</span> L=4 <span
+class="math inline">\(或\)</span> L&gt;4 <span
+class="math inline">\(，UE应根据与每个半帧内SS/PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS/PBCH块索引的2或3个LSB比特。对于\)</span>
+L=64
+$，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS/PBCH块索引的3
+个MSB比特。</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -751,13 +807,32 @@
           <blockquote>
 <p>Marshall注：本博文重点关注了与polar code相关的比特级处理。</p>
 </blockquote>
-<h1 id="物理信道映射"><a href="#物理信道映射" class="headerlink" title="物理信道映射"></a>物理信道映射</h1><h2 id="上行"><a href="#上行" class="headerlink" title="上行"></a>上行</h2><h2 id="下行"><a href="#下行" class="headerlink" title="下行"></a>下行</h2><h1 id="通用流程"><a href="#通用流程" class="headerlink" title="通用流程"></a>通用流程</h1><p><br/>来自MAC层&#x2F;向MAC层输出的数据和控制流经过编&#x2F;解码，通过无线传输链路提供传输和控制服务。信道编码方案是错误检测、错误纠正、速率匹配、交织以及传输信道或控制信息向物理信道映射&#x2F;从物理信道到传输信道控制信息解析或分离的组合方案。</p>
-<h2 id="CRC计算"><a href="#CRC计算" class="headerlink" title="CRC计算"></a>CRC计算</h2><p><br/>CRC计算单元的输入比特为$ { {a}<em>{0}},{ {a}</em>{1}},{ {a}<em>{2}},{ {a}</em>{3}},…,{ {a}<em>{A-1}} $，奇偶校验比特为$ { {p}</em>{0}},{ {p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},…,{ {p}</em>{L-1}} $。$ A $是输入序列的长度，$ L $是校验比特数目。校验比特由下列循环生成多项式之一产生：</p>
+<h1 id="物理信道映射">物理信道映射</h1>
+<h2 id="上行">上行</h2>
+<h2 id="下行">下行</h2>
+<h1 id="通用流程">通用流程</h1>
+<p><br/>来自MAC层/向MAC层输出的数据和控制流经过编/解码，通过无线传输链路提供传输和控制服务。信道编码方案是错误检测、错误纠正、速率匹配、交织以及传输信道或控制信息向物理信道映射/从物理信道到传输信道控制信息解析或分离的组合方案。</p>
+<h2 id="crc计算">CRC计算</h2>
+<p><br/>CRC计算单元的输入比特为$ { {a}<em>{0}},{ {a}</em>{1}},{
+{a}<em>{2}},{ {a}</em>{3}},...,{ {a}<em>{A-1}} <span
+class="math inline">\(，奇偶校验比特为\)</span> { {p}</em>{0}},{
+{p}<em>{1}},{ {p}</em>{2}},{ {p}<em>{3}},...,{ {p}</em>{L-1}} <span
+class="math inline">\(。\)</span> A <span
+class="math inline">\(是输入序列的长度，\)</span> L
+$是校验比特数目。校验比特由下列循环生成多项式之一产生：</p>
 <ul>
-<li>$ { {g}_{\text{CRC24A}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{18}}+{ {D}^{17}}+{ {D}^{14}}+{ {D}^{11}}+{ {D}^{10}}+{ {D}^{7}}+{ {D}^{6}}+{ {D}^{5}}+{ {D}^{4}}+{ {D}^{3}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
-<li>$ { {g}_{\text{CRC24B}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{6}}+{ {D}^{5}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
-<li>$ { {g}_{\text{CRC24C}}}\left( D \right)&#x3D;[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{21}}+{ {D}^{20}}+{ {D}^{17}}+{ {D}^{15}}+{ {D}^{13}}+{ {D}^{12}}+{ {D}^{8}}+{ {D}^{4}}+{ {D}^{2}}+D+1] $，CRC长度$ L&#x3D;24 $；</li>
-<li>$ { {g}_{\text{CRC16}}}\left( D \right)&#x3D;[{ {D}^{16}}+{ {D}^{12}}+{ {D}^{5}}+D+1] $，CRC长度$ L&#x3D;16 $</li>
+<li>$ { {g}_{}}( D )=[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{18}}+{ {D}^{17}}+{
+{D}^{14}}+{ {D}^{11}}+{ {D}^{10}}+{ {D}^{7}}+{ {D}^{6}}+{ {D}^{5}}+{
+{D}^{4}}+{ {D}^{3}}+D+1] <span class="math inline">\(，CRC长度\)</span>
+L=24 $；</li>
+<li>$ { {g}_{}}( D )=[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{6}}+{ {D}^{5}}+D+1]
+<span class="math inline">\(，CRC长度\)</span> L=24 $；</li>
+<li>$ { {g}_{}}( D )=[{ {D}^{24}}+{ {D}^{23}}+{ {D}^{21}}+{ {D}^{20}}+{
+{D}^{17}}+{ {D}^{15}}+{ {D}^{13}}+{ {D}^{12}}+{ {D}^{8}}+{ {D}^{4}}+{
+{D}^{2}}+D+1] <span class="math inline">\(，CRC长度\)</span> L=24
+$；</li>
+<li>$ { {g}_{}}( D )=[{ {D}^{16}}+{ {D}^{12}}+{ {D}^{5}}+D+1] <span
+class="math inline">\(，CRC长度\)</span> L=16 $</li>
 </ul>
           <!--noindex-->
           <!--/noindex-->
@@ -845,48 +920,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF">上接《NR物理信道与调制》下行链路</a></p>
-<h1 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>下行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
+          <p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#下行链路">上接《NR物理信道与调制》下行链路</a></p>
+<h1 id="下行链路">下行链路</h1>
+<h2 id="概述">概述</h2>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>下行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
 <ul>
-<li><pre><code>物理下行共享信道（PDSCH）
-</code></pre>
-<ul>
-<li><pre><code>物理广播信道（PBCH）
-</code></pre>
-<ul>
-<li><pre><code>物理下行控制信道（PDCCH）
-</code></pre>
-</li>
+<li>物理下行共享信道（PDSCH）</li>
+<li>物理广播信道（PBCH）</li>
+<li>物理下行控制信道（PDCCH）</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
 <ul>
-<li><pre><code>解调参考信号（Demodulation reference signals，DM-RS）
-</code></pre>
-<ul>
-<li><pre><code>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）
-</code></pre>
-<ul>
-<li><pre><code>信道状态信息参考信号（Channel-state information reference signal，CSI-RS）
-</code></pre>
-<ul>
-<li><pre><code>主同步信号（Primary synchronization signal，PSS）
-</code></pre>
-<ul>
-<li><pre><code>辅同步信号（Secondary synchronization signal，SSS）
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>解调参考信号（Demodulation reference signals，DM-RS）</li>
+<li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
+<li>信道状态信息参考信号（Channel-state information reference
+signal，CSI-RS）</li>
+<li>主同步信号（Primary synchronization signal，PSS）</li>
+<li>辅同步信号（Secondary synchronization signal，SSS）</li>
 </ul>
           <!--noindex-->
           <!--/noindex-->
@@ -974,38 +1027,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF">上接《NR物理信道与调制》上行链路</a></p>
-<h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="物理信道概述"><a href="#物理信道概述" class="headerlink" title="物理信道概述"></a>物理信道概述</h3><p><br/>上行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：</p>
+          <p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#上行链路">上接《NR物理信道与调制》上行链路</a></p>
+<h1 id="上行链路">上行链路</h1>
+<h2 id="概述">概述</h2>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>上行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下上行信道：</p>
 <ul>
-<li><pre><code>物理上行共享信道（PUSCH）
-</code></pre>
-<ul>
-<li><pre><code>物理上行控制信道（PUCCH）
-</code></pre>
-<ul>
-<li><pre><code>物理随机接入信道（PRACH）
-</code></pre>
-</li>
+<li>物理上行共享信道（PUSCH）</li>
+<li>物理上行控制信道（PUCCH）</li>
+<li>物理随机接入信道（PRACH）</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="物理信号概述"><a href="#物理信号概述" class="headerlink" title="物理信号概述"></a>物理信号概述</h3><p><br/>上行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：</p>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>上行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下上行物理信号：</p>
 <ul>
-<li><pre><code>解调参考信号（Demodulation reference signals，DM-RS）
-</code></pre>
-<ul>
-<li><pre><code>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）
-</code></pre>
-<ul>
-<li><pre><code>探测参考信号（Sounding reference signal，SRS）
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>解调参考信号（Demodulation reference signals，DM-RS）</li>
+<li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
+<li>探测参考信号（Sounding reference signal，SRS）</li>
 </ul>
           <!--noindex-->
           <!--/noindex-->
@@ -1094,11 +1132,33 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p><strong>Marshall：</strong><a href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G NR物理层规范已更新到<a href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
+<p><strong>Marshall：</strong><a
+href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G
+NR物理层规范已更新到<a
+href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
 </blockquote>
-<h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位${ {T}<em>{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}</em>{\max }}\cdot { {N}<em>{\text{f}}} \right)};$，其中$\Delta { {f}</em>{\max }}&#x3D;480\cdot { {10}^{3}}$ Hz，${ {N}<em>{\text{f}}}&#x3D;4096$。常量$\kappa &#x3D;{\Delta { {f}</em>{\text{max}}}{ {N}<em>{\text{f}}}}&#x2F;{\left( \Delta { {f}</em>{\text{ref}}}{ {N}<em>{\text{f,ref}}} \right)};&#x3D;64$，其中$\Delta { {f}</em>{\text{ref}}}&#x3D;15\cdot { {10}^{3}}\text{ Hz}$，${ {N}_{\text{f,ref}}}&#x3D;2048$。</p>
-<h2 id="波形参数"><a href="#波形参数" class="headerlink" title="波形参数"></a>波形参数</h2><p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的$\mu$和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png" alt="mark"></p>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位<span
+class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta { {f}_{\max
+}}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\max }}=480\cdot {
+{10}^{3}}\)</span> Hz，<span class="math inline">\({
+{N}_{\text{f}}}=4096\)</span>。常量<span class="math inline">\(\kappa
+={\Delta { {f}_{\text{max}}}{ {N}_{\text{f}}}}/{\left( \Delta {
+{f}_{\text{ref}}}{ {N}_{\text{f,ref}}} \right)}\;=64\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot {
+{10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({
+{N}_{\text{f,ref}}}=2048\)</span>。</p>
+<h2 id="波形参数">波形参数</h2>
+<p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的<span
+class="math inline">\(\mu\)</span>和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
           <!--noindex-->
           <!--/noindex-->
         
@@ -1185,7 +1245,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="物理层的服务和功能"><a href="#物理层的服务和功能" class="headerlink" title="物理层的服务和功能"></a>物理层的服务和功能</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>物理层向高层提供数据传输服务。</p>
+          <h1 id="物理层的服务和功能">物理层的服务和功能</h1>
+<h2 id="概述">概述</h2>
+<p><br/>物理层向高层提供数据传输服务。</p>
 <p>这些服务的接入是通过使用MAC子层的传输信道实现的。</p>
 <p>传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（<em>注：这句话有待进一步讨论</em>）。</p>
           <!--noindex-->

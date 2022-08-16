@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Polar Code信道编码Polar Code（1）概述 Polar Code（2）编码原理 Polar Code（3）编码实例 Polar Code（4）编码之极化信道可靠性估计 Polar Code（5）编码之信道转移概率 Polar Code（6）SC译码算法 Polar Code（7）SCL译码算法 Polar Code（8）高斯近似 Polar Code（9）CA-SCL译码算法 Po">
+    <meta name="description" content="Polar Code信道编码 Polar Code（1）概述 Polar Code（2）编码原理 Polar Code（3）编码实例 Polar Code（4）编码之极化信道可靠性估计 Polar Code（5）编码之信道转移概率 Polar Code（6）SC译码算法 Polar Code（7）SCL译码算法 Polar Code（8）高斯近似 Polar C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2017年博文汇总">
 <meta property="og:url" content="https://marshallcomm.cn/2017/12/31/archives-2017/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="Polar Code信道编码Polar Code（1）概述 Polar Code（2）编码原理 Polar Code（3）编码实例 Polar Code（4）编码之极化信道可靠性估计 Polar Code（5）编码之信道转移概率 Polar Code（6）SC译码算法 Polar Code（7）SCL译码算法 Polar Code（8）高斯近似 Polar Code（9）CA-SCL译码算法 Po">
+<meta property="og:description" content="Polar Code信道编码 Polar Code（1）概述 Polar Code（2）编码原理 Polar Code（3）编码实例 Polar Code（4）编码之极化信道可靠性估计 Polar Code（5）编码之信道转移概率 Polar Code（6）SC译码算法 Polar Code（7）SCL译码算法 Polar Code（8）高斯近似 Polar C">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-12-31T09:40:53.000Z">
 <meta property="article:modified_time" content="2020-11-22T14:45:36.858Z">
@@ -147,7 +147,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Polar-Code%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">Polar Code信道编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E7%96%91"><span class="nav-number">1.1.</span> <span class="nav-text">答疑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Polar-Code-%E4%B9%8B5G%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">Polar Code 之5G标准化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3GPP-5G%E7%89%A9%E7%90%86%E5%B1%82%E8%A7%84%E8%8C%83"><span class="nav-number">3.</span> <span class="nav-text">3GPP 5G物理层规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v1-0-0%EF%BC%882017-09%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">v1.0.0（2017-09）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v1-1-0%EF%BC%882017-10%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">v1.1.0（2017-10）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v2-0-0%EF%BC%882017-12%EF%BC%89%E2%80%94%E2%80%945G-NSA%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.3.</span> <span class="nav-text">v2.0.0（2017-12）——5G NSA版本协议</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#polar-code%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">Polar Code信道编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E7%96%91"><span class="nav-number">1.1.</span> <span class="nav-text">答疑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#polar-code-%E4%B9%8B5g%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">Polar Code 之5G标准化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gpp-5g%E7%89%A9%E7%90%86%E5%B1%82%E8%A7%84%E8%8C%83"><span class="nav-number">3.</span> <span class="nav-text">3GPP 5G物理层规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v1.0.02017-09"><span class="nav-number">3.1.</span> <span class="nav-text">v1.0.0（2017-09）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v1.1.02017-10"><span class="nav-number">3.2.</span> <span class="nav-text">v1.1.0（2017-10）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v2.0.02017-125g-nsa%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.3.</span> <span class="nav-text">v2.0.0（2017-12）——5G
+NSA版本协议</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -271,49 +272,122 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Polar-Code信道编码"><a href="#Polar-Code信道编码" class="headerlink" title="Polar Code信道编码"></a>Polar Code信道编码</h1><p><br/><a href="http://marshallcomm.cn/2017/03/01/polar-code-1-summary/">Polar Code（1）概述</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/04/polar-code-2-encoding-principle/">Polar Code（2）编码原理</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/05/polar-code-3-encoding-example/">Polar Code（3）编码实例</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">Polar Code（4）编码之极化信道可靠性估计</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">Polar Code（5）编码之信道转移概率</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">Polar Code（6）SC译码算法</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/">Polar Code（7）SCL译码算法</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">Polar Code（8）高斯近似</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/18/polar-code-9-ca-scl-decoder/">Polar Code（9）CA-SCL译码算法</a></p>
-<p><a href="http://marshallcomm.cn/2017/03/21/polar-code-10-rcpp/">Polar Code（10）速率适配的凿孔极化码</a></p>
-<p><a href="http://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/">Polar Code（12）B-DMC对称容量</a></p>
-<p><a href="http://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/">Polar Code（13）信道极化</a></p>
-<p><a href="http://marshallcomm.cn/2017/08/24/polar-code-18-select-bitchannel/">Polar Code（18）比特信道的选择</a></p>
-<p><a href="http://marshallcomm.cn/2017/08/26/polar-code-19-design-snr/">Polar Code（19）当我们谈论design-snr时我们在谈论什么</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/">Polar Code（20）Beta-expansion</a></p>
-<p><a href="http://marshallcomm.cn/2017/12/25/polar-code-24-brief-summary/">Polar Code（24）小结</a></p>
+        <h1 id="polar-code信道编码">Polar Code信道编码</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/03/01/polar-code-1-summary/">Polar
+Code（1）概述</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/04/polar-code-2-encoding-principle/">Polar
+Code（2）编码原理</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/05/polar-code-3-encoding-example/">Polar
+Code（3）编码实例</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">Polar
+Code（4）编码之极化信道可靠性估计</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/12/polar-code-5-encoding-chan-trans-prob/">Polar
+Code（5）编码之信道转移概率</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">Polar
+Code（6）SC译码算法</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/15/polar-code-7-scl-decoder/">Polar
+Code（7）SCL译码算法</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">Polar
+Code（8）高斯近似</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/03/18/polar-code-9-ca-scl-decoder/">Polar
+Code（9）CA-SCL译码算法</a></p>
+<p><a href="http://marshallcomm.cn/2017/03/21/polar-code-10-rcpp/">Polar
+Code（10）速率适配的凿孔极化码</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/04/09/Polar-Code-12-BDMC-Symmetric-Capacity/">Polar
+Code（12）B-DMC对称容量</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/05/04/Polar-Code-13-channel-polarization/">Polar
+Code（13）信道极化</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/08/24/polar-code-18-select-bitchannel/">Polar
+Code（18）比特信道的选择</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/08/26/polar-code-19-design-snr/">Polar
+Code（19）当我们谈论design-snr时我们在谈论什么</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/19/polar-code-20-beta-expansion/">Polar
+Code（20）Beta-expansion</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/12/25/polar-code-24-brief-summary/">Polar
+Code（24）小结</a></p>
 <span id="more"></span>
-
-<h2 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h2><p><a href="http://marshallcomm.cn/2017/03/07/answer-polar-code-def-error-prob/">Answer-Polar Code-定义错误概率</a></p>
-<p><a href="http://marshallcomm.cn/2017/11/02/answer-polar-code-ga-inverse-phix/">Answer-Polar Code-高斯近似之φ(x)反函数</a></p>
-<h1 id="Polar-Code-之5G标准化"><a href="#Polar-Code-之5G标准化" class="headerlink" title="Polar Code 之5G标准化"></a>Polar Code 之5G标准化</h1><p><a href="http://marshallcomm.cn/2017/03/22/polar-code-11-3gpp-standard-1/">Polar Code（11）3GPP标准化进展</a></p>
-<p><a href="http://marshallcomm.cn/2017/05/15/polar-code-14-3gpp-ran1-88b/">Polar Code（14）3GPP RAN1#88bis</a></p>
-<p><a href="http://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/">Polar Code（15）3GPP RAN1#89</a></p>
-<p><a href="http://marshallcomm.cn/2017/07/01/polar-code-16-3gpp-ran1-adhoc2/">Polar Code（16）3GPP RAN1 adhoc#2</a></p>
-<p><a href="http://marshallcomm.cn/2017/10/20/polar-code-21-3gpp-ran1-90/">Polar Code（21）3GPP RAN1#90</a></p>
-<p><a href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/">Polar Code（22）3GPP RAN1 adhoc#3</a></p>
-<p><a href="http://marshallcomm.cn/2017/10/20/polar-code-23-3gpp-ran1-90b/">Polar Code（23）3GPP RAN1#90bis</a></p>
-<h1 id="3GPP-5G物理层规范"><a href="#3GPP-5G物理层规范" class="headerlink" title="3GPP 5G物理层规范"></a>3GPP 5G物理层规范</h1><h2 id="v1-0-0（2017-09）"><a href="#v1-0-0（2017-09）" class="headerlink" title="v1.0.0（2017-09）"></a>v1.0.0（2017-09）</h2><p><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">5G-NR物理层概述v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">5G-NR物理层提供的服务v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">5G-NR物理信道与调制v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">5G-NR物理信道与调制-下行链路v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">5G-NR复用与信道编码v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">5G-NR物理层过程（控制）v1.0.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-index/">5G-NR物理层协议v1.0.0</a></p>
-<h2 id="v1-1-0（2017-10）"><a href="#v1-1-0（2017-10）" class="headerlink" title="v1.1.0（2017-10）"></a>v1.1.0（2017-10）</h2><p><a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/">5G-NR物理信道与调制v1.1.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
-<p><a href="http://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/">5G-NR物理信道与调制-下行链路v1.1.0</a></p>
-<h2 id="v2-0-0（2017-12）——5G-NSA版本协议"><a href="#v2-0-0（2017-12）——5G-NSA版本协议" class="headerlink" title="v2.0.0（2017-12）——5G NSA版本协议"></a>v2.0.0（2017-12）——5G NSA版本协议</h2><p><a href="http://marshallcomm.cn/2017/12/31/nr-v200-l1-index/">5G NSA物理层协议</a></p>
-<p><a href="http://marshallcomm.cn/2017/12/17/nr-v200-l1-channel-modulation/">5G 帧结构、物理资源与物理信道</a></p>
-<p><a href="http://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/">5G SSB与小区搜索</a></p>
-<p><a href="http://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/">5G PRACH与随机接入</a></p>
-<p><a href="http://marshallcomm.cn/2017/12/30/nr-v200-l1-pdcch/">5G PDCCH</a></p>
+<h2 id="答疑">答疑</h2>
+<p><a
+href="http://marshallcomm.cn/2017/03/07/answer-polar-code-def-error-prob/">Answer-Polar
+Code-定义错误概率</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/11/02/answer-polar-code-ga-inverse-phix/">Answer-Polar
+Code-高斯近似之φ(x)反函数</a></p>
+<h1 id="polar-code-之5g标准化">Polar Code 之5G标准化</h1>
+<p><a
+href="http://marshallcomm.cn/2017/03/22/polar-code-11-3gpp-standard-1/">Polar
+Code（11）3GPP标准化进展</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/05/15/polar-code-14-3gpp-ran1-88b/">Polar
+Code（14）3GPP RAN1#88bis</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/05/19/polar-code-15-3gpp-ran1-89/">Polar
+Code（15）3GPP RAN1#89</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/07/01/polar-code-16-3gpp-ran1-adhoc2/">Polar
+Code（16）3GPP RAN1 adhoc#2</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/10/20/polar-code-21-3gpp-ran1-90/">Polar
+Code（21）3GPP RAN1#90</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/10/20/polar-code-22-3gpp-ran1-adhoc3/">Polar
+Code（22）3GPP RAN1 adhoc#3</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/10/20/polar-code-23-3gpp-ran1-90b/">Polar
+Code（23）3GPP RAN1#90bis</a></p>
+<h1 id="gpp-5g物理层规范">3GPP 5G物理层规范</h1>
+<h2 id="v1.0.02017-09">v1.0.0（2017-09）</h2>
+<p><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">5G-NR物理层概述v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">5G-NR物理层提供的服务v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">5G-NR物理信道与调制v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">5G-NR物理信道与调制-下行链路v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">5G-NR复用与信道编码v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">5G-NR物理层过程（控制）v1.0.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-index/">5G-NR物理层协议v1.0.0</a></p>
+<h2 id="v1.1.02017-10">v1.1.0（2017-10）</h2>
+<p><a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation/">5G-NR物理信道与调制v1.1.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/10/23/nr-v110-l1-channel-modulation-ul/">5G-NR物理信道与调制-上行链路v1.1.0</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/">5G-NR物理信道与调制-下行链路v1.1.0</a></p>
+<h2 id="v2.0.02017-125g-nsa版本协议">v2.0.0（2017-12）——5G
+NSA版本协议</h2>
+<p><a href="http://marshallcomm.cn/2017/12/31/nr-v200-l1-index/">5G
+NSA物理层协议</a></p>
+<p><a
+href="http://marshallcomm.cn/2017/12/17/nr-v200-l1-channel-modulation/">5G
+帧结构、物理资源与物理信道</a></p>
+<p><a href="http://marshallcomm.cn/2017/12/29/nr-v200-l1-ssb/">5G
+SSB与小区搜索</a></p>
+<p><a href="http://marshallcomm.cn/2017/12/29/nr-v200-l1-prach/">5G
+PRACH与随机接入</a></p>
+<p><a href="http://marshallcomm.cn/2017/12/30/nr-v200-l1-pdcch/">5G
+PDCCH</a></p>
 
     </div>
 

@@ -22,18 +22,14 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Marshall：v1.0.0版本已过时，5G NR物理层规范已更新到v1.1.0版本。  帧结构与物理资源概述在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位${ {T}{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}{\max }}\cdot { {N}{\text{f}}} \right)};$，其中$\Delta { {f}{">
+    <meta name="description" content="Marshall：v1.0.0版本已过时，5G NR物理层规范已更新到v1.1.0版本。  帧结构与物理资源 概述 在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位\({ {T}_{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}_{\max }}\cdot { {N}_{\text{f}}} \right)}\;\)，其中\(\Delta">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5G-NR物理信道与调制v1.0.0">
 <meta property="og:url" content="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="Marshall：v1.0.0版本已过时，5G NR物理层规范已更新到v1.1.0版本。  帧结构与物理资源概述在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位${ {T}{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}{\max }}\cdot { {N}{\text{f}}} \right)};$，其中$\Delta { {f}{">
+<meta property="og:description" content="Marshall：v1.0.0版本已过时，5G NR物理层规范已更新到v1.1.0版本。  帧结构与物理资源 概述 在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位\({ {T}_{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}_{\max }}\cdot { {N}_{\text{f}}} \right)}\;\)，其中\(\Delta">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160156375.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160308810.png">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161038568.png">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161511352.png">
 <meta property="article:published_time" content="2017-09-09T07:37:09.000Z">
 <meta property="article:modified_time" content="2018-10-21T05:44:37.840Z">
@@ -42,7 +38,7 @@
 <meta property="article:tag" content="5G-NR">
 <meta property="article:tag" content="3GPP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png">
+<meta name="twitter:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png">
 
 
 <link rel="canonical" href="https://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">
@@ -157,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">帧结构与物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A2%E5%BD%A2%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">波形参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A7%E5%92%8C%E5%AD%90%E5%B8%A7"><span class="nav-number">1.3.1.</span> <span class="nav-text">帧和子帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%9A%99"><span class="nav-number">1.3.2.</span> <span class="nav-text">时隙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.4.</span> <span class="nav-text">物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.1.</span> <span class="nav-text">天线端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%A0%BC"><span class="nav-number">1.4.2.</span> <span class="nav-text">资源格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%85%83%E7%B4%A0"><span class="nav-number">1.4.3.</span> <span class="nav-text">资源元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%9D%97"><span class="nav-number">1.4.4.</span> <span class="nav-text">资源块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E5%B8%A6%E5%AE%BDpart"><span class="nav-number">1.4.5.</span> <span class="nav-text">载波带宽part</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E8%81%9A%E5%90%88"><span class="nav-number">1.5.</span> <span class="nav-text">载波聚合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">通用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E6%98%A0%E5%B0%84%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">调制映射器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%CF%80-x2F-2-BPSK"><span class="nav-number">2.1.1.</span> <span class="nav-text">π&#x2F;2-BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BPSK"><span class="nav-number">2.1.2.</span> <span class="nav-text">BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QPSK"><span class="nav-number">2.1.3.</span> <span class="nav-text">QPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16QAM"><span class="nav-number">2.1.4.</span> <span class="nav-text">16QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#64QAM"><span class="nav-number">2.1.5.</span> <span class="nav-text">64QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#256QAM"><span class="nav-number">2.1.6.</span> <span class="nav-text">256QAM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">伪随机序列生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OFDM%E5%9F%BA%E5%B8%A6%E4%BF%A1%E5%8F%B7%E7%94%9F%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">OFDM基带信号生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E5%92%8C%E4%B8%8A%E5%8F%98%E9%A2%91"><span class="nav-number">2.4.</span> <span class="nav-text">调制和上变频</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">下行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">帧结构与物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A2%E5%BD%A2%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">波形参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A7%E5%92%8C%E5%AD%90%E5%B8%A7"><span class="nav-number">1.3.1.</span> <span class="nav-text">帧和子帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%9A%99"><span class="nav-number">1.3.2.</span> <span class="nav-text">时隙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.4.</span> <span class="nav-text">物理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.1.</span> <span class="nav-text">天线端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%A0%BC"><span class="nav-number">1.4.2.</span> <span class="nav-text">资源格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%85%83%E7%B4%A0"><span class="nav-number">1.4.3.</span> <span class="nav-text">资源元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%9D%97"><span class="nav-number">1.4.4.</span> <span class="nav-text">资源块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E5%B8%A6%E5%AE%BDpart"><span class="nav-number">1.4.5.</span> <span class="nav-text">载波带宽part</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E8%81%9A%E5%90%88"><span class="nav-number">1.5.</span> <span class="nav-text">载波聚合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">通用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E6%98%A0%E5%B0%84%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">调制映射器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%CF%802-bpsk"><span class="nav-number">2.1.1.</span> <span class="nav-text">π&#x2F;2-BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpsk"><span class="nav-number">2.1.2.</span> <span class="nav-text">BPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qpsk"><span class="nav-number">2.1.3.</span> <span class="nav-text">QPSK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam"><span class="nav-number">2.1.4.</span> <span class="nav-text">16QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam-1"><span class="nav-number">2.1.5.</span> <span class="nav-text">64QAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qam-2"><span class="nav-number">2.1.6.</span> <span class="nav-text">256QAM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">伪随机序列生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ofdm%E5%9F%BA%E5%B8%A6%E4%BF%A1%E5%8F%B7%E7%94%9F%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">OFDM基带信号生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E5%88%B6%E5%92%8C%E4%B8%8A%E5%8F%98%E9%A2%91"><span class="nav-number">2.4.</span> <span class="nav-text">调制和上变频</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">下行链路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -291,89 +287,348 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p><strong>Marshall：</strong><a href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G NR物理层规范已更新到<a href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
+<p><strong>Marshall：</strong><a
+href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G
+NR物理层规范已更新到<a
+href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
 </blockquote>
-<h1 id="帧结构与物理资源"><a href="#帧结构与物理资源" class="headerlink" title="帧结构与物理资源"></a>帧结构与物理资源</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位${ {T}<em>{\text{s}}}&#x3D;{1}&#x2F;{\left( \Delta { {f}</em>{\max }}\cdot { {N}<em>{\text{f}}} \right)};$，其中$\Delta { {f}</em>{\max }}&#x3D;480\cdot { {10}^{3}}$ Hz，${ {N}<em>{\text{f}}}&#x3D;4096$。常量$\kappa &#x3D;{\Delta { {f}</em>{\text{max}}}{ {N}<em>{\text{f}}}}&#x2F;{\left( \Delta { {f}</em>{\text{ref}}}{ {N}<em>{\text{f,ref}}} \right)};&#x3D;64$，其中$\Delta { {f}</em>{\text{ref}}}&#x3D;15\cdot { {10}^{3}}\text{ Hz}$，${ {N}_{\text{f,ref}}}&#x3D;2048$。</p>
-<h2 id="波形参数"><a href="#波形参数" class="headerlink" title="波形参数"></a>波形参数</h2><p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的$\mu$和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png" alt="mark"></p>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位<span
+class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta { {f}_{\max
+}}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\max }}=480\cdot {
+{10}^{3}}\)</span> Hz，<span class="math inline">\({
+{N}_{\text{f}}}=4096\)</span>。常量<span class="math inline">\(\kappa
+={\Delta { {f}_{\text{max}}}{ {N}_{\text{f}}}}/{\left( \Delta {
+{f}_{\text{ref}}}{ {N}_{\text{f,ref}}} \right)}\;=64\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot {
+{10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({
+{N}_{\text{f,ref}}}=2048\)</span>。</p>
+<h2 id="波形参数">波形参数</h2>
+<p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的<span
+class="math inline">\(\mu\)</span>和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <span id="more"></span>
-
-<h2 id="帧结构"><a href="#帧结构" class="headerlink" title="帧结构"></a>帧结构</h2><h3 id="帧和子帧"><a href="#帧和子帧" class="headerlink" title="帧和子帧"></a>帧和子帧</h3><p><br/>下行与上行链路传输于帧中，一帧的时域为${ {T}<em>{\text{f}}}&#x3D;\left( {\Delta { {f}</em>{\max }}{ {N}<em>{\text{f}}}}&#x2F;{100}; \right)\cdot { {T}</em>{\text{s}}}&#x3D;10\text{ ms}$，一帧包含10个子帧，每个子帧时域为${ {T}<em>{\text{sf}}}&#x3D;\left( {\Delta { {f}</em>{\max }}{ {N}<em>{\text{f}}}}&#x2F;{1000}; \right)\cdot { {T}</em>{\text{s}}}&#x3D;1\text{ ms}$。每个子帧中的连续OFDM符号数为$N_{\text{symb}}^{\text{subframe},\mu }&#x3D;N_{\text{symb}}^{\text{slot}}N_{\text{slot}}^{\text{subframe},\mu }$。每帧分为两个相等大小的半帧，每个半帧包含5个子帧。</p>
-<p>There is one set of frames in the uplink and one set of frames in the downlink on a carrier.</p>
-<p>来自UE的上行帧$i$应在UE对应的下行帧开始前${ {T}<em>{\text{TA}}}&#x3D;{ {N}</em>{\text{TA}}}{ {T}_{\text{s}}}$传输。</p>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png" title="Figure 4.3.1-1: Uplink-downlink timing relation" />
-
-<h3 id="时隙"><a href="#时隙" class="headerlink" title="时隙"></a>时隙</h3><p><br/>对于子载波间隔配置$\mu$，时隙在子帧内按递增顺序编号$n_{\text{s}}^{\mu }\in \left{ 0,…,N_{\text{slot}}^{\text{subframe,}\mu }-1 \right}$，在帧内按递增顺序编号$n_{\text{s,f}}^{\mu }\in \left{ 0,…,N_{\text{slot}}^{\text{frame,}\mu }-1 \right}$。一个时隙内有$N_{\text{symb}}^{\text{slot}}$个连续的OFDM符号，$N_{\text{symb}}^{\text{slot}}$依赖于CP长度，并且由Tables 4.3.2-1和4.3.2-2给定。子帧内的起始时隙$n_{\text{s}}^{\mu }$与子帧内起始OFDM符号$n_{\text{s}}^{\mu }N_{\text{symb}}^{\text{slot}}$在时间上对齐。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160156375.png" alt="mark"></p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160308810.png" alt="mark"></p>
+<h2 id="帧结构">帧结构</h2>
+<h3 id="帧和子帧">帧和子帧</h3>
+<p><br/>下行与上行链路传输于帧中，一帧的时域为<span
+class="math inline">\({ {T}_{\text{f}}}=\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{100}\; \right)\cdot { {T}_{\text{s}}}=10\text{
+ms}\)</span>，一帧包含10个子帧，每个子帧时域为<span
+class="math inline">\({ {T}_{\text{sf}}}=\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{1000}\; \right)\cdot { {T}_{\text{s}}}=1\text{
+ms}\)</span>。每个子帧中的连续OFDM符号数为<span
+class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
+}=N_{\text{symb}}^{\text{slot}}N_{\text{slot}}^{\text{subframe},\mu
+}\)</span>。每帧分为两个相等大小的半帧，每个半帧包含5个子帧。</p>
+<p>There is one set of frames in the uplink and one set of frames in the
+downlink on a carrier.</p>
+<p>来自UE的上行帧<span
+class="math inline">\(i\)</span>应在UE对应的下行帧开始前<span
+class="math inline">\({ {T}_{\text{TA}}}={ {N}_{\text{TA}}}{
+{T}_{\text{s}}}\)</span>传输。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png" title="Figure 4.3.1-1: Uplink-downlink timing relation" /></p>
+<h3 id="时隙">时隙</h3>
+<p><br/>对于子载波间隔配置<span
+class="math inline">\(\mu\)</span>，时隙在子帧内按递增顺序编号<span
+class="math inline">\(n_{\text{s}}^{\mu }\in \left\{
+0,...,N_{\text{slot}}^{\text{subframe,}\mu }-1
+\right\}\)</span>，在帧内按递增顺序编号<span
+class="math inline">\(n_{\text{s,f}}^{\mu }\in \left\{
+0,...,N_{\text{slot}}^{\text{frame,}\mu }-1
+\right\}\)</span>。一个时隙内有<span
+class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>个连续的OFDM符号，<span
+class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>依赖于CP长度，并且由Tables
+4.3.2-1和4.3.2-2给定。子帧内的起始时隙<span
+class="math inline">\(n_{\text{s}}^{\mu
+}\)</span>与子帧内起始OFDM符号<span
+class="math inline">\(n_{\text{s}}^{\mu
+}N_{\text{symb}}^{\text{slot}}\)</span>在时间上对齐。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160156375.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160308810.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <blockquote>
 <p><strong>Agreements:</strong></p>
+<ul>
+<li>A slot can contain all downlink, all uplink, or {at least one
+downlink part and at least one uplink part}</li>
+<li>There are also agreements on various semi-static configurations with
+different periodicities</li>
+</ul>
 </blockquote>
+<h2 id="物理资源">物理资源</h2>
+<h3 id="天线端口">天线端口</h3>
+<p><br/>天线端口定义为，在同一天线端口上，某一符号上的信道可以由另一符号上的信道推知。</p>
+<p>如果一个天线端口上某一符号传输的信道的大尺度性能可以被另一天线端口上某一符号传输的信道所推知，则这两个天线端口被称为quasi
+co-located。大尺度性能包括一个或多个延时扩展，多普勒扩展，多普勒频移，平均增益，平均时延和空间接收参数。</p>
+<h3 id="资源格">资源格</h3>
+<p><br/>对于每种波形参数和载波，资源格由<span
+class="math inline">\(N_{\text{RB,}x}^{\mu
+}N_{\text{sc}}^{\text{RB}}\)</span>个子载波和<span
+class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
+}\)</span>个OFDM符号定义，其中<span
+class="math inline">\(x\)</span>表示DL或UL，<span
+class="math inline">\(N_{\text{RB,}x}^{\text{max,}\mu }\)</span>由Table
+4.4.2-1给定。在不至于混淆的情况下，下标<span
+class="math inline">\(x\)</span>可省略。每个天线端口<span
+class="math inline">\(p\)</span>，每个子载波间隔配置<span
+class="math inline">\(\mu\)</span>以及每个传输方向（上行或下行）对应一个资源格。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161038568.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h3 id="资源元素">资源元素</h3>
+<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的资源格中每个元素被称为资源元素（Resource
+Element，RE），它用索引对<span class="math inline">\(\left( k,l
+\right)\)</span>唯一地标识，其中<span
+class="math inline">\(k=0,...,N_{\text{RB}}^{\mu
+}N_{\text{sc}}^{\text{RB}}-1\)</span>是频域索引，<span
+class="math inline">\(l\)</span>是时域符号索引。</p>
+<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的RE <span
+class="math inline">\(\left( k,l \right)\)</span>表示为<span
+class="math inline">\({ {\left( k,l \right)}_{p,\mu
+}}\)</span>，相应的复数值表示为<span
+class="math inline">\(a_{k,l}^{(p,\mu
+)}\)</span>。在不至于混淆的情况下，或在没有特定的天线端口或子载波间隔的情况下，索引<span
+class="math inline">\(p\)</span>和<span
+class="math inline">\(\mu\)</span>可以省略，简写为<span
+class="math inline">\(a_{k,l}^{(p)}\)</span>或<span
+class="math inline">\({ {a}_{k,l}}\)</span>。</p>
+<p>一个资源元素（RE）分为4类：‘uplink’, ‘downlink’, ‘flexible’, or
+‘reserved’。</p>
 <ul>
-<li>A slot can contain all downlink, all uplink, or {at least one downlink part and at least one uplink part}</li>
-<li>There are also agreements on various semi-static configurations with different periodicities</li>
+<li>如果RE被配置为‘reserved’，
+UE不应在上行链路中对该RE发送任何内容，也不对下行链路中的RE内容作出任何假设。</li>
 </ul>
-<h2 id="物理资源"><a href="#物理资源" class="headerlink" title="物理资源"></a>物理资源</h2><h3 id="天线端口"><a href="#天线端口" class="headerlink" title="天线端口"></a>天线端口</h3><p><br/>天线端口定义为，在同一天线端口上，某一符号上的信道可以由另一符号上的信道推知。</p>
-<p>如果一个天线端口上某一符号传输的信道的大尺度性能可以被另一天线端口上某一符号传输的信道所推知，则这两个天线端口被称为quasi co-located。大尺度性能包括一个或多个延时扩展，多普勒扩展，多普勒频移，平均增益，平均时延和空间接收参数。</p>
-<h3 id="资源格"><a href="#资源格" class="headerlink" title="资源格"></a>资源格</h3><p><br/>对于每种波形参数和载波，资源格由$N_{\text{RB,}x}^{\mu }N_{\text{sc}}^{\text{RB}}$个子载波和$N_{\text{symb}}^{\text{subframe},\mu }$个OFDM符号定义，其中$x$表示DL或UL，$N_{\text{RB,}x}^{\text{max,}\mu }$由Table 4.4.2-1给定。在不至于混淆的情况下，下标$x$可省略。每个天线端口$p$，每个子载波间隔配置$\mu$以及每个传输方向（上行或下行）对应一个资源格。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161038568.png" alt="mark"></p>
-<h3 id="资源元素"><a href="#资源元素" class="headerlink" title="资源元素"></a>资源元素</h3><p>天线端口$p$和子载波间隔配置$\mu$下的资源格中每个元素被称为资源元素（Resource Element，RE），它用索引对$\left( k,l \right)$唯一地标识，其中$k&#x3D;0,…,N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}-1$是频域索引，$l$是时域符号索引。</p>
-<p>天线端口$p$和子载波间隔配置$\mu$下的RE $\left( k,l \right)$表示为${ {\left( k,l \right)}<em>{p,\mu }}$，相应的复数值表示为$a</em>{k,l}^{(p,\mu )}$。在不至于混淆的情况下，或在没有特定的天线端口或子载波间隔的情况下，索引$p$和$\mu$可以省略，简写为$a_{k,l}^{(p)}$或${ {a}_{k,l}}$。</p>
-<p>一个资源元素（RE）分为4类：‘uplink’, ‘downlink’, ‘flexible’, or ‘reserved’。</p>
-<ul>
-<li><pre><code>如果RE被配置为‘reserved’， UE不应在上行链路中对该RE发送任何内容，也不对下行链路中的RE内容作出任何假设。
-</code></pre>
-</li>
-</ul>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161511352.png" title="Figure 4.4.3-1: Resource grid and resource block" />
-
-<h3 id="资源块"><a href="#资源块" class="headerlink" title="资源块"></a>资源块</h3><p><br/>一个物理资源块（PRB）在频域上定义为$N_{\text{sc}}^{\text{RB}}&#x3D;12$连续的子载波。</p>
-<p>PRB在频域上从0到$N_{\text{RB}}^{\mu }-1$编号。频域上的PRB数${ {n}_{\text{PRB}}}$和RE $(k,l)$的关系由下式给定：</p>
-<p>$${ {n}<em>{\text{PRB}}}&#x3D;\left\lfloor \frac{k}{N</em>{\text{sc}}^{\text{RB}}} \right\rfloor $$</p>
-<h3 id="载波带宽part"><a href="#载波带宽part" class="headerlink" title="载波带宽part"></a>载波带宽part</h3><p><br/>对于给定的载波上的波形参数${ {\mu }<em>{i}}$，载波带宽part（bandwidth part，BWP）是一组连续的PRB。BWP中的RB从0到$N</em>{\text{RB,}x}^{\mu }-1$编号，其中$x$表示DL或UL，with $N_{\text{BWP}}^{i}$ being the offset between PRB 0 in the absolute resource block grid in clause 1.4.4 and PRB 0 in carrier bandwidth part number $i$。BWP中的RB数应满足$N_{\text{RB, }x}^{\text{min, }\mu }\le N_{\text{RB,}x}^{\mu }\le N_{\text{RB, }x}^{\text{max, }\mu }$，其中最小值和最大值在Table 4.4.2-1中给定。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161511352.png" title="Figure 4.4.3-1: Resource grid and resource block" /></p>
+<h3 id="资源块">资源块</h3>
+<p><br/>一个物理资源块（PRB）在频域上定义为<span
+class="math inline">\(N_{\text{sc}}^{\text{RB}}=12\)</span>连续的子载波。</p>
+<p>PRB在频域上从0到<span class="math inline">\(N_{\text{RB}}^{\mu
+}-1\)</span>编号。频域上的PRB数<span class="math inline">\({
+{n}_{\text{PRB}}}\)</span>和RE <span
+class="math inline">\((k,l)\)</span>的关系由下式给定：</p>
+<p><span class="math display">\[{ {n}_{\text{PRB}}}=\left\lfloor
+\frac{k}{N_{\text{sc}}^{\text{RB}}} \right\rfloor \]</span></p>
+<h3 id="载波带宽part">载波带宽part</h3>
+<p><br/>对于给定的载波上的波形参数<span class="math inline">\({ {\mu
+}_{i}}\)</span>，载波带宽part（bandwidth
+part，BWP）是一组连续的PRB。BWP中的RB从0到<span
+class="math inline">\(N_{\text{RB,}x}^{\mu }-1\)</span>编号，其中<span
+class="math inline">\(x\)</span>表示DL或UL，with <span
+class="math inline">\(N_{\text{BWP}}^{i}\)</span> being the offset
+between PRB 0 in the absolute resource block grid in clause 1.4.4 and
+PRB 0 in carrier bandwidth part number <span
+class="math inline">\(i\)</span>。BWP中的RB数应满足<span
+class="math inline">\(N_{\text{RB, }x}^{\text{min, }\mu }\le
+N_{\text{RB,}x}^{\mu }\le N_{\text{RB, }x}^{\text{max, }\mu
+}\)</span>，其中最小值和最大值在Table 4.4.2-1中给定。</p>
 <p>下行链路中，UE可配置具有一个或多个载波BWP，所述载波BWP的子集在给带时间处于激活状态。UE不希望在BWP以外的频带接收PDSCH或PDCCH。</p>
 <p>在上行链路中，UE可配置为具有一个或多个载波BWP，所述载波BWP的子集在给定时间处于激活状态。UE不希望在BWP以外的频带发送PUSCH或PUCCH。</p>
-<h2 id="载波聚合"><a href="#载波聚合" class="headerlink" title="载波聚合"></a>载波聚合</h2><p><br/>在多个小区中的传输可以被聚合，除了主小区外，最多可以使用15个辅小区。除非另有说明，本规范中的描述适用于多达16个服务小区中的每一个。</p>
-<h1 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h1><h2 id="调制映射器"><a href="#调制映射器" class="headerlink" title="调制映射器"></a>调制映射器</h2><p><br/>调制映射器采用二进制0或1作为输入，产生复值调制符号作为输出。</p>
-<h3 id="π-x2F-2-BPSK"><a href="#π-x2F-2-BPSK" class="headerlink" title="π&#x2F;2-BPSK"></a>π&#x2F;2-BPSK</h3><p><br/>对于π&#x2F;2-BPSK调制，比特$b(i)$根据下式映射为复值调制符号$x$</p>
-<p>$$x&#x3D;\frac{ { {e}^{j{i\pi }&#x2F;{2};}}}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i) \right) \right]$$</p>
-<h3 id="BPSK"><a href="#BPSK" class="headerlink" title="BPSK"></a>BPSK</h3><p><br/>对于BPSK调制，比特$b(i)$根据下式映射为复值调制符号$x$</p>
-<p>$$x&#x3D;\frac{1}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i) \right) \right]$$</p>
-<h3 id="QPSK"><a href="#QPSK" class="headerlink" title="QPSK"></a>QPSK</h3><p><br/>对于QPSK调制，成对比特$b(i),b(i+1)$根据下式映射为复值调制符号$x$</p>
-<p>$$x&#x3D;\frac{1}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i+1) \right) \right]$$</p>
-<h3 id="16QAM"><a href="#16QAM" class="headerlink" title="16QAM"></a>16QAM</h3><p><br/>对于16QAM调制，四位比特$b(i),b(i+1),b(i+2),b(i+3)$根据下式映射为复值调制符号$x$</p>
-<p>$$x&#x3D;\frac{1}{\sqrt{10}}\left[ \left( 1-2b(i) \right)\left( 2-\left( 1-2b(i+2) \right) \right)+j\left( 1-2b(i+1) \right)\left( 2-\left( 1-2b(i+3) \right) \right) \right]$$</p>
-<h3 id="64QAM"><a href="#64QAM" class="headerlink" title="64QAM"></a>64QAM</h3><p><br/>对于64QAM调制，六位比特$b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5)$根据下式映射为复值调制符号$x$</p>
-<p>$$\begin{align}<br>  \nonumber &amp; x&#x3D;\frac{1}{\sqrt{42}}\left[ \left( 1-2b(i) \right)\left( 4-\left( 1-2b(i+2) \right)\left( 2-\left( 1-2b(i+4) \right) \right) \right) \right. \<br> \nonumber &amp; \ \ \ \ \ \ \left. +j\left( 1-2b(i+1) \right)\left( 4-\left( 1-2b(i+3) \right)\left( 2-\left( 1-2b(i+5) \right) \right) \right) \right] \<br>\end{align}$$</p>
-<h3 id="256QAM"><a href="#256QAM" class="headerlink" title="256QAM"></a>256QAM</h3><p><br/>对于256QAM调制，八位比特$b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5),b(i+6),b(i+7)$根据下式映射为复值调制符号$x$</p>
-<p>$$\begin{align}<br> \nonumber &amp; x&#x3D;\frac{1}{\sqrt{170}}\left[ \left( 1-2b(i) \right)\left( 8-\left( 1-2b(i+2) \right)\left( 4-\left( 1-2b(i+4) \right)\left( 2-\left( 1-2b(i+6) \right) \right) \right) \right) \right. \<br> \ \ \ \nonumber &amp; \left. +j\left( 1-2b(i+1) \right)\left( 8-\left( 1-2b(i+3) \right)\left( 4-\left( 1-2b(i+5) \right)\left( 2-\left( 1-2b(i+7) \right) \right) \right) \right) \right]<br>\end{align}$$</p>
-<h2 id="伪随机序列生成"><a href="#伪随机序列生成" class="headerlink" title="伪随机序列生成"></a>伪随机序列生成</h2><p><br/>伪随机序列由长度为31的Gold序列定义。长度为${ {M}<em>{\text{PN}}}$的输出序列$c(n)$，其中$n&#x3D;0,1,…,{ {M}</em>{\text{PN}}}-1$，由下式定义</p>
-<p>$$\begin{align}<br> \nonumber &amp; c(n)&#x3D;\left( { {x}<em>{1}}(n+{ {N}</em>{C}})+{ {x}<em>{2}}(n+{ {N}</em>{C}}) \right)\bmod 2 \<br> \nonumber &amp; { {x}<em>{1}}(n+31)&#x3D;\left( { {x}</em>{1}}(n+3)+{ {x}<em>{1}}(n) \right)\bmod 2 \<br> \nonumber &amp; { {x}</em>{2}}(n+31)&#x3D;\left( { {x}<em>{2}}(n+3)+{ {x}</em>{2}}(n+2)+{ {x}<em>{2}}(n+1)+{ {x}</em>{2}}(n) \right)\bmod 2<br>\end{align}$$</p>
-<p>其中${ {N}<em>{C}}&#x3D;1600$，第一m序列应由${ {x}</em>{1}}(0)&#x3D;1,{ {x}<em>{1}}(n)&#x3D;0,n&#x3D;1,2,…,30$初始化。第二m序列的初始化由${ {c}</em>{\text{init}}}&#x3D;\sum\nolimits_{i&#x3D;0}^{30}{ { {x}_{2}}(i)\cdot { {2}^{i}}}$表示，其值取决于序列的应用。</p>
-<h2 id="OFDM基带信号生成"><a href="#OFDM基带信号生成" class="headerlink" title="OFDM基带信号生成"></a>OFDM基带信号生成</h2><p><br/>对除PRACH以外的任何物理信道或信号，对于一个子帧内的OFDM符号$l$，天线端口$p$和子载波间隔配置$\mu$下的时间连续信号$s_{l}^{(p,\mu )}\left( t \right)$定义为</p>
-<p>$$s_{l}^{(p,\mu )}\left( t \right)&#x3D;\sum\limits_{k&#x3D;-\left\lfloor N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}&#x2F;2 \right\rfloor }^{ { {\left\lceil N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}&#x2F;2 \right\rceil }^{ {}}}-1}{a_{ {k}’,\bar{l}}^{(p,\mu )}\cdot { {e}^{j2\pi \left( k+{ {k}<em>{0}} \right)\Delta f\left( t-{ {N}</em>{\text{CP},\bar{l}}}\cdot { {T}_{\text{s}}} \right)}}}$$</p>
-<p>其中$0\le t&lt;\left( { {N}<em>{\text{u}}}+N</em>{\text{CP},\bar{l}}^{\mu } \right){ {T}<em>{\text{s}}}$且${k}’&#x3D;k+\left\lfloor {N</em>{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}}&#x2F;{2}; \right\rfloor $。The value of ${ {k}_{0}}$ is such that the lowest numbered subcarrier in a resource block for subcarrier spacing configuration $\mu$ coincides with the lowest numbered subcarrier in a resource block for any subcarrier spacing configuration less than $\mu$.</p>
-<p>子载波间隔配置$\mu$下的OFDM符号$l$的起始位置为</p>
-<p>$$ t_{\text{start},l}^{\mu }&#x3D;\left{ \begin{array}{*{35}{l}}<br>   0 &amp; l&#x3D;0  \<br>   t_{\text{start},\bar{l}-1}^{\mu }+\left( { {N}<em>{\text{u}}}+N</em>{\text{CP,}l-1}^{\mu } \right)\cdot { {T}_{\text{s}}} &amp; \text{otherwise}  \<br>\end{array} \right.$$</p>
+<h2 id="载波聚合">载波聚合</h2>
+<p><br/>在多个小区中的传输可以被聚合，除了主小区外，最多可以使用15个辅小区。除非另有说明，本规范中的描述适用于多达16个服务小区中的每一个。</p>
+<h1 id="通用函数">通用函数</h1>
+<h2 id="调制映射器">调制映射器</h2>
+<p><br/>调制映射器采用二进制0或1作为输入，产生复值调制符号作为输出。</p>
+<h3 id="π2-bpsk">π/2-BPSK</h3>
+<p><br/>对于π/2-BPSK调制，比特<span
+class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{ { {e}^{j{i\pi
+}/{2}\;}}}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i)
+\right) \right]\]</span></p>
+<h3 id="bpsk">BPSK</h3>
+<p><br/>对于BPSK调制，比特<span
+class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
+1-2b(i) \right)+j\left( 1-2b(i) \right) \right]\]</span></p>
+<h3 id="qpsk">QPSK</h3>
+<p><br/>对于QPSK调制，成对比特<span
+class="math inline">\(b(i),b(i+1)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
+1-2b(i) \right)+j\left( 1-2b(i+1) \right) \right]\]</span></p>
+<h3 id="qam">16QAM</h3>
+<p><br/>对于16QAM调制，四位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{10}}\left[ \left(
+1-2b(i) \right)\left( 2-\left( 1-2b(i+2) \right) \right)+j\left(
+1-2b(i+1) \right)\left( 2-\left( 1-2b(i+3) \right) \right)
+\right]\]</span></p>
+<h3 id="qam-1">64QAM</h3>
+<p><br/>对于64QAM调制，六位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; x=\frac{1}{\sqrt{42}}\left[ \left( 1-2b(i)
+\right)\left( 4-\left( 1-2b(i+2) \right)\left( 2-\left( 1-2b(i+4)
+\right) \right) \right) \right. \\
+\nonumber &amp; \ \ \ \ \ \ \left. +j\left( 1-2b(i+1) \right)\left(
+4-\left( 1-2b(i+3) \right)\left( 2-\left( 1-2b(i+5) \right) \right)
+\right) \right] \\
+\end{align}\]</span></p>
+<h3 id="qam-2">256QAM</h3>
+<p><br/>对于256QAM调制，八位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5),b(i+6),b(i+7)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+\nonumber &amp; x=\frac{1}{\sqrt{170}}\left[ \left( 1-2b(i)
+\right)\left( 8-\left( 1-2b(i+2) \right)\left( 4-\left( 1-2b(i+4)
+\right)\left( 2-\left( 1-2b(i+6) \right) \right) \right) \right) \right.
+\\
+\ \ \ \nonumber &amp; \left. +j\left( 1-2b(i+1) \right)\left( 8-\left(
+1-2b(i+3) \right)\left( 4-\left( 1-2b(i+5) \right)\left( 2-\left(
+1-2b(i+7) \right) \right) \right) \right) \right]  
+\end{align}\]</span></p>
+<h2 id="伪随机序列生成">伪随机序列生成</h2>
+<p><br/>伪随机序列由长度为31的Gold序列定义。长度为<span
+class="math inline">\({ {M}_{\text{PN}}}\)</span>的输出序列<span
+class="math inline">\(c(n)\)</span>，其中<span
+class="math inline">\(n=0,1,...,{
+{M}_{\text{PN}}}-1\)</span>，由下式定义</p>
+<p><span class="math display">\[\begin{align}
+\nonumber &amp; c(n)=\left( { {x}_{1}}(n+{ {N}_{C}})+{ {x}_{2}}(n+{
+{N}_{C}}) \right)\bmod 2 \\
+\nonumber &amp; { {x}_{1}}(n+31)=\left( { {x}_{1}}(n+3)+{ {x}_{1}}(n)
+\right)\bmod 2 \\
+\nonumber &amp; { {x}_{2}}(n+31)=\left( { {x}_{2}}(n+3)+{
+{x}_{2}}(n+2)+{ {x}_{2}}(n+1)+{ {x}_{2}}(n) \right)\bmod 2  
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\({
+{N}_{C}}=1600\)</span>，第一m序列应由<span class="math inline">\({
+{x}_{1}}(0)=1,{
+{x}_{1}}(n)=0,n=1,2,...,30\)</span>初始化。第二m序列的初始化由<span
+class="math inline">\({ {c}_{\text{init}}}=\sum\nolimits_{i=0}^{30}{ {
+{x}_{2}}(i)\cdot { {2}^{i}}}\)</span>表示，其值取决于序列的应用。</p>
+<h2 id="ofdm基带信号生成">OFDM基带信号生成</h2>
+<p><br/>对除PRACH以外的任何物理信道或信号，对于一个子帧内的OFDM符号<span
+class="math inline">\(l\)</span>，天线端口<span
+class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的时间连续信号<span
+class="math inline">\(s_{l}^{(p,\mu )}\left( t
+\right)\)</span>定义为</p>
+<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
+\right)=\sum\limits_{k=-\left\lfloor N_{\text{RB}}^{\mu
+}N_{\text{sc}}^{\text{RB}}/2 \right\rfloor }^{ { {\left\lceil
+N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}/2 \right\rceil }^{
+{}}}-1}{a_{ {k}&#39;,\bar{l}}^{(p,\mu )}\cdot { {e}^{j2\pi \left( k+{
+{k}_{0}} \right)\Delta f\left( t-{ {N}_{\text{CP},\bar{l}}}\cdot {
+{T}_{\text{s}}} \right)}}}\]</span></p>
+<p>其中<span class="math inline">\(0\le t&lt;\left( {
+{N}_{\text{u}}}+N_{\text{CP},\bar{l}}^{\mu } \right){
+{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。The value of <span
+class="math inline">\({ {k}_{0}}\)</span> is such that the lowest
+numbered subcarrier in a resource block for subcarrier spacing
+configuration <span class="math inline">\(\mu\)</span> coincides with
+the lowest numbered subcarrier in a resource block for any subcarrier
+spacing configuration less than <span
+class="math inline">\(\mu\)</span>.</p>
+<p>子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的OFDM符号<span
+class="math inline">\(l\)</span>的起始位置为</p>
+<p><span class="math display">\[ t_{\text{start},l}^{\mu }=\left\{
+\begin{array}{*{35}{l}}
+   0 &amp; l=0  \\
+   t_{\text{start},\bar{l}-1}^{\mu }+\left( {
+{N}_{\text{u}}}+N_{\text{CP,}l-1}^{\mu } \right)\cdot { {T}_{\text{s}}}
+&amp; \text{otherwise}  \\
+\end{array} \right.\]</span></p>
 <p>其中</p>
-<p>$$ \begin{align}<br> \nonumber &amp; { {N}<em>{\text{u}}}&#x3D;2048\kappa \cdot { {2}^{-\mu }} \<br> \nonumber &amp; { {N}</em>{\text{CP},\bar{l}}}&#x3D;\left{ \begin{array}{*{35}{l}}<br>   512\kappa \cdot { {2}^{-\mu }} &amp; \text{extended cyclic prefix}  \<br>   144\kappa \cdot { {2}^{-\mu }}+16\kappa  &amp; \text{normal cyclic prefix and }l&#x3D;0\text{ or }l&#x3D;7  \<br>   144\kappa \cdot { {2}^{-\mu }} &amp; \text{otherwise}  \<br>\end{array} \right.\cdot { {2}^{\mu }} \<br>\nonumber  &amp;<br>\end{align}$$</p>
-<p>对于PRACH，天线端口$p$下的时间连续信号$s_{l}^{(p,\mu )}\left( t \right)$定义为</p>
-<p>$$s_{l}^{(p,\mu )}\left( t \right)&#x3D;\sum\limits_{k&#x3D;-\left\lfloor { {L}<em>{\text{RA}}}&#x2F;2 \right\rfloor }^{ { {\left\lceil { {L}</em>{\text{RA}}}&#x2F;2 \right\rceil }^{ {}}}-1}{a_{ { {k}’}}^{(p,\text{RA})}\cdot { {e}^{j2\pi \left( k+{ {k}<em>{0}} \right)\Delta { {f}</em>{\text{RA}}}\left( t-{ {N}<em>{\text{CP},l}}\cdot { {T}</em>{\text{s}}} \right)}}}$$</p>
-<p>其中$0\le t&lt;\left( { {N}<em>{\text{u}}}+N</em>{\text{CP},l}^{\mu } \right){ {T}<em>{\text{s}}}$且${k}’&#x3D;k+\left\lfloor { { {L}</em>{\text{RA}}}}&#x2F;{2}; \right\rfloor $。</p>
-<p>一个子帧内PRACH前导的起始位置由$t_{\text{start}}^{\text{RA}}$给定，假设子帧始于$t&#x3D;0$，其中</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; { {N}_{\text{u}}}=2048\kappa \cdot { {2}^{-\mu }} \\
+\nonumber &amp; { {N}_{\text{CP},\bar{l}}}=\left\{
+\begin{array}{*{35}{l}}
+   512\kappa \cdot { {2}^{-\mu }} &amp; \text{extended cyclic
+prefix}  \\
+   144\kappa \cdot { {2}^{-\mu }}+16\kappa  &amp; \text{normal cyclic
+prefix and }l=0\text{ or }l=7  \\
+   144\kappa \cdot { {2}^{-\mu }} &amp; \text{otherwise}  \\
+\end{array} \right.\cdot { {2}^{\mu }} \\
+\nonumber  &amp;   
+\end{align}\]</span></p>
+<p>对于PRACH，天线端口<span
+class="math inline">\(p\)</span>下的时间连续信号<span
+class="math inline">\(s_{l}^{(p,\mu )}\left( t
+\right)\)</span>定义为</p>
+<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
+\right)=\sum\limits_{k=-\left\lfloor { {L}_{\text{RA}}}/2 \right\rfloor
+}^{ { {\left\lceil { {L}_{\text{RA}}}/2 \right\rceil }^{ {}}}-1}{a_{ {
+{k}&#39;}}^{(p,\text{RA})}\cdot { {e}^{j2\pi \left( k+{ {k}_{0}}
+\right)\Delta { {f}_{\text{RA}}}\left( t-{ {N}_{\text{CP},l}}\cdot {
+{T}_{\text{s}}} \right)}}}\]</span></p>
+<p>其中<span class="math inline">\(0\le t&lt;\left( {
+{N}_{\text{u}}}+N_{\text{CP},l}^{\mu } \right){
+{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。</p>
+<p>一个子帧内PRACH前导的起始位置由<span
+class="math inline">\(t_{\text{start}}^{\text{RA}}\)</span>给定，假设子帧始于<span
+class="math inline">\(t=0\)</span>，其中</p>
 <ul>
-<li>对于$\Delta { {f}<em>{\text{RA}}}\in \left{ 15,30,60,120 \right}\text{ kHz}$，有$t</em>{\text{start}}^{\text{RA}}&#x3D;t_{\text{start},l}^{\mu }$  for some $l$</li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+15,30,60,120 \right\}\text{ kHz}\)</span>，有<span
+class="math inline">\(t_{\text{start}}^{\text{RA}}=t_{\text{start},l}^{\mu
+}\)</span> for some <span class="math inline">\(l\)</span></li>
 </ul>
-<p>${ {L}<em>{\text{RA}}}$和${ {N}</em>{\text{u}}}$在3.3.3节给定，并且有${ {N}<em>{\text{CP},l}}&#x3D;N</em>{\text{CP}}^{\text{RA}}+n\cdot 16\kappa $，其中</p>
+<p><span class="math inline">\({ {L}_{\text{RA}}}\)</span>和<span
+class="math inline">\({ {N}_{\text{u}}}\)</span>在3.3.3节给定，并且有${
+{N}<em>{,l}}=N</em>{}^{}+n$，其中</p>
 <ul>
-<li>对于$\Delta { {f}_{\text{RA}}}\in \left{ 1.25,5 \right}\text{ kHz}$，$n&#x3D;0$</li>
-<li>对于$\Delta { {f}<em>{\text{RA}}}\in \left{ 15,30,60,120 \right}\text{ kHz}$，$n$ is the number of times the interval $\left[ t</em>{\text{start}}^{\text{RA}},t_{\text{start}}^{\text{RA}}+\left( N_{\text{u}}^{\text{RA}}+N_{\text{CP}}^{\text{RA}} \right){ {T}<em>{\text{s}}} \right]$ overlaps with either time instance 0 or time instance $\left( {\Delta { {f}</em>{\max }}{ {N}<em>{\text{f}}}}&#x2F;{500}; \right)\cdot { {T}</em>{\text{s}}}&#x3D;0.5\text{ ms}$ in a subframe</li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+1.25,5 \right\}\text{ kHz}\)</span>，<span
+class="math inline">\(n=0\)</span></li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+15,30,60,120 \right\}\text{ kHz}\)</span>，<span
+class="math inline">\(n\)</span> is the number of times the interval
+<span class="math inline">\(\left[
+t_{\text{start}}^{\text{RA}},t_{\text{start}}^{\text{RA}}+\left(
+N_{\text{u}}^{\text{RA}}+N_{\text{CP}}^{\text{RA}} \right){
+{T}_{\text{s}}} \right]\)</span> overlaps with either time instance 0 or
+time instance <span class="math inline">\(\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{500}\; \right)\cdot { {T}_{\text{s}}}=0.5\text{
+ms}\)</span> in a subframe</li>
 </ul>
-<h2 id="调制和上变频"><a href="#调制和上变频" class="headerlink" title="调制和上变频"></a>调制和上变频</h2><p><br/>对于天线端口$p$和子载波间隔配置$\mu$，复值OFDM基带信号调制和上变频至载频${ {f}_{0}}$</p>
-<p>$$\operatorname{Re}\left{ s_{l}^{(p,\mu )}\left( t \right)\cdot { {e}^{j2\pi { {f}_{0}}t}} \right}$$</p>
-<h1 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h1><p><br/>为避免本页面过于冗长，<a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">上行链路另起一页</a>。</p>
-<h1 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h1><p><br/>为避免本页面过于冗长，<a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">下行链路另起一页</a>。</p>
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a><br><a href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a><br><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+<h2 id="调制和上变频">调制和上变频</h2>
+<p><br/>对于天线端口<span
+class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>，复值OFDM基带信号调制和上变频至载频<span
+class="math inline">\({ {f}_{0}}\)</span></p>
+<p><span class="math display">\[\operatorname{Re}\left\{ s_{l}^{(p,\mu
+)}\left( t \right)\cdot { {e}^{j2\pi { {f}_{0}}t}} \right\}\]</span></p>
+<h1 id="上行链路">上行链路</h1>
+<p><br/>为避免本页面过于冗长，<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">上行链路另起一页</a>。</p>
+<h1 id="下行链路">下行链路</h1>
+<p><br/>为避免本页面过于冗长，<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">下行链路另起一页</a>。</p>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
+<a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
+<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
+<a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
 
     </div>
 

@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="物理层的服务和功能概述物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
+    <meta name="description" content="物理层的服务和功能 概述 物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5G-NR物理层提供的服务v1.0.0">
 <meta property="og:url" content="https://marshallcomm.cn/2017/09/08/nr-v100-l1-service/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="物理层的服务和功能概述物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
+<meta property="og:description" content="物理层的服务和功能 概述 物理层向高层提供数据传输服务。 这些服务的接入是通过使用MAC子层的传输信道实现的。 传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（注：这句话有待进一步讨论）。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png">
@@ -154,7 +154,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">物理层的服务和功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">L1功能概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UE%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">UE的物理层模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">上行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.1.</span> <span class="nav-text">上行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">随机接入信道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">下行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">下行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.2.</span> <span class="nav-text">广播信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E5%91%BC%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.3.</span> <span class="nav-text">寻呼信道</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parallel-transmission-of-simultaneous-Physical-channels-and-SRS"><span class="nav-number">3.</span> <span class="nav-text">Parallel transmission of simultaneous Physical channels and SRS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.2.</span> <span class="nav-text">下行链路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E6%8F%90%E4%BE%9B%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">物理层提供的测量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UE%E6%B5%8B%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">UE测量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">物理层的服务和功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#l1%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">L1功能概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ue%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">UE的物理层模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">上行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.1.</span> <span class="nav-text">上行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">随机接入信道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">下行链路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E5%85%B1%E4%BA%AB%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">下行共享信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.2.</span> <span class="nav-text">广播信道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E5%91%BC%E4%BF%A1%E9%81%93"><span class="nav-number">2.2.3.</span> <span class="nav-text">寻呼信道</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#parallel-transmission-of-simultaneous-physical-channels-and-srs"><span class="nav-number">3.</span> <span class="nav-text">Parallel
+transmission of simultaneous Physical channels and SRS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">上行链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="nav-number">3.2.</span> <span class="nav-text">下行链路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E6%8F%90%E4%BE%9B%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">物理层提供的测量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ue%E6%B5%8B%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">UE测量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -287,197 +288,100 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="物理层的服务和功能"><a href="#物理层的服务和功能" class="headerlink" title="物理层的服务和功能"></a>物理层的服务和功能</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><br/>物理层向高层提供数据传输服务。</p>
+        <h1 id="物理层的服务和功能">物理层的服务和功能</h1>
+<h2 id="概述">概述</h2>
+<p><br/>物理层向高层提供数据传输服务。</p>
 <p>这些服务的接入是通过使用MAC子层的传输信道实现的。</p>
 <p>传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（<em>注：这句话有待进一步讨论</em>）。</p>
 <span id="more"></span>
-
-<h2 id="L1功能概述"><a href="#L1功能概述" class="headerlink" title="L1功能概述"></a>L1功能概述</h2><p><br/>正如3GPP TS 38.201规范中所提到的，物理层向高层提供数据传输服务。为了提供数据传输服务，物理层预期执行以下功能：</p>
+<h2 id="l1功能概述">L1功能概述</h2>
+<p><br/>正如3GPP TS
+38.201规范中所提到的，物理层向高层提供数据传输服务。为了提供数据传输服务，物理层预期执行以下功能：</p>
 <ul>
-<li><pre><code>传输信道的差错检测并指示给高层
-</code></pre>
-<ul>
-<li><pre><code>传输信道的前向纠错（FEC）编码/解码
-</code></pre>
-<ul>
-<li><pre><code>混合自动重传请求（HARQ）软合并
-</code></pre>
-<ul>
-<li><pre><code>编码的传输信道到物理信道的速率匹配
-</code></pre>
-<ul>
-<li><pre><code>编码的传输信道到物理信道的映射
-</code></pre>
-<ul>
-<li><pre><code>物理信道的功率加权
-</code></pre>
-<ul>
-<li><pre><code>物理信道的调制和解调
-</code></pre>
-<ul>
-<li><pre><code>频域和时间同步
-</code></pre>
-<ul>
-<li><pre><code>无线特性测量并指示给高层
-</code></pre>
-<ul>
-<li><pre><code>MIMO天线处理
-</code></pre>
-<ul>
-<li><pre><code>射频处理
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>传输信道的差错检测并指示给高层</li>
+<li>传输信道的前向纠错（FEC）编码/解码</li>
+<li>混合自动重传请求（HARQ）软合并</li>
+<li>编码的传输信道到物理信道的速率匹配</li>
+<li>编码的传输信道到物理信道的映射</li>
+<li>物理信道的功率加权</li>
+<li>物理信道的调制和解调</li>
+<li>频域和时间同步</li>
+<li>无线特性测量并指示给高层</li>
+<li>MIMO天线处理</li>
+<li>射频处理</li>
 </ul>
 <p>对于每个传输信道，L1功能的建模详见2.1和2.2节。</p>
-<h1 id="UE的物理层模型"><a href="#UE的物理层模型" class="headerlink" title="UE的物理层模型"></a>UE的物理层模型</h1><p><br/>5G-NR物理层模型capture以下与物理层相关的特性：</p>
+<h1 id="ue的物理层模型">UE的物理层模型</h1>
+<p><br/>5G-NR物理层模型capture以下与物理层相关的特性：</p>
 <ul>
-<li><pre><code>向下传递到物理层或从物理层上传道高层数据的结构；
-</code></pre>
+<li>向下传递到物理层或从物理层上传道高层数据的结构；</li>
+<li>高层能够配置物理层的方法；</li>
+<li>物理层向高层提供不同的指示（错误指示，信道质量指示等）</li>
+</ul>
+<h2 id="上行链路模型">上行链路模型</h2>
+<h3 id="上行共享信道">上行共享信道</h3>
+<p><br/>上行共享信道（UL-SCH）传输的物理层模型基于PUSCH物理层处理的相应链路。如Figure
+5.1.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
 <ul>
-<li><pre><code>高层能够配置物理层的方法；
-</code></pre>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速率匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
+<li>L1控制信令的支持</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png" title="Figure 5.1.1-1: Physical-layer model for UL-SCH transmission" /></p>
+<h3 id="随机接入信道">随机接入信道</h3>
+<p><br/>随机接入信道传输的物理层模型通过PRACH前导格式来表征。PRACH前导格式由循环前缀，前导和保护时间间隔组成。</p>
+<h2 id="下行链路模型">下行链路模型</h2>
+<h3 id="下行共享信道">下行共享信道</h3>
+<p><br/>下行共享信道传输的物理层模型基于PDSCH物理层处理的相应链路。如Figure
+5.2.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
 <ul>
-<li><pre><code>物理层向高层提供不同的指示（错误指示，信道质量指示等）
-</code></pre>
-</li>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速率匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
+<li>L1控制信令的支持</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="上行链路模型"><a href="#上行链路模型" class="headerlink" title="上行链路模型"></a>上行链路模型</h2><h3 id="上行共享信道"><a href="#上行共享信道" class="headerlink" title="上行共享信道"></a>上行共享信道</h3><p><br/>上行共享信道（UL-SCH）传输的物理层模型基于PUSCH物理层处理的相应链路。如Figure 5.1.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png" title="Figure 5.2.1-1: Physical-layer model for DL-SCH transmission" /></p>
+<h3 id="广播信道">广播信道</h3>
+<p><br/>广播信道传输的物理层模型由一个固定预定义的传输格式来表征。BCH每80ms一个传输块。广播信道的物理层模型基于PBCH物理层处理的相应链路，如Figure
+5.2.2-1所示。</p>
 <ul>
-<li><pre><code>高层数据传到或来自物理层
-</code></pre>
-<ul>
-<li><pre><code>CRC和传输块错误指示
-</code></pre>
-<ul>
-<li><pre><code>FEC和速率匹配
-</code></pre>
-<ul>
-<li><pre><code>数据调制
-</code></pre>
-<ul>
-<li><pre><code>映射到物理资源
-</code></pre>
-<ul>
-<li><pre><code>多天线处理
-</code></pre>
-<ul>
-<li><pre><code>L1控制信令的支持
-</code></pre>
-</li>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速配匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png" title="Figure 5.1.1-1: Physical-layer model for UL-SCH transmission" />
-
-<h3 id="随机接入信道"><a href="#随机接入信道" class="headerlink" title="随机接入信道"></a>随机接入信道</h3><p><br/>随机接入信道传输的物理层模型通过PRACH前导格式来表征。PRACH前导格式由循环前缀，前导和保护时间间隔组成。</p>
-<h2 id="下行链路模型"><a href="#下行链路模型" class="headerlink" title="下行链路模型"></a>下行链路模型</h2><h3 id="下行共享信道"><a href="#下行共享信道" class="headerlink" title="下行共享信道"></a>下行共享信道</h3><p><br/>下行共享信道传输的物理层模型基于PDSCH物理层处理的相应链路。如Figure 5.2.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
-<ul>
-<li><pre><code>高层数据传到或来自物理层
-</code></pre>
-<ul>
-<li><pre><code>CRC和传输块错误指示
-</code></pre>
-<ul>
-<li><pre><code>FEC和速率匹配
-</code></pre>
-<ul>
-<li><pre><code>数据调制
-</code></pre>
-<ul>
-<li><pre><code>映射到物理资源
-</code></pre>
-<ul>
-<li><pre><code>多天线处理
-</code></pre>
-<ul>
-<li><pre><code>L1控制信令的支持
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png" title="Figure 5.2.1-1: Physical-layer model for DL-SCH transmission" />
-
-<h3 id="广播信道"><a href="#广播信道" class="headerlink" title="广播信道"></a>广播信道</h3><p><br/>广播信道传输的物理层模型由一个固定预定义的传输格式来表征。BCH每80ms一个传输块。广播信道的物理层模型基于PBCH物理层处理的相应链路，如Figure 5.2.2-1所示。</p>
-<ul>
-<li><pre><code>高层数据传到或来自物理层
-</code></pre>
-<ul>
-<li><pre><code>CRC和传输块错误指示
-</code></pre>
-<ul>
-<li><pre><code>FEC和速配匹配
-</code></pre>
-<ul>
-<li><pre><code>数据调制
-</code></pre>
-<ul>
-<li><pre><code>映射到物理资源
-</code></pre>
-<ul>
-<li><pre><code>多天线处理
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png" title="Figure 5.2.2-1: Physical-layer model for BCH transmission" />
-
-<h3 id="寻呼信道"><a href="#寻呼信道" class="headerlink" title="寻呼信道"></a>寻呼信道</h3><h1 id="Parallel-transmission-of-simultaneous-Physical-channels-and-SRS"><a href="#Parallel-transmission-of-simultaneous-Physical-channels-and-SRS" class="headerlink" title="Parallel transmission of simultaneous Physical channels and SRS"></a>Parallel transmission of simultaneous Physical channels and SRS</h1><p><br/>This clause describes the requirements from the UE to send and receive on multiple Physical and Transport Channels and SRS simultaneously depending on the service capabilities and requirements.</p>
-<h2 id="上行链路"><a href="#上行链路" class="headerlink" title="上行链路"></a>上行链路</h2><h2 id="下行链路"><a href="#下行链路" class="headerlink" title="下行链路"></a>下行链路</h2><h1 id="物理层提供的测量"><a href="#物理层提供的测量" class="headerlink" title="物理层提供的测量"></a>物理层提供的测量</h1><h2 id="UE测量"><a href="#UE测量" class="headerlink" title="UE测量"></a>UE测量</h2><p><br/>UE测量的列表和定义提供在3GPP TS 38.215中。</p>
-<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><br/><a href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a><br><a href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a><br><a href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a><br><a href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png" title="Figure 5.2.2-1: Physical-layer model for BCH transmission" /></p>
+<h3 id="寻呼信道">寻呼信道</h3>
+<h1
+id="parallel-transmission-of-simultaneous-physical-channels-and-srs">Parallel
+transmission of simultaneous Physical channels and SRS</h1>
+<p><br/>This clause describes the requirements from the UE to send and
+receive on multiple Physical and Transport Channels and SRS
+simultaneously depending on the service capabilities and
+requirements.</p>
+<h2 id="上行链路">上行链路</h2>
+<h2 id="下行链路">下行链路</h2>
+<h1 id="物理层提供的测量">物理层提供的测量</h1>
+<h2 id="ue测量">UE测量</h2>
+<p><br/>UE测量的列表和定义提供在3GPP TS 38.215中。</p>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
+<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
+<a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
 
     </div>
 

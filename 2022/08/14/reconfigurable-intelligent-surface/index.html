@@ -22,15 +22,14 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"marshallcomm.cn","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="科普短视频@我爱星科技 关于 RIS 的科普短视频↓：  什么是 RIS从字面而言，智能反射表面（Intelligent Reflecting Surface, IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface, RIS），是一种可以重新配置的超表面[^1]。 从结构而言，RIS 是一种亚波长尺寸的人工二维材料，通常由金属、介质和可调元件构成，可">
+    <meta name="description" content="科普短视频 @我爱星科技 关于 RIS 的科普短视频↓：  什么是 RIS 从字面而言，智能反射表面（Intelligent Reflecting Surface, IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface, RIS），是一种可以重新配置的超表面1。 从结构而言，RIS 是一种亚波长尺寸的人工二维材料，通常由金属、介质和">
 <meta property="og:type" content="article">
 <meta property="og:title" content="可重构智能表面（RIS）">
 <meta property="og:url" content="https://marshallcomm.cn/2022/08/14/reconfigurable-intelligent-surface/index.html">
 <meta property="og:site_name" content="Marshall">
-<meta property="og:description" content="科普短视频@我爱星科技 关于 RIS 的科普短视频↓：  什么是 RIS从字面而言，智能反射表面（Intelligent Reflecting Surface, IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface, RIS），是一种可以重新配置的超表面[^1]。 从结构而言，RIS 是一种亚波长尺寸的人工二维材料，通常由金属、介质和可调元件构成，可">
+<meta property="og:description" content="科普短视频 @我爱星科技 关于 RIS 的科普短视频↓：  什么是 RIS 从字面而言，智能反射表面（Intelligent Reflecting Surface, IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface, RIS），是一种可以重新配置的超表面1。 从结构而言，RIS 是一种亚波长尺寸的人工二维材料，通常由金属、介质和">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/微信图片_20220814181650.jpg">
-<meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/image-20220814104143178.png">
 <meta property="article:published_time" content="2022-08-14T09:45:36.000Z">
 <meta property="article:modified_time" content="2022-08-14T23:06:13.626Z">
 <meta property="article:author" content="Marshall">
@@ -150,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE%E7%9F%AD%E8%A7%86%E9%A2%91"><span class="nav-number">1.</span> <span class="nav-text">科普短视频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-RIS"><span class="nav-number">2.</span> <span class="nav-text">什么是 RIS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RIS-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">RIS 的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RIS-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">RIS 的工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81-x2F-%E5%8D%8A%E9%9D%99%E6%80%81%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">静态&#x2F;半静态工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E9%80%8F%E6%98%8E%E7%9A%84%E5%8A%A8%E6%80%81%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">信道透明的动态工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E9%9D%9E%E9%80%8F%E6%98%8E%E7%9A%84%E6%99%BA%E8%83%BD%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">信道非透明的智能工作模式</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E6%99%AE%E7%9F%AD%E8%A7%86%E9%A2%91"><span class="nav-number">1.</span> <span class="nav-text">科普短视频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-ris"><span class="nav-number">2.</span> <span class="nav-text">什么是 RIS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ris-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">RIS 的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ris-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">RIS 的工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8D%8A%E9%9D%99%E6%80%81%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">静态&#x2F;半静态工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E9%80%8F%E6%98%8E%E7%9A%84%E5%8A%A8%E6%80%81%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">信道透明的动态工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E9%9D%9E%E9%80%8F%E6%98%8E%E7%9A%84%E6%99%BA%E8%83%BD%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">信道非透明的智能工作模式</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -283,26 +282,74 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="科普短视频"><a href="#科普短视频" class="headerlink" title="科普短视频"></a>科普短视频</h2><p><a target="_blank" rel="noopener" href="https://weibo.com/u/7495014682">@我爱星科技</a> 关于 RIS 的科普短视频↓：</p>
+        <h2 id="科普短视频">科普短视频</h2>
+<p><a target="_blank" rel="noopener" href="https://weibo.com/u/7495014682"><span class="citation"
+data-cites="我爱星科技">@我爱星科技</span></a> 关于 RIS
+的科普短视频↓：</p>
 <p><a target="_blank" rel="noopener" href="http://weibo.com/7495014682/LEQVYafGq"><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/微信图片_20220814181650.jpg" alt="RIS" ></a></p>
-<h2 id="什么是-RIS"><a href="#什么是-RIS" class="headerlink" title="什么是 RIS"></a>什么是 RIS</h2><p>从字面而言，智能反射表面（Intelligent Reflecting Surface, IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface, RIS），是一种可以重新配置的超表面[^1]。</p>
-<p>从结构而言，RIS 是一种亚波长尺寸的人工二维材料，通常由金属、介质和可调元件构成，可以等效表征为 RLC 电路。调整电磁单元的物理性质，如容抗、阻抗或感抗，改变 RIS 的辐射特性，实现非常规的物理现象诸如非规则反射、负折射、吸波、聚焦以及极化转换，进而对电磁波进行动态调控[^2]。</p>
-<p>从特性而言，RIS 是一种具有可编程电磁特性的人工电磁表面结构，由超材料技术发展而来[^2]。为了理解这句话，我查阅了一些资料，探究 RIS 如何从超材料发展而来：</p>
-<p>RIS 首先属于一种「<a href="https://marshallcomm.cn/2022/08/11/metamaterials/">超材料</a>」，进一步它属于一种「<a href="https://marshallcomm.cn/2022/08/12/electromagnetic-metamaterials/">电磁超材料</a>」，更进一步它不是三维的而是二维的超材料，即它是一种「<a href="https://marshallcomm.cn/2022/08/12/electromagnetic-metamaterials/#%E4%B8%80%E7%A7%8D%E4%BA%8C%E7%BB%B4%E8%B6%85%E6%9D%90%E6%96%99%E4%BA%BA%E5%B7%A5%E7%94%B5%E7%A3%81%E8%B6%85%E8%A1%A8%E9%9D%A2">超表面</a>」。在超表面的基础上再加限定词，可重构的、智能的超表面就是 RIS（Reconfigurable Intelligent Surface）。RIS 的可编程&#x2F;可重构电磁特性是基于「<a href="https://marshallcomm.cn/2022/08/13/information-metamaterials/">信息超材料</a>」，信息超材料将电磁波和数字信息世界联系起来，因此 RIS 不仅可以调控电磁波还可以调制信息。</p>
-<p>RIS 可以调控电磁波意味着通过 RIS 可以构建可控的无线环境。前五代移动通信都基于无线环境的不可控假设，这就是为什么说 RIS 会带来一种全新的通信网络范式。</p>
+<h2 id="什么是-ris">什么是 RIS</h2>
+<p>从字面而言，智能反射表面（Intelligent Reflecting Surface,
+IRS），也称为可重构智能表面（Reconfigurable Intelligent Surface,
+RIS），是一种可以重新配置的超表面<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
+<p>从结构而言，RIS
+是一种亚波长尺寸的人工二维材料，通常由金属、介质和可调元件构成，可以等效表征为
+RLC 电路。调整电磁单元的物理性质，如容抗、阻抗或感抗，改变 RIS
+的辐射特性，实现非常规的物理现象诸如非规则反射、负折射、吸波、聚焦以及极化转换，进而对电磁波进行动态调控<a
+href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>。</p>
+<p>从特性而言，RIS
+是一种具有可编程电磁特性的人工电磁表面结构，由超材料技术发展而来<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>。为了理解这句话，我查阅了一些资料，探究
+RIS 如何从超材料发展而来：</p>
+<p>RIS 首先属于一种「<a
+href="https://marshallcomm.cn/2022/08/11/metamaterials/">超材料</a>」，进一步它属于一种「<a
+href="https://marshallcomm.cn/2022/08/12/electromagnetic-metamaterials/">电磁超材料</a>」，更进一步它不是三维的而是二维的超材料，即它是一种「<a
+href="https://marshallcomm.cn/2022/08/12/electromagnetic-metamaterials/#%E4%B8%80%E7%A7%8D%E4%BA%8C%E7%BB%B4%E8%B6%85%E6%9D%90%E6%96%99%E4%BA%BA%E5%B7%A5%E7%94%B5%E7%A3%81%E8%B6%85%E8%A1%A8%E9%9D%A2">超表面</a>」。在超表面的基础上再加限定词，可重构的、智能的超表面就是
+RIS（Reconfigurable Intelligent Surface）。RIS
+的可编程/可重构电磁特性是基于「<a
+href="https://marshallcomm.cn/2022/08/13/information-metamaterials/">信息超材料</a>」，信息超材料将电磁波和数字信息世界联系起来，因此
+RIS 不仅可以调控电磁波还可以调制信息。</p>
+<p>RIS 可以调控电磁波意味着通过 RIS
+可以构建可控的无线环境。前五代移动通信都基于无线环境的不可控假设，这就是为什么说
+RIS 会带来一种全新的通信网络范式。</p>
 <span id="more"></span>
-
-<h2 id="RIS-的原理"><a href="#RIS-的原理" class="headerlink" title="RIS 的原理"></a>RIS 的原理</h2><p>在传统的无线通信环境中，无线信号在传输过程中会遇到障碍，经过反射、折射和透射等，会出现原始无线信号的多径分量，以不同的幅度、相位及延迟到达接收端。由于这些多径分量与原始无线信号在接收端正向叠加或反向抵消，使得接收信号产生多径衰落，严重损害无线通信系统的性能。</p>
-<p>RIS 通过大量低成本电磁单元智能控制无线信号的<strong>反射特征</strong>，从而实现无线传播环境的重构，使得无线电环境「可控」。</p>
-<p>RIS 以软件控制的方式重新设计环境中的电磁波，将不可控的传播环境变为一个确定性的空间。如下图所示，调控 RIS 的电磁单元的反射相移，使得通过 RIS 的反射信号以及通过其他路径传播的信号可以在接收端同相叠加以增强接收信号质量。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/image-20220814104143178.png"></p>
-<h2 id="RIS-的工作模式"><a href="#RIS-的工作模式" class="headerlink" title="RIS 的工作模式"></a>RIS 的工作模式</h2><p>目前学术研究从理想假设出发，主要关注 RIS 辅助通信系统的理论性能上界。而实际部署需要综合考虑量化误差、处理复杂度、计算能力、系统开销等多种实际因素，因此，从静态到动态，逐步实现逼近理论上界的智能调控的「三步走」工作模式更符合一般部署节奏。</p>
-<h3 id="静态-x2F-半静态工作模式"><a href="#静态-x2F-半静态工作模式" class="headerlink" title="静态&#x2F;半静态工作模式"></a>静态&#x2F;半静态工作模式</h3><p>初期阶段，可以令反射板波束固定不变，或者间隔很长一段时间进行相位调节。</p>
-<h3 id="信道透明的动态工作模式"><a href="#信道透明的动态工作模式" class="headerlink" title="信道透明的动态工作模式"></a>信道透明的动态工作模式</h3><p>在该阶段，反射相位调节过程无需信道信息，RIS 使用多个已知的波束方向（例如码本）进行调整，用户通过信道质量的测量，反馈对应最佳波束方向的相关信息，基站将反射面配置为所选择的波束方向。该工作模式无需小尺度信道信息，可选波束方向较为固定，控制指示开销较小，但多次调整波束会带来较大系统开销。</p>
-<h3 id="信道非透明的智能工作模式"><a href="#信道非透明的智能工作模式" class="headerlink" title="信道非透明的智能工作模式"></a>信道非透明的智能工作模式</h3><p>在该阶段，基站配置反射面的相位，多次调整反射单元相位进行信道估计，基站根据信道估计结果，配置与实际传输信道适配的反射相位。在工作模式可以获得最优性能，但是信道估计算法和流程的复杂度很高，系统开销很大。</p>
+<h2 id="ris-的原理">RIS 的原理</h2>
+<p>在传统的无线通信环境中，无线信号在传输过程中会遇到障碍，经过反射、折射和透射等，会出现原始无线信号的多径分量，以不同的幅度、相位及延迟到达接收端。由于这些多径分量与原始无线信号在接收端正向叠加或反向抵消，使得接收信号产生多径衰落，严重损害无线通信系统的性能。</p>
+<p>RIS
+通过大量低成本电磁单元智能控制无线信号的<strong>反射特征</strong>，从而实现无线传播环境的重构，使得无线电环境「可控」。</p>
+<p>RIS
+以软件控制的方式重新设计环境中的电磁波，将不可控的传播环境变为一个确定性的空间。如下图所示，调控
+RIS 的电磁单元的反射相移，使得通过 RIS
+的反射信号以及通过其他路径传播的信号可以在接收端同相叠加以增强接收信号质量。</p>
+<p><img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/image-20220814104143178.png" /></p>
+<h2 id="ris-的工作模式">RIS 的工作模式</h2>
+<p>目前学术研究从理想假设出发，主要关注 RIS
+辅助通信系统的理论性能上界。而实际部署需要综合考虑量化误差、处理复杂度、计算能力、系统开销等多种实际因素，因此，从静态到动态，逐步实现逼近理论上界的智能调控的「三步走」工作模式更符合一般部署节奏。</p>
+<h3 id="静态半静态工作模式">静态/半静态工作模式</h3>
+<p>初期阶段，可以令反射板波束固定不变，或者间隔很长一段时间进行相位调节。</p>
+<h3 id="信道透明的动态工作模式">信道透明的动态工作模式</h3>
+<p>在该阶段，反射相位调节过程无需信道信息，RIS
+使用多个已知的波束方向（例如码本）进行调整，用户通过信道质量的测量，反馈对应最佳波束方向的相关信息，基站将反射面配置为所选择的波束方向。该工作模式无需小尺度信道信息，可选波束方向较为固定，控制指示开销较小，但多次调整波束会带来较大系统开销。</p>
+<h3 id="信道非透明的智能工作模式">信道非透明的智能工作模式</h3>
+<p>在该阶段，基站配置反射面的相位，多次调整反射单元相位进行信道估计，基站根据信道估计结果，配置与实际传输信道适配的反射相位。在工作模式可以获得最优性能，但是信道估计算法和流程的复杂度很高，系统开销很大。</p>
 <p>基于以上分析，在当前条件下，信道透明的动态工作模式可以很好地获得性能和开销的折中，是目前研究的重点方向。</p>
-<p>[^1]: <a target="_blank" rel="noopener" href="https://max.book118.com/html/2022/0327/5102021041004204.shtm">中国移动. 6G信息超材料技术白皮书(2022)</a></p>
-<p>[^2]: IMT-2030（6G）推进组. 智能超表面技术研究报告. 2021.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+target="_blank" rel="noopener" href="https://max.book118.com/html/2022/0327/5102021041004204.shtm">中国移动.
+6G信息超材料技术白皮书(2022)</a><a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>IMT-2030（6G）推进组. 智能超表面技术研究报告. 2021.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>IMT-2030（6G）推进组. 智能超表面技术研究报告. 2021.<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
     </div>
 
