@@ -549,103 +549,6 @@ class="math inline">\(\mathbf{R}_{x}^{H}={
       </tags>
   </entry>
   <entry>
-    <title>Answer-Polar Code-定义错误概率</title>
-    <url>/2017/03/07/answer-polar-code-def-error-prob/</url>
-    <content><![CDATA[<p><a
-href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar
-Code（4）编码之极化信道可靠性估计》</a>提到，事件<span
-class="math inline">\({ {A}_{i}}\)</span>表示序号为<span
-class="math inline">\(i\)</span>的极化信道<span
-class="math inline">\(W_{N}^{\left( i
-\right)}\)</span>所承载的比特经过传输后接收发生错误，即</p>
-<p><span class="math display">\[ { {A}_{i}}=\left\{
-u_{1}^{N},y_{1}^{N}:W_{N}^{\left( i \right)}\left(
-y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)&lt;W_{N}^{\left( i
-\right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}}\oplus 1 \right) \right\}
-\]</span></p>
-<p>则极化信道<span class="math inline">\(W_{N}^{\left( i
-\right)}\)</span>的错误概率为<span class="math inline">\(P\left( {
-{A}_{i}} \right)\)</span>。</p>
-<p><strong>那么事件<span class="math inline">\({
-{A}_{i}}\)</span>怎么理解？</strong></p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171027/192821484.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>举个例子，假设N=2。编码器输入是<span class="math inline">\(\left(
-\begin{matrix}  { {u}_{1}} \\  { {u}_{2}} \\ \end{matrix}
-\right)\)</span>，编码器输出是<span class="math inline">\(\left(
-\begin{matrix}  { {x}_{1}}={ {u}_{1}}\oplus { {u}_{2}} \\  { {x}_{2}}={
-{u}_{2}} \\ \end{matrix}
-\right)\)</span>。经过无线信道，假设接收端接收到的信号为<span
-class="math inline">\(y_{1}^{2}\)</span>。</p>
-<span id="more"></span>
-<p>对接收端来说，<span
-class="math inline">\(y_{1}^{2}\)</span>是已知量，而<span
-class="math inline">\({ {u}_{i}}\)</span>是未知量。转移概率<span
-class="math inline">\(W_{2}^{i}\left( y_{1}^{2}|{ {u}_{i}}
-\right)\)</span>表示通过序号为<span
-class="math inline">\(i\)</span>的极化信道<span
-class="math inline">\(W_{N}^{\left( i \right)}\)</span>，发送为<span
-class="math inline">\({ {u}_{i}}\)</span>接收为<span
-class="math inline">\(y_{1}^{2}\)</span>的概率。</p>
-<p><span class="math inline">\({ {u}_{i}}\)</span>和$ ( { {u}_{i}} )
-$这种表达形式使得这两个值正好是互斥的：</p>
-<ul>
-<li><span class="math inline">\({ {u}_{i}}=0\)</span>时，有$ {
-{u}_{i}}=1 $</li>
-<li><span class="math inline">\({ {u}_{i}}=1\)</span>时，有$ {
-{u}_{i}}=0 $</li>
-</ul>
-<p>二进制比特<span class="math inline">\({
-{u}_{i}}\)</span>只有两种取值，无论发送“0”或“1”，由于无线信道的影响，接收端都有可能得到相同的<span
-class="math inline">\(y_{1}^{2}\)</span>。那么到底是发送“0”使得接收为<span
-class="math inline">\(y_{1}^{2}\)</span>，还是发送“1”使得接收为<span
-class="math inline">\(y_{1}^{2}\)</span>？可以通过比较这两种情况的转移概率得到答案。</p>
-<p><strong>给定<span class="math inline">\({
-{u}_{1}}=0\)</span>的情况</strong></p>
-<p>比较$ W_{N}^{( i )}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )
-<span class="math inline">\(和\)</span> W</em>{N}^{( i )}(
-y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
-class="math inline">\(，也即比较\)</span> W</em>{2}^{( 1 )}( y_{1}^{2}|0
-) <span class="math inline">\(和\)</span> W_{2}^{( 1 )}( y_{1}^{2}|1 )
-<span class="math inline">\(。只有当\)</span> W_{2}^{( 1 )}( y_{1}^{2}|0
-)&gt;W_{2}^{( 1 )}( y_{1}^{2}|1 ) <span
-class="math inline">\(时，才是正确接收。左边的式子和**给定\)</span>{
-{u}_{1}}=0$相一致**。</p>
-<p><strong>给定<span class="math inline">\({
-{u}_{1}}=1\)</span>的情况</strong></p>
-<p>比较$ W_{N}^{( i )}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )
-<span class="math inline">\(和\)</span> W</em>{N}^{( i )}(
-y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
-class="math inline">\(，也即比较\)</span> W</em>{2}^{( 1 )}( y_{1}^{2}|1
-) <span class="math inline">\(和\)</span> W_{2}^{( 1 )}( y_{1}^{2}|0 )
-<span class="math inline">\(。只有当\)</span> W_{2}^{( 1 )}( y_{1}^{2}|1
-)&gt;W_{2}^{( 1 )}( y_{1}^{2}|0 ) <span
-class="math inline">\(时，才是正确接收。左边的式子和**给定\)</span>{
-{u}_{1}}=1$相一致**。</p>
-<p>这两种情况是等价的。即$ W_{N}^{( i )}(
-y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )&gt;W</em>{N}^{( i )}(
-y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
-class="math inline">\(时才是正确接收。反过来，当\)</span> W</em>{N}^{( i
-)}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )&lt;W</em>{N}^{( i )}(
-y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
-class="math inline">\(时意味着接收错误，这就是事件\)</span>{
-{A}</em>{i}}<span class="math inline">\(。事件\)</span>{
-{A}<em>{i}}<span class="math inline">\(发生的概率就是错误概率\)</span>P(
-{ {A}</em>{i}} )$。</p>
-]]></content>
-      <categories>
-        <category>Polar Code</category>
-      </categories>
-      <tags>
-        <tag>Polar Code</tag>
-        <tag>answer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Answer-Polar Code-高斯近似之$\varphi \left( x \right)$反函数</title>
     <url>/2017/11/02/answer-polar-code-ga-inverse-phix/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -749,6 +652,103 @@ class="math inline">\({ {\varphi }^{-1}}\left( x
 <p><br/><img
 src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171102/150439302.png"
 alt="mark" /></p>
+]]></content>
+      <categories>
+        <category>Polar Code</category>
+      </categories>
+      <tags>
+        <tag>Polar Code</tag>
+        <tag>answer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Answer-Polar Code-定义错误概率</title>
+    <url>/2017/03/07/answer-polar-code-def-error-prob/</url>
+    <content><![CDATA[<p><a
+href="http://marshallcomm.cn/2017/03/07/polar-code-4-encoding-chan-rel-est/">《Polar
+Code（4）编码之极化信道可靠性估计》</a>提到，事件<span
+class="math inline">\({ {A}_{i}}\)</span>表示序号为<span
+class="math inline">\(i\)</span>的极化信道<span
+class="math inline">\(W_{N}^{\left( i
+\right)}\)</span>所承载的比特经过传输后接收发生错误，即</p>
+<p><span class="math display">\[ { {A}_{i}}=\left\{
+u_{1}^{N},y_{1}^{N}:W_{N}^{\left( i \right)}\left(
+y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}} \right)&lt;W_{N}^{\left( i
+\right)}\left( y_{1}^{N},u_{1}^{i-1}|{ {u}_{i}}\oplus 1 \right) \right\}
+\]</span></p>
+<p>则极化信道<span class="math inline">\(W_{N}^{\left( i
+\right)}\)</span>的错误概率为<span class="math inline">\(P\left( {
+{A}_{i}} \right)\)</span>。</p>
+<p><strong>那么事件<span class="math inline">\({
+{A}_{i}}\)</span>怎么理解？</strong></p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171027/192821484.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>举个例子，假设N=2。编码器输入是<span class="math inline">\(\left(
+\begin{matrix}  { {u}_{1}} \\  { {u}_{2}} \\ \end{matrix}
+\right)\)</span>，编码器输出是<span class="math inline">\(\left(
+\begin{matrix}  { {x}_{1}}={ {u}_{1}}\oplus { {u}_{2}} \\  { {x}_{2}}={
+{u}_{2}} \\ \end{matrix}
+\right)\)</span>。经过无线信道，假设接收端接收到的信号为<span
+class="math inline">\(y_{1}^{2}\)</span>。</p>
+<span id="more"></span>
+<p>对接收端来说，<span
+class="math inline">\(y_{1}^{2}\)</span>是已知量，而<span
+class="math inline">\({ {u}_{i}}\)</span>是未知量。转移概率<span
+class="math inline">\(W_{2}^{i}\left( y_{1}^{2}|{ {u}_{i}}
+\right)\)</span>表示通过序号为<span
+class="math inline">\(i\)</span>的极化信道<span
+class="math inline">\(W_{N}^{\left( i \right)}\)</span>，发送为<span
+class="math inline">\({ {u}_{i}}\)</span>接收为<span
+class="math inline">\(y_{1}^{2}\)</span>的概率。</p>
+<p><span class="math inline">\({ {u}_{i}}\)</span>和$ ( { {u}_{i}} )
+$这种表达形式使得这两个值正好是互斥的：</p>
+<ul>
+<li><span class="math inline">\({ {u}_{i}}=0\)</span>时，有$ {
+{u}_{i}}=1 $</li>
+<li><span class="math inline">\({ {u}_{i}}=1\)</span>时，有$ {
+{u}_{i}}=0 $</li>
+</ul>
+<p>二进制比特<span class="math inline">\({
+{u}_{i}}\)</span>只有两种取值，无论发送“0”或“1”，由于无线信道的影响，接收端都有可能得到相同的<span
+class="math inline">\(y_{1}^{2}\)</span>。那么到底是发送“0”使得接收为<span
+class="math inline">\(y_{1}^{2}\)</span>，还是发送“1”使得接收为<span
+class="math inline">\(y_{1}^{2}\)</span>？可以通过比较这两种情况的转移概率得到答案。</p>
+<p><strong>给定<span class="math inline">\({
+{u}_{1}}=0\)</span>的情况</strong></p>
+<p>比较$ W_{N}^{( i )}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )
+<span class="math inline">\(和\)</span> W</em>{N}^{( i )}(
+y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
+class="math inline">\(，也即比较\)</span> W</em>{2}^{( 1 )}( y_{1}^{2}|0
+) <span class="math inline">\(和\)</span> W_{2}^{( 1 )}( y_{1}^{2}|1 )
+<span class="math inline">\(。只有当\)</span> W_{2}^{( 1 )}( y_{1}^{2}|0
+)&gt;W_{2}^{( 1 )}( y_{1}^{2}|1 ) <span
+class="math inline">\(时，才是正确接收。左边的式子和**给定\)</span>{
+{u}_{1}}=0$相一致**。</p>
+<p><strong>给定<span class="math inline">\({
+{u}_{1}}=1\)</span>的情况</strong></p>
+<p>比较$ W_{N}^{( i )}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )
+<span class="math inline">\(和\)</span> W</em>{N}^{( i )}(
+y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
+class="math inline">\(，也即比较\)</span> W</em>{2}^{( 1 )}( y_{1}^{2}|1
+) <span class="math inline">\(和\)</span> W_{2}^{( 1 )}( y_{1}^{2}|0 )
+<span class="math inline">\(。只有当\)</span> W_{2}^{( 1 )}( y_{1}^{2}|1
+)&gt;W_{2}^{( 1 )}( y_{1}^{2}|0 ) <span
+class="math inline">\(时，才是正确接收。左边的式子和**给定\)</span>{
+{u}_{1}}=1$相一致**。</p>
+<p>这两种情况是等价的。即$ W_{N}^{( i )}(
+y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )&gt;W</em>{N}^{( i )}(
+y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
+class="math inline">\(时才是正确接收。反过来，当\)</span> W</em>{N}^{( i
+)}( y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} )&lt;W</em>{N}^{( i )}(
+y_{1}<sup>{N},u_{1}</sup>{i-1}|{ {u}<em>{i}} ) <span
+class="math inline">\(时意味着接收错误，这就是事件\)</span>{
+{A}</em>{i}}<span class="math inline">\(。事件\)</span>{
+{A}<em>{i}}<span class="math inline">\(发生的概率就是错误概率\)</span>P(
+{ {A}</em>{i}} )$。</p>
 ]]></content>
       <categories>
         <category>Polar Code</category>
@@ -880,30 +880,6 @@ PDCCH</a></p>
 ]]></content>
   </entry>
   <entry>
-    <title>更换评论系统</title>
-    <url>/2017/07/27/change-comment-system/</url>
-    <content><![CDATA[<p>本博客使用了第三方评论系统，网易云跟帖将在2017年8月1日关闭，也就是说云跟帖倒闭了。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170727/101036290.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>今天更换了评论系统，朋友们可以继续留言。但遗憾是，由于新的评论系统不支持数据导入，意味着从前所有的评论数据将丢失。</p>
-<p>评论系统对一个博客来说还是比较重要的，它给人们提供了交流的平台。在过去的几个月里，许多研究极化码的朋友在博客里参与讨论，我也从中获益良多。许多朋友也指出我的错误，我了解到以后也一一改正，使文章更完善。</p>
-<p>感谢所有曾经参与评论的朋友。</p>
-<hr />
-<p>2017年8月22日更新</p>
-<p>适用来必力评论系统一段时间，由于服务器在韩国，评论加载速度太慢，还是弃用了。切换到畅言评论系统，如果畅言不倒闭，今后就一直使用了。</p>
-]]></content>
-      <categories>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Blog</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>电磁超材料</title>
     <url>/2022/08/12/electromagnetic-metamaterials/</url>
     <content><![CDATA[<h2 id="电磁超材料的定义">电磁超材料的定义</h2>
@@ -985,6 +961,30 @@ role="doc-backlink">↩︎</a></p></li>
       </categories>
   </entry>
   <entry>
+    <title>更换评论系统</title>
+    <url>/2017/07/27/change-comment-system/</url>
+    <content><![CDATA[<p>本博客使用了第三方评论系统，网易云跟帖将在2017年8月1日关闭，也就是说云跟帖倒闭了。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170727/101036290.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>今天更换了评论系统，朋友们可以继续留言。但遗憾是，由于新的评论系统不支持数据导入，意味着从前所有的评论数据将丢失。</p>
+<p>评论系统对一个博客来说还是比较重要的，它给人们提供了交流的平台。在过去的几个月里，许多研究极化码的朋友在博客里参与讨论，我也从中获益良多。许多朋友也指出我的错误，我了解到以后也一一改正，使文章更完善。</p>
+<p>感谢所有曾经参与评论的朋友。</p>
+<hr />
+<p>2017年8月22日更新</p>
+<p>适用来必力评论系统一段时间，由于服务器在韩国，评论加载速度太慢，还是弃用了。切换到畅言评论系统，如果畅言不倒闭，今后就一直使用了。</p>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Blog</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>信息超材料</title>
     <url>/2022/08/13/information-metamaterials/</url>
     <content><![CDATA[<h2 id="信息超材料的概念">信息超材料的概念</h2>
@@ -1007,6 +1007,96 @@ id="信息超材料的应用无线通信系统">信息超材料的应用——�
 <h2 id="references">References</h2>
 <p>崔铁军, 吴浩天, and 刘硕. "信息超材料研究进展." 物理学报
 69.15(2020):13.</p>
+]]></content>
+      <categories>
+        <category>RIS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>超材料</title>
+    <url>/2022/08/11/metamaterials/</url>
+    <content><![CDATA[<h2 id="超材料的定义">超材料的定义</h2>
+<p>超材料（metamaterials） 是 21 世纪物理学领域出现的一个新的学术词汇<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>。拉丁语「meta-」可以表达「超出……、亚……、另类」等含义。
+在 2004
+年超材料尚未有一个严格的、权威的定义，但一般文献中给出的定义是具有天然材料所不具备的超常物理性质的人工复合结构或复合材料。</p>
+<p>「超材料」一词的出现与一类被称为「左手材料」或「左手物质」的材料系统息息相关，狭义的
+metamaterial 往往指的就是这类材料。左手材料（LHM，left-hand
+materials）的思想由前苏联人 Veselago 于 1968 年首次提出。</p>
+<p>左手材料具有许多独特的性质<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>。例如：</p>
+<blockquote>
+<p>在左手材料中传播的电磁波，其能量的传输方向与相位的传输方向相反。</p>
+<p>在正常材料中存在多普勒效应，而在左手材料中存在逆多普勒效应：由于相位的传输方向与能量的传输方向相反，当接收器向波源运动时所接收到的电磁波频率小于波源发出的电磁波频率。</p>
+</blockquote>
+<p>随着研究工作的深入，超材料的范围已经远远超出了左手材料的范围。</p>
+<p>2016
+年《电磁超材料术语》正式实施，成为全球第一份超材料领域的国家标准<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>。在《电磁超材料术语》中超材料（metamaterials）定义为一种特种复合材料或结构,
+通过对材料关键物理尺寸上进行有序结构设计,
+使其获得常规材料所不具备的超常物理性质<a href="#fn4"
+class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>。</p>
+<span id="more"></span>
+<h2 id="超材料的基本设计思路">超材料的基本设计思路</h2>
+<p>超材料的基本设计思路是：材料中所呈现的一些物理性质往往和材料结构中的<strong>关键物理尺度</strong>有关。一个最直观的例子是晶体。晶体是自然界中物质的有序结构的一个重要形式，它的有序主要存在于<strong>原子层次</strong>，正是由于在这个尺度上的有序性调制，使晶体材料形成了一些无定型态所不具备的物理特征。由此类比，在其它层次上的有序排列则可能获得一定程度的自然界中的材料所不具备的物理性质。因此，人们可以通过各种层次的有序结构实现对各种物理量的调制，从而获得自然界中在该层次上无序或无结构的材料所不具备的物理性质<a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>。</p>
+<h2 id="超材料具有-3-个重要特征">超材料具有 3 个重要特征</h2>
+<p>超材料
+1）具有特殊人工结构，2）具有超常的物理性质，3）性质往往不主要决定于构成材料的本征性质而取决于其中的人工结构<a
+href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a>。</p>
+<h2 id="超材料的分类">超材料的分类</h2>
+<p>依据超材料的应用领域，超材料基本上可以分为四大类：电磁超材料（electromagnetic
+metamaterials）、声超材料（acoustic metamaterials）、热超材料（thermal
+metamaterials）和机械超材料（mechanical metamaterials）<a href="#fn7"
+class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a><a
+href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a>。</p>
+<p><img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/image-20220813164700957.png" /></p>
+<h2 id="references">References</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
+"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
+2004(z1):4.</a><a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
+"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
+2004(z1):4.</a><a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a
+href="http://www.xinhuanet.com/politics/2021-04/19/c_1127344990.htm">中国持续推进超材料行业标准化工作
+健全标准体系</a><a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://sousepad.com/h-nd-495.html">GB_T
+32005-2015 电磁超材料术语</a><a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a
+href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
+"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
+2004(z1):4.</a><a href="#fnref5" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a
+href="https://www.doc88.com/p-6951355332333.html">梅中磊, 张黎, 崔铁军.
+电磁超材料研究进展. 科技导报, 2016, 34(18):13.</a><a href="#fnref6"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Fan, J. , et al. "A review of additive manufacturing of
+metamaterials and developing trends." Materials Today 25(2021).<a
+href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a
+href="https://www.163.com/dy/article/GCPMRSPQ0531549P.html">华科大综述：增材制造超材料及其发展趋势（一）</a><a
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 ]]></content>
       <categories>
         <category>RIS</category>
@@ -1174,96 +1264,6 @@ are used for rate matching。信道编码方案的进一步细节详见[4]。</p
         <tag>5G-NR</tag>
         <tag>3GPP</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>超材料</title>
-    <url>/2022/08/11/metamaterials/</url>
-    <content><![CDATA[<h2 id="超材料的定义">超材料的定义</h2>
-<p>超材料（metamaterials） 是 21 世纪物理学领域出现的一个新的学术词汇<a
-href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>。拉丁语「meta-」可以表达「超出……、亚……、另类」等含义。
-在 2004
-年超材料尚未有一个严格的、权威的定义，但一般文献中给出的定义是具有天然材料所不具备的超常物理性质的人工复合结构或复合材料。</p>
-<p>「超材料」一词的出现与一类被称为「左手材料」或「左手物质」的材料系统息息相关，狭义的
-metamaterial 往往指的就是这类材料。左手材料（LHM，left-hand
-materials）的思想由前苏联人 Veselago 于 1968 年首次提出。</p>
-<p>左手材料具有许多独特的性质<a href="#fn2" class="footnote-ref"
-id="fnref2" role="doc-noteref"><sup>2</sup></a>。例如：</p>
-<blockquote>
-<p>在左手材料中传播的电磁波，其能量的传输方向与相位的传输方向相反。</p>
-<p>在正常材料中存在多普勒效应，而在左手材料中存在逆多普勒效应：由于相位的传输方向与能量的传输方向相反，当接收器向波源运动时所接收到的电磁波频率小于波源发出的电磁波频率。</p>
-</blockquote>
-<p>随着研究工作的深入，超材料的范围已经远远超出了左手材料的范围。</p>
-<p>2016
-年《电磁超材料术语》正式实施，成为全球第一份超材料领域的国家标准<a
-href="#fn3" class="footnote-ref" id="fnref3"
-role="doc-noteref"><sup>3</sup></a>。在《电磁超材料术语》中超材料（metamaterials）定义为一种特种复合材料或结构,
-通过对材料关键物理尺寸上进行有序结构设计,
-使其获得常规材料所不具备的超常物理性质<a href="#fn4"
-class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a>。</p>
-<span id="more"></span>
-<h2 id="超材料的基本设计思路">超材料的基本设计思路</h2>
-<p>超材料的基本设计思路是：材料中所呈现的一些物理性质往往和材料结构中的<strong>关键物理尺度</strong>有关。一个最直观的例子是晶体。晶体是自然界中物质的有序结构的一个重要形式，它的有序主要存在于<strong>原子层次</strong>，正是由于在这个尺度上的有序性调制，使晶体材料形成了一些无定型态所不具备的物理特征。由此类比，在其它层次上的有序排列则可能获得一定程度的自然界中的材料所不具备的物理性质。因此，人们可以通过各种层次的有序结构实现对各种物理量的调制，从而获得自然界中在该层次上无序或无结构的材料所不具备的物理性质<a
-href="#fn5" class="footnote-ref" id="fnref5"
-role="doc-noteref"><sup>5</sup></a>。</p>
-<h2 id="超材料具有-3-个重要特征">超材料具有 3 个重要特征</h2>
-<p>超材料
-1）具有特殊人工结构，2）具有超常的物理性质，3）性质往往不主要决定于构成材料的本征性质而取决于其中的人工结构<a
-href="#fn6" class="footnote-ref" id="fnref6"
-role="doc-noteref"><sup>6</sup></a>。</p>
-<h2 id="超材料的分类">超材料的分类</h2>
-<p>依据超材料的应用领域，超材料基本上可以分为四大类：电磁超材料（electromagnetic
-metamaterials）、声超材料（acoustic metamaterials）、热超材料（thermal
-metamaterials）和机械超材料（mechanical metamaterials）<a href="#fn7"
-class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a><a
-href="#fn8" class="footnote-ref" id="fnref8"
-role="doc-noteref"><sup>8</sup></a>。</p>
-<p><img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20220814/image-20220813164700957.png" /></p>
-<h2 id="references">References</h2>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p><a
-href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
-"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
-2004(z1):4.</a><a href="#fnref1" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a
-href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
-"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
-2004(z1):4.</a><a href="#fnref2" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a
-href="http://www.xinhuanet.com/politics/2021-04/19/c_1127344990.htm">中国持续推进超材料行业标准化工作
-健全标准体系</a><a href="#fnref3" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a href="https://sousepad.com/h-nd-495.html">GB_T
-32005-2015 电磁超材料术语</a><a href="#fnref4" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><a
-href="https://max.book118.com/html/2015/0722/21648710.shtm">周济.
-"超材料(metamaterials)":设计思想、材料体系与应用. 功能材料,
-2004(z1):4.</a><a href="#fnref5" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p><a
-href="https://www.doc88.com/p-6951355332333.html">梅中磊, 张黎, 崔铁军.
-电磁超材料研究进展. 科技导报, 2016, 34(18):13.</a><a href="#fnref6"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Fan, J. , et al. "A review of additive manufacturing of
-metamaterials and developing trends." Materials Today 25(2021).<a
-href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p><a
-href="https://www.163.com/dy/article/GCPMRSPQ0531549P.html">华科大综述：增材制造超材料及其发展趋势（一）</a><a
-href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>RIS</category>
-      </categories>
   </entry>
   <entry>
     <title>5G-NR物理信道与调制-下行链路v1.0.0</title>
@@ -2798,420 +2798,6 @@ NR物理层与LTE有多大的不同，又有多大的相似。</p>
       </tags>
   </entry>
   <entry>
-    <title>5G-NR物理层过程（控制）v1.0.0</title>
-    <url>/2017/09/11/nr-v100-l1-procedure-control/</url>
-    <content><![CDATA[<h1 id="同步过程">同步过程</h1>
-<h2 id="小区搜索">小区搜索</h2>
-<p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
-<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS
-38.211中定义。</p>
-<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS/PBCH块。</p>
-<p>对于半帧中的SS/PBCH块，候选SS/PBCH块的OFDM
-符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
-<ul>
-<li>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
-14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1, 2, 3。</li>
-<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20} +
-28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1。</li>
-<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
-14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1, 2, 3。</li>
-<li>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20}
-+ 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12,
-13, 15, 16, 17, 18。</li>
-<li>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{8, 12, 16, 20,
-32, 36, 40, 44} + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7,
-8。</li>
-</ul>
-<p>一个半帧中的候选SS/PBCH块在时域上以升序从0到$ L-1 ]<span
-class="math inline">\(进行编号。对于\)</span> L=4 <span
-class="math inline">\(或\)</span> L&gt;4 <span
-class="math inline">\(，UE应根据与每个半帧内SS/PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS/PBCH块索引的2或3个LSB比特。对于\)</span>
-L=64
-$，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS/PBCH块索引的3
-个MSB比特。</p>
-<span id="more"></span>
-<blockquote>
-<p>注：DM-RS序列索引在TS 38.211中定义。</p>
-</blockquote>
-<p>UE可通过参数[<em>SSB-transmitted-SIB1</em>]被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。UE也可通过高层参数[<em>SSB-transmitted</em>]在每个服务小区被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。[通过[<em>SSB-transmitted</em>]配置优先于通过[<em>SSB-transmitted-SIB1</em>]配置。]</p>
-<blockquote>
-<p>注：May be removed and captured in 38.211。</p>
-</blockquote>
-<p>对于每个服务小区中SS/PBCH块的接收，UE可以在每个服务小区通过高层参数[<em>SSB-timing</em>]每半帧周期性地被配置。如果对于SS/PBCH块的接收，UE没有每半帧被周期性配置，则UE应假设以半帧为周期。UE应假设在服务小区中，对于所有SS/PBCH块，周期是相同的。</p>
-<p>对于初始小区的选择，UE可以假设SS/PBCH块半帧出现的周期为2帧。</p>
-<h2 id="传输定时调整">传输定时调整</h2>
-<h2 id="timing-for-secondary-cell-activation-deactivation">Timing for
-secondary cell activation / deactivation</h2>
-<h1 id="无线链路监测">无线链路监测</h1>
-<p><br/>为了向高层指示失步/同时状态，UE应监测主小区的下行无线链路质量。</p>
-<p>此处暂省略300+字，具体内容详见原文档。</p>
-<h1 id="链路重配置过程">[链路重配置过程]</h1>
-<p><br/>在一个服务小区内为了[RSRP x
-或SINR]测量，UE可以配置一组CSI-RS资源或一组SS/PBCH块索引。UE应假设SCI-RS采用非零传输功率。每个CSI-RS资源参数通过高层信令配置，这些参数包括：</p>
-<ul>
-<li>[资源配置]</li>
-<li>[周期]</li>
-<li>[天线端口]</li>
-<li>[传输功率]</li>
-<li>[伪随机序列生成参数]</li>
-<li>[QCL参数]</li>
-<li>[…]</li>
-</ul>
-<blockquote>
-<p>[Editor’s note: For reconfiguration request, there are also no
-existing agreements to describe preamble retransmissions, or the window
-for the UE to receive a response, or the configuration of the CORESET
-where the PDCCH scheduling the response is transmitted, etc.]</p>
-</blockquote>
-<h1 id="上行功率控制">上行功率控制</h1>
-<h2 id="物理上行共享信道">物理上行共享信道</h2>
-<h3 id="ue-behaviour">UE behaviour</h3>
-<h3 id="power-headroom">Power headroom</h3>
-<h2 id="物理上行控制信道">物理上行控制信道</h2>
-<h3 id="ue-behaviour-1">UE behaviour</h3>
-<h2 id="探测参考信号">探测参考信号</h2>
-<h2 id="物理随机接入信道">物理随机接入信道</h2>
-<p><br/>在时隙$ i <span
-class="math inline">\(内，对于服务小区\)</span>c$，UE通过下式确定PRACH传输功率：</p>
-<p><span class="math display">\[ { {P}_{\text{PRACH,c}}}(i)=\min {
-{\left\{ { {P}_{\text{CMAX},c}}(i),\ { {P}_{\text{PRACH,target}}}+P{
-{L}_{c}} \right\}}^{ {}}} \]</span> dBm</p>
-<p>其中$ { {P}<em>{}}(i) <span class="math inline">\(是在TS
-38.133中定义的服务小区\)</span>c<span
-class="math inline">\(中在时隙\)</span>i<span
-class="math inline">\(的UE传输功率，\)</span> { {P}</em>{}} <span
-class="math inline">\(由高层参数[*preambleReceivedTargetPower*]提供，\)</span>
-P{ {L}<em>{c}} <span
-class="math inline">\(是UE计算对于服务小区\)</span>c<span
-class="math inline">\(的路径损耗，单位为dB。为了确定\)</span> {
-{P}</em>{}}(i) <span class="math inline">\(，UE计算路径损耗\)</span> P{
-{L}<em>{c}} <span
-class="math inline">\(。路径损耗根据SS/PBCH块得到，即\)</span> P{
-{L}</em>{c}} $ = <em>SS/PBCHBlockPower</em> – higher layer filtered
-RSRP，其中<em>SS/PBCHBlockPower</em>由[<em>SystemInformationBlockType1</em>]提供，RSRP在TS
-38.215中定义，高层滤波器配置在TS 38.331中定义。</p>
-<p>如果一个随机接入响应窗口内，如5.2小节中描述，UE不接收随机接入响应，随机接入响应包含了一个与UE发送的前导序列对应的前导ID，UE将为随后的PRACH传输确定传输功率，如果有的话。[TS
-38.321]</p>
-<h2 id="载波聚合">载波聚合</h2>
-<h2 id="双连接">双连接</h2>
-<h1 id="随机接入过程">随机接入过程</h1>
-<p><br/>在进行初始化的物理随机接入过程之前，L1应该从高层接收一组SS/PBCH块索引，并且应向高层提供一组对应的RSRP测量。</p>
-<p>在进行初始化的物理随机接入过程之前，L1应该从高层接收以下信息：</p>
-<ul>
-<li>PRACH传输参数（PRACH前导格式，用于PRACH传输的时域和频域资源）</li>
-<li>用于决定小区中根序列及其在前导序列集合中的循环移位值的参数（逻辑根序列表格索引、循环移位$
-N_{}^{ {}} $、集合类型（受限集合和非受限集合））</li>
-</ul>
-<p>从物理层来看，物理层随机接入过程包括PRACH中随机接入前导（Msg1）的发送，PDSCH（Msg2）中的随机接入响应（RAR），PUSCH中的Msg3和PDSCH中的Msg4。</p>
-<blockquote>
-<p>批注：Tentatively, Msg3 and Msg4 will be described as part of the RA
-procedure due to various differences from PUSCH/PDSCH after RRC
-connection.</p>
-</blockquote>
-<h2 id="随机接入前导">随机接入前导</h2>
-<p><br/>L1过程通过PRACH传输请求被触发，PRACH传输由高层来配置。高层对PRACH传输的配置包括：</p>
-<ul>
-<li>对于PRACH传输，高层参数[<em>PRACH-config</em>]提供的配置</li>
-<li>对于PRACH传输，高层参数[<em>PRACH-cell-idx</em>]提供的服务小区索引</li>
-<li>前导索引，PRACH格式，$ { {P}_{}} $，相应的RA-RNTI，PRACH资源</li>
-<li>[对于PRACH传输的重复次数，也作为请求的一部分由高层指示]</li>
-</ul>
-<p>A PRACH format is selected from the preamble sequence set for the
-corresponding preamble sequence length using the preamble index.</p>
-<p>在所指示的PRACH资源上，前导使用所选择的PRACH格式发送，传输功率为4.4节描述的$
-{ {P}_{}} $。</p>
-<h3 id="定时">定时</h3>
-<h2 id="随机接入响应">随机接入响应</h2>
-<p><br/>UE通过高层[TS
-38.321]在一个约束窗内，采用所指示的RA-RNTI尝试检测PDCCH。窗口开始于最早的CORESET的符号。对于Type1-PDCCH公共搜索空间，UE配置了CORESET。Type1-PDCCH公共搜索空间在7.1节进行了定义，在前导序列传输的[X]个符号之后。随机接入响应窗口的长度由高层参数[<em>rar-windowlength</em>]提供。</p>
-<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，UE将传输块传递到高层。高层分析传输块并向物理层指示上行授权。如果在时间窗内，UE不检测PDCCH或相应的DL-SCH传输块，则UE过程如[TS
-38.321]中的描述。</p>
-<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，高层指示[XX]比特的上行授权到物理层。这一过程被称为物理层的随机接入响应（RAR）。UE应接收PDCCH和PDSCH。作为包含[<em>SystemInformationBlockType1</em>]的PDSCH的接收，PDSCH包含了具有相同子载波间隔和相同CP的DL-SCH传输块。[XX]比特的内容，开始于MSB，结束于LSB：</p>
-<p>[…]</p>
-<blockquote>
-<p>批注：To be completed as the contents of the UL grant in the RAR are
-determined.</p>
-</blockquote>
-<h2 id="msg3-pusch">Msg3 PUSCH</h2>
-<p><br/>对于Msg3
-PUSCH传输，高层参数[<em>msg3-tp</em>]指示UE是否应用变换预编码（transform
-precoding），变换预编在[TS 38.211]中描述。</p>
-<p>Msg3 PUSCH传输的子载波间隔由高层参数[<em>msg3-scs</em>]提供。</p>
-<p>UE应在相同的服务小区内发送PRACH和Msg3 PUSCH。</p>
-<h2 id="msg4-pdsch">Msg4 PDSCH</h2>
-<p><br/>Msg4 PDSCH传输的子载波间隔与PDSCH相同提供随机接入响应。</p>
-<h1 id="ue-procedure-for-reporting-control-information">UE procedure for
-reporting control information</h1>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/095958597.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h2 id="ue-procedure-for-harq-ack-codebook-determination">UE procedure
-for HARQ-ACK codebook determination</h2>
-<h3 id="cbg-based-harq-ack-codebook-determination">CBG-based HARQ-ACK
-codebook determination</h3>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100046252.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[HARQ-ACK information bits] The actual number of bits to report
-can be different – e.g. with bundling.</p>
-</blockquote>
-<blockquote>
-<p>批注：[initial] For retransmissions, decisions are needed for
-dynamic/semi-static HARQ-ACK codebook determination and for possible DCI
-indications.</p>
-</blockquote>
-<blockquote>
-<p>批注：[a] No decision currently exists for 2 TBs (e.g. same number
-for both TBs, separately configured number per TB).</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100136656.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[the UE determines whether or not a CBG is retransmitted based
-on a corresponding value of the CBGTI field] Placeholder text – will be
-modified once the specifics for the operation of the CBGTI field are
-decided.</p>
-</blockquote>
-<blockquote>
-<p>批注：[<em>cc</em>] LTE terminology for indicating semi-static
-codebook (can be modified once RRC terminology is finalized). Statement
-in brackets will be removed if only semi-static codebook determination
-is supported for CBG-based HARQ-ACK.</p>
-</blockquote>
-<h2 id="ue-procedure-for-reporting-harq-ack">UE procedure for reporting
-HARQ-ACK</h2>
-<h3 id="harq-ack-reporting-in-physical-uplink-shared-channel">HARQ-ACK
-reporting in physical uplink shared channel</h3>
-<h3 id="harq-ack-reporting-in-physical-uplink-control-channel">HARQ-ACK
-reporting in physical uplink control channel</h3>
-<p><br/>如果UE没有配置为PUSCH和PUCCH同时传输，并且UE不传输PUSCH，且不传输CSI或positive/negative
-SR，则UE应传输HARQ-ACK</p>
-<ul>
-<li>on PUCCH format 0 if
-<ul>
-<li>the transmission is over 1 symbol or 2 symbols,</li>
-<li>the number of HARQ-ACK information bits is 1 or 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 1 if
-<ul>
-<li>the transmission is over 4 or more symbols,</li>
-<li>the number of HARQ-ACK information bits is 1 or 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 2 if
-<ul>
-<li>the transmission is over 1 symbol or 2 symbols,</li>
-<li>the number of HARQ-ACK information bits is more than 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 3 if
-<ul>
-<li>the transmission is over 4 or more symbols,</li>
-<li>the number of HARQ-ACK information bits is more than [2]</li>
-</ul></li>
-</ul>
-<p>UE在一个时隙的$ N_{}^{,} <span
-class="math inline">\(个符号上发送一个或多个PUCCH。对于PUCCH传输时隙的参考，如果UE在PDCCH上检测DCI格式，其中PDCCH通过一定数量的符号调度PDSCH的接收，这些符号的最后一个符号在时隙\)</span>n<span
-class="math inline">\(内，则UE应在PUCCH传输中提供相应的HARQ-ACK信息，PUCCH在时隙\)</span>
-n+k <span
-class="math inline">\(上传输，其中\)</span>k$是时隙数，且通过DCI格式中的[DL-data-DL-acknowledgement]字段来指示。[DL-data-DL-acknowledgement]字段的值映射到时隙数的值，见Table
-9.1.2-1中的定义。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100506146.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：Dynamic indication of symbols within a slot or joint indication
-of time/frequency/code PUCCH resources is not precluded pending specific
-RAN1 agreements.</p>
-</blockquote>
-<h4 id="harq-ack-procedures-for-one-configured-serving-cell">HARQ-ACK
-procedures for one configured serving cell</h4>
-<h4
-id="harq-ack-procedures-for-more-than-one-configured-serving-cell">HARQ-ACK
-procedures for more than one configured serving cell</h4>
-<h2 id="ue-procedure-for-reporting-sr">UE procedure for reporting
-SR</h2>
-<blockquote>
-<p>批注：There are currently no RAN1 decisions on SR transmission
-structure and possible multiplexing with HARQ-ACK/CSI</p>
-</blockquote>
-<h2 id="ue-procedure-for-reporting-multiple-uci-types">UE procedure for
-reporting multiple UCI types</h2>
-<h2 id="uci-repetition-procedure">UCI repetition procedure</h2>
-<h1 id="ue-procedure-for-receiving-control-information">UE procedure for
-receiving control information</h1>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100635180.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>UE应在一个或多个激活的服务小区或BWPs上，根据相应的搜索空间，在一个或多个CORESET内监听一组PDCCH候选集，其中搜索空间是根据所监听的DCI格式译码每个PDCCH候选。</p>
-<blockquote>
-<p>批注：[PDCCH候选集] Can add more details later, such as per activated
-cell, etc., based on respective agreements.</p>
-</blockquote>
-<blockquote>
-<p>批注：[DCI formats] Can remain applicable for potentially mapping
-multiple DCI formats to a same size (as for LTE DCI format 0 and DCI
-format 1A).</p>
-</blockquote>
-<h2
-id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-common-search-space">UE
-procedure for determining physical downlink control channel assignment
-in common search space</h2>
-<p><br/>UE应在下列一个或多个搜索空间内监听PDCCH候选：</p>
-<ul>
-<li>a Type0-PDCCH common search space for a DCI format scrambled by a
-[SI-RNTI] on a primary cell</li>
-<li>a Type1-PDCCH common search space for a DCI format scrambled by a
-[RA-RNTI] on a primary cell</li>
-<li>a Type2-PDCCH common search space for a DCI format scrambled by a
-[INT-RNTI]</li>
-</ul>
-<p>[UE应在没有载波指示域的情况下监听PDCCH候选。]</p>
-<p>如果UE通过高层配置为以[INT-RNTI]加扰的CRC译码DCI格式，UE也在[每个服务小区]配置[一组]PRBs和一组OFDM符号。如果UE以[INT-RNTI]加扰的CRC检测DCI格式，UE可以假设不在这组PRBs和OFDM符号中发送。UE通过高层参数[<em>int-PRBs-unit</em>]配置PRBs的指示粒度。UE通过高层参数[<em>int-symbols-unit</em>]配置OFDM符号的指示粒度。UE通过高层参数[<em>Num-PDCCH-cand</em>]来配置对于DCI格式的每个CCE聚合等级下的若干PDCCH候选，其中DCI格式使用[INT-RNTI]加扰的CRC。</p>
-<blockquote>
-<p>批注：[[INT-RNTI]加扰的CRC] Eventually, this DCI format will have a
-name and will be used to remove this part.</p>
-</blockquote>
-<h2
-id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-ue-specific-search-space">UE
-procedure for determining physical downlink control channel assignment
-in UE-specific search space</h2>
-<p><br/>对于每个服务小区，高层信令给UE配置$ Q $个CORESETs。对于CORESET
-<span class="math inline">\(q\)</span>，$ 0q&lt;Q $，配置包括：</p>
-<ul>
-<li>高层参数[<em>CORESET-start-symb</em>]提供第1个OFDM符号</li>
-<li>高层参数[<em>CORESET-time-duration</em>]提供若干连续的OFDM符号</li>
-<li>高层参数[<em>CORESET-freq-dom</em>]提供一组RBs集合</li>
-<li>高层参数[<em>CORESET-trans-type</em>]提供CCE-to-REG映射</li>
-<li>对于交织的CCE-to-REG映射，高层参数[<em>CORESET-REG-bundle-size</em>]提供REG
-bundle大小</li>
-<li>[高层参数[<em>CORESET-QCL-ConfigId</em>]提供天线端口quasi-collocation]</li>
-</ul>
-<p>对于非交织的CCE-to-REG映射，REG bundle大小等于6。UE可以假设一个REG
-bundle内的所有REGs上传输的PDCCH应用相同的预编码。</p>
-<blockquote>
-<p>批注：[对于非交织的CCE-to-REG映射，REG bundle大小等于6。] Can be
-updated if additional REG bundle sizes are defined for non-interleaved
-transmissions.</p>
-</blockquote>
-<p>每个CORESET包含一组从0到$ { {N}<em>{,q}}-1 <span
-class="math inline">\(编号的CCEs，其中\)</span> { {N}</em>{,q}}
-$是CORESET <span class="math inline">\(q\)</span>中的CCEs个数。</p>
-<p>UE所监听的PDCCH候选集定义在PDCCH UE特定搜索空间。PDCCH
-UE特定搜索空间在聚合等级$ L{ 1, 2, 4, 8 } <span
-class="math inline">\(上定义为，对于CCE聚合等级\)</span>L$的一组PDCCH候选。对于一个DCI格式，UE在每个服务小区内通过高层参数[<em>Num-PDCCH-cand</em>]配置每个CCE聚合等级
-下的一组PDCCH候选。</p>
-<blockquote>
-<p>批注：[UE特定搜索空间] Cross-carrier scheduling, including use of
-different numerologies, will be captured through the search space.</p>
-</blockquote>
-<p>对于连续接收（non-DRX）模式操作，UE在根据$ { {W}<em>{ q}}
-$个符号周期，监听CORESET <span
-class="math inline">\(q\)</span>中的PDCCH候选，其中对于CORESET <span
-class="math inline">\(q\)</span>的$ { {W}</em>{ q}}
-$由高层参数[<em>CORESET-monitor-period</em>]配置。</p>
-<blockquote>
-<p>批注：[CORESET-monitor-period] Need to determine how, based on
-configured periodicity, UE monitors PDCCH and whether it is a CORESET or
-a search space parameter. Allowed periodicity values (symbol, slot,
-etc.) are TBD (start from 1 symbol) and are to be included in RAN2
-specifications (likely not visible in 38.213).</p>
-</blockquote>
-<p>服务小区中的UE，在UE特定的搜索空间监听PDCCH的候选，如果UE没有配置载波指示域，UE应在没有载波指示域的条件下监听PDCCH候选。服务小区中的UE，在UE
-特定的搜索空间监听PDCCH的候选，如果UE配置了载波指示域，则UE应使用载波指示域监听PDCCH候选。</p>
-<p>如果UE在另一个服务小区上被配置使用对应于secondary
-cell的载波指示来监听PDCCH候选，UE不希望在secondary
-cell上监听PDCCH候选。[对于服务小区中的UE监听PDCCH候选，UE应至少在同一个服务小区内监听PDCCH候选。]</p>
-<h1 id="bandwidth-part-operation">Bandwidth part operation</h1>
-<blockquote>
-<p>批注：It will be attempted, as much as possible, to capture all BWP
-operation aspects in this Subclause while referring to other Subclauses.
-Potential overlaps will be resolved as the specifications progress.</p>
-</blockquote>
-<blockquote>
-<p>批注：Text is subject to revisions as descriptions in 38.211 and
-38.213 are aligned.</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101231694.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[BWP] Regarding the CSS, he agreement for its configuration is
-ambiguous. Which CSS configuration is it (e.g. is it for SIB scheduling,
-for GC-PDCCH, … )? Maybe multiple CSS configurations are applicable as
-in Subclause 10.1? Reference to primary cell in the agreement points to
-SIB scheduling but clarification is needed for what the CSS intends to
-do, whether the respective BWP is same as the BWP from initial access,
-….</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101316284.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[transmissions] Activation/deactivation by DCI requires further
-details (e.g. it is FFS whether it is a DCI scheduling PDSCH/PUSCH in a
-configured BWP ot a separate DCI). Deactivation by a timer also requires
-further details (e.g. no separate specifications if it is the DRX
-timer). A separate timer may be described in RRC specifications as for
-the DRX timer.</p>
-</blockquote>
-<h1
-id="configurations-and-assumptions-independent-of-physical-channels-or-signals">Configurations
-and assumptions independent of physical channels or signals</h1>
-<blockquote>
-<p>批注：[signals] To capture reserved resources, potential LTE-NR
-coexistence aspects, etc. For LTE-NR DC with single UL Tx, corresponding
-agreement regarding configuration of DL-reference UL/DL configuration
-affects only LTE operation, is suitable for LTE specifications, and is
-not captured (unless it is extended to NR-NR DC).</p>
-</blockquote>
-<h1 id="相关链接">相关链接</h1>
-<p><br/><a
-href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
-<a
-href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
-<a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
-<a
-href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a></p>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>2017-09</tag>
-        <tag>5G-NR</tag>
-        <tag>3GPP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>5G-NR复用与信道编码v1.0.0</title>
     <url>/2017/09/10/nr-v100-l1-multiplexing-coding/</url>
     <content><![CDATA[<blockquote>
@@ -3839,6 +3425,527 @@ href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理�
 href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
 <a
 href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+<a
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>2017-09</tag>
+        <tag>5G-NR</tag>
+        <tag>3GPP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>5G-NR物理层过程（控制）v1.0.0</title>
+    <url>/2017/09/11/nr-v100-l1-procedure-control/</url>
+    <content><![CDATA[<h1 id="同步过程">同步过程</h1>
+<h2 id="小区搜索">小区搜索</h2>
+<p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
+<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS
+38.211中定义。</p>
+<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS/PBCH块。</p>
+<p>对于半帧中的SS/PBCH块，候选SS/PBCH块的OFDM
+符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
+<ul>
+<li>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20} +
+28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20}
++ 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12,
+13, 15, 16, 17, 18。</li>
+<li>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{8, 12, 16, 20,
+32, 36, 40, 44} + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7,
+8。</li>
+</ul>
+<p>一个半帧中的候选SS/PBCH块在时域上以升序从0到$ L-1 ]<span
+class="math inline">\(进行编号。对于\)</span> L=4 <span
+class="math inline">\(或\)</span> L&gt;4 <span
+class="math inline">\(，UE应根据与每个半帧内SS/PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS/PBCH块索引的2或3个LSB比特。对于\)</span>
+L=64
+$，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS/PBCH块索引的3
+个MSB比特。</p>
+<span id="more"></span>
+<blockquote>
+<p>注：DM-RS序列索引在TS 38.211中定义。</p>
+</blockquote>
+<p>UE可通过参数[<em>SSB-transmitted-SIB1</em>]被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。UE也可通过高层参数[<em>SSB-transmitted</em>]在每个服务小区被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。[通过[<em>SSB-transmitted</em>]配置优先于通过[<em>SSB-transmitted-SIB1</em>]配置。]</p>
+<blockquote>
+<p>注：May be removed and captured in 38.211。</p>
+</blockquote>
+<p>对于每个服务小区中SS/PBCH块的接收，UE可以在每个服务小区通过高层参数[<em>SSB-timing</em>]每半帧周期性地被配置。如果对于SS/PBCH块的接收，UE没有每半帧被周期性配置，则UE应假设以半帧为周期。UE应假设在服务小区中，对于所有SS/PBCH块，周期是相同的。</p>
+<p>对于初始小区的选择，UE可以假设SS/PBCH块半帧出现的周期为2帧。</p>
+<h2 id="传输定时调整">传输定时调整</h2>
+<h2 id="timing-for-secondary-cell-activation-deactivation">Timing for
+secondary cell activation / deactivation</h2>
+<h1 id="无线链路监测">无线链路监测</h1>
+<p><br/>为了向高层指示失步/同时状态，UE应监测主小区的下行无线链路质量。</p>
+<p>此处暂省略300+字，具体内容详见原文档。</p>
+<h1 id="链路重配置过程">[链路重配置过程]</h1>
+<p><br/>在一个服务小区内为了[RSRP x
+或SINR]测量，UE可以配置一组CSI-RS资源或一组SS/PBCH块索引。UE应假设SCI-RS采用非零传输功率。每个CSI-RS资源参数通过高层信令配置，这些参数包括：</p>
+<ul>
+<li>[资源配置]</li>
+<li>[周期]</li>
+<li>[天线端口]</li>
+<li>[传输功率]</li>
+<li>[伪随机序列生成参数]</li>
+<li>[QCL参数]</li>
+<li>[…]</li>
+</ul>
+<blockquote>
+<p>[Editor’s note: For reconfiguration request, there are also no
+existing agreements to describe preamble retransmissions, or the window
+for the UE to receive a response, or the configuration of the CORESET
+where the PDCCH scheduling the response is transmitted, etc.]</p>
+</blockquote>
+<h1 id="上行功率控制">上行功率控制</h1>
+<h2 id="物理上行共享信道">物理上行共享信道</h2>
+<h3 id="ue-behaviour">UE behaviour</h3>
+<h3 id="power-headroom">Power headroom</h3>
+<h2 id="物理上行控制信道">物理上行控制信道</h2>
+<h3 id="ue-behaviour-1">UE behaviour</h3>
+<h2 id="探测参考信号">探测参考信号</h2>
+<h2 id="物理随机接入信道">物理随机接入信道</h2>
+<p><br/>在时隙$ i <span
+class="math inline">\(内，对于服务小区\)</span>c$，UE通过下式确定PRACH传输功率：</p>
+<p><span class="math display">\[ { {P}_{\text{PRACH,c}}}(i)=\min {
+{\left\{ { {P}_{\text{CMAX},c}}(i),\ { {P}_{\text{PRACH,target}}}+P{
+{L}_{c}} \right\}}^{ {}}} \]</span> dBm</p>
+<p>其中$ { {P}<em>{}}(i) <span class="math inline">\(是在TS
+38.133中定义的服务小区\)</span>c<span
+class="math inline">\(中在时隙\)</span>i<span
+class="math inline">\(的UE传输功率，\)</span> { {P}</em>{}} <span
+class="math inline">\(由高层参数[*preambleReceivedTargetPower*]提供，\)</span>
+P{ {L}<em>{c}} <span
+class="math inline">\(是UE计算对于服务小区\)</span>c<span
+class="math inline">\(的路径损耗，单位为dB。为了确定\)</span> {
+{P}</em>{}}(i) <span class="math inline">\(，UE计算路径损耗\)</span> P{
+{L}<em>{c}} <span
+class="math inline">\(。路径损耗根据SS/PBCH块得到，即\)</span> P{
+{L}</em>{c}} $ = <em>SS/PBCHBlockPower</em> – higher layer filtered
+RSRP，其中<em>SS/PBCHBlockPower</em>由[<em>SystemInformationBlockType1</em>]提供，RSRP在TS
+38.215中定义，高层滤波器配置在TS 38.331中定义。</p>
+<p>如果一个随机接入响应窗口内，如5.2小节中描述，UE不接收随机接入响应，随机接入响应包含了一个与UE发送的前导序列对应的前导ID，UE将为随后的PRACH传输确定传输功率，如果有的话。[TS
+38.321]</p>
+<h2 id="载波聚合">载波聚合</h2>
+<h2 id="双连接">双连接</h2>
+<h1 id="随机接入过程">随机接入过程</h1>
+<p><br/>在进行初始化的物理随机接入过程之前，L1应该从高层接收一组SS/PBCH块索引，并且应向高层提供一组对应的RSRP测量。</p>
+<p>在进行初始化的物理随机接入过程之前，L1应该从高层接收以下信息：</p>
+<ul>
+<li>PRACH传输参数（PRACH前导格式，用于PRACH传输的时域和频域资源）</li>
+<li>用于决定小区中根序列及其在前导序列集合中的循环移位值的参数（逻辑根序列表格索引、循环移位$
+N_{}^{ {}} $、集合类型（受限集合和非受限集合））</li>
+</ul>
+<p>从物理层来看，物理层随机接入过程包括PRACH中随机接入前导（Msg1）的发送，PDSCH（Msg2）中的随机接入响应（RAR），PUSCH中的Msg3和PDSCH中的Msg4。</p>
+<blockquote>
+<p>批注：Tentatively, Msg3 and Msg4 will be described as part of the RA
+procedure due to various differences from PUSCH/PDSCH after RRC
+connection.</p>
+</blockquote>
+<h2 id="随机接入前导">随机接入前导</h2>
+<p><br/>L1过程通过PRACH传输请求被触发，PRACH传输由高层来配置。高层对PRACH传输的配置包括：</p>
+<ul>
+<li>对于PRACH传输，高层参数[<em>PRACH-config</em>]提供的配置</li>
+<li>对于PRACH传输，高层参数[<em>PRACH-cell-idx</em>]提供的服务小区索引</li>
+<li>前导索引，PRACH格式，$ { {P}_{}} $，相应的RA-RNTI，PRACH资源</li>
+<li>[对于PRACH传输的重复次数，也作为请求的一部分由高层指示]</li>
+</ul>
+<p>A PRACH format is selected from the preamble sequence set for the
+corresponding preamble sequence length using the preamble index.</p>
+<p>在所指示的PRACH资源上，前导使用所选择的PRACH格式发送，传输功率为4.4节描述的$
+{ {P}_{}} $。</p>
+<h3 id="定时">定时</h3>
+<h2 id="随机接入响应">随机接入响应</h2>
+<p><br/>UE通过高层[TS
+38.321]在一个约束窗内，采用所指示的RA-RNTI尝试检测PDCCH。窗口开始于最早的CORESET的符号。对于Type1-PDCCH公共搜索空间，UE配置了CORESET。Type1-PDCCH公共搜索空间在7.1节进行了定义，在前导序列传输的[X]个符号之后。随机接入响应窗口的长度由高层参数[<em>rar-windowlength</em>]提供。</p>
+<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，UE将传输块传递到高层。高层分析传输块并向物理层指示上行授权。如果在时间窗内，UE不检测PDCCH或相应的DL-SCH传输块，则UE过程如[TS
+38.321]中的描述。</p>
+<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，高层指示[XX]比特的上行授权到物理层。这一过程被称为物理层的随机接入响应（RAR）。UE应接收PDCCH和PDSCH。作为包含[<em>SystemInformationBlockType1</em>]的PDSCH的接收，PDSCH包含了具有相同子载波间隔和相同CP的DL-SCH传输块。[XX]比特的内容，开始于MSB，结束于LSB：</p>
+<p>[…]</p>
+<blockquote>
+<p>批注：To be completed as the contents of the UL grant in the RAR are
+determined.</p>
+</blockquote>
+<h2 id="msg3-pusch">Msg3 PUSCH</h2>
+<p><br/>对于Msg3
+PUSCH传输，高层参数[<em>msg3-tp</em>]指示UE是否应用变换预编码（transform
+precoding），变换预编在[TS 38.211]中描述。</p>
+<p>Msg3 PUSCH传输的子载波间隔由高层参数[<em>msg3-scs</em>]提供。</p>
+<p>UE应在相同的服务小区内发送PRACH和Msg3 PUSCH。</p>
+<h2 id="msg4-pdsch">Msg4 PDSCH</h2>
+<p><br/>Msg4 PDSCH传输的子载波间隔与PDSCH相同提供随机接入响应。</p>
+<h1 id="ue-procedure-for-reporting-control-information">UE procedure for
+reporting control information</h1>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/095958597.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="ue-procedure-for-harq-ack-codebook-determination">UE procedure
+for HARQ-ACK codebook determination</h2>
+<h3 id="cbg-based-harq-ack-codebook-determination">CBG-based HARQ-ACK
+codebook determination</h3>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100046252.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[HARQ-ACK information bits] The actual number of bits to report
+can be different – e.g. with bundling.</p>
+</blockquote>
+<blockquote>
+<p>批注：[initial] For retransmissions, decisions are needed for
+dynamic/semi-static HARQ-ACK codebook determination and for possible DCI
+indications.</p>
+</blockquote>
+<blockquote>
+<p>批注：[a] No decision currently exists for 2 TBs (e.g. same number
+for both TBs, separately configured number per TB).</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100136656.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[the UE determines whether or not a CBG is retransmitted based
+on a corresponding value of the CBGTI field] Placeholder text – will be
+modified once the specifics for the operation of the CBGTI field are
+decided.</p>
+</blockquote>
+<blockquote>
+<p>批注：[<em>cc</em>] LTE terminology for indicating semi-static
+codebook (can be modified once RRC terminology is finalized). Statement
+in brackets will be removed if only semi-static codebook determination
+is supported for CBG-based HARQ-ACK.</p>
+</blockquote>
+<h2 id="ue-procedure-for-reporting-harq-ack">UE procedure for reporting
+HARQ-ACK</h2>
+<h3 id="harq-ack-reporting-in-physical-uplink-shared-channel">HARQ-ACK
+reporting in physical uplink shared channel</h3>
+<h3 id="harq-ack-reporting-in-physical-uplink-control-channel">HARQ-ACK
+reporting in physical uplink control channel</h3>
+<p><br/>如果UE没有配置为PUSCH和PUCCH同时传输，并且UE不传输PUSCH，且不传输CSI或positive/negative
+SR，则UE应传输HARQ-ACK</p>
+<ul>
+<li>on PUCCH format 0 if
+<ul>
+<li>the transmission is over 1 symbol or 2 symbols,</li>
+<li>the number of HARQ-ACK information bits is 1 or 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 1 if
+<ul>
+<li>the transmission is over 4 or more symbols,</li>
+<li>the number of HARQ-ACK information bits is 1 or 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 2 if
+<ul>
+<li>the transmission is over 1 symbol or 2 symbols,</li>
+<li>the number of HARQ-ACK information bits is more than 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 3 if
+<ul>
+<li>the transmission is over 4 or more symbols,</li>
+<li>the number of HARQ-ACK information bits is more than [2]</li>
+</ul></li>
+</ul>
+<p>UE在一个时隙的$ N_{}^{,} <span
+class="math inline">\(个符号上发送一个或多个PUCCH。对于PUCCH传输时隙的参考，如果UE在PDCCH上检测DCI格式，其中PDCCH通过一定数量的符号调度PDSCH的接收，这些符号的最后一个符号在时隙\)</span>n<span
+class="math inline">\(内，则UE应在PUCCH传输中提供相应的HARQ-ACK信息，PUCCH在时隙\)</span>
+n+k <span
+class="math inline">\(上传输，其中\)</span>k$是时隙数，且通过DCI格式中的[DL-data-DL-acknowledgement]字段来指示。[DL-data-DL-acknowledgement]字段的值映射到时隙数的值，见Table
+9.1.2-1中的定义。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100506146.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：Dynamic indication of symbols within a slot or joint indication
+of time/frequency/code PUCCH resources is not precluded pending specific
+RAN1 agreements.</p>
+</blockquote>
+<h4 id="harq-ack-procedures-for-one-configured-serving-cell">HARQ-ACK
+procedures for one configured serving cell</h4>
+<h4
+id="harq-ack-procedures-for-more-than-one-configured-serving-cell">HARQ-ACK
+procedures for more than one configured serving cell</h4>
+<h2 id="ue-procedure-for-reporting-sr">UE procedure for reporting
+SR</h2>
+<blockquote>
+<p>批注：There are currently no RAN1 decisions on SR transmission
+structure and possible multiplexing with HARQ-ACK/CSI</p>
+</blockquote>
+<h2 id="ue-procedure-for-reporting-multiple-uci-types">UE procedure for
+reporting multiple UCI types</h2>
+<h2 id="uci-repetition-procedure">UCI repetition procedure</h2>
+<h1 id="ue-procedure-for-receiving-control-information">UE procedure for
+receiving control information</h1>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100635180.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>UE应在一个或多个激活的服务小区或BWPs上，根据相应的搜索空间，在一个或多个CORESET内监听一组PDCCH候选集，其中搜索空间是根据所监听的DCI格式译码每个PDCCH候选。</p>
+<blockquote>
+<p>批注：[PDCCH候选集] Can add more details later, such as per activated
+cell, etc., based on respective agreements.</p>
+</blockquote>
+<blockquote>
+<p>批注：[DCI formats] Can remain applicable for potentially mapping
+multiple DCI formats to a same size (as for LTE DCI format 0 and DCI
+format 1A).</p>
+</blockquote>
+<h2
+id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-common-search-space">UE
+procedure for determining physical downlink control channel assignment
+in common search space</h2>
+<p><br/>UE应在下列一个或多个搜索空间内监听PDCCH候选：</p>
+<ul>
+<li>a Type0-PDCCH common search space for a DCI format scrambled by a
+[SI-RNTI] on a primary cell</li>
+<li>a Type1-PDCCH common search space for a DCI format scrambled by a
+[RA-RNTI] on a primary cell</li>
+<li>a Type2-PDCCH common search space for a DCI format scrambled by a
+[INT-RNTI]</li>
+</ul>
+<p>[UE应在没有载波指示域的情况下监听PDCCH候选。]</p>
+<p>如果UE通过高层配置为以[INT-RNTI]加扰的CRC译码DCI格式，UE也在[每个服务小区]配置[一组]PRBs和一组OFDM符号。如果UE以[INT-RNTI]加扰的CRC检测DCI格式，UE可以假设不在这组PRBs和OFDM符号中发送。UE通过高层参数[<em>int-PRBs-unit</em>]配置PRBs的指示粒度。UE通过高层参数[<em>int-symbols-unit</em>]配置OFDM符号的指示粒度。UE通过高层参数[<em>Num-PDCCH-cand</em>]来配置对于DCI格式的每个CCE聚合等级下的若干PDCCH候选，其中DCI格式使用[INT-RNTI]加扰的CRC。</p>
+<blockquote>
+<p>批注：[[INT-RNTI]加扰的CRC] Eventually, this DCI format will have a
+name and will be used to remove this part.</p>
+</blockquote>
+<h2
+id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-ue-specific-search-space">UE
+procedure for determining physical downlink control channel assignment
+in UE-specific search space</h2>
+<p><br/>对于每个服务小区，高层信令给UE配置$ Q $个CORESETs。对于CORESET
+<span class="math inline">\(q\)</span>，$ 0q&lt;Q $，配置包括：</p>
+<ul>
+<li>高层参数[<em>CORESET-start-symb</em>]提供第1个OFDM符号</li>
+<li>高层参数[<em>CORESET-time-duration</em>]提供若干连续的OFDM符号</li>
+<li>高层参数[<em>CORESET-freq-dom</em>]提供一组RBs集合</li>
+<li>高层参数[<em>CORESET-trans-type</em>]提供CCE-to-REG映射</li>
+<li>对于交织的CCE-to-REG映射，高层参数[<em>CORESET-REG-bundle-size</em>]提供REG
+bundle大小</li>
+<li>[高层参数[<em>CORESET-QCL-ConfigId</em>]提供天线端口quasi-collocation]</li>
+</ul>
+<p>对于非交织的CCE-to-REG映射，REG bundle大小等于6。UE可以假设一个REG
+bundle内的所有REGs上传输的PDCCH应用相同的预编码。</p>
+<blockquote>
+<p>批注：[对于非交织的CCE-to-REG映射，REG bundle大小等于6。] Can be
+updated if additional REG bundle sizes are defined for non-interleaved
+transmissions.</p>
+</blockquote>
+<p>每个CORESET包含一组从0到$ { {N}<em>{,q}}-1 <span
+class="math inline">\(编号的CCEs，其中\)</span> { {N}</em>{,q}}
+$是CORESET <span class="math inline">\(q\)</span>中的CCEs个数。</p>
+<p>UE所监听的PDCCH候选集定义在PDCCH UE特定搜索空间。PDCCH
+UE特定搜索空间在聚合等级$ L{ 1, 2, 4, 8 } <span
+class="math inline">\(上定义为，对于CCE聚合等级\)</span>L$的一组PDCCH候选。对于一个DCI格式，UE在每个服务小区内通过高层参数[<em>Num-PDCCH-cand</em>]配置每个CCE聚合等级
+下的一组PDCCH候选。</p>
+<blockquote>
+<p>批注：[UE特定搜索空间] Cross-carrier scheduling, including use of
+different numerologies, will be captured through the search space.</p>
+</blockquote>
+<p>对于连续接收（non-DRX）模式操作，UE在根据$ { {W}<em>{ q}}
+$个符号周期，监听CORESET <span
+class="math inline">\(q\)</span>中的PDCCH候选，其中对于CORESET <span
+class="math inline">\(q\)</span>的$ { {W}</em>{ q}}
+$由高层参数[<em>CORESET-monitor-period</em>]配置。</p>
+<blockquote>
+<p>批注：[CORESET-monitor-period] Need to determine how, based on
+configured periodicity, UE monitors PDCCH and whether it is a CORESET or
+a search space parameter. Allowed periodicity values (symbol, slot,
+etc.) are TBD (start from 1 symbol) and are to be included in RAN2
+specifications (likely not visible in 38.213).</p>
+</blockquote>
+<p>服务小区中的UE，在UE特定的搜索空间监听PDCCH的候选，如果UE没有配置载波指示域，UE应在没有载波指示域的条件下监听PDCCH候选。服务小区中的UE，在UE
+特定的搜索空间监听PDCCH的候选，如果UE配置了载波指示域，则UE应使用载波指示域监听PDCCH候选。</p>
+<p>如果UE在另一个服务小区上被配置使用对应于secondary
+cell的载波指示来监听PDCCH候选，UE不希望在secondary
+cell上监听PDCCH候选。[对于服务小区中的UE监听PDCCH候选，UE应至少在同一个服务小区内监听PDCCH候选。]</p>
+<h1 id="bandwidth-part-operation">Bandwidth part operation</h1>
+<blockquote>
+<p>批注：It will be attempted, as much as possible, to capture all BWP
+operation aspects in this Subclause while referring to other Subclauses.
+Potential overlaps will be resolved as the specifications progress.</p>
+</blockquote>
+<blockquote>
+<p>批注：Text is subject to revisions as descriptions in 38.211 and
+38.213 are aligned.</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101231694.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[BWP] Regarding the CSS, he agreement for its configuration is
+ambiguous. Which CSS configuration is it (e.g. is it for SIB scheduling,
+for GC-PDCCH, … )? Maybe multiple CSS configurations are applicable as
+in Subclause 10.1? Reference to primary cell in the agreement points to
+SIB scheduling but clarification is needed for what the CSS intends to
+do, whether the respective BWP is same as the BWP from initial access,
+….</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101316284.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[transmissions] Activation/deactivation by DCI requires further
+details (e.g. it is FFS whether it is a DCI scheduling PDSCH/PUSCH in a
+configured BWP ot a separate DCI). Deactivation by a timer also requires
+further details (e.g. no separate specifications if it is the DRX
+timer). A separate timer may be described in RRC specifications as for
+the DRX timer.</p>
+</blockquote>
+<h1
+id="configurations-and-assumptions-independent-of-physical-channels-or-signals">Configurations
+and assumptions independent of physical channels or signals</h1>
+<blockquote>
+<p>批注：[signals] To capture reserved resources, potential LTE-NR
+coexistence aspects, etc. For LTE-NR DC with single UL Tx, corresponding
+agreement regarding configuration of DL-reference UL/DL configuration
+affects only LTE operation, is suitable for LTE specifications, and is
+not captured (unless it is extended to NR-NR DC).</p>
+</blockquote>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
+<a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
+<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a></p>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>2017-09</tag>
+        <tag>5G-NR</tag>
+        <tag>3GPP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>5G-NR物理层提供的服务v1.0.0</title>
+    <url>/2017/09/08/nr-v100-l1-service/</url>
+    <content><![CDATA[<h1 id="物理层的服务和功能">物理层的服务和功能</h1>
+<h2 id="概述">概述</h2>
+<p><br/>物理层向高层提供数据传输服务。</p>
+<p>这些服务的接入是通过使用MAC子层的传输信道实现的。</p>
+<p>传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（<em>注：这句话有待进一步讨论</em>）。</p>
+<span id="more"></span>
+<h2 id="l1功能概述">L1功能概述</h2>
+<p><br/>正如3GPP TS
+38.201规范中所提到的，物理层向高层提供数据传输服务。为了提供数据传输服务，物理层预期执行以下功能：</p>
+<ul>
+<li>传输信道的差错检测并指示给高层</li>
+<li>传输信道的前向纠错（FEC）编码/解码</li>
+<li>混合自动重传请求（HARQ）软合并</li>
+<li>编码的传输信道到物理信道的速率匹配</li>
+<li>编码的传输信道到物理信道的映射</li>
+<li>物理信道的功率加权</li>
+<li>物理信道的调制和解调</li>
+<li>频域和时间同步</li>
+<li>无线特性测量并指示给高层</li>
+<li>MIMO天线处理</li>
+<li>射频处理</li>
+</ul>
+<p>对于每个传输信道，L1功能的建模详见2.1和2.2节。</p>
+<h1 id="ue的物理层模型">UE的物理层模型</h1>
+<p><br/>5G-NR物理层模型capture以下与物理层相关的特性：</p>
+<ul>
+<li>向下传递到物理层或从物理层上传道高层数据的结构；</li>
+<li>高层能够配置物理层的方法；</li>
+<li>物理层向高层提供不同的指示（错误指示，信道质量指示等）</li>
+</ul>
+<h2 id="上行链路模型">上行链路模型</h2>
+<h3 id="上行共享信道">上行共享信道</h3>
+<p><br/>上行共享信道（UL-SCH）传输的物理层模型基于PUSCH物理层处理的相应链路。如Figure
+5.1.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
+<ul>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速率匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
+<li>L1控制信令的支持</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png" title="Figure 5.1.1-1: Physical-layer model for UL-SCH transmission" /></p>
+<h3 id="随机接入信道">随机接入信道</h3>
+<p><br/>随机接入信道传输的物理层模型通过PRACH前导格式来表征。PRACH前导格式由循环前缀，前导和保护时间间隔组成。</p>
+<h2 id="下行链路模型">下行链路模型</h2>
+<h3 id="下行共享信道">下行共享信道</h3>
+<p><br/>下行共享信道传输的物理层模型基于PDSCH物理层处理的相应链路。如Figure
+5.2.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
+<ul>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速率匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
+<li>L1控制信令的支持</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png" title="Figure 5.2.1-1: Physical-layer model for DL-SCH transmission" /></p>
+<h3 id="广播信道">广播信道</h3>
+<p><br/>广播信道传输的物理层模型由一个固定预定义的传输格式来表征。BCH每80ms一个传输块。广播信道的物理层模型基于PBCH物理层处理的相应链路，如Figure
+5.2.2-1所示。</p>
+<ul>
+<li>高层数据传到或来自物理层</li>
+<li>CRC和传输块错误指示</li>
+<li>FEC和速配匹配</li>
+<li>数据调制</li>
+<li>映射到物理资源</li>
+<li>多天线处理</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png" title="Figure 5.2.2-1: Physical-layer model for BCH transmission" /></p>
+<h3 id="寻呼信道">寻呼信道</h3>
+<h1
+id="parallel-transmission-of-simultaneous-physical-channels-and-srs">Parallel
+transmission of simultaneous Physical channels and SRS</h1>
+<p><br/>This clause describes the requirements from the UE to send and
+receive on multiple Physical and Transport Channels and SRS
+simultaneously depending on the service capabilities and
+requirements.</p>
+<h2 id="上行链路">上行链路</h2>
+<h2 id="下行链路">下行链路</h2>
+<h1 id="物理层提供的测量">物理层提供的测量</h1>
+<h2 id="ue测量">UE测量</h2>
+<p><br/>UE测量的列表和定义提供在3GPP TS 38.215中。</p>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
+<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
 <a
 href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
 ]]></content>
@@ -5152,113 +5259,6 @@ href="http://marshallcomm.cn/2017/10/24/nr-v110-l1-channel-modulation-dl/">5G-NR
       </tags>
   </entry>
   <entry>
-    <title>5G-NR物理层提供的服务v1.0.0</title>
-    <url>/2017/09/08/nr-v100-l1-service/</url>
-    <content><![CDATA[<h1 id="物理层的服务和功能">物理层的服务和功能</h1>
-<h2 id="概述">概述</h2>
-<p><br/>物理层向高层提供数据传输服务。</p>
-<p>这些服务的接入是通过使用MAC子层的传输信道实现的。</p>
-<p>传输块被定义为MAC层向物理层交付的数据，反之亦然。传输块在每一个TTI内进行交付（<em>注：这句话有待进一步讨论</em>）。</p>
-<span id="more"></span>
-<h2 id="l1功能概述">L1功能概述</h2>
-<p><br/>正如3GPP TS
-38.201规范中所提到的，物理层向高层提供数据传输服务。为了提供数据传输服务，物理层预期执行以下功能：</p>
-<ul>
-<li>传输信道的差错检测并指示给高层</li>
-<li>传输信道的前向纠错（FEC）编码/解码</li>
-<li>混合自动重传请求（HARQ）软合并</li>
-<li>编码的传输信道到物理信道的速率匹配</li>
-<li>编码的传输信道到物理信道的映射</li>
-<li>物理信道的功率加权</li>
-<li>物理信道的调制和解调</li>
-<li>频域和时间同步</li>
-<li>无线特性测量并指示给高层</li>
-<li>MIMO天线处理</li>
-<li>射频处理</li>
-</ul>
-<p>对于每个传输信道，L1功能的建模详见2.1和2.2节。</p>
-<h1 id="ue的物理层模型">UE的物理层模型</h1>
-<p><br/>5G-NR物理层模型capture以下与物理层相关的特性：</p>
-<ul>
-<li>向下传递到物理层或从物理层上传道高层数据的结构；</li>
-<li>高层能够配置物理层的方法；</li>
-<li>物理层向高层提供不同的指示（错误指示，信道质量指示等）</li>
-</ul>
-<h2 id="上行链路模型">上行链路模型</h2>
-<h3 id="上行共享信道">上行共享信道</h3>
-<p><br/>上行共享信道（UL-SCH）传输的物理层模型基于PUSCH物理层处理的相应链路。如Figure
-5.1.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
-<ul>
-<li>高层数据传到或来自物理层</li>
-<li>CRC和传输块错误指示</li>
-<li>FEC和速率匹配</li>
-<li>数据调制</li>
-<li>映射到物理资源</li>
-<li>多天线处理</li>
-<li>L1控制信令的支持</li>
-</ul>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153200005.png" title="Figure 5.1.1-1: Physical-layer model for UL-SCH transmission" /></p>
-<h3 id="随机接入信道">随机接入信道</h3>
-<p><br/>随机接入信道传输的物理层模型通过PRACH前导格式来表征。PRACH前导格式由循环前缀，前导和保护时间间隔组成。</p>
-<h2 id="下行链路模型">下行链路模型</h2>
-<h3 id="下行共享信道">下行共享信道</h3>
-<p><br/>下行共享信道传输的物理层模型基于PDSCH物理层处理的相应链路。如Figure
-5.2.1-1所示，用蓝色突出显示的部分是高层可配置的。</p>
-<ul>
-<li>高层数据传到或来自物理层</li>
-<li>CRC和传输块错误指示</li>
-<li>FEC和速率匹配</li>
-<li>数据调制</li>
-<li>映射到物理资源</li>
-<li>多天线处理</li>
-<li>L1控制信令的支持</li>
-</ul>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153239209.png" title="Figure 5.2.1-1: Physical-layer model for DL-SCH transmission" /></p>
-<h3 id="广播信道">广播信道</h3>
-<p><br/>广播信道传输的物理层模型由一个固定预定义的传输格式来表征。BCH每80ms一个传输块。广播信道的物理层模型基于PBCH物理层处理的相应链路，如Figure
-5.2.2-1所示。</p>
-<ul>
-<li>高层数据传到或来自物理层</li>
-<li>CRC和传输块错误指示</li>
-<li>FEC和速配匹配</li>
-<li>数据调制</li>
-<li>映射到物理资源</li>
-<li>多天线处理</li>
-</ul>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/153353556.png" title="Figure 5.2.2-1: Physical-layer model for BCH transmission" /></p>
-<h3 id="寻呼信道">寻呼信道</h3>
-<h1
-id="parallel-transmission-of-simultaneous-physical-channels-and-srs">Parallel
-transmission of simultaneous Physical channels and SRS</h1>
-<p><br/>This clause describes the requirements from the UE to send and
-receive on multiple Physical and Transport Channels and SRS
-simultaneously depending on the service capabilities and
-requirements.</p>
-<h2 id="上行链路">上行链路</h2>
-<h2 id="下行链路">下行链路</h2>
-<h1 id="物理层提供的测量">物理层提供的测量</h1>
-<h2 id="ue测量">UE测量</h2>
-<p><br/>UE测量的列表和定义提供在3GPP TS 38.215中。</p>
-<h1 id="相关链接">相关链接</h1>
-<p><br/><a
-href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
-<a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
-<a
-href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
-<a
-href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>2017-09</tag>
-        <tag>5G-NR</tag>
-        <tag>3GPP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>5G-NR物理信道与调制v1.1.0</title>
     <url>/2017/10/23/nr-v110-l1-channel-modulation/</url>
     <content><![CDATA[<blockquote>
@@ -6260,6 +6260,290 @@ alt="mark" />
       </tags>
   </entry>
   <entry>
+    <title>5G SSB与小区搜索</title>
+    <url>/2017/12/29/nr-v200-l1-ssb/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p><br/>在5G
+NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS/PBCH
+block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。</p>
+<h1 id="同步信号ss">同步信号（SS）</h1>
+<h2 id="物理层小区id">物理层小区ID</h2>
+<p><br/>1008个唯一的物理层小区ID根据如下公式确定</p>
+<p><span class="math display">\[
+N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
+\]</span></p>
+<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(，\)</span>
+N_{}^{}{ 0,1,2 } $。</p>
+<span id="more"></span>
+<h2 id="主同步信号pss">主同步信号（PSS）</h2>
+<h3 id="序列生成">序列生成</h3>
+<p>PSS序列$ { {d}_{}}(n) $根据如下公式生成</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; { {d}_{\text{PSS}}}\left( n \right)=1-2x\left( m \right)
+\\
+\nonumber &amp; m=\left( n+43N_{\text{ID}}^{\text{(2)}} \right)\bmod 127
+\\
+\nonumber &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ x\left( i+7 \right)=\left( x\left( i+4
+\right)+x\left( i \right) \right)\bmod 2 \]</span></p>
+<p>且</p>
+<p><span class="math display">\[ \left[ \begin{matrix}
+   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right)
+&amp; x\left( 3 \right) &amp; x\left( 2 \right) &amp; x\left( 1 \right)
+&amp; x\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \\
+\end{matrix} \right]
+\]</span></p>
+<h3 id="物理资源映射">物理资源映射</h3>
+<p><br/>物理资源映射见本文SSB。</p>
+<h2 id="辅同步信号sss">辅同步信号（SSS）</h2>
+<h3 id="序列生成-1">序列生成</h3>
+<p><br/>SSS序列$ { {d}_{}}(n) $根据如下公式生成</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { {d}_{\text{SSS}}}\left( n \right)=\left[ 1-2{
+{x}_{0}}\left( \left( n+{ {m}_{0}} \right)\bmod 127 \right)
+\right]\left[ 1-2{ {x}_{1}}\left( \left( n+{ {m}_{1}} \right)\bmod 127
+\right) \right] \\
+\nonumber &amp; { {m}_{0}}=15\left\lfloor
+\frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor
++5N_{\text{ID}}^{\text{(2)}} \\
+\nonumber &amp; { {m}_{1}}=N_{\text{ID}}^{\text{(1)}}\bmod 112 \\
+\nonumber &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { {x}_{0}}\left( i+7 \right)=\left( { {x}_{0}}\left(
+i+4 \right)+x{}_{0}\left( i \right) \right)\bmod 2 \\
+\nonumber &amp; { {x}_{1}}\left( i+7 \right)=\left( { {x}_{1}}\left( i+1
+\right)+x{}_{1}\left( i \right) \right)\bmod 2  
+\end{align}
+\]</span></p>
+<p>且</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; \left[ \begin{matrix}
+   { {x}_{0}}\left( 6 \right) &amp; { {x}_{0}}\left( 5 \right) &amp; {
+{x}_{0}}\left( 4 \right) &amp; { {x}_{0}}\left( 3 \right) &amp; {
+{x}_{0}}\left( 2 \right) &amp; { {x}_{0}}\left( 1 \right) &amp; {
+{x}_{0}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right] \\
+  \nonumber &amp; \left[ \begin{matrix}
+   { {x}_{1}}\left( 6 \right) &amp; { {x}_{1}}\left( 5 \right) &amp; {
+{x}_{1}}\left( 4 \right) &amp; { {x}_{1}}\left( 3 \right) &amp; {
+{x}_{1}}\left( 2 \right) &amp; { {x}_{1}}\left( 1 \right) &amp; {
+{x}_{1}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right]  
+\end{align}
+\]</span></p>
+<h3 id="物理资源映射-1">物理资源映射</h3>
+<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="物理广播信道pbch">物理广播信道（PBCH）</h1>
+<h2 id="加扰">加扰</h2>
+<p><br/>UE应假定比特块$ b(0),...,b(M_{}^{ {}}-1) <span
+class="math inline">\(在调制前进行加扰，其中\)</span> { {M}<em>{}} <span
+class="math inline">\(是PBCH传输的比特数，加扰后的比特块为\)</span>
+(0),...,({ {M}</em>{}}-1) $</p>
+<p><span class="math display">\[ \tilde{b}(i)=\left( b(i)+c(i+v{
+{M}_{\text{bit}}}) \right)\bmod 2 \]</span></p>
+<p>其中扰码序列$ c(i) <span
+class="math inline">\(由38.211的5.2节给定。扰码序列应在每个SSB的开始时根据\)</span>
+{ {c}<em>{}}=N</em>{}^{} $进行初始化</p>
+<ul>
+<li>对于$ { {L}_{}}=4 <span class="math inline">\(，\)</span> v
+$是SSB索引的2个最低有效位</li>
+<li>对于$ { {L}<em>{}}=8 <span class="math inline">\(或\)</span> {
+{L}</em>{}}=64 <span class="math inline">\(，\)</span> v $是SSB索引的3
+个最低有效位</li>
+</ul>
+<p>其中$ { {L}_{}}
+$是38.104给出的特定频带的SS/PBCH周期中的SSB的最大数目。</p>
+<h2 id="调制">调制</h2>
+<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
+class="math inline">\(采用QPSK调制，得到复值调制符号块\)</span> {
+{d}</em>{}}(0),...,{ {d}<em>{}}({ {M}</em>{}}-1)
+$，QPSK见38.211的5.1.3节。</p>
+<h2 id="物理资源映射-2">物理资源映射</h2>
+<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="解调参考信号dm-rs">解调参考信号（DM-RS）</h1>
+<h2 id="序列生成-2">序列生成</h2>
+<p><br/>UE应假定SSB的参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中加扰序列$ c(n) $在38.211的5.2节定义。扰码序列生成器应在每个SSB
+机会的开始处进行初始化</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; { {c}_{\text{init}}}={ {2}^{11}}\left( { {
+{\bar{i}}}_{\text{SSB}}}+1 \right)\left( \left\lfloor
+{N_{\text{ID}}^{\text{cell}}}/{\text{4}}\; \right\rfloor +1 \right)+{
+{2}^{6}}\left( { { {\bar{i}}}_{\text{SSB}}}+1 \right)+\left(
+N_{\text{ID}}^{\text{cell}}\bmod 4 \right) \\
+\nonumber &amp; { { {\bar{i}}}_{\text{SSB}}}=4{
+{i}_{\text{SSB}}}+n{}_{\text{hf}} \\
+\end{align}
+\]</span></p>
+<p>其中</p>
+<ul>
+<li>若$ { {L}<em>{}}=4 <span class="math inline">\(，则\)</span> {
+{n}</em>{}} <span class="math inline">\(是发送PBCH的半帧数目，\)</span>
+{ {i}_{}} $是SSB索引的2个LSB比特</li>
+<li>若$ { {L}<em>{}}=8 <span class="math inline">\(或\)</span> {
+{L}</em>{}}=64 <span class="math inline">\(，则\)</span> { {n}<em>{}}=0
+<span class="math inline">\(，\)</span> { {i}</em>{}}
+$是SSB索引的3个LSB比特</li>
+</ul>
+<p>其中$ { {L}_{}} $是特定带宽下的SSB周期中SSB的最大数量。</p>
+<h2 id="物理资源映射-3">物理资源映射</h2>
+<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
+<h1 id="ssb">SSB</h1>
+<h2 id="ssb的时域结构">SSB的时域结构</h2>
+<p><br/>在时域上，1个SSB由4个OFDM符号组成，符号在SSB内从0到3增序编号。如表7.4.3.1-1所示，PSS、SSS、PBCH及其DM-RS占用不同的符号。</p>
+<p>在频域上，1个SSB由240个连续子载波组成，子载波在SSB内从0到239增序编号。$
+k <span class="math inline">\(和\)</span> l <span
+class="math inline">\(分别表示SSB内的频域索引和时域索引。UE可假定表7.4.3.1-1中的“Set
+to 0”的资源粒子（RE）被设置为零。SSB的子载波0对应于公共资源块\)</span>
+N_{}^{} <span class="math inline">\(的子载波\)</span> { {k}<em>{0}}
+<span class="math inline">\(，其中\)</span> N</em>{}^{} $由高层参数
+<em>offset-ref-low-scs-ref-PRB</em> 得到。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/094753857.png" title="图 1 SS/PBCH block时频域结构" /></p>
+<p>与SSB部分或完全重叠的任何公共资源块应当被视为被占用，并且不被用于PDSCH或PDCCH传输。UE可假定不用于SS/PBCH传输的资源粒子，将部分重叠的公共资源的一部分设置为零。</p>
+<p>对于SSB，UE应假定</p>
+<ul>
+<li>天线端口$ p=4000 $，</li>
+<li>PSS、SSS和PBCH具有相同的CP长度和子载波间隔，</li>
+<li>对于SSB type A，$ { {k}<em>{0}}{ ... } <span
+class="math inline">\(，\)</span> { {k}</em>{0}}{ ... } <span
+class="math inline">\(，\)</span> N_{}^{}
+$是就15kHz子载波间隔而言的表示，</li>
+<li>对于SSB type B，$ { {k}<em>{0}}{ ... } <span
+class="math inline">\(，\)</span> { } <span
+class="math inline">\(，\)</span> N</em>{}^{}
+$是就60kHz子载波间隔而言的表示</li>
+</ul>
+<p>UE可假定相同的块索引所发送的SSB关于多普勒扩展，多普勒频移，平均增益，平均延迟和空间Rx参数是准共同定位（quasi
+co-located，QCL）的。对于任何其他SSB传输，UE不应假定QCL。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/095600758.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h3 id="ssb中的pss映射">SSB中的PSS映射</h3>
+<p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{}}(0),...,{
+{d}</em>{}}(126) <span class="math inline">\(乘以幅值因子\)</span> {
+{}<em>{}} <span class="math inline">\(，以符合TS
+38.213中规定的PSS功率分配。符号序列按\)</span> k $增序映射到RE $ { {(
+k,l )}</em>{p,}} <span class="math inline">\(，其中\)</span> k <span
+class="math inline">\(和\)</span> l
+$由表7.4.3.1-1给定，分为表示SSB中的频域索引和时域索引。</p>
+<h3 id="ssb中的sss映射">SSB中的SSS映射</h3>
+<p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{}}(0),...,{
+{d}</em>{}}(126) <span class="math inline">\(乘以幅值因子\)</span> {
+{}<em>{!!!!}} <span class="math inline">\(，并按\)</span> k
+$增序映射到RE $ { {( k,l )}</em>{p,}} <span
+class="math inline">\(，其中\)</span> k <span
+class="math inline">\(和\)</span> l
+$由表7.4.3.1-1给定，分为表示SSB内的频域索引和时域索引。</p>
+<h3 id="ssb中的pbch和dm-rs映射">SSB中的PBCH和DM-RS映射</h3>
+<p><br/>UE应假定组成PBCH的符号序列$ { {d}<em>{}}(0),...,{ {d}</em>{}}({
+{M}<em>{}}-1) <span class="math inline">\(乘以幅值因子\)</span> {
+{}</em>{!!!!}} <span class="math inline">\(，以符合TS
+38.213中规定的PBCH功率分配。符号序列从\)</span> { {d}<em>{}}(0)
+$开始映射到RE $ { {( k,l )}</em>{p,}} $，并满足下列条件：</p>
+<ul>
+<li>这些RE不用于PDCCH DM-RS</li>
+</ul>
+<p>对于不为PBCH DM-RS保留的RE的映射，按递增顺序先$ k <span
+class="math inline">\(后\)</span>l<span
+class="math inline">\(映射，其中\)</span> k <span
+class="math inline">\(和\)</span>l$分别是SSB内的频域和时域索引，并由表7.4.3.1-1给定。</p>
+<p>UE应假定SSB的DM-RS复值符号序列$ { {r}<em>{l}}(0),...,{
+{r}</em>{l}}(143) <span class="math inline">\(乘以幅值因子\)</span>
+<em>{}^{ {}} <span
+class="math inline">\(，以符合TS38.213中规定的PBCH功率分配，并按递增顺序先\)</span>k<span
+class="math inline">\(后\)</span>l<span
+class="math inline">\(映射到资源粒子\)</span> { {( k,l )}</em>{p,}}
+<span class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l$分别是SSB内的频域和时域索引，并由Table
+7.4.3.1-1给定，其中 <span
+class="math inline">\(v=N_{\text{ID}}^{\text{cell}}\bmod
+4\)</span>。</p>
+<h2 id="ssb的时域位置">SSB的时域位置</h2>
+<p><br/>在下一章描述UE将监测的可能的SSB时域位置。</p>
+<h1 id="小区搜索">小区搜索</h1>
+<p><br/>小区搜索是UE获取与小区的时间和频率同步，并检测该小区的物理层小区ID的过程。</p>
+<p>UE接收以下同步信号（SS）以执行小区搜索：TS38.211中定义的主同步信号（PSS）和辅同步信号（SSS）。</p>
+<p>UE应假定PBCH、PSS和SSS在连续的符号中接收，并形成SS/PBCH
+block（如TS38.211中所定义）。UE应假定SSS和PBCH DM-RS具有相同的EPRE。</p>
+<p>对于具有SSB的半帧，候选SSB的数目和第一个符号索引位置根据SSB的子载波间隔确定如下：</p>
+<ul>
+<li>Case A - 15 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} +
+14*n。对于载频小于或等于3 GHz的情况，n=0,1。对于载频大于3
+GHz且小于或等于6 GHz的情况，n=0,1,2,3。</li>
+<li>CaseB - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16, 20}
++ 28*n。对于载频小于或等于3 GHz的情况，n=0。对于载频大于3
+GHz且小于或等于6 GHz的情况，n=0,1。</li>
+<li>Case C - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} +
+14*n。对于载频小于或等于3 GHz的情况，n=0,1。对于载频大于3
+GHz且小于或等于6 GHz的情况，n=0,1,2,3。</li>
+<li>Case D - 120 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16,
+20} + 28*n。对于载频大于6 GHz的情况，n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11,
+12, 13, 15, 16, 17, 18。</li>
+<li>Case E - 240 kHz子载波间隔：候选SSB的第一个符号的索引为{8, 12, 16,
+20, 32, 36, 40, 44} + 56*n。对于载频对于6 GHz的情况，n=0, 1, 2, 3, 5, 6,
+7, 8。</li>
+</ul>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101842369.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101923796.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>半帧中的候选SSB索引在时间上从0到$ L-1 <span
+class="math inline">\(升序编号。在PBCH中发送的DM-RS序列的索引与每半帧中的SSB索引形成一一映射，若\)</span>
+L=4 <span
+class="math inline">\(，则UE应从DM-RS序列索引中确定半帧中SSB索引的2个低有效位；若\)</span>
+L&gt;4 <span
+class="math inline">\(，则UE应从DM-RS索引中确定半帧中SSB索引的3个低有效位。若\)</span>
+L=64 $，UE应从高层参数 <em>SSB-index-explicit</em>
+确定每半帧中的SSB索引的3个高有效位。</p>
+<p>UE可以通过参数 <em>SSB-transmitted-SIB1</em>
+得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。UE也可以通过高层参数
+<em>SSB-transmitted</em>
+按照每个服务小区得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。
+<em>SSB-transmitted</em> 的配置覆盖 <em>SSB-transmitted-SIB1</em>
+的配置。UE可以通过高层参数 <em>SSB-timing</em>
+为每个服务小区配置用于接收每个服务小区的SSB的半帧的周期。如果UE没有配置接收SSB的半帧的周期，则UE将假定周期为半帧。UE应该假定服务小区中的所有SSB的周期是相同的。</p>
+<p>对于初始小区选择，UE可假定具有SSB的半帧以2个帧为周期。</p>
+<p>对于没有发送SSB的服务小区，UE基于服务小区的小区群的PCell或PSCell上的SSB的接收来获取与服务小区的时间和频率同步。</p>
+<blockquote>
+<p>本文参考3GPP TS38.211 V2.0.0 (2017-12)</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>5G-NR</tag>
+        <tag>3GPP</tag>
+        <tag>2017-12</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>5G PRACH与随机接入</title>
     <url>/2017/12/29/nr-v200-l1-prach/</url>
     <content><![CDATA[<h1 id="prach">PRACH</h1>
@@ -6670,290 +6954,6 @@ alt="mark" />
       </tags>
   </entry>
   <entry>
-    <title>5G SSB与小区搜索</title>
-    <url>/2017/12/29/nr-v200-l1-ssb/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p><br/>在5G
-NR中，主同步信号（PSS）、辅同步信号（SSS）和PBCH共同构成一个SSB（SS/PBCH
-block），SSB在时域上共占用4个OFDM符号，频域共占用240个子载波（20个PRB）。本文分别介绍PSS、SSS、PBCH、SSB以及小区搜索。</p>
-<h1 id="同步信号ss">同步信号（SS）</h1>
-<h2 id="物理层小区id">物理层小区ID</h2>
-<p><br/>1008个唯一的物理层小区ID根据如下公式确定</p>
-<p><span class="math display">\[
-N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
-\]</span></p>
-<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(，\)</span>
-N_{}^{}{ 0,1,2 } $。</p>
-<span id="more"></span>
-<h2 id="主同步信号pss">主同步信号（PSS）</h2>
-<h3 id="序列生成">序列生成</h3>
-<p>PSS序列$ { {d}_{}}(n) $根据如下公式生成</p>
-<p><span class="math display">\[ \begin{align}
-\nonumber &amp; { {d}_{\text{PSS}}}\left( n \right)=1-2x\left( m \right)
-\\
-\nonumber &amp; m=\left( n+43N_{\text{ID}}^{\text{(2)}} \right)\bmod 127
-\\
-\nonumber &amp; 0\le n&lt;127  
-\end{align}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[ x\left( i+7 \right)=\left( x\left( i+4
-\right)+x\left( i \right) \right)\bmod 2 \]</span></p>
-<p>且</p>
-<p><span class="math display">\[ \left[ \begin{matrix}
-   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right)
-&amp; x\left( 3 \right) &amp; x\left( 2 \right) &amp; x\left( 1 \right)
-&amp; x\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \\
-\end{matrix} \right]
-\]</span></p>
-<h3 id="物理资源映射">物理资源映射</h3>
-<p><br/>物理资源映射见本文SSB。</p>
-<h2 id="辅同步信号sss">辅同步信号（SSS）</h2>
-<h3 id="序列生成-1">序列生成</h3>
-<p><br/>SSS序列$ { {d}_{}}(n) $根据如下公式生成</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; { {d}_{\text{SSS}}}\left( n \right)=\left[ 1-2{
-{x}_{0}}\left( \left( n+{ {m}_{0}} \right)\bmod 127 \right)
-\right]\left[ 1-2{ {x}_{1}}\left( \left( n+{ {m}_{1}} \right)\bmod 127
-\right) \right] \\
-\nonumber &amp; { {m}_{0}}=15\left\lfloor
-\frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor
-+5N_{\text{ID}}^{\text{(2)}} \\
-\nonumber &amp; { {m}_{1}}=N_{\text{ID}}^{\text{(1)}}\bmod 112 \\
-\nonumber &amp; 0\le n&lt;127  
-\end{align}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; { {x}_{0}}\left( i+7 \right)=\left( { {x}_{0}}\left(
-i+4 \right)+x{}_{0}\left( i \right) \right)\bmod 2 \\
-\nonumber &amp; { {x}_{1}}\left( i+7 \right)=\left( { {x}_{1}}\left( i+1
-\right)+x{}_{1}\left( i \right) \right)\bmod 2  
-\end{align}
-\]</span></p>
-<p>且</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; \left[ \begin{matrix}
-   { {x}_{0}}\left( 6 \right) &amp; { {x}_{0}}\left( 5 \right) &amp; {
-{x}_{0}}\left( 4 \right) &amp; { {x}_{0}}\left( 3 \right) &amp; {
-{x}_{0}}\left( 2 \right) &amp; { {x}_{0}}\left( 1 \right) &amp; {
-{x}_{0}}\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
-\end{matrix} \right] \\
-  \nonumber &amp; \left[ \begin{matrix}
-   { {x}_{1}}\left( 6 \right) &amp; { {x}_{1}}\left( 5 \right) &amp; {
-{x}_{1}}\left( 4 \right) &amp; { {x}_{1}}\left( 3 \right) &amp; {
-{x}_{1}}\left( 2 \right) &amp; { {x}_{1}}\left( 1 \right) &amp; {
-{x}_{1}}\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
-\end{matrix} \right]  
-\end{align}
-\]</span></p>
-<h3 id="物理资源映射-1">物理资源映射</h3>
-<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
-<h1 id="物理广播信道pbch">物理广播信道（PBCH）</h1>
-<h2 id="加扰">加扰</h2>
-<p><br/>UE应假定比特块$ b(0),...,b(M_{}^{ {}}-1) <span
-class="math inline">\(在调制前进行加扰，其中\)</span> { {M}<em>{}} <span
-class="math inline">\(是PBCH传输的比特数，加扰后的比特块为\)</span>
-(0),...,({ {M}</em>{}}-1) $</p>
-<p><span class="math display">\[ \tilde{b}(i)=\left( b(i)+c(i+v{
-{M}_{\text{bit}}}) \right)\bmod 2 \]</span></p>
-<p>其中扰码序列$ c(i) <span
-class="math inline">\(由38.211的5.2节给定。扰码序列应在每个SSB的开始时根据\)</span>
-{ {c}<em>{}}=N</em>{}^{} $进行初始化</p>
-<ul>
-<li>对于$ { {L}_{}}=4 <span class="math inline">\(，\)</span> v
-$是SSB索引的2个最低有效位</li>
-<li>对于$ { {L}<em>{}}=8 <span class="math inline">\(或\)</span> {
-{L}</em>{}}=64 <span class="math inline">\(，\)</span> v $是SSB索引的3
-个最低有效位</li>
-</ul>
-<p>其中$ { {L}_{}}
-$是38.104给出的特定频带的SS/PBCH周期中的SSB的最大数目。</p>
-<h2 id="调制">调制</h2>
-<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
-class="math inline">\(采用QPSK调制，得到复值调制符号块\)</span> {
-{d}</em>{}}(0),...,{ {d}<em>{}}({ {M}</em>{}}-1)
-$，QPSK见38.211的5.1.3节。</p>
-<h2 id="物理资源映射-2">物理资源映射</h2>
-<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
-<h1 id="解调参考信号dm-rs">解调参考信号（DM-RS）</h1>
-<h2 id="序列生成-2">序列生成</h2>
-<p><br/>UE应假定SSB的参考信号序列$ r(m) $定义为</p>
-<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
-c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
-\]</span></p>
-<p>其中加扰序列$ c(n) $在38.211的5.2节定义。扰码序列生成器应在每个SSB
-机会的开始处进行初始化</p>
-<p><span class="math display">\[ \begin{align}
-\nonumber &amp; { {c}_{\text{init}}}={ {2}^{11}}\left( { {
-{\bar{i}}}_{\text{SSB}}}+1 \right)\left( \left\lfloor
-{N_{\text{ID}}^{\text{cell}}}/{\text{4}}\; \right\rfloor +1 \right)+{
-{2}^{6}}\left( { { {\bar{i}}}_{\text{SSB}}}+1 \right)+\left(
-N_{\text{ID}}^{\text{cell}}\bmod 4 \right) \\
-\nonumber &amp; { { {\bar{i}}}_{\text{SSB}}}=4{
-{i}_{\text{SSB}}}+n{}_{\text{hf}} \\
-\end{align}
-\]</span></p>
-<p>其中</p>
-<ul>
-<li>若$ { {L}<em>{}}=4 <span class="math inline">\(，则\)</span> {
-{n}</em>{}} <span class="math inline">\(是发送PBCH的半帧数目，\)</span>
-{ {i}_{}} $是SSB索引的2个LSB比特</li>
-<li>若$ { {L}<em>{}}=8 <span class="math inline">\(或\)</span> {
-{L}</em>{}}=64 <span class="math inline">\(，则\)</span> { {n}<em>{}}=0
-<span class="math inline">\(，\)</span> { {i}</em>{}}
-$是SSB索引的3个LSB比特</li>
-</ul>
-<p>其中$ { {L}_{}} $是特定带宽下的SSB周期中SSB的最大数量。</p>
-<h2 id="物理资源映射-3">物理资源映射</h2>
-<p><br/>物理资源映射见“SSB的时域结构”一节。</p>
-<h1 id="ssb">SSB</h1>
-<h2 id="ssb的时域结构">SSB的时域结构</h2>
-<p><br/>在时域上，1个SSB由4个OFDM符号组成，符号在SSB内从0到3增序编号。如表7.4.3.1-1所示，PSS、SSS、PBCH及其DM-RS占用不同的符号。</p>
-<p>在频域上，1个SSB由240个连续子载波组成，子载波在SSB内从0到239增序编号。$
-k <span class="math inline">\(和\)</span> l <span
-class="math inline">\(分别表示SSB内的频域索引和时域索引。UE可假定表7.4.3.1-1中的“Set
-to 0”的资源粒子（RE）被设置为零。SSB的子载波0对应于公共资源块\)</span>
-N_{}^{} <span class="math inline">\(的子载波\)</span> { {k}<em>{0}}
-<span class="math inline">\(，其中\)</span> N</em>{}^{} $由高层参数
-<em>offset-ref-low-scs-ref-PRB</em> 得到。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/094753857.png" title="图 1 SS/PBCH block时频域结构" /></p>
-<p>与SSB部分或完全重叠的任何公共资源块应当被视为被占用，并且不被用于PDSCH或PDCCH传输。UE可假定不用于SS/PBCH传输的资源粒子，将部分重叠的公共资源的一部分设置为零。</p>
-<p>对于SSB，UE应假定</p>
-<ul>
-<li>天线端口$ p=4000 $，</li>
-<li>PSS、SSS和PBCH具有相同的CP长度和子载波间隔，</li>
-<li>对于SSB type A，$ { {k}<em>{0}}{ ... } <span
-class="math inline">\(，\)</span> { {k}</em>{0}}{ ... } <span
-class="math inline">\(，\)</span> N_{}^{}
-$是就15kHz子载波间隔而言的表示，</li>
-<li>对于SSB type B，$ { {k}<em>{0}}{ ... } <span
-class="math inline">\(，\)</span> { } <span
-class="math inline">\(，\)</span> N</em>{}^{}
-$是就60kHz子载波间隔而言的表示</li>
-</ul>
-<p>UE可假定相同的块索引所发送的SSB关于多普勒扩展，多普勒频移，平均增益，平均延迟和空间Rx参数是准共同定位（quasi
-co-located，QCL）的。对于任何其他SSB传输，UE不应假定QCL。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/095600758.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h3 id="ssb中的pss映射">SSB中的PSS映射</h3>
-<p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{}}(0),...,{
-{d}</em>{}}(126) <span class="math inline">\(乘以幅值因子\)</span> {
-{}<em>{}} <span class="math inline">\(，以符合TS
-38.213中规定的PSS功率分配。符号序列按\)</span> k $增序映射到RE $ { {(
-k,l )}</em>{p,}} <span class="math inline">\(，其中\)</span> k <span
-class="math inline">\(和\)</span> l
-$由表7.4.3.1-1给定，分为表示SSB中的频域索引和时域索引。</p>
-<h3 id="ssb中的sss映射">SSB中的SSS映射</h3>
-<p><br/>UE应假定组成PSS的符号序列$ { {d}<em>{}}(0),...,{
-{d}</em>{}}(126) <span class="math inline">\(乘以幅值因子\)</span> {
-{}<em>{!!!!}} <span class="math inline">\(，并按\)</span> k
-$增序映射到RE $ { {( k,l )}</em>{p,}} <span
-class="math inline">\(，其中\)</span> k <span
-class="math inline">\(和\)</span> l
-$由表7.4.3.1-1给定，分为表示SSB内的频域索引和时域索引。</p>
-<h3 id="ssb中的pbch和dm-rs映射">SSB中的PBCH和DM-RS映射</h3>
-<p><br/>UE应假定组成PBCH的符号序列$ { {d}<em>{}}(0),...,{ {d}</em>{}}({
-{M}<em>{}}-1) <span class="math inline">\(乘以幅值因子\)</span> {
-{}</em>{!!!!}} <span class="math inline">\(，以符合TS
-38.213中规定的PBCH功率分配。符号序列从\)</span> { {d}<em>{}}(0)
-$开始映射到RE $ { {( k,l )}</em>{p,}} $，并满足下列条件：</p>
-<ul>
-<li>这些RE不用于PDCCH DM-RS</li>
-</ul>
-<p>对于不为PBCH DM-RS保留的RE的映射，按递增顺序先$ k <span
-class="math inline">\(后\)</span>l<span
-class="math inline">\(映射，其中\)</span> k <span
-class="math inline">\(和\)</span>l$分别是SSB内的频域和时域索引，并由表7.4.3.1-1给定。</p>
-<p>UE应假定SSB的DM-RS复值符号序列$ { {r}<em>{l}}(0),...,{
-{r}</em>{l}}(143) <span class="math inline">\(乘以幅值因子\)</span>
-<em>{}^{ {}} <span
-class="math inline">\(，以符合TS38.213中规定的PBCH功率分配，并按递增顺序先\)</span>k<span
-class="math inline">\(后\)</span>l<span
-class="math inline">\(映射到资源粒子\)</span> { {( k,l )}</em>{p,}}
-<span class="math inline">\(，其中\)</span>k<span
-class="math inline">\(和\)</span>l$分别是SSB内的频域和时域索引，并由Table
-7.4.3.1-1给定，其中 <span
-class="math inline">\(v=N_{\text{ID}}^{\text{cell}}\bmod
-4\)</span>。</p>
-<h2 id="ssb的时域位置">SSB的时域位置</h2>
-<p><br/>在下一章描述UE将监测的可能的SSB时域位置。</p>
-<h1 id="小区搜索">小区搜索</h1>
-<p><br/>小区搜索是UE获取与小区的时间和频率同步，并检测该小区的物理层小区ID的过程。</p>
-<p>UE接收以下同步信号（SS）以执行小区搜索：TS38.211中定义的主同步信号（PSS）和辅同步信号（SSS）。</p>
-<p>UE应假定PBCH、PSS和SSS在连续的符号中接收，并形成SS/PBCH
-block（如TS38.211中所定义）。UE应假定SSS和PBCH DM-RS具有相同的EPRE。</p>
-<p>对于具有SSB的半帧，候选SSB的数目和第一个符号索引位置根据SSB的子载波间隔确定如下：</p>
-<ul>
-<li>Case A - 15 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} +
-14*n。对于载频小于或等于3 GHz的情况，n=0,1。对于载频大于3
-GHz且小于或等于6 GHz的情况，n=0,1,2,3。</li>
-<li>CaseB - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16, 20}
-+ 28*n。对于载频小于或等于3 GHz的情况，n=0。对于载频大于3
-GHz且小于或等于6 GHz的情况，n=0,1。</li>
-<li>Case C - 30 kHz子载波间隔：候选SSB的第一个符号的索引为{2, 8} +
-14*n。对于载频小于或等于3 GHz的情况，n=0,1。对于载频大于3
-GHz且小于或等于6 GHz的情况，n=0,1,2,3。</li>
-<li>Case D - 120 kHz子载波间隔：候选SSB的第一个符号的索引为{4, 8, 16,
-20} + 28*n。对于载频大于6 GHz的情况，n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11,
-12, 13, 15, 16, 17, 18。</li>
-<li>Case E - 240 kHz子载波间隔：候选SSB的第一个符号的索引为{8, 12, 16,
-20, 32, 36, 40, 44} + 56*n。对于载频对于6 GHz的情况，n=0, 1, 2, 3, 5, 6,
-7, 8。</li>
-</ul>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101842369.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171229/101923796.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>半帧中的候选SSB索引在时间上从0到$ L-1 <span
-class="math inline">\(升序编号。在PBCH中发送的DM-RS序列的索引与每半帧中的SSB索引形成一一映射，若\)</span>
-L=4 <span
-class="math inline">\(，则UE应从DM-RS序列索引中确定半帧中SSB索引的2个低有效位；若\)</span>
-L&gt;4 <span
-class="math inline">\(，则UE应从DM-RS索引中确定半帧中SSB索引的3个低有效位。若\)</span>
-L=64 $，UE应从高层参数 <em>SSB-index-explicit</em>
-确定每半帧中的SSB索引的3个高有效位。</p>
-<p>UE可以通过参数 <em>SSB-transmitted-SIB1</em>
-得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。UE也可以通过高层参数
-<em>SSB-transmitted</em>
-按照每个服务小区得到配置，UE不应接收与SSB对应的RE重叠的RE中的其他信号或信道的SSB索引。
-<em>SSB-transmitted</em> 的配置覆盖 <em>SSB-transmitted-SIB1</em>
-的配置。UE可以通过高层参数 <em>SSB-timing</em>
-为每个服务小区配置用于接收每个服务小区的SSB的半帧的周期。如果UE没有配置接收SSB的半帧的周期，则UE将假定周期为半帧。UE应该假定服务小区中的所有SSB的周期是相同的。</p>
-<p>对于初始小区选择，UE可假定具有SSB的半帧以2个帧为周期。</p>
-<p>对于没有发送SSB的服务小区，UE基于服务小区的小区群的PCell或PSCell上的SSB的接收来获取与服务小区的时间和频率同步。</p>
-<blockquote>
-<p>本文参考3GPP TS38.211 V2.0.0 (2017-12)</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>5G-NR</tag>
-        <tag>3GPP</tag>
-        <tag>2017-12</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NR PRG</title>
     <url>/2020/03/07/nr_prg/</url>
     <content><![CDATA[<h2 id="prg">PRG</h2>
@@ -7049,76 +7049,6 @@ size等于UE所调度的连续PRB数目，分配给UE的资源必须是连续的
       </categories>
       <tags>
         <tag>5G-NR</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Polar Code（1）概述</title>
-    <url>/2017/03/01/polar-code-1-summary/</url>
-    <content><![CDATA[<p>2016年11月18日，在美国内华达州里诺召开的3GPP RAN1
-#87次会议，确定<strong>Polar Code</strong>作为5G
-<strong>eMBB</strong>（增强移动宽带）场景下<strong>控制信道</strong>编码方案。</p>
-<p>2008年，Erdal
-Arikan在国际信息论ISIT会议上首次提出了<strong>信道极化（Channel
-Polarization）</strong>的概念；2009年在“IEEE Transaction on Information
-Theory”期刊上发表了一篇长达23页的论文更加详细地阐述了信道极化，并基于信道极化给出了一种新的编码方式，名称为<strong>极化码（Polar
-Code）</strong>。极化码具有确定性的构造方法，并且是已知的唯一一种能够被严格证明“达到”信道容量的信道编码方法。</p>
-<span id="more"></span>
-<p>从代数编码和概率编码的角度来说，极化码具备了两者各自的特点。首先，只要给定编码长度，极化码的编译码结构就唯一确定了，而且可以通过生成矩阵的形式完成编码过程，这一点和代数编码的常见思维是一致的。其次，极化码在设计时并没有考虑最小距离特性，而是利用了<strong>信道联合（Channel
-Combination）与信道分裂（Channel
-Splitting）</strong>的过程来选择具体的编码方案，而且在译码时也是采用概率算法，这一点比较符合概率编码的思想。</p>
-<p>对于长度为<span class="math inline">\(N={2^{n}}\)</span>（<span
-class="math inline">\(n\)</span>为任意正整数）的极化码，它利用信道<span
-class="math inline">\(W\)</span>的N个独立副本，进行信道联合和信道分裂，得到新的N个分裂之后的信道<span
-class="math inline">\(\left\{ W_{N}^{\left( 1 \right)},W_{N}^{\left( 2
-\right)},...,W_{N}^{\left( N \right)}
-\right\}\)</span>。随着码长N的增加，分裂之后的信道将向两个极端发展：其中一部分分裂信道会趋近于完美信道，即信道容量趋近于1的无噪声信道；而另一部分分裂信道会趋近于完全噪声信道，即信道容量趋近于0的信道。假设原信道<span
-class="math inline">\(W\)</span>的二进制输入对称容量记作<span
-class="math inline">\(I\left(W\right)\)</span>，那么当码长N趋近于无穷大时，信道容量趋近于1的分裂信道比例约为<span
-class="math inline">\(K=N\times I\left( W
-\right)\)</span>，而信道容量趋近于0的比例约为<span
-class="math inline">\(N\times \left( 1-I\left( W \right)
-\right)\)</span>。对于信道容量为1的可靠信道，可以直接放置消息比特而不采用任何编码，即相当于编码速率为<span
-class="math inline">\(R=1\)</span>；而对于信道容量为0的不可靠信道，可以放置发送端和接收端都事先已知的冻结比特，即相当于编码速率为<span
-class="math inline">\(R=0\)</span>。那么当码长$N<span
-class="math inline">\(时，极化码的可达编码速率\)</span>R=NI(W)/N=I(W)$，即在理论上，极化码可以被证明是可达信道容量的。</p>
-<p>在极化码编码时，首先要区分出N个分裂信道的可靠程度，即哪些属于可靠信道，哪些属于不可靠信道。对各个极化信道的可靠性进行度量常用的有三种方法：<strong>巴氏参数</strong>（Bhattacharyya
-Parameter）法、<strong>密度进化</strong>（Density
-Evolution，DE）法和<strong>高斯近似</strong>（Gaussian
-Approximation）法：</p>
-<ol type="1">
-<li>最初，极化码采用巴氏参数<span class="math inline">\(Z\left( W
-\right)\)</span>来作为每个分裂信道的可靠性度量，<span
-class="math inline">\(Z\left( W
-\right)\)</span>越大表示信道的可靠程度越低。当信道<span
-class="math inline">\(W\)</span>是二元删除信道（Binary Erasure
-Channel，BEC）时，每个<span class="math inline">\(Z\left( W_{N}^{\left(
-i \right)} \right)\)</span>都可以采用递归的方式计算出来，复杂度为<span
-class="math inline">\(O\left( N\log N
-\right)\)</span>。然而，对于其他信道，如二进制输入对称信道（Binary-input
-Symmeric Channel，BSC）或者二进制输入加性高斯白噪声信道（Binary-input
-Additive White Gaussian Channel，BAWGNC）并不存在准确的能够计算<span
-class="math inline">\(Z\left( W_{N}^{\left( i \right)}
-\right)\)</span>的方法。</li>
-<li>因此，Mori等人提出了一种采用密度进化方法跟踪每个子信道概率密度函数（Probability
-Density
-Function，PDF），从而估计每个子信道错误概率的方法。这种方法适用于所有类型的二进制输入离散无记忆信道（Binary-input
-Discrete Memoryless Channel，B-DMC）信道。</li>
-<li>在大多数研究场景下，信道编码的传输信道模型均为BAWGNC信道。在BAWGNC信道下，可以将密度进化中的对数似然比（Likelihood
-Rate，LLR）的概率密度函数用一族方差为均值2倍的高斯分布来近似，从而简化成了对一维均值的计算，大大降低计算量，这种对DE的简化计算即为高斯近似。</li>
-</ol>
-<p>参考文献： [1] Arikan E. Channel polarization: A method for
-constructing capacity-achieving codes[C]// IEEE International Symposium
-on Information Theory. IEEE, 2008:1173-1177. [2] Arikan E. Channel
-Polarization: A Method for Constructing Capacity-Achieving Codes for
-Symmetric Binary-Input Memoryless Channels[J]. IEEE Transactions on
-Information Theory, 2008, 55(7):3051-3073. [3] 陈凯.
-极化编码理论与实用方案研究[D]. 北京邮电大学, 2014.</p>
-]]></content>
-      <categories>
-        <category>Polar Code</category>
-      </categories>
-      <tags>
-        <tag>Polar Code</tag>
       </tags>
   </entry>
   <entry>
@@ -7535,6 +7465,76 @@ codes[C]// IEEE International Conference on Communications. IEEE,
       </tags>
   </entry>
   <entry>
+    <title>Polar Code（1）概述</title>
+    <url>/2017/03/01/polar-code-1-summary/</url>
+    <content><![CDATA[<p>2016年11月18日，在美国内华达州里诺召开的3GPP RAN1
+#87次会议，确定<strong>Polar Code</strong>作为5G
+<strong>eMBB</strong>（增强移动宽带）场景下<strong>控制信道</strong>编码方案。</p>
+<p>2008年，Erdal
+Arikan在国际信息论ISIT会议上首次提出了<strong>信道极化（Channel
+Polarization）</strong>的概念；2009年在“IEEE Transaction on Information
+Theory”期刊上发表了一篇长达23页的论文更加详细地阐述了信道极化，并基于信道极化给出了一种新的编码方式，名称为<strong>极化码（Polar
+Code）</strong>。极化码具有确定性的构造方法，并且是已知的唯一一种能够被严格证明“达到”信道容量的信道编码方法。</p>
+<span id="more"></span>
+<p>从代数编码和概率编码的角度来说，极化码具备了两者各自的特点。首先，只要给定编码长度，极化码的编译码结构就唯一确定了，而且可以通过生成矩阵的形式完成编码过程，这一点和代数编码的常见思维是一致的。其次，极化码在设计时并没有考虑最小距离特性，而是利用了<strong>信道联合（Channel
+Combination）与信道分裂（Channel
+Splitting）</strong>的过程来选择具体的编码方案，而且在译码时也是采用概率算法，这一点比较符合概率编码的思想。</p>
+<p>对于长度为<span class="math inline">\(N={2^{n}}\)</span>（<span
+class="math inline">\(n\)</span>为任意正整数）的极化码，它利用信道<span
+class="math inline">\(W\)</span>的N个独立副本，进行信道联合和信道分裂，得到新的N个分裂之后的信道<span
+class="math inline">\(\left\{ W_{N}^{\left( 1 \right)},W_{N}^{\left( 2
+\right)},...,W_{N}^{\left( N \right)}
+\right\}\)</span>。随着码长N的增加，分裂之后的信道将向两个极端发展：其中一部分分裂信道会趋近于完美信道，即信道容量趋近于1的无噪声信道；而另一部分分裂信道会趋近于完全噪声信道，即信道容量趋近于0的信道。假设原信道<span
+class="math inline">\(W\)</span>的二进制输入对称容量记作<span
+class="math inline">\(I\left(W\right)\)</span>，那么当码长N趋近于无穷大时，信道容量趋近于1的分裂信道比例约为<span
+class="math inline">\(K=N\times I\left( W
+\right)\)</span>，而信道容量趋近于0的比例约为<span
+class="math inline">\(N\times \left( 1-I\left( W \right)
+\right)\)</span>。对于信道容量为1的可靠信道，可以直接放置消息比特而不采用任何编码，即相当于编码速率为<span
+class="math inline">\(R=1\)</span>；而对于信道容量为0的不可靠信道，可以放置发送端和接收端都事先已知的冻结比特，即相当于编码速率为<span
+class="math inline">\(R=0\)</span>。那么当码长$N<span
+class="math inline">\(时，极化码的可达编码速率\)</span>R=NI(W)/N=I(W)$，即在理论上，极化码可以被证明是可达信道容量的。</p>
+<p>在极化码编码时，首先要区分出N个分裂信道的可靠程度，即哪些属于可靠信道，哪些属于不可靠信道。对各个极化信道的可靠性进行度量常用的有三种方法：<strong>巴氏参数</strong>（Bhattacharyya
+Parameter）法、<strong>密度进化</strong>（Density
+Evolution，DE）法和<strong>高斯近似</strong>（Gaussian
+Approximation）法：</p>
+<ol type="1">
+<li>最初，极化码采用巴氏参数<span class="math inline">\(Z\left( W
+\right)\)</span>来作为每个分裂信道的可靠性度量，<span
+class="math inline">\(Z\left( W
+\right)\)</span>越大表示信道的可靠程度越低。当信道<span
+class="math inline">\(W\)</span>是二元删除信道（Binary Erasure
+Channel，BEC）时，每个<span class="math inline">\(Z\left( W_{N}^{\left(
+i \right)} \right)\)</span>都可以采用递归的方式计算出来，复杂度为<span
+class="math inline">\(O\left( N\log N
+\right)\)</span>。然而，对于其他信道，如二进制输入对称信道（Binary-input
+Symmeric Channel，BSC）或者二进制输入加性高斯白噪声信道（Binary-input
+Additive White Gaussian Channel，BAWGNC）并不存在准确的能够计算<span
+class="math inline">\(Z\left( W_{N}^{\left( i \right)}
+\right)\)</span>的方法。</li>
+<li>因此，Mori等人提出了一种采用密度进化方法跟踪每个子信道概率密度函数（Probability
+Density
+Function，PDF），从而估计每个子信道错误概率的方法。这种方法适用于所有类型的二进制输入离散无记忆信道（Binary-input
+Discrete Memoryless Channel，B-DMC）信道。</li>
+<li>在大多数研究场景下，信道编码的传输信道模型均为BAWGNC信道。在BAWGNC信道下，可以将密度进化中的对数似然比（Likelihood
+Rate，LLR）的概率密度函数用一族方差为均值2倍的高斯分布来近似，从而简化成了对一维均值的计算，大大降低计算量，这种对DE的简化计算即为高斯近似。</li>
+</ol>
+<p>参考文献： [1] Arikan E. Channel polarization: A method for
+constructing capacity-achieving codes[C]// IEEE International Symposium
+on Information Theory. IEEE, 2008:1173-1177. [2] Arikan E. Channel
+Polarization: A Method for Constructing Capacity-Achieving Codes for
+Symmetric Binary-Input Memoryless Channels[J]. IEEE Transactions on
+Information Theory, 2008, 55(7):3051-3073. [3] 陈凯.
+极化编码理论与实用方案研究[D]. 北京邮电大学, 2014.</p>
+]]></content>
+      <categories>
+        <category>Polar Code</category>
+      </categories>
+      <tags>
+        <tag>Polar Code</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Polar Code（11）3GPP标准化进展</title>
     <url>/2017/03/22/polar-code-11-3gpp-standard-1/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -7937,65 +7937,6 @@ Code（8）高斯近似》</a></p>
       </tags>
   </entry>
   <entry>
-    <title>Polar Code（19）当我们谈论design-snr时我们在谈论什么</title>
-    <url>/2017/08/26/polar-code-19-design-snr/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p><br/>本文对论文“A Comparative Study of Polar Code Constructions for
-the AWGN Channel”进行解读。</p>
-<h1 id="极化码构造">极化码构造</h1>
-<p><br/>论文首先锁定了讨论的范围是<strong>极化码构造</strong>。极化码是线性分组码，极化码的码长N一旦确定，其生成矩阵随之确定；此时，比特信道的选择就完全地定义了一个极化码，不同的比特信道位置，其对应的编码结果不同。因此将比特信道的选择过程称为<strong>“极化码构造”（polar
-code construction）</strong>。</p>
-<span id="more"></span>
-<p>极化码构造对于有限码长的最佳性能至关重要。极化码的构造在理论上有明确地定义，无非是从N个比特信道中选择最可靠的K个子信道。但现实的挑战是，你怎么知道哪些子信道是最可靠的？——极化信道的可靠性估计。于是引出了许多估计方法，如巴氏参数界法、蒙特卡洛估计法、TPM估计法、高斯近似法。</p>
-<h1 id="design-snr">design-snr</h1>
-<p><br/>极化码有个重要特性就是它的<strong>非普遍性（non-universality）</strong>。不同的极化码在给定的不同SNR下是不同的。实际的无线信道，其SNR是可能变化的。但我们不希望编码总是跟着信道SNR变化。因此我们希望有一个“一劳永逸”的解决方案，只设定一个SNR值，让它能够适用于一定范围内变化的SNR。这个SNR值被称为design-snr。</p>
-<p>那么design-snr值究竟是多少呢？它等于多少时才使极化码性能达到最优呢？能够使极化码性能最优的design-snr就是the
-best design-snr。本论文的目的，就是找到the best design-snr。</p>
-<p>作者指出极化码性能取决于三个因素，码率、码长和码构造算法。这意味着不同的码率、不同的码长、不同的码构造算法，the
-best
-design-snr也可能不同。再进一步明确本论文的目的，在规定的码率和码长（R=0.5，N=2048）下，分别找到不同码构造算法对应的最优design-snr。</p>
-<h1 id="the-best-design-snr">the best design-snr</h1>
-<p><br/>怎么找？作者给出了一个搜索算法，其实就是试数法。假如我们感兴趣的SNR范围是{S1,S2,…,Sm}。令design-snr依次取每一个Si值，看看在哪个Si下，对应的码构造算法性能最优。使性能最优的那个Si值就是我们要找的the
-best design-snr。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170826/163041818.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>如上图所示，高斯近似法在N=2048，R=0.5的条件下，性能最好的是那条蓝色实线，其对应的design-snr=-1.5917dB。这就是要找的the
-best design-snr。</p>
-<p>也就是说，在感兴趣的SNR={-1.5917,0,1,2,…,10}dB中，使高斯近似法性能达到最优的design-snr=-1.5917dB。So,
--1.5917 dB is the best design-snr for GA.</p>
-<p>反过来看，这个最佳design-snr对大多范围内的SNR有效呢？上图的横坐标是EbN0，纵坐标是BER。如果要使BER性能达到10-3以下，在给定最佳design-snr下，EbN0大约只需2.4dB。</p>
-<p>对需要满足的BER性能指标，所需EbN0越小越好。而众多感兴趣的SNR值中，只有在最佳design-snr下，所需EbN0是最小的。换句话说，如果所用的
-design-snr不是最佳design-snr，要满足一定的BER性能，所需要的EbN0就要更大一些，这意味着对信道条件的要求更苛刻一些。</p>
-<p><span class="math inline">\(SNR=\frac{ { {E}_{s}}}{ {
-{N}_{0}}}=R\cdot \frac{ { {E}_{b}}}{ { {N}_{0}}}\)</span></p>
-<p>写成dB形成：</p>
-<p><span class="math inline">\(SNR\left( dB \right)=EbN0\left( dB
-\right)+10\log 10\left( R \right)\)</span></p>
-<p><span class="math inline">\(SNR\left( dB \right)=2.4+10\log 10\left(
-0.5 \right)=-0.6dB\)</span></p>
-<p>也就是说，对于高斯近似法，在最佳design-snr=-1.5917dB下，要达到BER=10-3的性能，所需SNR只要-0.6dB。换言之，对于高斯近似法，要达到BER=10-3的性能，对于N=2048，R=0.5，只要信道SNR大于-0.6dB，这个最佳design-snr值就是适用的。</p>
-<p>如此看来，design-snr意义非凡。</p>
-<h1 id="参考文献">参考文献</h1>
-<p><br/>[1] Vangala H, Viterbo E, Hong Y. A comparative study of polar
-code constructions for the AWGN channel[J]. arXiv preprint
-arXiv:1501.02473, 2015.</p>
-<h1 id="相关链接">相关链接</h1>
-<p><br/><a
-href="http://marshallcomm.cn/2017/08/24/polar-code-18-select-bitchannel/">Polar
-Code（18）比特信道的选择</a></p>
-]]></content>
-      <categories>
-        <category>Polar Code</category>
-      </categories>
-      <tags>
-        <tag>Polar Code</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Polar Code（18）比特信道的选择</title>
     <url>/2017/08/24/polar-code-18-select-bitchannel/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -8158,6 +8099,370 @@ href="http://marshallcomm.cn/2017/03/17/polar-code-8-gaussian-approximation/">Po
 Code（8）高斯近似</a> <a
 href="http://marshallcomm.cn/2017/08/26/polar-code-19-design-snr/">Polar
 Code（19）当我们谈论design-snr时我们在谈论什么</a></p>
+]]></content>
+      <categories>
+        <category>Polar Code</category>
+      </categories>
+      <tags>
+        <tag>Polar Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polar Code（19）当我们谈论design-snr时我们在谈论什么</title>
+    <url>/2017/08/26/polar-code-19-design-snr/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p><br/>本文对论文“A Comparative Study of Polar Code Constructions for
+the AWGN Channel”进行解读。</p>
+<h1 id="极化码构造">极化码构造</h1>
+<p><br/>论文首先锁定了讨论的范围是<strong>极化码构造</strong>。极化码是线性分组码，极化码的码长N一旦确定，其生成矩阵随之确定；此时，比特信道的选择就完全地定义了一个极化码，不同的比特信道位置，其对应的编码结果不同。因此将比特信道的选择过程称为<strong>“极化码构造”（polar
+code construction）</strong>。</p>
+<span id="more"></span>
+<p>极化码构造对于有限码长的最佳性能至关重要。极化码的构造在理论上有明确地定义，无非是从N个比特信道中选择最可靠的K个子信道。但现实的挑战是，你怎么知道哪些子信道是最可靠的？——极化信道的可靠性估计。于是引出了许多估计方法，如巴氏参数界法、蒙特卡洛估计法、TPM估计法、高斯近似法。</p>
+<h1 id="design-snr">design-snr</h1>
+<p><br/>极化码有个重要特性就是它的<strong>非普遍性（non-universality）</strong>。不同的极化码在给定的不同SNR下是不同的。实际的无线信道，其SNR是可能变化的。但我们不希望编码总是跟着信道SNR变化。因此我们希望有一个“一劳永逸”的解决方案，只设定一个SNR值，让它能够适用于一定范围内变化的SNR。这个SNR值被称为design-snr。</p>
+<p>那么design-snr值究竟是多少呢？它等于多少时才使极化码性能达到最优呢？能够使极化码性能最优的design-snr就是the
+best design-snr。本论文的目的，就是找到the best design-snr。</p>
+<p>作者指出极化码性能取决于三个因素，码率、码长和码构造算法。这意味着不同的码率、不同的码长、不同的码构造算法，the
+best
+design-snr也可能不同。再进一步明确本论文的目的，在规定的码率和码长（R=0.5，N=2048）下，分别找到不同码构造算法对应的最优design-snr。</p>
+<h1 id="the-best-design-snr">the best design-snr</h1>
+<p><br/>怎么找？作者给出了一个搜索算法，其实就是试数法。假如我们感兴趣的SNR范围是{S1,S2,…,Sm}。令design-snr依次取每一个Si值，看看在哪个Si下，对应的码构造算法性能最优。使性能最优的那个Si值就是我们要找的the
+best design-snr。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170826/163041818.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>如上图所示，高斯近似法在N=2048，R=0.5的条件下，性能最好的是那条蓝色实线，其对应的design-snr=-1.5917dB。这就是要找的the
+best design-snr。</p>
+<p>也就是说，在感兴趣的SNR={-1.5917,0,1,2,…,10}dB中，使高斯近似法性能达到最优的design-snr=-1.5917dB。So,
+-1.5917 dB is the best design-snr for GA.</p>
+<p>反过来看，这个最佳design-snr对大多范围内的SNR有效呢？上图的横坐标是EbN0，纵坐标是BER。如果要使BER性能达到10-3以下，在给定最佳design-snr下，EbN0大约只需2.4dB。</p>
+<p>对需要满足的BER性能指标，所需EbN0越小越好。而众多感兴趣的SNR值中，只有在最佳design-snr下，所需EbN0是最小的。换句话说，如果所用的
+design-snr不是最佳design-snr，要满足一定的BER性能，所需要的EbN0就要更大一些，这意味着对信道条件的要求更苛刻一些。</p>
+<p><span class="math inline">\(SNR=\frac{ { {E}_{s}}}{ {
+{N}_{0}}}=R\cdot \frac{ { {E}_{b}}}{ { {N}_{0}}}\)</span></p>
+<p>写成dB形成：</p>
+<p><span class="math inline">\(SNR\left( dB \right)=EbN0\left( dB
+\right)+10\log 10\left( R \right)\)</span></p>
+<p><span class="math inline">\(SNR\left( dB \right)=2.4+10\log 10\left(
+0.5 \right)=-0.6dB\)</span></p>
+<p>也就是说，对于高斯近似法，在最佳design-snr=-1.5917dB下，要达到BER=10-3的性能，所需SNR只要-0.6dB。换言之，对于高斯近似法，要达到BER=10-3的性能，对于N=2048，R=0.5，只要信道SNR大于-0.6dB，这个最佳design-snr值就是适用的。</p>
+<p>如此看来，design-snr意义非凡。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><br/>[1] Vangala H, Viterbo E, Hong Y. A comparative study of polar
+code constructions for the AWGN channel[J]. arXiv preprint
+arXiv:1501.02473, 2015.</p>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/08/24/polar-code-18-select-bitchannel/">Polar
+Code（18）比特信道的选择</a></p>
+]]></content>
+      <categories>
+        <category>Polar Code</category>
+      </categories>
+      <tags>
+        <tag>Polar Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polar Code（20）Beta-expansion</title>
+    <url>/2017/09/19/polar-code-20-beta-expansion/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p><br/><strong>高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。</strong></p>
+<p>文献[1]首先揭示了极化码合成信道（synthesized
+channels）之间的偏序（Partial
+Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1
+#86次会议上，华为提出了用极化权重（Polarization
+Weight，PW）来表征AWGN信道下极化码合成信道可靠性的算法[2]。这两项独立的研究似乎不谋而合，促使华为进一步进行理论扩展，追求AWGN信道下极化码的快速构造方法。这就是本博文所要介绍的β-expansion[3]。</p>
+<p>文献[3]首先介绍了通用偏序（Universal Partial
+Order，UPO）的两个重要性质：嵌套和对称。这两个性质是能够采用递归方式构造极化码序列的基础。然后介绍了PW方法，其中β参数需要慎重地选择，其值的大小直接决定了合成信道的顺序。最后用大量的篇幅论证了β的最佳取值为1.1892，即<span
+class="math inline">\(\beta ={ {2}^{
+{1}/{4}\;}}\)</span>。无论是渐进性分析，还是数值仿真结果都证实β-expansion方法以低复杂度获得了与GA相同的性能。</p>
+<span id="more"></span>
+<h1 id="预备知识">预备知识</h1>
+<h2 id="极化码策略">极化码策略</h2>
+<p><br/><strong>策略：</strong>将信息比特放置于好的信道位置上，将冻结比特放置于差的信道位置上。</p>
+<p><strong>关键：</strong>如何有效地识别信道位置的好坏并按可靠性排序，是极化码序列构造的关键。</p>
+<p><strong>不幸：</strong>有效地序列构造仅存在于二进制删除信道（BEC）上。</p>
+<p><strong>挑战：</strong>5G无线通信系统要求极化码至少能够适用于AWGN信道。</p>
+<p><strong>已有方法：</strong>高斯近似（GA）。</p>
+<p><strong>已有方法缺点：</strong>GA的缺点是计算量大，其计算量随着码块长度成比例增加，这对于码长和码率变化的实际系统是不可接受的。不仅如此，对于低延迟的编译码器，也无法实现在线地处理。</p>
+<h2 id="通用偏序upo">通用偏序（UPO）</h2>
+<p><br/>文献[1]证明了任意二进制输入对称信道下的可靠性测量存在偏序（Partial
+Order）关系。给定一对合成信道索引<span class="math inline">\(\left( x,y
+\right)\)</span>，它们的可靠性关系取决于下列规则：</p>
+<p><strong>Addition：</strong>若一个合成信道索引用二进制表示为<span
+class="math inline">\(\left( a,b,1,c
+\right)\)</span>，那么它的可靠性一定大于合成信道<span
+class="math inline">\(\left( a,b,0,c \right)\)</span>。<span
+class="math inline">\(&#39;&#39;1\succ
+0&#39;&#39;\)</span>模式对于1比特或多比特同样适用。例如：</p>
+<p>2（0, 1 ,0） $$ 3（0, 1, 1）</p>
+<p>9（1, 0, 0, 1） $$ 15（1, 1, 1, 1）</p>
+<p>在此例中（1, 0, 0, 1）是合成信道索引9的二进制表示。</p>
+<p><strong>Left-swap：</strong>若合成信道索引为<span
+class="math inline">\(\left( a,0,b,1,c
+\right)\)</span>，那么它的可靠性一定小于合成信道<span
+class="math inline">\(\left( a,1,b,0,c \right)\)</span>。<span
+class="math inline">\(&#39;&#39;0...1\prec
+1...0&#39;&#39;\)</span>模式可以出现多次，并且0,1不需要彼此相邻。例如：</p>
+<p>2（0, 1 ,0） $$ 4（1, 0, 0）</p>
+<p>12（0, 1, 1, 0, 0） $$ 24（1, 1, 0, 0, 0）</p>
+<p>但这两个规则也不是万能的，对于某些索引对<span
+class="math inline">\(\left( x,y
+\right)\)</span>则无能为力。Addition、Left-swap或它们的联合都不能确定顺序。例如：</p>
+<p>3（0, 1, 1）and 4（1, 0, 0）</p>
+<p>7（0, 1, 1, 1）and 12（1, 1, 0, 0）</p>
+<p>我们称这些序对于UPO是<strong>未知的</strong>。</p>
+<h1 id="upo的性质">UPO的性质</h1>
+<p><br/><strong>Proposition 1.</strong>
+（嵌套和对称）极化码通用偏序有两个重要性质：</p>
+<p><strong>嵌套：</strong>码长为<span
+class="math inline">\(N\)</span>的序可在码长为<span
+class="math inline">\(2N\)</span>的序中保持不变。</p>
+<p><strong>对称：</strong>在码长为<span
+class="math inline">\(N\)</span>的极化码中，<span
+class="math inline">\(x\prec y\)</span>的序和<span
+class="math inline">\(\left( N-1-x \right)\prec \left( N-1-y
+\right)\)</span>的序对称。</p>
+<p>现在讨论UPO的递归结构。定义<span class="math inline">\(\mathbf{UP}{
+{\mathbf{O}}_{n}}\)</span>为极化码码长<span
+class="math inline">\(N\)</span>的偏序关系<span
+class="math inline">\(x\prec y\)</span>的最小集合，其中<span
+class="math inline">\(x\prec y\)</span>记为<span
+class="math inline">\(\left\{ x,y \right\}\)</span>，<span
+class="math inline">\(x,y\)</span>是<span class="math inline">\(\left[
+0,N-1 \right]\)</span>内的整数。关系链<span class="math inline">\(x\prec
+y\prec z\)</span>可以用若干子链表示最临近节点之间的关系，即<span
+class="math inline">\(x\prec y\)</span>和<span
+class="math inline">\(y\prec z\)</span>。例如：</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181904087.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>其中<span class="math inline">\(\mathbf{UP}{
+{\mathbf{O}}_{n}}\)</span>中黑色字体的序来源于它的上一级<span
+class="math inline">\(\mathbf{UP}{
+{\mathbf{O}}_{n-1}}\)</span>，对应于Proposition
+1的<strong>嵌套性质</strong>；蓝色字体的序表示与黑色字体的序对称的部分，对应于Proposition
+1的<strong>对称性质</strong>；红色字体的序表示从<span
+class="math inline">\(\mathbf{UP}{ {\mathbf{O}}_{n-1}}\)</span>到<span
+class="math inline">\(\mathbf{UP}{
+{\mathbf{O}}_{n}}\)</span>构造过程中出现的新序，这些新出现的序对于UPO来说是<strong>未知的</strong>。</p>
+<h1 id="β-expansionpw算法原理">β-expansion：PW算法原理</h1>
+<p><br/><strong>定义：（PW 算法）</strong>考虑一个合成信道索引<span
+class="math inline">\(x\)</span>，其<span
+class="math inline">\(n\)</span>比特二进制扩展为<span
+class="math inline">\(B=\left( { {b}_{n-1}},...,{ {b}_{1}},{ {b}_{0}}
+\right)\)</span>，最左边为最高有效位。极化权重定义为</p>
+<p><span class="math display">\[\begin{align}
+{ {f}^{PW}}:x\mapsto \sum\limits_{i=1}^{n}{ { {b}_{i}}{ {\beta }^{i}}}
+\end{align}\]</span></p>
+<p>其中$<span
+class="math inline">\(的值需要慎重选择。文献[2]建议\)</span>={ {2}^{
+{1}/{4};}}$。</p>
+<p>在数学上，这种表示方法被称为β-expansion，是十进制扩展的推广，可以看作是对于任意实数<span
+class="math inline">\(y\)</span>的基于β的非整数表示。</p>
+<p><strong>例1：</strong>令<span class="math inline">\(\beta ={ {2}^{
+{1}/{4}\;}}\)</span>，极化码码长为<span class="math inline">\(N={
+{2}^{n}}=16\)</span>。则对于合成信道索引3，即<span
+class="math inline">\({ {B}_{3}}=\left( 0,0,1,1
+\right)\)</span>，其β-expansion可计算为</p>
+<p><span class="math display">\[{ {w}_{3}}=0\cdot { {2}^{
+{3}/{4}\;}}+0\cdot { {2}^{ {2}/{4}\;}}+1\cdot { {2}^{ {1}/{4}\;}}+1\cdot
+{ {2}^{ {0}/{4}\;}}=2.189\cdot \cdot \cdot \]</span></p>
+<p>同理，我们可以写出所有合成信道的β-expansion</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; w=\left\{ \begin{matrix}
+   0.000 &amp; 1.000 &amp; 1.189 &amp; 2.189 &amp; 1.414 &amp; 2.414
+&amp; 2.603 &amp; 3.603  \\
+\end{matrix} \right. \\
+\nonumber &amp; \ \ \ \ \ \ \ \left. \begin{matrix}
+   1.682 &amp; 2.682 &amp; 2.871 &amp; 3.871 &amp; 3.096 &amp; 4.096
+&amp; 4.285 &amp; 5.285  \\
+\end{matrix} \right\} \\
+\end{align}\]</span></p>
+<p><span class="math inline">\({
+{w}_{x}}\)</span>值越大表示合成信道索引<span
+class="math inline">\(x\)</span>的可靠性越高。将<span
+class="math inline">\(w\)</span>按可靠性增序排列，就得到了极化码序列</p>
+<p><span class="math display">\[order=\left\{ \begin{matrix}
+   0 &amp; 1 &amp; 2 &amp; 4 &amp; 8 &amp; 3 &amp; 5 &amp; 6 &amp; 9
+&amp; 10 &amp; 12 &amp; 7 &amp; 11 &amp; 13 &amp; 14 &amp; 15  \\
+\end{matrix} \right\}\]</span></p>
+<p><strong>PW算法的优点是，对合成信道可靠性，提供了一种简洁、低复杂度的全排列算法，并且当码长<span
+class="math inline">\({ {2}^{n}}\)</span>从<span
+class="math inline">\(n=1\)</span>到$n+$增加时，能够始终保持一种嵌套性质。</strong></p>
+<p><strong>Proposition 2.
+</strong>（嵌套结构）PW算法维持了极化码的嵌套码构造的特性。</p>
+<p><strong>Proposition 3.</strong> 当<span class="math inline">\(\beta
+&gt;1\)</span>，任何由PW算法得到的序列都遵循极化码的通用偏序（UPO）关系。</p>
+<p><strong>Theorem 1.</strong> 对于长度为<span class="math inline">\({
+{2}^{n}}\left( n\ge 3 \right)\)</span>的极化码，存在一个升序集合<span
+class="math inline">\({ {A}_{n}}=\left\{ { {a}_{0}},{ {a}_{1}},{
+{a}_{2}},...,{ {a}_{ { {i}_{\max }}}},+\infty
+\right\}\)</span>，其中<span class="math inline">\({
+{a}_{0}}=1\)</span>和<span class="math inline">\({ {a}_{1}},{
+{a}_{2}},...,{ {a}_{ { {i}_{\max }}}}\)</span>都是代数。任意$<span
+class="math inline">\(落入区间\)</span>( { {a}<em>{i}},{ {a}</em>{i+1}}
+),i<span
+class="math inline">\(内，β-expansion都是唯一的，并且\)</span><span
+class="math inline">\(落入不同区间可导致不同的顺序序列。此外，集合\)</span>{
+{A}<em>{n}}<span class="math inline">\(是嵌套的，即\)</span>{
+{A}</em>{n}}$。</p>
+<blockquote>
+<p>Marshall：通过上述Proposition和Theorem，初步地把β-expansion和偏序建立起联系，β-expansion获得了偏序的理论支撑。两者的共性在于，它们都具有嵌套结构。然而$$的值究竟取何值呢？这还需要在具体的用例中去分析和确定。</p>
+</blockquote>
+<h1 id="awgn信道下的快速构造">AWGN信道下的快速构造</h1>
+<p><br/>现在UPO已经成为极化码序列构造的基础，而极化码序列的构造决定了合成信道的可靠性顺序。但UPO无法做到对整个序列进行全排列，正如在UPO的性质一节所看到的，从<span
+class="math inline">\(\mathbf{UP}{ {\mathbf{O}}_{n-1}}\)</span>到<span
+class="math inline">\(\mathbf{UP}{
+{\mathbf{O}}_{n}}\)</span>的构造中，总会有一些新的序是UPO无法判断的。而高斯近似虽然能够对整个序列进行全排序，但由于其高复杂度而不适用于实际应用。为了克服两者的缺点，本节呈现了一种基于UPO和β-expansion的快速构造方法。</p>
+<blockquote>
+<p>Marshall：根据高斯近似的结果，一步一步缩小$$的取值范围，最终的序列不仅满足UPO性质，而且与高斯近似的结果保持一致。换句话说，没有条件，就去创造条件。</p>
+</blockquote>
+<p>解释一下为什么$$的取值会影响序列顺序，如图1所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181329970.png" title="图 1 $\beta $-expansion嵌套结构，$\beta ={ {2}^{ {1}/{4}\;}}$，$N=2,4,8,16$ "/></p>
+<p>根据定理1，是默认为<span class="math inline">\(\beta
+&gt;1\)</span>，所以今后只考虑<span class="math inline">\(\beta
+&gt;1\)</span>。</p>
+<p>当<span
+class="math inline">\(n=3\)</span>时，只有一对未定关系，即<span
+class="math inline">\(\left( \beta +1,{ {\beta }^{2}}
+\right)\)</span>。为了区分它们的关系，需要多项式方式<span
+class="math inline">\({ {x}^{2}}-x-1=0\)</span>，取其大于1的根为<span
+class="math inline">\(x=\frac{1+\sqrt{5}}{2}=1.618\)</span>，因此升序集合为</p>
+<p><span class="math display">\[{ {A}_{3}}=\left\{
+1,1.618,+\infty  \right\}\]</span></p>
+<p>当<span class="math inline">\(\beta \in \left( 1,1.618
+\right)\)</span>时，有<span class="math inline">\(\beta +1&gt;{ {\beta
+}^{2}}\)</span>，则相应的序列为</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182022400.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>当<span class="math inline">\(\beta \in \left( 1.618,+\infty
+\right)\)</span>时，有<span class="math inline">\(\beta +1&lt;{ {\beta
+}^{2}}\)</span>，则相应的序列为</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182147280.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>这就是定理1所说的，当$<span class="math inline">\(落入\)</span>{
+{A}_{3}}$的任意区间内，β-expansion是唯一的，且导致不同的顺序序列。</p>
+<p>当<span
+class="math inline">\(n=4\)</span>时，有4对未定关系，包括之前提到的<span
+class="math inline">\(\left( \beta +1,{ {\beta }^{2}}
+\right)\)</span>及其两个等价形式，即</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; \left( \beta +1,{ {\beta }^{2}} \right),\left( {
+{\beta }^{2}}+\beta ,{ {\beta }^{3}} \right),\left( { {\beta
+}^{2}}+\beta ,{ {\beta }^{3}} \right) \\
+\nonumber &amp; \left( \beta +1,{ {\beta }^{3}} \right),\left( { {\beta
+}^{2}}+1,{ {\beta }^{3}} \right),\left( { {\beta }^{2}}+\beta +1,{
+{\beta }^{3}} \right) \\
+\end{align}\]</span></p>
+<p>为了区分它们的关系，需要求解4个多项式方程</p>
+<p><span class="math display">\[\begin{align}
+{ {x}^{3}}-{ {x}^{2}}-x-1=0
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+{ {x}^{3}}-{ {x}^{2}}-1=0
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+{ {x}^{2}}-x-1=0
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+{ {x}^{3}}-x-1=0
+\end{align}\]</span></p>
+<p>得到</p>
+<p><span class="math display">\[{ {A}_{4}}=\left\{
+1,1.325,1.466,1.618,1.839,+\infty  \right\}\]</span></p>
+<p>其中1.325,1.466,1.618,1.839分别是多项式方程（2~5）的根。</p>
+<p>$<span class="math inline">\(分别落入\)</span>{
+{A}_{4}}$的5段子区间内，将导致5种不同的序，如图2所示。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/183636666.png" title="图 2 极化码的$\beta $-expansion，$N=16$"/></p>
+<p>$<span
+class="math inline">\(取哪个值？此时高斯近似法开始派上用场。对于码长\)</span>N={
+{2}^{4}}=16<span
+class="math inline">\(，\)</span>n=4$的极化码，AWGN信道下，高斯近似法对合成信道索引的排序为</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; 0\to 1\to 2\to 4\to 8\to 3\to 5\to 6\to 9 \\
+  \nonumber &amp; \to 10\to 12\to 7\to 11\to 13\to 14\to 15 \\
+\end{align}\]</span></p>
+<p>将这个序与图2对比，发现当<span class="math inline">\(\beta \in \left(
+1,1.325 \right)\)</span>时，两个序一致。</p>
+<p>由此，我们将$<span
+class="math inline">\(的取值范围由\)</span>n=3<span
+class="math inline">\(时的\)</span>( 1,1.618 )<span
+class="math inline">\(缩小到\)</span>n=4<span
+class="math inline">\(时的\)</span>( 1,1.325 )$。</p>
+<p>进一步，当<span
+class="math inline">\(n=5\)</span>时，有5对未定关系，即<span
+class="math inline">\(\left( 28,15 \right),\left( 14,19 \right),\left(
+24,13 \right),\left( 24,11 \right),\left( 24,7
+\right)\)</span>。根据高斯近似的可靠性结果，呈现出与$$的对应关系</p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; 28\prec 15,\ 24\prec 11\Leftrightarrow \beta &lt;1.221
+\\
+\nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 14\prec 19\Leftrightarrow \beta
+&lt;1.325 \\
+\nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 24\prec 13\Leftrightarrow \beta
+&lt;1.272 \\
+\end{align}\]</span></p>
+<p>对于序<span class="math inline">\(\left\{ 7,24
+\right\}\)</span>，虽然依赖于SNR的可靠性结果为<span
+class="math inline">\(7\succ 24\)</span>，但大量仿真结果表明<span
+class="math inline">\(7\prec 24\)</span>具有更好的性能。因此选择</p>
+<p><span class="math display">\[7\prec 24\Leftrightarrow \beta
+&gt;1.179\]</span></p>
+<p>此时，$<span class="math inline">\(的取值范围进一步缩小到\)</span>(
+1.179,1.221 )$。</p>
+<p>对于<span class="math inline">\(n&gt;5\)</span>（<span
+class="math inline">\(N&gt;32\)</span>）的情况，继续重复这一搜索过程，得到如下表中所示的结果。随着<span
+class="math inline">\(N\)</span>的增加，$$的取值范围不断缩小，并接近于<span
+class="math inline">\(1.1892\approx { {2}^{
+{1}/{4}\;}}\)</span>。新的序对小于合成信道总数的20%。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184231335.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h1 id="渐进性分析与数值仿真结果">渐进性分析与数值仿真结果</h1>
+<p><br/>β-expansion可以转化为贝努力卷积（Bernoulli
+Convolution）概念。贝努力卷积定义了概率测度</p>
+<p><span class="math display">\[{ {v}_{\lambda
+}}=\sum\limits_{i=1}^{+\infty }{ { {b}_{i}}}{ {\beta }^{i}}\]</span></p>
+<p>假设<span class="math inline">\(B=\left( ...,{ {b}_{1}},{ {b}_{0}}
+\right)\)</span>是二进制独立随机序列，满足</p>
+<p><span class="math display">\[\Pr \left\{ { {b}_{i}}=1 \right\}=\Pr
+\left\{ { {b}_{i}}=0 \right\}=0.5,\forall i\]</span></p>
+<p>测度<span class="math inline">\({ {v}_{\lambda
+}}\)</span>要么是绝对连续的，要么是奇异的。我们需要的正是<span
+class="math inline">\({ {v}_{\lambda
+}}\)</span>的绝对连续，使得在无限长的序列上能够进行全排列。令<span
+class="math inline">\(\beta ={ {2}^{
+{1}/{k}\;}}\)</span>，已经证明当<span
+class="math inline">\(k=4\)</span>时，即<span
+class="math inline">\(\beta
+\text{=}1.1892\)</span>时，满足绝对连续的必要条件。这与上表中的观察一致。</p>
+<p>图3则从仿真结果上表明β-expansion与高斯近似的性能相同。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184439317.png" title="图 3 Comparison of PW algorithm with β= 1.1892 and Gaussian approximation for different block-length N (code length in number of code bits). Simulation assumptions are: BLER = 0.001, QPSK modulation, AWGN channel, successive cancellation list (SCL) decoder with list size 8 and extra 19-bit CRC."/></p>
+<p>至此，从理论分析到仿真结果，充分论证了β-expansion算法的可行性和优越性。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><br/>[1] C. Schurch, “A partial Order for the Synthesized Channels of
+a Polar Code, ISIT 2016. [2] 3GPP, R1-167209, Polar code design and rate
+matching, Huawei, HiSilicon. [3] β-expansion A Theoretical Framework for
+Fast and Recursive Construction of Polar Codes, Huawei.</p>
 ]]></content>
       <categories>
         <category>Polar Code</category>
@@ -8503,311 +8808,6 @@ class="math inline">\(N\)</span>，编译码结构就唯一确定。极化码基
 Capacity-Achieving Codes for Symmetric Binary-Input Memoryless
 Channels[J]. IEEE Transactions on Information Theory, 2008,
 55(7):3051-3073.</p>
-]]></content>
-      <categories>
-        <category>Polar Code</category>
-      </categories>
-      <tags>
-        <tag>Polar Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Polar Code（20）Beta-expansion</title>
-    <url>/2017/09/19/polar-code-20-beta-expansion/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p><br/><strong>高斯近似（GA）终将成为历史，取而代之的是β-expansion算法。β-expansion与GA性能等价，但复杂度极低。</strong></p>
-<p>文献[1]首先揭示了极化码合成信道（synthesized
-channels）之间的偏序（Partial
-Order，PO）关系。2016年8月22-26日，在瑞典哥德堡举行的3GPP RAN1
-#86次会议上，华为提出了用极化权重（Polarization
-Weight，PW）来表征AWGN信道下极化码合成信道可靠性的算法[2]。这两项独立的研究似乎不谋而合，促使华为进一步进行理论扩展，追求AWGN信道下极化码的快速构造方法。这就是本博文所要介绍的β-expansion[3]。</p>
-<p>文献[3]首先介绍了通用偏序（Universal Partial
-Order，UPO）的两个重要性质：嵌套和对称。这两个性质是能够采用递归方式构造极化码序列的基础。然后介绍了PW方法，其中β参数需要慎重地选择，其值的大小直接决定了合成信道的顺序。最后用大量的篇幅论证了β的最佳取值为1.1892，即<span
-class="math inline">\(\beta ={ {2}^{
-{1}/{4}\;}}\)</span>。无论是渐进性分析，还是数值仿真结果都证实β-expansion方法以低复杂度获得了与GA相同的性能。</p>
-<span id="more"></span>
-<h1 id="预备知识">预备知识</h1>
-<h2 id="极化码策略">极化码策略</h2>
-<p><br/><strong>策略：</strong>将信息比特放置于好的信道位置上，将冻结比特放置于差的信道位置上。</p>
-<p><strong>关键：</strong>如何有效地识别信道位置的好坏并按可靠性排序，是极化码序列构造的关键。</p>
-<p><strong>不幸：</strong>有效地序列构造仅存在于二进制删除信道（BEC）上。</p>
-<p><strong>挑战：</strong>5G无线通信系统要求极化码至少能够适用于AWGN信道。</p>
-<p><strong>已有方法：</strong>高斯近似（GA）。</p>
-<p><strong>已有方法缺点：</strong>GA的缺点是计算量大，其计算量随着码块长度成比例增加，这对于码长和码率变化的实际系统是不可接受的。不仅如此，对于低延迟的编译码器，也无法实现在线地处理。</p>
-<h2 id="通用偏序upo">通用偏序（UPO）</h2>
-<p><br/>文献[1]证明了任意二进制输入对称信道下的可靠性测量存在偏序（Partial
-Order）关系。给定一对合成信道索引<span class="math inline">\(\left( x,y
-\right)\)</span>，它们的可靠性关系取决于下列规则：</p>
-<p><strong>Addition：</strong>若一个合成信道索引用二进制表示为<span
-class="math inline">\(\left( a,b,1,c
-\right)\)</span>，那么它的可靠性一定大于合成信道<span
-class="math inline">\(\left( a,b,0,c \right)\)</span>。<span
-class="math inline">\(&#39;&#39;1\succ
-0&#39;&#39;\)</span>模式对于1比特或多比特同样适用。例如：</p>
-<p>2（0, 1 ,0） $$ 3（0, 1, 1）</p>
-<p>9（1, 0, 0, 1） $$ 15（1, 1, 1, 1）</p>
-<p>在此例中（1, 0, 0, 1）是合成信道索引9的二进制表示。</p>
-<p><strong>Left-swap：</strong>若合成信道索引为<span
-class="math inline">\(\left( a,0,b,1,c
-\right)\)</span>，那么它的可靠性一定小于合成信道<span
-class="math inline">\(\left( a,1,b,0,c \right)\)</span>。<span
-class="math inline">\(&#39;&#39;0...1\prec
-1...0&#39;&#39;\)</span>模式可以出现多次，并且0,1不需要彼此相邻。例如：</p>
-<p>2（0, 1 ,0） $$ 4（1, 0, 0）</p>
-<p>12（0, 1, 1, 0, 0） $$ 24（1, 1, 0, 0, 0）</p>
-<p>但这两个规则也不是万能的，对于某些索引对<span
-class="math inline">\(\left( x,y
-\right)\)</span>则无能为力。Addition、Left-swap或它们的联合都不能确定顺序。例如：</p>
-<p>3（0, 1, 1）and 4（1, 0, 0）</p>
-<p>7（0, 1, 1, 1）and 12（1, 1, 0, 0）</p>
-<p>我们称这些序对于UPO是<strong>未知的</strong>。</p>
-<h1 id="upo的性质">UPO的性质</h1>
-<p><br/><strong>Proposition 1.</strong>
-（嵌套和对称）极化码通用偏序有两个重要性质：</p>
-<p><strong>嵌套：</strong>码长为<span
-class="math inline">\(N\)</span>的序可在码长为<span
-class="math inline">\(2N\)</span>的序中保持不变。</p>
-<p><strong>对称：</strong>在码长为<span
-class="math inline">\(N\)</span>的极化码中，<span
-class="math inline">\(x\prec y\)</span>的序和<span
-class="math inline">\(\left( N-1-x \right)\prec \left( N-1-y
-\right)\)</span>的序对称。</p>
-<p>现在讨论UPO的递归结构。定义<span class="math inline">\(\mathbf{UP}{
-{\mathbf{O}}_{n}}\)</span>为极化码码长<span
-class="math inline">\(N\)</span>的偏序关系<span
-class="math inline">\(x\prec y\)</span>的最小集合，其中<span
-class="math inline">\(x\prec y\)</span>记为<span
-class="math inline">\(\left\{ x,y \right\}\)</span>，<span
-class="math inline">\(x,y\)</span>是<span class="math inline">\(\left[
-0,N-1 \right]\)</span>内的整数。关系链<span class="math inline">\(x\prec
-y\prec z\)</span>可以用若干子链表示最临近节点之间的关系，即<span
-class="math inline">\(x\prec y\)</span>和<span
-class="math inline">\(y\prec z\)</span>。例如：</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181904087.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>其中<span class="math inline">\(\mathbf{UP}{
-{\mathbf{O}}_{n}}\)</span>中黑色字体的序来源于它的上一级<span
-class="math inline">\(\mathbf{UP}{
-{\mathbf{O}}_{n-1}}\)</span>，对应于Proposition
-1的<strong>嵌套性质</strong>；蓝色字体的序表示与黑色字体的序对称的部分，对应于Proposition
-1的<strong>对称性质</strong>；红色字体的序表示从<span
-class="math inline">\(\mathbf{UP}{ {\mathbf{O}}_{n-1}}\)</span>到<span
-class="math inline">\(\mathbf{UP}{
-{\mathbf{O}}_{n}}\)</span>构造过程中出现的新序，这些新出现的序对于UPO来说是<strong>未知的</strong>。</p>
-<h1 id="β-expansionpw算法原理">β-expansion：PW算法原理</h1>
-<p><br/><strong>定义：（PW 算法）</strong>考虑一个合成信道索引<span
-class="math inline">\(x\)</span>，其<span
-class="math inline">\(n\)</span>比特二进制扩展为<span
-class="math inline">\(B=\left( { {b}_{n-1}},...,{ {b}_{1}},{ {b}_{0}}
-\right)\)</span>，最左边为最高有效位。极化权重定义为</p>
-<p><span class="math display">\[\begin{align}
-{ {f}^{PW}}:x\mapsto \sum\limits_{i=1}^{n}{ { {b}_{i}}{ {\beta }^{i}}}
-\end{align}\]</span></p>
-<p>其中$<span
-class="math inline">\(的值需要慎重选择。文献[2]建议\)</span>={ {2}^{
-{1}/{4};}}$。</p>
-<p>在数学上，这种表示方法被称为β-expansion，是十进制扩展的推广，可以看作是对于任意实数<span
-class="math inline">\(y\)</span>的基于β的非整数表示。</p>
-<p><strong>例1：</strong>令<span class="math inline">\(\beta ={ {2}^{
-{1}/{4}\;}}\)</span>，极化码码长为<span class="math inline">\(N={
-{2}^{n}}=16\)</span>。则对于合成信道索引3，即<span
-class="math inline">\({ {B}_{3}}=\left( 0,0,1,1
-\right)\)</span>，其β-expansion可计算为</p>
-<p><span class="math display">\[{ {w}_{3}}=0\cdot { {2}^{
-{3}/{4}\;}}+0\cdot { {2}^{ {2}/{4}\;}}+1\cdot { {2}^{ {1}/{4}\;}}+1\cdot
-{ {2}^{ {0}/{4}\;}}=2.189\cdot \cdot \cdot \]</span></p>
-<p>同理，我们可以写出所有合成信道的β-expansion</p>
-<p><span class="math display">\[\begin{align}
-  \nonumber &amp; w=\left\{ \begin{matrix}
-   0.000 &amp; 1.000 &amp; 1.189 &amp; 2.189 &amp; 1.414 &amp; 2.414
-&amp; 2.603 &amp; 3.603  \\
-\end{matrix} \right. \\
-\nonumber &amp; \ \ \ \ \ \ \ \left. \begin{matrix}
-   1.682 &amp; 2.682 &amp; 2.871 &amp; 3.871 &amp; 3.096 &amp; 4.096
-&amp; 4.285 &amp; 5.285  \\
-\end{matrix} \right\} \\
-\end{align}\]</span></p>
-<p><span class="math inline">\({
-{w}_{x}}\)</span>值越大表示合成信道索引<span
-class="math inline">\(x\)</span>的可靠性越高。将<span
-class="math inline">\(w\)</span>按可靠性增序排列，就得到了极化码序列</p>
-<p><span class="math display">\[order=\left\{ \begin{matrix}
-   0 &amp; 1 &amp; 2 &amp; 4 &amp; 8 &amp; 3 &amp; 5 &amp; 6 &amp; 9
-&amp; 10 &amp; 12 &amp; 7 &amp; 11 &amp; 13 &amp; 14 &amp; 15  \\
-\end{matrix} \right\}\]</span></p>
-<p><strong>PW算法的优点是，对合成信道可靠性，提供了一种简洁、低复杂度的全排列算法，并且当码长<span
-class="math inline">\({ {2}^{n}}\)</span>从<span
-class="math inline">\(n=1\)</span>到$n+$增加时，能够始终保持一种嵌套性质。</strong></p>
-<p><strong>Proposition 2.
-</strong>（嵌套结构）PW算法维持了极化码的嵌套码构造的特性。</p>
-<p><strong>Proposition 3.</strong> 当<span class="math inline">\(\beta
-&gt;1\)</span>，任何由PW算法得到的序列都遵循极化码的通用偏序（UPO）关系。</p>
-<p><strong>Theorem 1.</strong> 对于长度为<span class="math inline">\({
-{2}^{n}}\left( n\ge 3 \right)\)</span>的极化码，存在一个升序集合<span
-class="math inline">\({ {A}_{n}}=\left\{ { {a}_{0}},{ {a}_{1}},{
-{a}_{2}},...,{ {a}_{ { {i}_{\max }}}},+\infty
-\right\}\)</span>，其中<span class="math inline">\({
-{a}_{0}}=1\)</span>和<span class="math inline">\({ {a}_{1}},{
-{a}_{2}},...,{ {a}_{ { {i}_{\max }}}}\)</span>都是代数。任意$<span
-class="math inline">\(落入区间\)</span>( { {a}<em>{i}},{ {a}</em>{i+1}}
-),i<span
-class="math inline">\(内，β-expansion都是唯一的，并且\)</span><span
-class="math inline">\(落入不同区间可导致不同的顺序序列。此外，集合\)</span>{
-{A}<em>{n}}<span class="math inline">\(是嵌套的，即\)</span>{
-{A}</em>{n}}$。</p>
-<blockquote>
-<p>Marshall：通过上述Proposition和Theorem，初步地把β-expansion和偏序建立起联系，β-expansion获得了偏序的理论支撑。两者的共性在于，它们都具有嵌套结构。然而$$的值究竟取何值呢？这还需要在具体的用例中去分析和确定。</p>
-</blockquote>
-<h1 id="awgn信道下的快速构造">AWGN信道下的快速构造</h1>
-<p><br/>现在UPO已经成为极化码序列构造的基础，而极化码序列的构造决定了合成信道的可靠性顺序。但UPO无法做到对整个序列进行全排列，正如在UPO的性质一节所看到的，从<span
-class="math inline">\(\mathbf{UP}{ {\mathbf{O}}_{n-1}}\)</span>到<span
-class="math inline">\(\mathbf{UP}{
-{\mathbf{O}}_{n}}\)</span>的构造中，总会有一些新的序是UPO无法判断的。而高斯近似虽然能够对整个序列进行全排序，但由于其高复杂度而不适用于实际应用。为了克服两者的缺点，本节呈现了一种基于UPO和β-expansion的快速构造方法。</p>
-<blockquote>
-<p>Marshall：根据高斯近似的结果，一步一步缩小$$的取值范围，最终的序列不仅满足UPO性质，而且与高斯近似的结果保持一致。换句话说，没有条件，就去创造条件。</p>
-</blockquote>
-<p>解释一下为什么$$的取值会影响序列顺序，如图1所示。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/181329970.png" title="图 1 $\beta $-expansion嵌套结构，$\beta ={ {2}^{ {1}/{4}\;}}$，$N=2,4,8,16$ "/></p>
-<p>根据定理1，是默认为<span class="math inline">\(\beta
-&gt;1\)</span>，所以今后只考虑<span class="math inline">\(\beta
-&gt;1\)</span>。</p>
-<p>当<span
-class="math inline">\(n=3\)</span>时，只有一对未定关系，即<span
-class="math inline">\(\left( \beta +1,{ {\beta }^{2}}
-\right)\)</span>。为了区分它们的关系，需要多项式方式<span
-class="math inline">\({ {x}^{2}}-x-1=0\)</span>，取其大于1的根为<span
-class="math inline">\(x=\frac{1+\sqrt{5}}{2}=1.618\)</span>，因此升序集合为</p>
-<p><span class="math display">\[{ {A}_{3}}=\left\{
-1,1.618,+\infty  \right\}\]</span></p>
-<p>当<span class="math inline">\(\beta \in \left( 1,1.618
-\right)\)</span>时，有<span class="math inline">\(\beta +1&gt;{ {\beta
-}^{2}}\)</span>，则相应的序列为</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182022400.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>当<span class="math inline">\(\beta \in \left( 1.618,+\infty
-\right)\)</span>时，有<span class="math inline">\(\beta +1&lt;{ {\beta
-}^{2}}\)</span>，则相应的序列为</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/182147280.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>这就是定理1所说的，当$<span class="math inline">\(落入\)</span>{
-{A}_{3}}$的任意区间内，β-expansion是唯一的，且导致不同的顺序序列。</p>
-<p>当<span
-class="math inline">\(n=4\)</span>时，有4对未定关系，包括之前提到的<span
-class="math inline">\(\left( \beta +1,{ {\beta }^{2}}
-\right)\)</span>及其两个等价形式，即</p>
-<p><span class="math display">\[\begin{align}
-  \nonumber &amp; \left( \beta +1,{ {\beta }^{2}} \right),\left( {
-{\beta }^{2}}+\beta ,{ {\beta }^{3}} \right),\left( { {\beta
-}^{2}}+\beta ,{ {\beta }^{3}} \right) \\
-\nonumber &amp; \left( \beta +1,{ {\beta }^{3}} \right),\left( { {\beta
-}^{2}}+1,{ {\beta }^{3}} \right),\left( { {\beta }^{2}}+\beta +1,{
-{\beta }^{3}} \right) \\
-\end{align}\]</span></p>
-<p>为了区分它们的关系，需要求解4个多项式方程</p>
-<p><span class="math display">\[\begin{align}
-{ {x}^{3}}-{ {x}^{2}}-x-1=0
-\end{align}\]</span></p>
-<p><span class="math display">\[\begin{align}
-{ {x}^{3}}-{ {x}^{2}}-1=0
-\end{align}\]</span></p>
-<p><span class="math display">\[\begin{align}
-{ {x}^{2}}-x-1=0
-\end{align}\]</span></p>
-<p><span class="math display">\[\begin{align}
-{ {x}^{3}}-x-1=0
-\end{align}\]</span></p>
-<p>得到</p>
-<p><span class="math display">\[{ {A}_{4}}=\left\{
-1,1.325,1.466,1.618,1.839,+\infty  \right\}\]</span></p>
-<p>其中1.325,1.466,1.618,1.839分别是多项式方程（2~5）的根。</p>
-<p>$<span class="math inline">\(分别落入\)</span>{
-{A}_{4}}$的5段子区间内，将导致5种不同的序，如图2所示。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/183636666.png" title="图 2 极化码的$\beta $-expansion，$N=16$"/></p>
-<p>$<span
-class="math inline">\(取哪个值？此时高斯近似法开始派上用场。对于码长\)</span>N={
-{2}^{4}}=16<span
-class="math inline">\(，\)</span>n=4$的极化码，AWGN信道下，高斯近似法对合成信道索引的排序为</p>
-<p><span class="math display">\[\begin{align}
-  \nonumber &amp; 0\to 1\to 2\to 4\to 8\to 3\to 5\to 6\to 9 \\
-  \nonumber &amp; \to 10\to 12\to 7\to 11\to 13\to 14\to 15 \\
-\end{align}\]</span></p>
-<p>将这个序与图2对比，发现当<span class="math inline">\(\beta \in \left(
-1,1.325 \right)\)</span>时，两个序一致。</p>
-<p>由此，我们将$<span
-class="math inline">\(的取值范围由\)</span>n=3<span
-class="math inline">\(时的\)</span>( 1,1.618 )<span
-class="math inline">\(缩小到\)</span>n=4<span
-class="math inline">\(时的\)</span>( 1,1.325 )$。</p>
-<p>进一步，当<span
-class="math inline">\(n=5\)</span>时，有5对未定关系，即<span
-class="math inline">\(\left( 28,15 \right),\left( 14,19 \right),\left(
-24,13 \right),\left( 24,11 \right),\left( 24,7
-\right)\)</span>。根据高斯近似的可靠性结果，呈现出与$$的对应关系</p>
-<p><span class="math display">\[\begin{align}
-  \nonumber &amp; 28\prec 15,\ 24\prec 11\Leftrightarrow \beta &lt;1.221
-\\
-\nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 14\prec 19\Leftrightarrow \beta
-&lt;1.325 \\
-\nonumber &amp; \ \ \ \ \ \ \ \ \ \ \ \ 24\prec 13\Leftrightarrow \beta
-&lt;1.272 \\
-\end{align}\]</span></p>
-<p>对于序<span class="math inline">\(\left\{ 7,24
-\right\}\)</span>，虽然依赖于SNR的可靠性结果为<span
-class="math inline">\(7\succ 24\)</span>，但大量仿真结果表明<span
-class="math inline">\(7\prec 24\)</span>具有更好的性能。因此选择</p>
-<p><span class="math display">\[7\prec 24\Leftrightarrow \beta
-&gt;1.179\]</span></p>
-<p>此时，$<span class="math inline">\(的取值范围进一步缩小到\)</span>(
-1.179,1.221 )$。</p>
-<p>对于<span class="math inline">\(n&gt;5\)</span>（<span
-class="math inline">\(N&gt;32\)</span>）的情况，继续重复这一搜索过程，得到如下表中所示的结果。随着<span
-class="math inline">\(N\)</span>的增加，$$的取值范围不断缩小，并接近于<span
-class="math inline">\(1.1892\approx { {2}^{
-{1}/{4}\;}}\)</span>。新的序对小于合成信道总数的20%。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184231335.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h1 id="渐进性分析与数值仿真结果">渐进性分析与数值仿真结果</h1>
-<p><br/>β-expansion可以转化为贝努力卷积（Bernoulli
-Convolution）概念。贝努力卷积定义了概率测度</p>
-<p><span class="math display">\[{ {v}_{\lambda
-}}=\sum\limits_{i=1}^{+\infty }{ { {b}_{i}}}{ {\beta }^{i}}\]</span></p>
-<p>假设<span class="math inline">\(B=\left( ...,{ {b}_{1}},{ {b}_{0}}
-\right)\)</span>是二进制独立随机序列，满足</p>
-<p><span class="math display">\[\Pr \left\{ { {b}_{i}}=1 \right\}=\Pr
-\left\{ { {b}_{i}}=0 \right\}=0.5,\forall i\]</span></p>
-<p>测度<span class="math inline">\({ {v}_{\lambda
-}}\)</span>要么是绝对连续的，要么是奇异的。我们需要的正是<span
-class="math inline">\({ {v}_{\lambda
-}}\)</span>的绝对连续，使得在无限长的序列上能够进行全排列。令<span
-class="math inline">\(\beta ={ {2}^{
-{1}/{k}\;}}\)</span>，已经证明当<span
-class="math inline">\(k=4\)</span>时，即<span
-class="math inline">\(\beta
-\text{=}1.1892\)</span>时，满足绝对连续的必要条件。这与上表中的观察一致。</p>
-<p>图3则从仿真结果上表明β-expansion与高斯近似的性能相同。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170919/184439317.png" title="图 3 Comparison of PW algorithm with β= 1.1892 and Gaussian approximation for different block-length N (code length in number of code bits). Simulation assumptions are: BLER = 0.001, QPSK modulation, AWGN channel, successive cancellation list (SCL) decoder with list size 8 and extra 19-bit CRC."/></p>
-<p>至此，从理论分析到仿真结果，充分论证了β-expansion算法的可行性和优越性。</p>
-<h1 id="参考文献">参考文献</h1>
-<p><br/>[1] C. Schurch, “A partial Order for the Synthesized Channels of
-a Polar Code, ISIT 2016. [2] 3GPP, R1-167209, Polar code design and rate
-matching, Huawei, HiSilicon. [3] β-expansion A Theoretical Framework for
-Fast and Recursive Construction of Polar Codes, Huawei.</p>
 ]]></content>
       <categories>
         <category>Polar Code</category>
