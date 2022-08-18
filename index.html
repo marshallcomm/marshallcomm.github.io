@@ -661,7 +661,7 @@ role="doc-noteref"><sup>4</sup></a>。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-14 22:39:36" itemprop="dateModified" datetime="2022-08-14T22:39:36+08:00">2022-08-14</time>
+      <time title="修改时间：2022-08-19 07:38:51" itemprop="dateModified" datetime="2022-08-19T07:38:51+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -669,7 +669,7 @@ role="doc-noteref"><sup>4</sup></a>。</p>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/past/" itemprop="url" rel="index"><span itemprop="name">past</span></a>
+          <a href="/categories/PAST/" itemprop="url" rel="index"><span itemprop="name">PAST</span></a>
         </span>
     </span>
 
@@ -692,8 +692,9 @@ src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/2022020
 Approximation Subspace Tracking，PAST）。</p>
 <p>特征子空间的跟踪与更新问题转化为以 J(W) 为目标函数的极小化问题</p>
 <p><span class="math display">\[
-J(W) = E\{|| x - WW^Hx||^2\}
-\]</span> 其中，<span class="math inline">\(x\)</span> 是 <span
+J(W) = E \left\{ \| x - WW^Hx \|^2 \right\}
+\]</span></p>
+<p>其中，<span class="math inline">\(x\)</span> 是 <span
 class="math inline">\(n \times 1\)</span> 观测数据向量，<span
 class="math inline">\(W\)</span> 是 <span class="math inline">\(n \times
 r\)</span> 矩阵。求矩阵 <span class="math inline">\(W\)</span>
@@ -903,9 +904,15 @@ src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/2020112
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-03-07 22:37:10 / 修改时间：22:44:19" itemprop="dateCreated datePublished" datetime="2020-03-07T22:37:10+08:00">2020-03-07</time>
+      <time title="创建时间：2020-03-07 22:37:10" itemprop="dateCreated datePublished" datetime="2020-03-07T22:37:10+08:00">2020-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-19 07:49:59" itemprop="dateModified" datetime="2022-08-19T07:49:59+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -928,92 +935,100 @@ src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/2020112
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="prg">PRG</h2>
-<p>PRG (Precoding Resource Block
-Group)是预编码资源块组，由一组频域连续的RB组成，这些连续的RB具有相同的预编码。</p>
-<p>PRG size的确定涉及到a) UE能力，b) RRC配置，c)
-UE所调度的连续PRB数目。</p>
+<p>PRG（Precoding Resource Block
+Group）是预编码资源块组，由一组频域连续的 RB 组成，这些连续的 RB
+具有相同的预编码。</p>
+<p>PRG size 的确定涉及到 a) UE能力，b) RRC配置，c) UE 所调度的连续 PRB
+数目。</p>
 <h3 id="dynamicprb-bundlingdl">dynamicPRB-BundlingDL</h3>
-<p><strong><em>dynamicPRB-BundlingDL</em></strong>
-用于指示UE是否支持基于DCI来指示PDSCH接收的PRG size。</p>
-<p>如果gNB收到UE上报的Phy-ParametersCommon ::
-dynamicPRB-BundlingDL，则表明UE支持基于DCI来指示PDSCH接收的PRG
+<p><strong><em>dynamicPRB-BundlingDL</em></strong> 用于指示 UE
+是否支持基于 DCI 来指示 PDSCH 接收的 PRG size。</p>
+<p>如果 gNB 收到 UE 上报的 Phy-ParametersCommon ::
+dynamicPRB-BundlingDL，则表明 UE 支持基于 DCI 来指示 PDSCH 接收的 PRG
 size。</p>
-<blockquote>
-<p>dynamicPRB-BundlingDL ENUMERATED {supported} OPTIONAL,</p>
-</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dynamicPRB-BundlingDL        ENUMERATED &#123;supported&#125;           OPTIONAL,</span><br></pre></td></tr></table></figure>
 <h3 id="prb-bundlingtype">prb-BundlingType</h3>
 <p>PDSCH-Config :: prb-BundlingType 用于RRC配置PRG size。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prb-BundlingType            CHOICE &#123;</span><br><span class="line">​    staticBundling             SEQUENCE &#123;</span><br><span class="line">​      bundleSize               ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;,</span><br><span class="line">​     dynamicBundling           SEQUENCE &#123;</span><br><span class="line">​      bundleSizeSet1             ENUMERATED &#123; n4, wideband, n2-wideband, n4-wideband &#125;    OPTIONAL,  -- Need S</span><br><span class="line">​      bundleSizeSet2             ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">prb-BundlingType</span><br><span class="line">Indicates the PRB bundle type and bundle size(s) (see TS 38.214 [19], clause 5.1.2.3). If *dynamic* is chosen, the actual *bundleSizeSet1 or bundleSizeSet2* to use is indicated via DCI. Constraints on *bundleSize(Set)* setting depending on *vrb-ToPRB-Interleaver* and *rbg-Size* settings are described in TS 38.214 [19], clause 5.1.2.3. If a *bundleSize(Set)* value is absent, the UE applies the value *n2*.</span><br></pre></td></tr></table></figure>
 <h3 id="consecutively-scheduled-bandwidth-in-frequency">consecutively
 scheduled bandwidth in frequency</h3>
-<p>UE所调度的连续PRB数目将与(BWP size)/2进行比较。</p>
+<p>UE所调度的连续 PRB 数目将与 (BWP size)/2 进行比较。</p>
 <h2 id="prg-size">PRG size</h2>
-<p>PRG size有{ n2, n4, wideband }三种可能，具体配置策略如下。</p>
-<p>对于DCI format 1_0调度的PDSCH，固定配置为<strong>PRG size =
+<p>PRG size 有 {n2, n4, wideband} 三种可能，具体配置策略如下。</p>
+<p>对于 DCI format 1_0 调度的 PDSCH ，固定配置为 <strong>PRG size =
 n2</strong>。</p>
-<p>对于DCI format 1_1调度的PDSCH，PRG size如下：</p>
+<p>对于 DCI format 1_1 调度的 PDSCH，PRG size如下：</p>
 <ol type="a">
-<li>如果UE没有dynamicPRB-BundlingDL能力，则gNB只能采用RRC静态配置PRG
-size。此时prb-BundlingType为staticBundling。</li>
+<li>如果 UE 没有 dynamicPRB-BundlingDL 能力，则 gNB 只能采用 RRC
+静态配置 PRG size。此时 prb-BundlingType为staticBundling。</li>
 </ol>
 <ul>
-<li>如果配置bundleSize = n4，则<strong>PRG size = n4</strong></li>
-<li>如果配置bundleSize = wideband，则<strong>PRG size =
+<li>如果配置 bundleSize = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSize = wideband，则 <strong>PRG size =
 wideband</strong></li>
 </ul>
 <ol start="2" type="a">
-<li>如果UE有dynamicPRB-BundlingDL能力，则gNB可采用1）RRC+DCI动态配置PRG
-size，或2）RRC静态配置PRG size。</li>
+<li>如果UE有 dynamicPRB-BundlingDL 能力，则 gNB 可采用 1）RRC + DCI
+动态配置 PRG size，或 2）RRC静态配置 PRG size。</li>
 </ol>
 <ul>
-<li>1）RRC+DCI动态配置，此时prb-BundlingType为dynamicBundling。
+<li>1）RRC + DCI 动态配置，此时 prb-BundlingType 为 dynamicBundling。
 <ul>
-<li>DCI字段<em>PRB bundling size
-indicator</em>用一个bit来指示bundleSizeSet1或bundleSizeSet2。值为1表示使用bundleSizeSet1，值为0表示使用bundleSizeSet2。
+<li>DCI 字段 <em>PRB bundling size indicator</em> 用一个 bit 来指示
+bundleSizeSet1 或 bundleSizeSet2 。值为 1 表示使用 bundleSizeSet1，值为
+0 表示使用 bundleSizeSet2。
 <ul>
-<li>bundleSizeSet1 = { n4, wideband, n2-wideband, n4-wideband }</li>
-<li>bundleSizeSet2 = { n4, wideband }</li>
+<li>bundleSizeSet1 = {n4, wideband, n2-wideband, n4-wideband}</li>
+<li>bundleSizeSet2 = {n4, wideband}</li>
 </ul></li>
-<li>如果DCI字段<em>PRB bundling size indicator</em>指示bundleSizeSet1
+<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
+指示bundleSizeSet1
 <ul>
-<li>如果配置bundleSizeSet1= n4，则<strong>PRG size = n4</strong></li>
-<li>如果配置bundleSizeSet1= wideband ，则<strong>PRG size =
+<li>如果配置 bundleSizeSet1 = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSizeSet1 = wideband，则 <strong>PRG size =
 wideband</strong></li>
-<li>如果配置bundleSizeSet1= n2-wideband，则
+<li>如果配置 bundleSizeSet1 = n2-wideband，则
 <ul>
-<li>如果UE所调度的连续PRB数目 &gt; (BWP size)/2，则<strong>PRG size =
-wideband</strong>；否则，<strong>PRG size = n2</strong>。</li>
+<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则 <strong>PRG size
+= wideband</strong>；否则，<strong>PRG size = n2</strong>。</li>
 </ul></li>
-<li>如果配置bundleSizeSet1= n4-wideband，则
+<li>如果配置 bundleSizeSet1 = n4-wideband，则
 <ul>
-<li>如果UE所调度的连续PRB数目 &gt; (BWP size)/2，则<strong>PRG size =
-wideband</strong>；否则，<strong>PRG size = n4</strong>。</li>
+<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则<strong>PRG size
+= wideband</strong>；否则，<strong>PRG size = n4</strong>。</li>
 </ul></li>
 </ul></li>
-<li>如果DCI字段<em>PRB bundling size indicator</em>指示bundleSizeSet2
+<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
+指示bundleSizeSet2
 <ul>
-<li>如果配置bundleSizeSet2 = n4，则<strong>PRG size = n4</strong></li>
-<li>如果配置bundleSizeSet2 = wideband，则<strong>PRG size =
+<li>如果配置 bundleSizeSet2 = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSizeSet2 = wideband，则 <strong>PRG size =
 wideband</strong></li>
 </ul></li>
 </ul></li>
-<li>2）RRC静态配置，同a</li>
+<li>2）RRC 静态配置，同 a</li>
 </ul>
 <ol start="3" type="a">
-<li><p>如有gNB没有配置bundleSize(Set)，则默认<strong>PRG size =
+<li><p>如有 gNB 没有配置 bundleSize(Set)，则默认 <strong>PRG size =
 n2</strong>。</p></li>
 <li><p>PRG size限制条件</p></li>
 </ol>
 <ul>
-<li>如果RBG = 2或vrb-ToPRB-Interleaver = n2，则<strong>不能配置PRG size
-= n4</strong>。</li>
+<li>如果RBG = 2 或 vrb-ToPRB-Interleaver = n2，则 <strong>不能配置PRG
+size = n4</strong>。</li>
 </ul>
-<p>Note: 当PRG size配置为wideband时，意味着PRG
-size等于UE所调度的连续PRB数目，分配给UE的资源必须是连续的PRB。在这些连续的PRB上使用相同的预编码。</p>
+<p>Note: 当 PRG size 配置为 wideband 时，意味着 PRG size 等于 UE
+所调度的连续 PRB 数目，分配给 UE 的资源必须是连续的 PRB。在这些连续的
+PRB 上使用相同的预编码。</p>
 <h3 id="references">References</h3>
-<p>[1] 3GPP Spec. 38.211 [2] 3GPP Spec. 38.212 [3] 3GPP Spec. 38.214 [4]
-3GPP Spec. 38.331 [5] 3GPP Spec. 38.306</p>
+<ul>
+<li>3GPP Spec. 38.211</li>
+<li>3GPP Spec. 38.212</li>
+<li>3GPP Spec. 38.214</li>
+<li>3GPP Spec. 38.331</li>
+<li>3GPP Spec. 38.306</li>
+</ul>
 
       
     </div>
@@ -1058,7 +1073,7 @@ size等于UE所调度的连续PRB数目，分配给UE的资源必须是连续的
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/22/algorithm-mmse-detection/" class="post-title-link" itemprop="url">MMSE检测算法推导</a>
+          <a href="/2018/12/22/algorithm-mmse-detection/" class="post-title-link" itemprop="url">MMSE 检测算法推导</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1076,7 +1091,7 @@ size等于UE所调度的连续PRB数目，分配给UE的资源必须是连续的
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-19 07:31:06" itemprop="dateModified" datetime="2022-08-19T07:31:06+08:00">2022-08-19</time>
+      <time title="修改时间：2022-08-19 07:40:10" itemprop="dateModified" datetime="2022-08-19T07:40:10+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1124,14 +1139,6 @@ class="math inline">\(\mathbf{n}\)</span> 不相关，则 <span
 class="math inline">\(\mathbf{x}\)</span>，<span
 class="math inline">\(\mathbf{n}\)</span> 互相关矩阵为 <span
 class="math inline">\(\mathbf{0}\)</span> 矩阵</p>
-<p><span class="math display">\[
-\mathbf{R}_{xn} = E[\mathbf{x} \mathbf{n}^H] = \mathbf{0}_{N_t \times
-N_r} \tag{4}
-\]</span></p>
-<p><span class="math display">\[
-\mathbf{R}_{nx} = E[\mathbf{n} \mathbf{x}^H] = \mathbf{0}_{N_r \times
-N_t} \tag{5}
-\]</span></p>
           <!--noindex-->
           <!--/noindex-->
         

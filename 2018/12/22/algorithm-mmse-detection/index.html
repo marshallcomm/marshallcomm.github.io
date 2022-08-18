@@ -24,13 +24,13 @@
 
     <meta name="description" content="考虑发送端具有 \(N_t\) 根发送天线，接收端具有 \(N_r\) 根接收天线，在一个时隙内信道为准静态平坦衰落情况下，接收信号可表示为 \[ \mathbf{y&#x3D;Hx+n} \tag{1} \] 其中 \(\mathbf{H} \in \mathbb{C}^{N_r \times N_t}\) 是 MIMO 信道矩阵，\(\mathbf{x} \in \mathbb{C}^{N">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MMSE检测算法推导">
+<meta property="og:title" content="MMSE 检测算法推导">
 <meta property="og:url" content="https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/index.html">
 <meta property="og:site_name" content="Marshall">
 <meta property="og:description" content="考虑发送端具有 \(N_t\) 根发送天线，接收端具有 \(N_r\) 根接收天线，在一个时隙内信道为准静态平坦衰落情况下，接收信号可表示为 \[ \mathbf{y&#x3D;Hx+n} \tag{1} \] 其中 \(\mathbf{H} \in \mathbb{C}^{N_r \times N_t}\) 是 MIMO 信道矩阵，\(\mathbf{x} \in \mathbb{C}^{N">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-12-22T08:59:02.000Z">
-<meta property="article:modified_time" content="2022-08-18T23:31:06.521Z">
+<meta property="article:modified_time" content="2022-08-18T23:40:10.092Z">
 <meta property="article:author" content="Marshall">
 <meta property="article:tag" content="MMSE">
 <meta name="twitter:card" content="summary">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/","path":"2018/12/22/algorithm-mmse-detection/","title":"MMSE检测算法推导"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/","path":"2018/12/22/algorithm-mmse-detection/","title":"MMSE 检测算法推导"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>MMSE检测算法推导 | Marshall</title>
+<title>MMSE 检测算法推导 | Marshall</title>
   
 
   <script src="/js/third-party/analytics/baidu-analytics.js"></script>
@@ -229,12 +229,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="MMSE检测算法推导 | Marshall">
+      <meta itemprop="name" content="MMSE 检测算法推导 | Marshall">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MMSE检测算法推导
+          MMSE 检测算法推导
         </h1>
 
         <div class="post-meta-container">
@@ -252,7 +252,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-19 07:31:06" itemprop="dateModified" datetime="2022-08-19T07:31:06+08:00">2022-08-19</time>
+      <time title="修改时间：2022-08-19 07:40:10" itemprop="dateModified" datetime="2022-08-19T07:40:10+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,6 +307,7 @@ class="math inline">\(\mathbf{n}\)</span> 不相关，则 <span
 class="math inline">\(\mathbf{x}\)</span>，<span
 class="math inline">\(\mathbf{n}\)</span> 互相关矩阵为 <span
 class="math inline">\(\mathbf{0}\)</span> 矩阵</p>
+<span id="more"></span>
 <p><span class="math display">\[
 \mathbf{R}_{xn} = E[\mathbf{x} \mathbf{n}^H] = \mathbf{0}_{N_t \times
 N_r} \tag{4}
@@ -315,7 +316,6 @@ N_r} \tag{4}
 \mathbf{R}_{nx} = E[\mathbf{n} \mathbf{x}^H] = \mathbf{0}_{N_r \times
 N_t} \tag{5}
 \]</span></p>
-<span id="more"></span>
 <p>接收信号向量 <span class="math inline">\(\mathbf{y}\)</span>
 的自相关矩阵</p>
 <p><span class="math display">\[\begin{equation} \tag{6}
@@ -572,7 +572,7 @@ class="math inline">\(\mathbf{R}_x^H =
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/" title="MMSE检测算法推导">https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/</a>
+      <a href="https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/" title="MMSE 检测算法推导">https://marshallcomm.cn/2018/12/22/algorithm-mmse-detection/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
