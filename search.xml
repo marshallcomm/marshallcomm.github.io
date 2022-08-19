@@ -1279,507 +1279,6 @@ are used for rate matching。信道编码方案的进一步细节详见[4]。</p
       </tags>
   </entry>
   <entry>
-    <title>5G-NR物理信道与调制-下行链路v1.0.0</title>
-    <url>/2017/09/09/nr-v100-l1-channel-modulation-dl/</url>
-    <content><![CDATA[<p><a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#下行链路">上接《NR物理信道与调制》下行链路</a></p>
-<h1 id="下行链路">下行链路</h1>
-<h2 id="概述">概述</h2>
-<h3 id="物理信道概述">物理信道概述</h3>
-<p><br/>下行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
-<ul>
-<li>物理下行共享信道（PDSCH）</li>
-<li>物理广播信道（PBCH）</li>
-<li>物理下行控制信道（PDCCH）</li>
-</ul>
-<h3 id="物理信号概述">物理信号概述</h3>
-<p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
-<ul>
-<li>解调参考信号（Demodulation reference signals，DM-RS）</li>
-<li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
-<li>信道状态信息参考信号（Channel-state information reference
-signal，CSI-RS）</li>
-<li>主同步信号（Primary synchronization signal，PSS）</li>
-<li>辅同步信号（Secondary synchronization signal，SSS）</li>
-</ul>
-<span id="more"></span>
-<h2 id="物理资源">物理资源</h2>
-<p><br/>本规范定义了下列用于下行链路的天线端口：</p>
-<ul>
-<li>Antenna ports starting with 1000 for DM-RS associated with
-PDSCH</li>
-<li>Antenna ports starting with 2000 for DM-RS associated with
-PDCCH</li>
-<li>Antenna ports starting with 3000 for CSI-RS</li>
-<li>Antenna ports starting with 4000 for SS/PBCH block transmission</li>
-</ul>
-<h2 id="物理信道">物理信道</h2>
-<h3 id="物理下行共享信道">物理下行共享信道</h3>
-<h4 id="加扰">加扰</h4>
-<p><br/>对于每个码字$ q <span
-class="math inline">\(，UE应假设比特块\)</span> { {b}^{(q)}}(0),...,{
-{b}<sup>{(q)}}(M_{}</sup>{(q)}-1) <span
-class="math inline">\(应在调制前被加扰，其中\)</span> M_{}^{(q)} <span
-class="math inline">\(是在物理信道上传输的码字\)</span> q <span
-class="math inline">\(的比特数，加扰后的比特块为\)</span> {
-{}^{(q)}}(0),...,{ {}<sup>{(q)}}(M_{}</sup>{}-1)
-$。根据如下公式进行加扰</p>
-<p><span class="math display">\[ { {\tilde{b}}^{(q)}}(i)=\left( {
-{b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 \]</span></p>
-<p>其中加扰序列$ { {c}^{(q)}}(i) $由2.2节给出。</p>
-<h4 id="调制">调制</h4>
-<p><br/>对于每个码字$ q <span
-class="math inline">\(，UE应假设加扰比特块\)</span> { {}^{(q)}}(0),...,{
-{}<sup>{(q)}}(M_{}</sup>{}-1) <span class="math inline">\(根据Table
-7.3.1.2-1中的调制方式进行调制，具体调制方法见《NR物理信道与调制》2.1节，得到复值调制符号块\)</span>
-{ {d}^{(q)}}(0),...,{ {d}<sup>{(q)}}(M_{}</sup>{}-1) $。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/195532388.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h4 id="层映射">层映射</h4>
-<p><br/>UE假设每个码字的复值调制符号根据Table
-7.3.1.3-1被映射到一层或多层上发送。码字$ q <span
-class="math inline">\(的复值调制符号\)</span> { {d}^{(q)}}(0),...,{
-{d}<sup>{(q)}}(M_{}</sup>{}-1) <span
-class="math inline">\(被映射到层\)</span> x(i)={ {}^{T}} <span
-class="math inline">\(，\)</span> i=0,1,...,M_{}^{}-1 <span
-class="math inline">\(，其中\)</span> <span
-class="math inline">\(是层数，\)</span> M_{}^{}
-$是每层的调制符号数。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/200219608.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h4 id="预编码">预编码</h4>
-<p><span class="math display">\[ \left[ \begin{matrix}
-   { {y}^{(0)}}(i)  \\
-   \vdots   \\
-   { {y}^{(P-1)}}(i)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   { {x}^{(0)}}(i)  \\
-   \vdots   \\
-   { {x}^{(\upsilon -1)}}(i)  \\
-\end{matrix} \right]
-\]</span></p>
-<p>where $ P=$.</p>
-<h4 id="资源映射">资源映射</h4>
-<p><br/>UE应假设对物理信道的传输所使用的每个天线端口，复值符号块$ {
-{y}^{(p)}}(0),...,{ {y}<sup>{(p)}}(M_{}</sup>{}-1) <span
-class="math inline">\(应符合38.xxx下行功率分配的规定，并且从\)</span> {
-{y}^{(p)}}(0) $开始映射到REs $ ( k,l ) $，REs满足以下所有条件：</p>
-<ul>
-<li>它们位于分配给传输的资源块中</li>
-<li>根据TS 38.214，它们被声明可用于PDSCH</li>
-</ul>
-<p>向没有其他用途的REs $ { {( k,l )}<em>{p,}} <span
-class="math inline">\(上映射，以递增顺序先按天线端口索引\)</span> p
-<span class="math inline">\(，再按分配的物理资源索引\)</span> k <span
-class="math inline">\(，然后按索引\)</span> l <span
-class="math inline">\(映射，索引\)</span> l <span
-class="math inline">\(以TS 38.213规范的描述以\)</span> l={ {l}</em>{0}}
-$为起始。</p>
-<p>UE可以假设在一个PRB bundle内使用相同的预编码，一个PRB
-bundle由2个或4个PRBs组成。PRB bundle基于 absolute资源格定义。</p>
-<h3 id="物理下行控制信道">物理下行控制信道</h3>
-<h4 id="控制信道单元">控制信道单元</h4>
-<p><br/>物理下行控制信道由一个或多个控制信道单元（control-channel
-elements，CCE）组成，CCE数由Table 7.3.2.1-1指示。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/202216219.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h4 id="控制资源集">控制资源集</h4>
-<p><br/>一个控制资源集（Control-resource set，CORESET）由$ N_{}^{} <span
-class="math inline">\(个频域RB和\)</span> N_{}^{}{ 1,2,3 } <span
-class="math inline">\(个时域符号组成，\)</span> N_{}^{} <span
-class="math inline">\(通过高层参数*CORESET-freq-dom*给定，\)</span>
-N_{}^{} <span
-class="math inline">\(通过高层参数*CORESET-time-dur*给定，其中仅当高层参数*DL-DMRS-typeA-pos*
-=3时支持\)</span> N_{}^{}=3 $。</p>
-<p>一个CCE由6个资源粒子组（resource-element
-group，REG）组成，一个REG等于一个OFDM符号上的RB。一个CORESET
-内的REGs按时域优先的方式以递增顺序编号，在CORESET内从第1个OFDM符号且最低的RB以0开始编号。</p>
-<p>UE可以配置多个CORESET。每个CORESET只与一个CCE-to-REG映射关联。</p>
-<p>对于一个CORESET，CCE-to-REG映射可以交织（interleaved），也可以不交织（non-
-interleaved），这由高层参数<em>CORESET-Trans-type</em>来配置，并且由REG
-bundles来描述：</p>
-<ul>
-<li>REG bundle $ i $定义为REGs $ { iL,iL+1,...,iL+L-1 } <span
-class="math inline">\(，其中\)</span> L <span
-class="math inline">\(是REG bundle size，REG bundle
-size由高层参数*CORESET-REG-bundle-size*配置，\)</span>
-i=0,1,...,{N_{}^{}}/{L};-1 $是CORESET内的REG数。</li>
-<li>CCE $ j $由REG bundles $ {
-f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
-class="math inline">\(组成，其中\)</span> f() $是交织器。</li>
-</ul>
-<p>对于非交织的CCE-to-REG映射，$ L=6 <span
-class="math inline">\(且\)</span> f(j)=j $。</p>
-<p>对于交织的CCE-to-REG映射，对于$ N_{}^{}=1 <span
-class="math inline">\(，有\)</span> L{ 2,6 } <span
-class="math inline">\(；对于\)</span> N_{}^{}{ 2,3 } <span
-class="math inline">\(，有\)</span> L{ N_{}^{},6 } $。</p>
-<p>UE可假设在一个REG bundle内在频域上使用相同的预编码。</p>
-<h4 id="加扰-1">加扰</h4>
-<h4 id="pdcch调制">PDCCH调制</h4>
-<p><br/>UE应假设比特块$ (0),...,({ {M}<em>{}}-1) <span
-class="math inline">\(进行QPSK调制，QPSK调制采用《NR物理信道与调制》2.1.3节所描述的方法，得到复值调制符号块\)</span>
-d(0),...,d({ {M}</em>{}}-1) $。</p>
-<h4 id="资源映射-1">资源映射</h4>
-<p><br/>UE应假设用于监测PDCCH的CCEs中，复值符号块$ d(0),...,d({
-{M}<em>{}}-1) <span class="math inline">\(乘以一个幅值因子\)</span> {
-{}</em>{}} <span class="math inline">\(，然后按照先\)</span> l <span
-class="math inline">\(后\)</span>k<span
-class="math inline">\(的递增顺序映射到REs\)</span> { {( k,l )}_{p,}}
-$。</p>
-<h3 id="物理广播信道">物理广播信道</h3>
-<h4 id="调制-1">调制</h4>
-<p><br/>UE应假设比特块$ b(0),...,b({ {M}<em>{}}-1) <span
-class="math inline">\(采用QPSK调制，QPSK调制采用《NR物理信道与调制》2.1节所描述的方法，得到复值调制符号块\)</span>
-{ {d}</em>{}}(0),...,{ {d}<em>{}}({ {M}</em>{}}-1) $。</p>
-<h4 id="资源映射-2">资源映射</h4>
-<p><br/>资源映射在本文1.4.3节中描述。</p>
-<h2 id="物理信号">物理信号</h2>
-<h3 id="参考信号">参考信号</h3>
-<h4 id="用于pdsch的dm-rs">用于PDSCH的DM-RS</h4>
-<h5 id="序列生成">序列生成</h5>
-<p><br/>UE应假设参考信号序列$ r(m) $定义为</p>
-<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
-c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
-\]</span></p>
-<p>其中伪随机序列$ c(i) $在《NR物理信道与调制》2.2节中定义。</p>
-<blockquote>
-<p>Note: Sequence defined on a global scale relative to (FFS) SSBlock or
-RRC-configured reference point.</p>
-</blockquote>
-<h5 id="资源映射-3">资源映射</h5>
-<p><br/>UE应假设PDSCH DM-RS根据type 1或type
-2映射到REs，DM-RS的类型由高层参数<em>DL-DMRS-config-type</em>给定。</p>
-<p>UE应假设序列$ r(m) $根据如下公式映射到RE</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{DMRS}}}{
-{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
-{l}&#39;} \right)\cdot r\left( 2m+{k}&#39;+{ {m}_{0}} \right) \\
-\nonumber &amp; k=\left\{ \begin{array}{*{35}{l}}
-   { {k}_{\text{0}}}+4m+2{k}&#39;+\Delta  &amp; \text{Configuration type
-1}  \\
-   { {k}_{\text{0}}}+6m+{k}&#39;+\Delta  &amp; \text{Configuration type
-2}  \\
-\end{array} \right. \\
-\nonumber &amp; {k}&#39;=0,1 \\
-\nonumber  &amp; l=\bar{l}+{l}&#39;  
-\end{align}
-\]</span></p>
-<p>其中$ l <span class="math inline">\(定义为相对于时隙的起始，\)</span>
-{ {w}<em>{}}( { {k}'} ) <span class="math inline">\(，\)</span> {
-{w}</em>{}}( { {l}'} ) <span class="math inline">\(和\)</span> $由Tables
-7.4.1.1.2-1 and 7.4.1.1.2-2给定。</p>
-<p>时域索引$ {l}' <span
-class="math inline">\(和所支持的天线端口\)</span>p<span
-class="math inline">\(依赖于DM-RS duration，DM-RS duration根据Table
-7.4.1.1.2-3确定。\)</span> {l} <span
-class="math inline">\(依赖于高层参数*DL-DMRS-add-pos*，*DL-DMRS-add-pos*由Table
-7.4.1.1.2-4给定。\)</span> { {l}_{0}} $依赖于映射类型：</p>
-<ul>
-<li>对于PDSCH映射类型A：如果高层参数<em>DL-DMRS-typeA-pos</em> =3则$ {
-{l}<em>{0}}=3 <span class="math inline">\(，以及\)</span> {
-{l}</em>{0}}=2 $</li>
-<li>对于PDSCH映射类型B：$ { {l}_{0}}
-$是DM-RS映射到所调度的PDSCH资源中的第1个OFDM符号</li>
-</ul>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/213937051.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/214014814.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/214111058.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>Note: More than one additional DM_RS can be configured.</p>
-</blockquote>
-<h4 id="用于pdsch的pt-rs">用于PDSCH的PT-RS</h4>
-<h5 id="序列生成-1">序列生成</h5>
-<h5 id="资源映射-4">资源映射</h5>
-<p><br/>UE应假设只有当高层参数<em>DL-PTRS-present</em>指示PT-RS被使用时，并且只在用于PDSCH的RBs中呈现。</p>
-<p>如果呈现，UE应假设PDSCH PT-RS根据如下公式映射到物理资源</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{PTRS}}}r(m) \\
-\nonumber &amp; l={ {l}_{\text{DMRS}}}+1+{ {L}_{\text{PTRS}}}\cdot
-{l}&#39; \\
-\nonumber &amp; l&#39;=0,1,2,...  
-\end{align}
-\]</span></p>
-<p>每$ { {K}_{}}
-$个被调度的RBs中，当下列条件被满足时，从最低编号的RB开始调度（<em>Note:
-It may not be the lowest numbers RB, FFS if an offset is
-used.</em>）</p>
-<ul>
-<li><span
-class="math inline">\(l\)</span>在用于PDSCH传输的所分配的OFDM符号内</li>
-<li>RE $ ( k,l ) $不用于DM-RS</li>
-</ul>
-<p>其中</p>
-<ul>
-<li>索引<span class="math inline">\(k\)</span>是一个PRB内的子载波数</li>
-<li>对于1个符号DM-RS，有$ { {l}<em>{}}={ {l}</em>{0}} <span
-class="math inline">\(；对于2个符号DM-RS，有\)</span> { {l}<em>{}}={
-{l}</em>{0}}+1 <span class="math inline">\(，其中\)</span> { {l}_{0}}
-$由1.4.1.1.2节定义</li>
-<li>$ { {K}_{}}{ 2,4 } $由[6, TS38.214]给定</li>
-<li>$ { {L}_{}}{ 1,2,4 } $由[6, TS38.214]给定</li>
-</ul>
-<h4 id="用于pdcch的dm-rs">用于PDCCH的DM-RS</h4>
-<h4 id="用于pbch的dm-rs">用于PBCH的DM-RS</h4>
-<h5 id="序列生成-2">序列生成</h5>
-<p><br/>UE应假设用于SS/PBCH的参考信号$ r(m) $由下式定义</p>
-<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
-c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
-\]</span></p>
-<p>其中$ c(n)
-$由《NR物理信道与调制》2.2节给定。加扰序列生成应在每个SS/PBCH块的起始处通过小区ID
-$ N_{}^{} <span class="math inline">\(和\)</span> { {n}_{}}
-$被初始化，块时间索引由PBCH DM-RS承载。</p>
-<h5 id="资源映射-5">资源映射</h5>
-<p><br/>资源映射在1.4.3节中描述。</p>
-<h4 id="csi-rs">CSI-RS</h4>
-<h5 id="序列生成-3">序列生成</h5>
-<p><br/>UE应假设参考信号序列$ r(m) $由下式定义</p>
-<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
-c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
-\]</span></p>
-<p>其中伪随机序列$ c(i) $由《NR物理信道与调制》2.2节定义。</p>
-<h5 id="资源映射-6">资源映射</h5>
-<p><br/>UE应假设序列$ r(m) $根据以下公式映射到物理资源</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{CSIRS}}}{
-{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
-{l}&#39;} \right)\cdot r\left( m \right) \\
-\nonumber &amp; k=\bar{k}+{k}&#39; \\
-\nonumber &amp; l=\bar{l}+{l}&#39;  
-\end{align}
-\]</span></p>
-<p>但有以下例外</p>
-<ul>
-<li>与所配置的CORESET重叠的REs应从CSI-RS传输中排除</li>
-</ul>
-<p>其中<span class="math inline">\(l\)</span>定义为相对于时隙的起始，$
-{k} <span class="math inline">\(和\)</span> {l} <span
-class="math inline">\(由Table 7.4.1.5.2-1和\)</span> { {w}<em>{}}( {
-{k}'} ),{ {w}</em>{}}( { {l}'} ){ ,,,} <span
-class="math inline">\(给定。对于每个\)</span> {l} $，有长度为6的bitmap $
-<span class="math inline">\(]，其中比特\)</span> { {b}<em>{i}} <span
-class="math inline">\(隐含地以索引\)</span> j <span
-class="math inline">\(按递增顺序指示\)</span> { {k}</em>{j}}=2i $。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/215953799.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h4 id="tracking-rs">Tracking RS</h4>
-<blockquote>
-<p>Note: depending on future decisions, the TRS may become a realization
-of a CSI-RS in which case this section will be removed.</p>
-</blockquote>
-<h5 id="序列产生">序列产生</h5>
-<p><br/>UE应假设参考信号序列$ r(m) $定义为</p>
-<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
-c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
-\]</span></p>
-<p>其中伪随机序列$ c(i) $由《NR物理信道与调制》2.2节定义。</p>
-<h5 id="资源映射-7">资源映射</h5>
-<p><br/>TRS burst由4个OFDM符号组成，并在2个连续时隙内发送。</p>
-<p>UE应假设TRS在一个burst内根据以下公式映射到物理资源</p>
-<p><span class="math display">\[ \begin{align}
-\nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{TRS}}}r(m) \\
-\nonumber &amp; k=4m+{ {k}_{0}}  
-\end{align}
-\]</span></p>
-<p>The UE may assume that a TRS burst is quasi co-located with respect
-to delay spread, average delay, Doppler shift, and Doppler spread with
-the PDSCH DM-RS.</p>
-<h3 id="同步信号">同步信号</h3>
-<h4 id="物理层小区id">物理层小区ID</h4>
-<p><br/>1008个唯一的物理层小区ID通过下式给定</p>
-<p><span class="math display">\[
-N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
-\]</span></p>
-<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(且\)</span>
-N_{}^{}{ 0,1,2 } $。</p>
-<h4 id="主同步信号">主同步信号</h4>
-<h5 id="序列产生-1">序列产生</h5>
-<p><br/>主同步信号序列$ { {d}_{}}(n) $定义为</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; { {d}_{\text{PSS}}}\left( n \right)=1-2x\left( m
-\right) \\
-\nonumber &amp; m=\left( n+43N_{\text{ID}}^{\text{(2)}} \right)\bmod 127
-\\
-\nonumber  &amp; 0\le n&lt;127  
-\end{align}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[ x\left( i+7 \right)=\left( x\left( i+4
-\right)+x\left( i \right) \right)\bmod 2 \]</span></p>
-<p>且</p>
-<p><span class="math display">\[ \left[ \begin{matrix}
-   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right)
-&amp; x\left( 3 \right) &amp; x\left( 2 \right) &amp; x\left( 1 \right)
-&amp; x\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \\
-\end{matrix} \right]
-\]</span></p>
-<h5 id="资源映射-8">资源映射</h5>
-<p><br/>资源映射由1.4.3节描述。</p>
-<h4 id="辅同步信号">辅同步信号</h4>
-<h5 id="序列产生-2">序列产生</h5>
-<p><br/>辅同步信号序列$ { {d}_{}}(n) $定义为</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber  &amp; { {d}_{\text{SSS}}}\left( n \right)=\left[ 1-2{
-{x}_{0}}\left( \left( n+{ {m}_{0}} \right)\bmod 127 \right)
-\right]\left[ 1-2{ {x}_{1}}\left( \left( n+{ {m}_{1}} \right)\bmod 127
-\right) \right] \\
-\nonumber &amp; { {m}_{0}}=15\left\lfloor
-\frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor
-+5N_{\text{ID}}^{\text{(2)}} \\
-\nonumber &amp; { {m}_{1}}=N_{\text{ID}}^{\text{(1)}}\bmod 112 \\
-\nonumber &amp; 0\le n&lt;127  
-\end{align}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[
-\begin{align}
-  \nonumber  &amp; { {x}_{0}}\left( i+7 \right)=\left( { {x}_{0}}\left(
-i+4 \right)+x{}_{0}\left( i \right) \right)\bmod 2 \\
-\nonumber  &amp; { {x}_{1}}\left( i+7 \right)=\left( { {x}_{1}}\left(
-i+1 \right)+x{}_{1}\left( i \right) \right)\bmod 2  
-\end{align}
-\]</span></p>
-<p>且</p>
-<p><span class="math display">\[ \begin{align}
-  \nonumber &amp; \left[ \begin{matrix}
-   { {x}_{0}}\left( 6 \right) &amp; { {x}_{0}}\left( 5 \right) &amp; {
-{x}_{0}}\left( 4 \right) &amp; { {x}_{0}}\left( 3 \right) &amp; {
-{x}_{0}}\left( 2 \right) &amp; { {x}_{0}}\left( 1 \right) &amp; {
-{x}_{0}}\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
-\end{matrix} \right] \\
-\nonumber &amp; \left[ \begin{matrix}
-   { {x}_{1}}\left( 6 \right) &amp; { {x}_{1}}\left( 5 \right) &amp; {
-{x}_{1}}\left( 4 \right) &amp; { {x}_{1}}\left( 3 \right) &amp; {
-{x}_{1}}\left( 2 \right) &amp; { {x}_{1}}\left( 1 \right) &amp; {
-{x}_{1}}\left( 0 \right)  \\
-\end{matrix} \right]=\left[ \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
-\end{matrix} \right]  
-\end{align}
-\]</span></p>
-<h5 id="资源映射-9">资源映射</h5>
-<p><br/>资源映射由1.4.3节描述。</p>
-<h3 id="sspbch块">SS/PBCH块</h3>
-<h4 id="sspbch块的时频结构">SS/PBCH块的时频结构</h4>
-<p><br/>在时域上，一个SS/PBCH块由4个OFDM符号组成，按递增顺序从0到3编号。在频域上，一个SS/PBCH块由24个连续RBs组成，其中的子载波按递增顺序从0到287编号，以编号最低的RB为起始。</p>
-<p>UE应假设为了符合[TS 38.213]中的PSS功率分配规定，符号序列$ {
-{d}<em>{}}(0),...,{ {d}</em>{}}(126) <span
-class="math inline">\(应乘以一个幅值因子\)</span> { {}<em>{}} <span
-class="math inline">\(以构成主同步信号，并按照\)</span>k$递增的顺序映射到REs
-$ { {( k,l )}</em>{p,}} <span
-class="math inline">\(，其中\)</span>k<span
-class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内频域和时域索引，并由Table
-7.4.3.1-1给定。</p>
-<p>UE应假设为了符合[TS 38.213]中的SSS功率分配规定，符号序列$ {
-{d}<em>{}}(0),...,{ {d}</em>{}}(126) <span
-class="math inline">\(应乘以一个幅值因子\)</span> { {}<em>{}} <span
-class="math inline">\(以构成辅同步信号，并按照\)</span>k$递增的顺序映射到REs
-$ { {( k,l )}</em>{p,}} <span
-class="math inline">\(，其中\)</span>k<span
-class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内频域和时域索引，并由Table
-7.4.3.1-1给定。</p>
-<p>UE应假设为了符合[TS 38.213]中的PBCH功率分配规定，复值符号序列$ {
-{d}<em>{}}(0),...,{ {d}</em>{}}({ {M}<em>{}}-1) <span
-class="math inline">\(应乘以一个幅值因子\)</span> { {}</em>{}}<span
-class="math inline">\(以构成物理广播信道，并且从\)</span> {
-{d}<em>{}}(0) $开始映射到REs $ { {( k,l )}</em>{p,}}
-$，其中REs满足以下所有条件：</p>
-<ul>
-<li>它们不用于PBCH DM-RS</li>
-</ul>
-<p>向没有其他用途的REs $ { {( k,l )}_{p,}} <span
-class="math inline">\(上映射，以递增顺序先按\)</span> k <span
-class="math inline">\(再按\)</span> l <span
-class="math inline">\(映射，其中\)</span> k <span
-class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内的频域和时域索引，并由Table
-7.4.3.1-1给定。</p>
-<p>UE假设为了符合[TS 38.213]中的PBCH DM-RS功率分配规定，复值符号序列$ {
-{r}<em>{l}}(0),...,{ {r}</em>{l}}(143) <span
-class="math inline">\(应乘以一个幅值因子\)</span> <em>{}^{} <span
-class="math inline">\(以构成SS/PBCH块的DM-RS，并且以递增顺序先按\)</span>k<span
-class="math inline">\(后按\)</span>l$映射到REs $ { {( k,l )}</em>{p,}}
-<span class="math inline">\(，其中\)</span> k <span
-class="math inline">\(和\)</span>l<span
-class="math inline">\(分别表示一个SS/PBCH块内的频域和时域索引，并由Table
-7.4.3.1-1和\)</span> v=N_{}^{} $给定。</p>
-<p>对于SS/PBCH块，UE应假设</p>
-<ul>
-<li>天线端口$ p=4000 $，</li>
-<li>子载波间隔配置$ { 0,1,3,4 } $，且</li>
-<li>对于PSS，SSS和PBCH有相同的CP长度和子载波间隔</li>
-</ul>
-<p>The UE may assume that SS/PBCH blocks transmitted with the same block
-time index within a SS/PBCH burst set periodicity are quasi co-located
-with respect to Doppler spread, Doppler shift, average gain, average
-delay, and spatial Rx parameters. The UE shall not assume quasi
-co-location for any other SS/PBCH block transmissions.</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/221608824.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h4 id="sspbch块的时域位置">SS/PBCH块的时域位置</h4>
-<p><br/>UE应对可能的SS/PBCH块进行监测的时域位置在[TS38.213]
-4.1节描述。</p>
-<h1 id="相关链接">相关链接</h1>
-<p><br/><a
-href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
-<a
-href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
-<a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
-<a
-href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
-<a
-href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>2017-09</tag>
-        <tag>5G-NR</tag>
-        <tag>3GPP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>5G-NR物理信道与调制-上行链路v1.0.0</title>
     <url>/2017/09/09/nr-v100-l1-channel-modulation-ul/</url>
     <content><![CDATA[<p><a
@@ -2394,347 +1893,492 @@ href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理�
       </tags>
   </entry>
   <entry>
-    <title>5G-NR物理信道与调制v1.0.0</title>
-    <url>/2017/09/09/nr-v100-l1-channel-modulation/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>Marshall：</strong><a
-href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G
-NR物理层规范已更新到<a
-href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
-</blockquote>
-<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+    <title>5G-NR物理信道与调制-下行链路v1.0.0</title>
+    <url>/2017/09/09/nr-v100-l1-channel-modulation-dl/</url>
+    <content><![CDATA[<p><a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/#下行链路">上接《NR物理信道与调制》下行链路</a></p>
+<h1 id="下行链路">下行链路</h1>
 <h2 id="概述">概述</h2>
-<p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位<span
-class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta { {f}_{\max
-}}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span
-class="math inline">\(\Delta { {f}_{\max }}=480\cdot {
-{10}^{3}}\)</span> Hz，<span class="math inline">\({
-{N}_{\text{f}}}=4096\)</span>。常量<span class="math inline">\(\kappa
-={\Delta { {f}_{\text{max}}}{ {N}_{\text{f}}}}/{\left( \Delta {
-{f}_{\text{ref}}}{ {N}_{\text{f,ref}}} \right)}\;=64\)</span>，其中<span
-class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot {
-{10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({
-{N}_{\text{f,ref}}}=2048\)</span>。</p>
-<h2 id="波形参数">波形参数</h2>
-<p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的<span
-class="math inline">\(\mu\)</span>和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
+<h3 id="物理信道概述">物理信道概述</h3>
+<p><br/>下行链路物理信道对应于一组资源元素（REs）的集合，用于承载源自高层的信息。本规范定义了如下下行信道：</p>
+<ul>
+<li>物理下行共享信道（PDSCH）</li>
+<li>物理广播信道（PBCH）</li>
+<li>物理下行控制信道（PDCCH）</li>
+</ul>
+<h3 id="物理信号概述">物理信号概述</h3>
+<p><br/>下行物理信号是物理层使用的但不承载任何来自高层信息的信号。本规范定义了如下下行物理信号：</p>
+<ul>
+<li>解调参考信号（Demodulation reference signals，DM-RS）</li>
+<li>相位跟踪参考信号（Phase-tracking reference signals，PT-RS）</li>
+<li>信道状态信息参考信号（Channel-state information reference
+signal，CSI-RS）</li>
+<li>主同步信号（Primary synchronization signal，PSS）</li>
+<li>辅同步信号（Secondary synchronization signal，SSS）</li>
+</ul>
 <span id="more"></span>
-<h2 id="帧结构">帧结构</h2>
-<h3 id="帧和子帧">帧和子帧</h3>
-<p><br/>下行与上行链路传输于帧中，一帧的时域为<span
-class="math inline">\({ {T}_{\text{f}}}=\left( {\Delta { {f}_{\max }}{
-{N}_{\text{f}}}}/{100}\; \right)\cdot { {T}_{\text{s}}}=10\text{
-ms}\)</span>，一帧包含10个子帧，每个子帧时域为<span
-class="math inline">\({ {T}_{\text{sf}}}=\left( {\Delta { {f}_{\max }}{
-{N}_{\text{f}}}}/{1000}\; \right)\cdot { {T}_{\text{s}}}=1\text{
-ms}\)</span>。每个子帧中的连续OFDM符号数为<span
-class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
-}=N_{\text{symb}}^{\text{slot}}N_{\text{slot}}^{\text{subframe},\mu
-}\)</span>。每帧分为两个相等大小的半帧，每个半帧包含5个子帧。</p>
-<p>There is one set of frames in the uplink and one set of frames in the
-downlink on a carrier.</p>
-<p>来自UE的上行帧<span
-class="math inline">\(i\)</span>应在UE对应的下行帧开始前<span
-class="math inline">\({ {T}_{\text{TA}}}={ {N}_{\text{TA}}}{
-{T}_{\text{s}}}\)</span>传输。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png" title="Figure 4.3.1-1: Uplink-downlink timing relation" /></p>
-<h3 id="时隙">时隙</h3>
-<p><br/>对于子载波间隔配置<span
-class="math inline">\(\mu\)</span>，时隙在子帧内按递增顺序编号<span
-class="math inline">\(n_{\text{s}}^{\mu }\in \left\{
-0,...,N_{\text{slot}}^{\text{subframe,}\mu }-1
-\right\}\)</span>，在帧内按递增顺序编号<span
-class="math inline">\(n_{\text{s,f}}^{\mu }\in \left\{
-0,...,N_{\text{slot}}^{\text{frame,}\mu }-1
-\right\}\)</span>。一个时隙内有<span
-class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>个连续的OFDM符号，<span
-class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>依赖于CP长度，并且由Tables
-4.3.2-1和4.3.2-2给定。子帧内的起始时隙<span
-class="math inline">\(n_{\text{s}}^{\mu
-}\)</span>与子帧内起始OFDM符号<span
-class="math inline">\(n_{\text{s}}^{\mu
-}N_{\text{symb}}^{\text{slot}}\)</span>在时间上对齐。</p>
+<h2 id="物理资源">物理资源</h2>
+<p><br/>本规范定义了下列用于下行链路的天线端口：</p>
+<ul>
+<li>Antenna ports starting with 1000 for DM-RS associated with
+PDSCH</li>
+<li>Antenna ports starting with 2000 for DM-RS associated with
+PDCCH</li>
+<li>Antenna ports starting with 3000 for CSI-RS</li>
+<li>Antenna ports starting with 4000 for SS/PBCH block transmission</li>
+</ul>
+<h2 id="物理信道">物理信道</h2>
+<h3 id="物理下行共享信道">物理下行共享信道</h3>
+<h4 id="加扰">加扰</h4>
+<p><br/>对于每个码字$ q <span
+class="math inline">\(，UE应假设比特块\)</span> { {b}^{(q)}}(0),...,{
+{b}<sup>{(q)}}(M_{}</sup>{(q)}-1) <span
+class="math inline">\(应在调制前被加扰，其中\)</span> M_{}^{(q)} <span
+class="math inline">\(是在物理信道上传输的码字\)</span> q <span
+class="math inline">\(的比特数，加扰后的比特块为\)</span> {
+{}^{(q)}}(0),...,{ {}<sup>{(q)}}(M_{}</sup>{}-1)
+$。根据如下公式进行加扰</p>
+<p><span class="math display">\[ { {\tilde{b}}^{(q)}}(i)=\left( {
+{b}^{(q)}}(i)+{ {c}^{(q)}}(i) \right)\bmod 2 \]</span></p>
+<p>其中加扰序列$ { {c}^{(q)}}(i) $由2.2节给出。</p>
+<h4 id="调制">调制</h4>
+<p><br/>对于每个码字$ q <span
+class="math inline">\(，UE应假设加扰比特块\)</span> { {}^{(q)}}(0),...,{
+{}<sup>{(q)}}(M_{}</sup>{}-1) <span class="math inline">\(根据Table
+7.3.1.2-1中的调制方式进行调制，具体调制方法见《NR物理信道与调制》2.1节，得到复值调制符号块\)</span>
+{ {d}^{(q)}}(0),...,{ {d}<sup>{(q)}}(M_{}</sup>{}-1) $。</p>
 <figure>
 <img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160156375.png"
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/195532388.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="层映射">层映射</h4>
+<p><br/>UE假设每个码字的复值调制符号根据Table
+7.3.1.3-1被映射到一层或多层上发送。码字$ q <span
+class="math inline">\(的复值调制符号\)</span> { {d}^{(q)}}(0),...,{
+{d}<sup>{(q)}}(M_{}</sup>{}-1) <span
+class="math inline">\(被映射到层\)</span> x(i)={ {}^{T}} <span
+class="math inline">\(，\)</span> i=0,1,...,M_{}^{}-1 <span
+class="math inline">\(，其中\)</span> <span
+class="math inline">\(是层数，\)</span> M_{}^{}
+$是每层的调制符号数。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/200219608.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="预编码">预编码</h4>
+<p><span class="math display">\[ \left[ \begin{matrix}
+   { {y}^{(0)}}(i)  \\
+   \vdots   \\
+   { {y}^{(P-1)}}(i)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   { {x}^{(0)}}(i)  \\
+   \vdots   \\
+   { {x}^{(\upsilon -1)}}(i)  \\
+\end{matrix} \right]
+\]</span></p>
+<p>where $ P=$.</p>
+<h4 id="资源映射">资源映射</h4>
+<p><br/>UE应假设对物理信道的传输所使用的每个天线端口，复值符号块$ {
+{y}^{(p)}}(0),...,{ {y}<sup>{(p)}}(M_{}</sup>{}-1) <span
+class="math inline">\(应符合38.xxx下行功率分配的规定，并且从\)</span> {
+{y}^{(p)}}(0) $开始映射到REs $ ( k,l ) $，REs满足以下所有条件：</p>
+<ul>
+<li>它们位于分配给传输的资源块中</li>
+<li>根据TS 38.214，它们被声明可用于PDSCH</li>
+</ul>
+<p>向没有其他用途的REs $ { {( k,l )}<em>{p,}} <span
+class="math inline">\(上映射，以递增顺序先按天线端口索引\)</span> p
+<span class="math inline">\(，再按分配的物理资源索引\)</span> k <span
+class="math inline">\(，然后按索引\)</span> l <span
+class="math inline">\(映射，索引\)</span> l <span
+class="math inline">\(以TS 38.213规范的描述以\)</span> l={ {l}</em>{0}}
+$为起始。</p>
+<p>UE可以假设在一个PRB bundle内使用相同的预编码，一个PRB
+bundle由2个或4个PRBs组成。PRB bundle基于 absolute资源格定义。</p>
+<h3 id="物理下行控制信道">物理下行控制信道</h3>
+<h4 id="控制信道单元">控制信道单元</h4>
+<p><br/>物理下行控制信道由一个或多个控制信道单元（control-channel
+elements，CCE）组成，CCE数由Table 7.3.2.1-1指示。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/202216219.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="控制资源集">控制资源集</h4>
+<p><br/>一个控制资源集（Control-resource set，CORESET）由$ N_{}^{} <span
+class="math inline">\(个频域RB和\)</span> N_{}^{}{ 1,2,3 } <span
+class="math inline">\(个时域符号组成，\)</span> N_{}^{} <span
+class="math inline">\(通过高层参数*CORESET-freq-dom*给定，\)</span>
+N_{}^{} <span
+class="math inline">\(通过高层参数*CORESET-time-dur*给定，其中仅当高层参数*DL-DMRS-typeA-pos*
+=3时支持\)</span> N_{}^{}=3 $。</p>
+<p>一个CCE由6个资源粒子组（resource-element
+group，REG）组成，一个REG等于一个OFDM符号上的RB。一个CORESET
+内的REGs按时域优先的方式以递增顺序编号，在CORESET内从第1个OFDM符号且最低的RB以0开始编号。</p>
+<p>UE可以配置多个CORESET。每个CORESET只与一个CCE-to-REG映射关联。</p>
+<p>对于一个CORESET，CCE-to-REG映射可以交织（interleaved），也可以不交织（non-
+interleaved），这由高层参数<em>CORESET-Trans-type</em>来配置，并且由REG
+bundles来描述：</p>
+<ul>
+<li>REG bundle $ i $定义为REGs $ { iL,iL+1,...,iL+L-1 } <span
+class="math inline">\(，其中\)</span> L <span
+class="math inline">\(是REG bundle size，REG bundle
+size由高层参数*CORESET-REG-bundle-size*配置，\)</span>
+i=0,1,...,{N_{}^{}}/{L};-1 $是CORESET内的REG数。</li>
+<li>CCE $ j $由REG bundles $ {
+f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
+class="math inline">\(组成，其中\)</span> f() $是交织器。</li>
+</ul>
+<p>对于非交织的CCE-to-REG映射，$ L=6 <span
+class="math inline">\(且\)</span> f(j)=j $。</p>
+<p>对于交织的CCE-to-REG映射，对于$ N_{}^{}=1 <span
+class="math inline">\(，有\)</span> L{ 2,6 } <span
+class="math inline">\(；对于\)</span> N_{}^{}{ 2,3 } <span
+class="math inline">\(，有\)</span> L{ N_{}^{},6 } $。</p>
+<p>UE可假设在一个REG bundle内在频域上使用相同的预编码。</p>
+<h4 id="加扰-1">加扰</h4>
+<h4 id="pdcch调制">PDCCH调制</h4>
+<p><br/>UE应假设比特块$ (0),...,({ {M}<em>{}}-1) <span
+class="math inline">\(进行QPSK调制，QPSK调制采用《NR物理信道与调制》2.1.3节所描述的方法，得到复值调制符号块\)</span>
+d(0),...,d({ {M}</em>{}}-1) $。</p>
+<h4 id="资源映射-1">资源映射</h4>
+<p><br/>UE应假设用于监测PDCCH的CCEs中，复值符号块$ d(0),...,d({
+{M}<em>{}}-1) <span class="math inline">\(乘以一个幅值因子\)</span> {
+{}</em>{}} <span class="math inline">\(，然后按照先\)</span> l <span
+class="math inline">\(后\)</span>k<span
+class="math inline">\(的递增顺序映射到REs\)</span> { {( k,l )}_{p,}}
+$。</p>
+<h3 id="物理广播信道">物理广播信道</h3>
+<h4 id="调制-1">调制</h4>
+<p><br/>UE应假设比特块$ b(0),...,b({ {M}<em>{}}-1) <span
+class="math inline">\(采用QPSK调制，QPSK调制采用《NR物理信道与调制》2.1节所描述的方法，得到复值调制符号块\)</span>
+{ {d}</em>{}}(0),...,{ {d}<em>{}}({ {M}</em>{}}-1) $。</p>
+<h4 id="资源映射-2">资源映射</h4>
+<p><br/>资源映射在本文1.4.3节中描述。</p>
+<h2 id="物理信号">物理信号</h2>
+<h3 id="参考信号">参考信号</h3>
+<h4 id="用于pdsch的dm-rs">用于PDSCH的DM-RS</h4>
+<h5 id="序列生成">序列生成</h5>
+<p><br/>UE应假设参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中伪随机序列$ c(i) $在《NR物理信道与调制》2.2节中定义。</p>
+<blockquote>
+<p>Note: Sequence defined on a global scale relative to (FFS) SSBlock or
+RRC-configured reference point.</p>
+</blockquote>
+<h5 id="资源映射-3">资源映射</h5>
+<p><br/>UE应假设PDSCH DM-RS根据type 1或type
+2映射到REs，DM-RS的类型由高层参数<em>DL-DMRS-config-type</em>给定。</p>
+<p>UE应假设序列$ r(m) $根据如下公式映射到RE</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{DMRS}}}{
+{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
+{l}&#39;} \right)\cdot r\left( 2m+{k}&#39;+{ {m}_{0}} \right) \\
+\nonumber &amp; k=\left\{ \begin{array}{*{35}{l}}
+   { {k}_{\text{0}}}+4m+2{k}&#39;+\Delta  &amp; \text{Configuration type
+1}  \\
+   { {k}_{\text{0}}}+6m+{k}&#39;+\Delta  &amp; \text{Configuration type
+2}  \\
+\end{array} \right. \\
+\nonumber &amp; {k}&#39;=0,1 \\
+\nonumber  &amp; l=\bar{l}+{l}&#39;  
+\end{align}
+\]</span></p>
+<p>其中$ l <span class="math inline">\(定义为相对于时隙的起始，\)</span>
+{ {w}<em>{}}( { {k}'} ) <span class="math inline">\(，\)</span> {
+{w}</em>{}}( { {l}'} ) <span class="math inline">\(和\)</span> $由Tables
+7.4.1.1.2-1 and 7.4.1.1.2-2给定。</p>
+<p>时域索引$ {l}' <span
+class="math inline">\(和所支持的天线端口\)</span>p<span
+class="math inline">\(依赖于DM-RS duration，DM-RS duration根据Table
+7.4.1.1.2-3确定。\)</span> {l} <span
+class="math inline">\(依赖于高层参数*DL-DMRS-add-pos*，*DL-DMRS-add-pos*由Table
+7.4.1.1.2-4给定。\)</span> { {l}_{0}} $依赖于映射类型：</p>
+<ul>
+<li>对于PDSCH映射类型A：如果高层参数<em>DL-DMRS-typeA-pos</em> =3则$ {
+{l}<em>{0}}=3 <span class="math inline">\(，以及\)</span> {
+{l}</em>{0}}=2 $</li>
+<li>对于PDSCH映射类型B：$ { {l}_{0}}
+$是DM-RS映射到所调度的PDSCH资源中的第1个OFDM符号</li>
+</ul>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/213937051.png"
 alt="mark" />
 <figcaption aria-hidden="true">mark</figcaption>
 </figure>
 <figure>
 <img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160308810.png"
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/214014814.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/214111058.png"
 alt="mark" />
 <figcaption aria-hidden="true">mark</figcaption>
 </figure>
 <blockquote>
-<p><strong>Agreements:</strong></p>
-<ul>
-<li>A slot can contain all downlink, all uplink, or {at least one
-downlink part and at least one uplink part}</li>
-<li>There are also agreements on various semi-static configurations with
-different periodicities</li>
-</ul>
+<p>Note: More than one additional DM_RS can be configured.</p>
 </blockquote>
-<h2 id="物理资源">物理资源</h2>
-<h3 id="天线端口">天线端口</h3>
-<p><br/>天线端口定义为，在同一天线端口上，某一符号上的信道可以由另一符号上的信道推知。</p>
-<p>如果一个天线端口上某一符号传输的信道的大尺度性能可以被另一天线端口上某一符号传输的信道所推知，则这两个天线端口被称为quasi
-co-located。大尺度性能包括一个或多个延时扩展，多普勒扩展，多普勒频移，平均增益，平均时延和空间接收参数。</p>
-<h3 id="资源格">资源格</h3>
-<p><br/>对于每种波形参数和载波，资源格由<span
-class="math inline">\(N_{\text{RB,}x}^{\mu
-}N_{\text{sc}}^{\text{RB}}\)</span>个子载波和<span
-class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
-}\)</span>个OFDM符号定义，其中<span
-class="math inline">\(x\)</span>表示DL或UL，<span
-class="math inline">\(N_{\text{RB,}x}^{\text{max,}\mu }\)</span>由Table
-4.4.2-1给定。在不至于混淆的情况下，下标<span
-class="math inline">\(x\)</span>可省略。每个天线端口<span
-class="math inline">\(p\)</span>，每个子载波间隔配置<span
-class="math inline">\(\mu\)</span>以及每个传输方向（上行或下行）对应一个资源格。</p>
+<h4 id="用于pdsch的pt-rs">用于PDSCH的PT-RS</h4>
+<h5 id="序列生成-1">序列生成</h5>
+<h5 id="资源映射-4">资源映射</h5>
+<p><br/>UE应假设只有当高层参数<em>DL-PTRS-present</em>指示PT-RS被使用时，并且只在用于PDSCH的RBs中呈现。</p>
+<p>如果呈现，UE应假设PDSCH PT-RS根据如下公式映射到物理资源</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{PTRS}}}r(m) \\
+\nonumber &amp; l={ {l}_{\text{DMRS}}}+1+{ {L}_{\text{PTRS}}}\cdot
+{l}&#39; \\
+\nonumber &amp; l&#39;=0,1,2,...  
+\end{align}
+\]</span></p>
+<p>每$ { {K}_{}}
+$个被调度的RBs中，当下列条件被满足时，从最低编号的RB开始调度（<em>Note:
+It may not be the lowest numbers RB, FFS if an offset is
+used.</em>）</p>
+<ul>
+<li><span
+class="math inline">\(l\)</span>在用于PDSCH传输的所分配的OFDM符号内</li>
+<li>RE $ ( k,l ) $不用于DM-RS</li>
+</ul>
+<p>其中</p>
+<ul>
+<li>索引<span class="math inline">\(k\)</span>是一个PRB内的子载波数</li>
+<li>对于1个符号DM-RS，有$ { {l}<em>{}}={ {l}</em>{0}} <span
+class="math inline">\(；对于2个符号DM-RS，有\)</span> { {l}<em>{}}={
+{l}</em>{0}}+1 <span class="math inline">\(，其中\)</span> { {l}_{0}}
+$由1.4.1.1.2节定义</li>
+<li>$ { {K}_{}}{ 2,4 } $由[6, TS38.214]给定</li>
+<li>$ { {L}_{}}{ 1,2,4 } $由[6, TS38.214]给定</li>
+</ul>
+<h4 id="用于pdcch的dm-rs">用于PDCCH的DM-RS</h4>
+<h4 id="用于pbch的dm-rs">用于PBCH的DM-RS</h4>
+<h5 id="序列生成-2">序列生成</h5>
+<p><br/>UE应假设用于SS/PBCH的参考信号$ r(m) $由下式定义</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中$ c(n)
+$由《NR物理信道与调制》2.2节给定。加扰序列生成应在每个SS/PBCH块的起始处通过小区ID
+$ N_{}^{} <span class="math inline">\(和\)</span> { {n}_{}}
+$被初始化，块时间索引由PBCH DM-RS承载。</p>
+<h5 id="资源映射-5">资源映射</h5>
+<p><br/>资源映射在1.4.3节中描述。</p>
+<h4 id="csi-rs">CSI-RS</h4>
+<h5 id="序列生成-3">序列生成</h5>
+<p><br/>UE应假设参考信号序列$ r(m) $由下式定义</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中伪随机序列$ c(i) $由《NR物理信道与调制》2.2节定义。</p>
+<h5 id="资源映射-6">资源映射</h5>
+<p><br/>UE应假设序列$ r(m) $根据以下公式映射到物理资源</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{CSIRS}}}{
+{w}_{\text{f}}}\left( { {k}&#39;} \right)\cdot { {w}_{\text{t}}}\left( {
+{l}&#39;} \right)\cdot r\left( m \right) \\
+\nonumber &amp; k=\bar{k}+{k}&#39; \\
+\nonumber &amp; l=\bar{l}+{l}&#39;  
+\end{align}
+\]</span></p>
+<p>但有以下例外</p>
+<ul>
+<li>与所配置的CORESET重叠的REs应从CSI-RS传输中排除</li>
+</ul>
+<p>其中<span class="math inline">\(l\)</span>定义为相对于时隙的起始，$
+{k} <span class="math inline">\(和\)</span> {l} <span
+class="math inline">\(由Table 7.4.1.5.2-1和\)</span> { {w}<em>{}}( {
+{k}'} ),{ {w}</em>{}}( { {l}'} ){ ,,,} <span
+class="math inline">\(给定。对于每个\)</span> {l} $，有长度为6的bitmap $
+<span class="math inline">\(]，其中比特\)</span> { {b}<em>{i}} <span
+class="math inline">\(隐含地以索引\)</span> j <span
+class="math inline">\(按递增顺序指示\)</span> { {k}</em>{j}}=2i $。</p>
 <figure>
 <img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161038568.png"
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/215953799.png"
 alt="mark" />
 <figcaption aria-hidden="true">mark</figcaption>
 </figure>
-<h3 id="资源元素">资源元素</h3>
-<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
-class="math inline">\(\mu\)</span>下的资源格中每个元素被称为资源元素（Resource
-Element，RE），它用索引对<span class="math inline">\(\left( k,l
-\right)\)</span>唯一地标识，其中<span
-class="math inline">\(k=0,...,N_{\text{RB}}^{\mu
-}N_{\text{sc}}^{\text{RB}}-1\)</span>是频域索引，<span
-class="math inline">\(l\)</span>是时域符号索引。</p>
-<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
-class="math inline">\(\mu\)</span>下的RE <span
-class="math inline">\(\left( k,l \right)\)</span>表示为<span
-class="math inline">\({ {\left( k,l \right)}_{p,\mu
-}}\)</span>，相应的复数值表示为<span
-class="math inline">\(a_{k,l}^{(p,\mu
-)}\)</span>。在不至于混淆的情况下，或在没有特定的天线端口或子载波间隔的情况下，索引<span
-class="math inline">\(p\)</span>和<span
-class="math inline">\(\mu\)</span>可以省略，简写为<span
-class="math inline">\(a_{k,l}^{(p)}\)</span>或<span
-class="math inline">\({ {a}_{k,l}}\)</span>。</p>
-<p>一个资源元素（RE）分为4类：‘uplink’, ‘downlink’, ‘flexible’, or
-‘reserved’。</p>
-<ul>
-<li>如果RE被配置为‘reserved’，
-UE不应在上行链路中对该RE发送任何内容，也不对下行链路中的RE内容作出任何假设。</li>
-</ul>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161511352.png" title="Figure 4.4.3-1: Resource grid and resource block" /></p>
-<h3 id="资源块">资源块</h3>
-<p><br/>一个物理资源块（PRB）在频域上定义为<span
-class="math inline">\(N_{\text{sc}}^{\text{RB}}=12\)</span>连续的子载波。</p>
-<p>PRB在频域上从0到<span class="math inline">\(N_{\text{RB}}^{\mu
-}-1\)</span>编号。频域上的PRB数<span class="math inline">\({
-{n}_{\text{PRB}}}\)</span>和RE <span
-class="math inline">\((k,l)\)</span>的关系由下式给定：</p>
-<p><span class="math display">\[{ {n}_{\text{PRB}}}=\left\lfloor
-\frac{k}{N_{\text{sc}}^{\text{RB}}} \right\rfloor \]</span></p>
-<h3 id="载波带宽part">载波带宽part</h3>
-<p><br/>对于给定的载波上的波形参数<span class="math inline">\({ {\mu
-}_{i}}\)</span>，载波带宽part（bandwidth
-part，BWP）是一组连续的PRB。BWP中的RB从0到<span
-class="math inline">\(N_{\text{RB,}x}^{\mu }-1\)</span>编号，其中<span
-class="math inline">\(x\)</span>表示DL或UL，with <span
-class="math inline">\(N_{\text{BWP}}^{i}\)</span> being the offset
-between PRB 0 in the absolute resource block grid in clause 1.4.4 and
-PRB 0 in carrier bandwidth part number <span
-class="math inline">\(i\)</span>。BWP中的RB数应满足<span
-class="math inline">\(N_{\text{RB, }x}^{\text{min, }\mu }\le
-N_{\text{RB,}x}^{\mu }\le N_{\text{RB, }x}^{\text{max, }\mu
-}\)</span>，其中最小值和最大值在Table 4.4.2-1中给定。</p>
-<p>下行链路中，UE可配置具有一个或多个载波BWP，所述载波BWP的子集在给带时间处于激活状态。UE不希望在BWP以外的频带接收PDSCH或PDCCH。</p>
-<p>在上行链路中，UE可配置为具有一个或多个载波BWP，所述载波BWP的子集在给定时间处于激活状态。UE不希望在BWP以外的频带发送PUSCH或PUCCH。</p>
-<h2 id="载波聚合">载波聚合</h2>
-<p><br/>在多个小区中的传输可以被聚合，除了主小区外，最多可以使用15个辅小区。除非另有说明，本规范中的描述适用于多达16个服务小区中的每一个。</p>
-<h1 id="通用函数">通用函数</h1>
-<h2 id="调制映射器">调制映射器</h2>
-<p><br/>调制映射器采用二进制0或1作为输入，产生复值调制符号作为输出。</p>
-<h3 id="π2-bpsk">π/2-BPSK</h3>
-<p><br/>对于π/2-BPSK调制，比特<span
-class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[x=\frac{ { {e}^{j{i\pi
-}/{2}\;}}}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i)
-\right) \right]\]</span></p>
-<h3 id="bpsk">BPSK</h3>
-<p><br/>对于BPSK调制，比特<span
-class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
-1-2b(i) \right)+j\left( 1-2b(i) \right) \right]\]</span></p>
-<h3 id="qpsk">QPSK</h3>
-<p><br/>对于QPSK调制，成对比特<span
-class="math inline">\(b(i),b(i+1)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
-1-2b(i) \right)+j\left( 1-2b(i+1) \right) \right]\]</span></p>
-<h3 id="qam">16QAM</h3>
-<p><br/>对于16QAM调制，四位比特<span
-class="math inline">\(b(i),b(i+1),b(i+2),b(i+3)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[x=\frac{1}{\sqrt{10}}\left[ \left(
-1-2b(i) \right)\left( 2-\left( 1-2b(i+2) \right) \right)+j\left(
-1-2b(i+1) \right)\left( 2-\left( 1-2b(i+3) \right) \right)
-\right]\]</span></p>
-<h3 id="qam-1">64QAM</h3>
-<p><br/>对于64QAM调制，六位比特<span
-class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[\begin{align}
-  \nonumber &amp; x=\frac{1}{\sqrt{42}}\left[ \left( 1-2b(i)
-\right)\left( 4-\left( 1-2b(i+2) \right)\left( 2-\left( 1-2b(i+4)
-\right) \right) \right) \right. \\
-\nonumber &amp; \ \ \ \ \ \ \left. +j\left( 1-2b(i+1) \right)\left(
-4-\left( 1-2b(i+3) \right)\left( 2-\left( 1-2b(i+5) \right) \right)
-\right) \right] \\
-\end{align}\]</span></p>
-<h3 id="qam-2">256QAM</h3>
-<p><br/>对于256QAM调制，八位比特<span
-class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5),b(i+6),b(i+7)\)</span>根据下式映射为复值调制符号<span
-class="math inline">\(x\)</span></p>
-<p><span class="math display">\[\begin{align}
-\nonumber &amp; x=\frac{1}{\sqrt{170}}\left[ \left( 1-2b(i)
-\right)\left( 8-\left( 1-2b(i+2) \right)\left( 4-\left( 1-2b(i+4)
-\right)\left( 2-\left( 1-2b(i+6) \right) \right) \right) \right) \right.
-\\
-\ \ \ \nonumber &amp; \left. +j\left( 1-2b(i+1) \right)\left( 8-\left(
-1-2b(i+3) \right)\left( 4-\left( 1-2b(i+5) \right)\left( 2-\left(
-1-2b(i+7) \right) \right) \right) \right) \right]  
-\end{align}\]</span></p>
-<h2 id="伪随机序列生成">伪随机序列生成</h2>
-<p><br/>伪随机序列由长度为31的Gold序列定义。长度为<span
-class="math inline">\({ {M}_{\text{PN}}}\)</span>的输出序列<span
-class="math inline">\(c(n)\)</span>，其中<span
-class="math inline">\(n=0,1,...,{
-{M}_{\text{PN}}}-1\)</span>，由下式定义</p>
-<p><span class="math display">\[\begin{align}
-\nonumber &amp; c(n)=\left( { {x}_{1}}(n+{ {N}_{C}})+{ {x}_{2}}(n+{
-{N}_{C}}) \right)\bmod 2 \\
-\nonumber &amp; { {x}_{1}}(n+31)=\left( { {x}_{1}}(n+3)+{ {x}_{1}}(n)
-\right)\bmod 2 \\
-\nonumber &amp; { {x}_{2}}(n+31)=\left( { {x}_{2}}(n+3)+{
-{x}_{2}}(n+2)+{ {x}_{2}}(n+1)+{ {x}_{2}}(n) \right)\bmod 2  
-\end{align}\]</span></p>
-<p>其中<span class="math inline">\({
-{N}_{C}}=1600\)</span>，第一m序列应由<span class="math inline">\({
-{x}_{1}}(0)=1,{
-{x}_{1}}(n)=0,n=1,2,...,30\)</span>初始化。第二m序列的初始化由<span
-class="math inline">\({ {c}_{\text{init}}}=\sum\nolimits_{i=0}^{30}{ {
-{x}_{2}}(i)\cdot { {2}^{i}}}\)</span>表示，其值取决于序列的应用。</p>
-<h2 id="ofdm基带信号生成">OFDM基带信号生成</h2>
-<p><br/>对除PRACH以外的任何物理信道或信号，对于一个子帧内的OFDM符号<span
-class="math inline">\(l\)</span>，天线端口<span
-class="math inline">\(p\)</span>和子载波间隔配置<span
-class="math inline">\(\mu\)</span>下的时间连续信号<span
-class="math inline">\(s_{l}^{(p,\mu )}\left( t
-\right)\)</span>定义为</p>
-<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
-\right)=\sum\limits_{k=-\left\lfloor N_{\text{RB}}^{\mu
-}N_{\text{sc}}^{\text{RB}}/2 \right\rfloor }^{ { {\left\lceil
-N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}/2 \right\rceil }^{
-{}}}-1}{a_{ {k}&#39;,\bar{l}}^{(p,\mu )}\cdot { {e}^{j2\pi \left( k+{
-{k}_{0}} \right)\Delta f\left( t-{ {N}_{\text{CP},\bar{l}}}\cdot {
-{T}_{\text{s}}} \right)}}}\]</span></p>
-<p>其中<span class="math inline">\(0\le t&lt;\left( {
-{N}_{\text{u}}}+N_{\text{CP},\bar{l}}^{\mu } \right){
-{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。The value of <span
-class="math inline">\({ {k}_{0}}\)</span> is such that the lowest
-numbered subcarrier in a resource block for subcarrier spacing
-configuration <span class="math inline">\(\mu\)</span> coincides with
-the lowest numbered subcarrier in a resource block for any subcarrier
-spacing configuration less than <span
-class="math inline">\(\mu\)</span>.</p>
-<p>子载波间隔配置<span
-class="math inline">\(\mu\)</span>下的OFDM符号<span
-class="math inline">\(l\)</span>的起始位置为</p>
-<p><span class="math display">\[ t_{\text{start},l}^{\mu }=\left\{
-\begin{array}{*{35}{l}}
-   0 &amp; l=0  \\
-   t_{\text{start},\bar{l}-1}^{\mu }+\left( {
-{N}_{\text{u}}}+N_{\text{CP,}l-1}^{\mu } \right)\cdot { {T}_{\text{s}}}
-&amp; \text{otherwise}  \\
-\end{array} \right.\]</span></p>
-<p>其中</p>
+<h4 id="tracking-rs">Tracking RS</h4>
+<blockquote>
+<p>Note: depending on future decisions, the TRS may become a realization
+of a CSI-RS in which case this section will be removed.</p>
+</blockquote>
+<h5 id="序列产生">序列产生</h5>
+<p><br/>UE应假设参考信号序列$ r(m) $定义为</p>
+<p><span class="math display">\[ r(m)=\frac{1}{\sqrt{2}}\left( 1-2\cdot
+c(2m) \right)+j\frac{1}{\sqrt{2}}\left( 1-2\cdot c(2m+1) \right)
+\]</span></p>
+<p>其中伪随机序列$ c(i) $由《NR物理信道与调制》2.2节定义。</p>
+<h5 id="资源映射-7">资源映射</h5>
+<p><br/>TRS burst由4个OFDM符号组成，并在2个连续时隙内发送。</p>
+<p>UE应假设TRS在一个burst内根据以下公式映射到物理资源</p>
 <p><span class="math display">\[ \begin{align}
-\nonumber &amp; { {N}_{\text{u}}}=2048\kappa \cdot { {2}^{-\mu }} \\
-\nonumber &amp; { {N}_{\text{CP},\bar{l}}}=\left\{
-\begin{array}{*{35}{l}}
-   512\kappa \cdot { {2}^{-\mu }} &amp; \text{extended cyclic
-prefix}  \\
-   144\kappa \cdot { {2}^{-\mu }}+16\kappa  &amp; \text{normal cyclic
-prefix and }l=0\text{ or }l=7  \\
-   144\kappa \cdot { {2}^{-\mu }} &amp; \text{otherwise}  \\
-\end{array} \right.\cdot { {2}^{\mu }} \\
-\nonumber  &amp;   
-\end{align}\]</span></p>
-<p>对于PRACH，天线端口<span
-class="math inline">\(p\)</span>下的时间连续信号<span
-class="math inline">\(s_{l}^{(p,\mu )}\left( t
-\right)\)</span>定义为</p>
-<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
-\right)=\sum\limits_{k=-\left\lfloor { {L}_{\text{RA}}}/2 \right\rfloor
-}^{ { {\left\lceil { {L}_{\text{RA}}}/2 \right\rceil }^{ {}}}-1}{a_{ {
-{k}&#39;}}^{(p,\text{RA})}\cdot { {e}^{j2\pi \left( k+{ {k}_{0}}
-\right)\Delta { {f}_{\text{RA}}}\left( t-{ {N}_{\text{CP},l}}\cdot {
-{T}_{\text{s}}} \right)}}}\]</span></p>
-<p>其中<span class="math inline">\(0\le t&lt;\left( {
-{N}_{\text{u}}}+N_{\text{CP},l}^{\mu } \right){
-{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。</p>
-<p>一个子帧内PRACH前导的起始位置由<span
-class="math inline">\(t_{\text{start}}^{\text{RA}}\)</span>给定，假设子帧始于<span
-class="math inline">\(t=0\)</span>，其中</p>
+\nonumber &amp; a_{k,l}^{(p,\mu )}={ {\beta }_{\text{TRS}}}r(m) \\
+\nonumber &amp; k=4m+{ {k}_{0}}  
+\end{align}
+\]</span></p>
+<p>The UE may assume that a TRS burst is quasi co-located with respect
+to delay spread, average delay, Doppler shift, and Doppler spread with
+the PDSCH DM-RS.</p>
+<h3 id="同步信号">同步信号</h3>
+<h4 id="物理层小区id">物理层小区ID</h4>
+<p><br/>1008个唯一的物理层小区ID通过下式给定</p>
+<p><span class="math display">\[
+N_{\text{ID}}^{\text{cell}}=3N_{\text{ID}}^{\text{(1)}}+N_{\text{ID}}^{\text{(2)}}
+\]</span></p>
+<p>其中$ N_{}^{}{ 0,1,...,335 } <span class="math inline">\(且\)</span>
+N_{}^{}{ 0,1,2 } $。</p>
+<h4 id="主同步信号">主同步信号</h4>
+<h5 id="序列产生-1">序列产生</h5>
+<p><br/>主同步信号序列$ { {d}_{}}(n) $定义为</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; { {d}_{\text{PSS}}}\left( n \right)=1-2x\left( m
+\right) \\
+\nonumber &amp; m=\left( n+43N_{\text{ID}}^{\text{(2)}} \right)\bmod 127
+\\
+\nonumber  &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ x\left( i+7 \right)=\left( x\left( i+4
+\right)+x\left( i \right) \right)\bmod 2 \]</span></p>
+<p>且</p>
+<p><span class="math display">\[ \left[ \begin{matrix}
+   x\left( 6 \right) &amp; x\left( 5 \right) &amp; x\left( 4 \right)
+&amp; x\left( 3 \right) &amp; x\left( 2 \right) &amp; x\left( 1 \right)
+&amp; x\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0  \\
+\end{matrix} \right]
+\]</span></p>
+<h5 id="资源映射-8">资源映射</h5>
+<p><br/>资源映射由1.4.3节描述。</p>
+<h4 id="辅同步信号">辅同步信号</h4>
+<h5 id="序列产生-2">序列产生</h5>
+<p><br/>辅同步信号序列$ { {d}_{}}(n) $定义为</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber  &amp; { {d}_{\text{SSS}}}\left( n \right)=\left[ 1-2{
+{x}_{0}}\left( \left( n+{ {m}_{0}} \right)\bmod 127 \right)
+\right]\left[ 1-2{ {x}_{1}}\left( \left( n+{ {m}_{1}} \right)\bmod 127
+\right) \right] \\
+\nonumber &amp; { {m}_{0}}=15\left\lfloor
+\frac{N_{\text{ID}}^{\text{(1)}}}{\text{112}} \right\rfloor
++5N_{\text{ID}}^{\text{(2)}} \\
+\nonumber &amp; { {m}_{1}}=N_{\text{ID}}^{\text{(1)}}\bmod 112 \\
+\nonumber &amp; 0\le n&lt;127  
+\end{align}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+\begin{align}
+  \nonumber  &amp; { {x}_{0}}\left( i+7 \right)=\left( { {x}_{0}}\left(
+i+4 \right)+x{}_{0}\left( i \right) \right)\bmod 2 \\
+\nonumber  &amp; { {x}_{1}}\left( i+7 \right)=\left( { {x}_{1}}\left(
+i+1 \right)+x{}_{1}\left( i \right) \right)\bmod 2  
+\end{align}
+\]</span></p>
+<p>且</p>
+<p><span class="math display">\[ \begin{align}
+  \nonumber &amp; \left[ \begin{matrix}
+   { {x}_{0}}\left( 6 \right) &amp; { {x}_{0}}\left( 5 \right) &amp; {
+{x}_{0}}\left( 4 \right) &amp; { {x}_{0}}\left( 3 \right) &amp; {
+{x}_{0}}\left( 2 \right) &amp; { {x}_{0}}\left( 1 \right) &amp; {
+{x}_{0}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right] \\
+\nonumber &amp; \left[ \begin{matrix}
+   { {x}_{1}}\left( 6 \right) &amp; { {x}_{1}}\left( 5 \right) &amp; {
+{x}_{1}}\left( 4 \right) &amp; { {x}_{1}}\left( 3 \right) &amp; {
+{x}_{1}}\left( 2 \right) &amp; { {x}_{1}}\left( 1 \right) &amp; {
+{x}_{1}}\left( 0 \right)  \\
+\end{matrix} \right]=\left[ \begin{matrix}
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\
+\end{matrix} \right]  
+\end{align}
+\]</span></p>
+<h5 id="资源映射-9">资源映射</h5>
+<p><br/>资源映射由1.4.3节描述。</p>
+<h3 id="sspbch块">SS/PBCH块</h3>
+<h4 id="sspbch块的时频结构">SS/PBCH块的时频结构</h4>
+<p><br/>在时域上，一个SS/PBCH块由4个OFDM符号组成，按递增顺序从0到3编号。在频域上，一个SS/PBCH块由24个连续RBs组成，其中的子载波按递增顺序从0到287编号，以编号最低的RB为起始。</p>
+<p>UE应假设为了符合[TS 38.213]中的PSS功率分配规定，符号序列$ {
+{d}<em>{}}(0),...,{ {d}</em>{}}(126) <span
+class="math inline">\(应乘以一个幅值因子\)</span> { {}<em>{}} <span
+class="math inline">\(以构成主同步信号，并按照\)</span>k$递增的顺序映射到REs
+$ { {( k,l )}</em>{p,}} <span
+class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内频域和时域索引，并由Table
+7.4.3.1-1给定。</p>
+<p>UE应假设为了符合[TS 38.213]中的SSS功率分配规定，符号序列$ {
+{d}<em>{}}(0),...,{ {d}</em>{}}(126) <span
+class="math inline">\(应乘以一个幅值因子\)</span> { {}<em>{}} <span
+class="math inline">\(以构成辅同步信号，并按照\)</span>k$递增的顺序映射到REs
+$ { {( k,l )}</em>{p,}} <span
+class="math inline">\(，其中\)</span>k<span
+class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内频域和时域索引，并由Table
+7.4.3.1-1给定。</p>
+<p>UE应假设为了符合[TS 38.213]中的PBCH功率分配规定，复值符号序列$ {
+{d}<em>{}}(0),...,{ {d}</em>{}}({ {M}<em>{}}-1) <span
+class="math inline">\(应乘以一个幅值因子\)</span> { {}</em>{}}<span
+class="math inline">\(以构成物理广播信道，并且从\)</span> {
+{d}<em>{}}(0) $开始映射到REs $ { {( k,l )}</em>{p,}}
+$，其中REs满足以下所有条件：</p>
 <ul>
-<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
-15,30,60,120 \right\}\text{ kHz}\)</span>，有<span
-class="math inline">\(t_{\text{start}}^{\text{RA}}=t_{\text{start},l}^{\mu
-}\)</span> for some <span class="math inline">\(l\)</span></li>
+<li>它们不用于PBCH DM-RS</li>
 </ul>
-<p><span class="math inline">\({ {L}_{\text{RA}}}\)</span>和<span
-class="math inline">\({ {N}_{\text{u}}}\)</span>在3.3.3节给定，并且有${
-{N}<em>{,l}}=N</em>{}^{}+n$，其中</p>
+<p>向没有其他用途的REs $ { {( k,l )}_{p,}} <span
+class="math inline">\(上映射，以递增顺序先按\)</span> k <span
+class="math inline">\(再按\)</span> l <span
+class="math inline">\(映射，其中\)</span> k <span
+class="math inline">\(和\)</span>l$分别表示一个SS/PBCH块内的频域和时域索引，并由Table
+7.4.3.1-1给定。</p>
+<p>UE假设为了符合[TS 38.213]中的PBCH DM-RS功率分配规定，复值符号序列$ {
+{r}<em>{l}}(0),...,{ {r}</em>{l}}(143) <span
+class="math inline">\(应乘以一个幅值因子\)</span> <em>{}^{} <span
+class="math inline">\(以构成SS/PBCH块的DM-RS，并且以递增顺序先按\)</span>k<span
+class="math inline">\(后按\)</span>l$映射到REs $ { {( k,l )}</em>{p,}}
+<span class="math inline">\(，其中\)</span> k <span
+class="math inline">\(和\)</span>l<span
+class="math inline">\(分别表示一个SS/PBCH块内的频域和时域索引，并由Table
+7.4.3.1-1和\)</span> v=N_{}^{} $给定。</p>
+<p>对于SS/PBCH块，UE应假设</p>
 <ul>
-<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
-1.25,5 \right\}\text{ kHz}\)</span>，<span
-class="math inline">\(n=0\)</span></li>
-<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
-15,30,60,120 \right\}\text{ kHz}\)</span>，<span
-class="math inline">\(n\)</span> is the number of times the interval
-<span class="math inline">\(\left[
-t_{\text{start}}^{\text{RA}},t_{\text{start}}^{\text{RA}}+\left(
-N_{\text{u}}^{\text{RA}}+N_{\text{CP}}^{\text{RA}} \right){
-{T}_{\text{s}}} \right]\)</span> overlaps with either time instance 0 or
-time instance <span class="math inline">\(\left( {\Delta { {f}_{\max }}{
-{N}_{\text{f}}}}/{500}\; \right)\cdot { {T}_{\text{s}}}=0.5\text{
-ms}\)</span> in a subframe</li>
+<li>天线端口$ p=4000 $，</li>
+<li>子载波间隔配置$ { 0,1,3,4 } $，且</li>
+<li>对于PSS，SSS和PBCH有相同的CP长度和子载波间隔</li>
 </ul>
-<h2 id="调制和上变频">调制和上变频</h2>
-<p><br/>对于天线端口<span
-class="math inline">\(p\)</span>和子载波间隔配置<span
-class="math inline">\(\mu\)</span>，复值OFDM基带信号调制和上变频至载频<span
-class="math inline">\({ {f}_{0}}\)</span></p>
-<p><span class="math display">\[\operatorname{Re}\left\{ s_{l}^{(p,\mu
-)}\left( t \right)\cdot { {e}^{j2\pi { {f}_{0}}t}} \right\}\]</span></p>
-<h1 id="上行链路">上行链路</h1>
-<p><br/>为避免本页面过于冗长，<a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">上行链路另起一页</a>。</p>
-<h1 id="下行链路">下行链路</h1>
-<p><br/>为避免本页面过于冗长，<a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">下行链路另起一页</a>。</p>
+<p>The UE may assume that SS/PBCH blocks transmitted with the same block
+time index within a SS/PBCH burst set periodicity are quasi co-located
+with respect to Doppler spread, Doppler shift, average gain, average
+delay, and spatial Rx parameters. The UE shall not assume quasi
+co-location for any other SS/PBCH block transmissions.</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/221608824.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h4 id="sspbch块的时域位置">SS/PBCH块的时域位置</h4>
+<p><br/>UE应对可能的SS/PBCH块进行监测的时域位置在[TS38.213]
+4.1节描述。</p>
 <h1 id="相关链接">相关链接</h1>
 <p><br/><a
 href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
 <a
 href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
+<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
 <a
 href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
 <a
@@ -3451,409 +3095,351 @@ href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理�
       </tags>
   </entry>
   <entry>
-    <title>5G-NR物理层过程（控制）v1.0.0</title>
-    <url>/2017/09/11/nr-v100-l1-procedure-control/</url>
-    <content><![CDATA[<h1 id="同步过程">同步过程</h1>
-<h2 id="小区搜索">小区搜索</h2>
-<p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
-<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS
-38.211中定义。</p>
-<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS/PBCH块。</p>
-<p>对于半帧中的SS/PBCH块，候选SS/PBCH块的OFDM
-符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
-<ul>
-<li>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
-14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1, 2, 3。</li>
-<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20} +
-28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1。</li>
-<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
-14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
-GHz，有n=0, 1, 2, 3。</li>
-<li>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20}
-+ 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12,
-13, 15, 16, 17, 18。</li>
-<li>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{8, 12, 16, 20,
-32, 36, 40, 44} + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7,
-8。</li>
-</ul>
-<p>一个半帧中的候选SS/PBCH块在时域上以升序从0到$ L-1 ]<span
-class="math inline">\(进行编号。对于\)</span> L=4 <span
-class="math inline">\(或\)</span> L&gt;4 <span
-class="math inline">\(，UE应根据与每个半帧内SS/PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS/PBCH块索引的2或3个LSB比特。对于\)</span>
-L=64
-$，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS/PBCH块索引的3
-个MSB比特。</p>
+    <title>5G-NR物理信道与调制v1.0.0</title>
+    <url>/2017/09/09/nr-v100-l1-channel-modulation/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>Marshall：</strong><a
+href="http://marshallcomm.cn/tags/2017-09/">v1.0.0版本</a>已过时，5G
+NR物理层规范已更新到<a
+href="http://marshallcomm.cn/tags/2017-10/">v1.1.0版本</a>。</p>
+</blockquote>
+<h1 id="帧结构与物理资源">帧结构与物理资源</h1>
+<h2 id="概述">概述</h2>
+<p><br/>在本规范中，除非另有说明，在时域中的各个域的大小表示为若干时间单位<span
+class="math inline">\({ {T}_{\text{s}}}={1}/{\left( \Delta { {f}_{\max
+}}\cdot { {N}_{\text{f}}} \right)}\;\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\max }}=480\cdot {
+{10}^{3}}\)</span> Hz，<span class="math inline">\({
+{N}_{\text{f}}}=4096\)</span>。常量<span class="math inline">\(\kappa
+={\Delta { {f}_{\text{max}}}{ {N}_{\text{f}}}}/{\left( \Delta {
+{f}_{\text{ref}}}{ {N}_{\text{f,ref}}} \right)}\;=64\)</span>，其中<span
+class="math inline">\(\Delta { {f}_{\text{ref}}}=15\cdot {
+{10}^{3}}\text{ Hz}\)</span>，<span class="math inline">\({
+{N}_{\text{f,ref}}}=2048\)</span>。</p>
+<h2 id="波形参数">波形参数</h2>
+<p><br/>支持多种OFDM波形参数，如Table 4.2-1所示，其中载波带宽部分的<span
+class="math inline">\(\mu\)</span>和CP由高层参数给定，下行链路由<em>DL_BWP_mu</em>和<em>DL_BWP_cp</em>给定，上行链路由<em>UL_BWP_mu</em>和<em>UL_BWP_cp</em>给定。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155018195.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <span id="more"></span>
+<h2 id="帧结构">帧结构</h2>
+<h3 id="帧和子帧">帧和子帧</h3>
+<p><br/>下行与上行链路传输于帧中，一帧的时域为<span
+class="math inline">\({ {T}_{\text{f}}}=\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{100}\; \right)\cdot { {T}_{\text{s}}}=10\text{
+ms}\)</span>，一帧包含10个子帧，每个子帧时域为<span
+class="math inline">\({ {T}_{\text{sf}}}=\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{1000}\; \right)\cdot { {T}_{\text{s}}}=1\text{
+ms}\)</span>。每个子帧中的连续OFDM符号数为<span
+class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
+}=N_{\text{symb}}^{\text{slot}}N_{\text{slot}}^{\text{subframe},\mu
+}\)</span>。每帧分为两个相等大小的半帧，每个半帧包含5个子帧。</p>
+<p>There is one set of frames in the uplink and one set of frames in the
+downlink on a carrier.</p>
+<p>来自UE的上行帧<span
+class="math inline">\(i\)</span>应在UE对应的下行帧开始前<span
+class="math inline">\({ {T}_{\text{TA}}}={ {N}_{\text{TA}}}{
+{T}_{\text{s}}}\)</span>传输。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/155332915.png" title="Figure 4.3.1-1: Uplink-downlink timing relation" /></p>
+<h3 id="时隙">时隙</h3>
+<p><br/>对于子载波间隔配置<span
+class="math inline">\(\mu\)</span>，时隙在子帧内按递增顺序编号<span
+class="math inline">\(n_{\text{s}}^{\mu }\in \left\{
+0,...,N_{\text{slot}}^{\text{subframe,}\mu }-1
+\right\}\)</span>，在帧内按递增顺序编号<span
+class="math inline">\(n_{\text{s,f}}^{\mu }\in \left\{
+0,...,N_{\text{slot}}^{\text{frame,}\mu }-1
+\right\}\)</span>。一个时隙内有<span
+class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>个连续的OFDM符号，<span
+class="math inline">\(N_{\text{symb}}^{\text{slot}}\)</span>依赖于CP长度，并且由Tables
+4.3.2-1和4.3.2-2给定。子帧内的起始时隙<span
+class="math inline">\(n_{\text{s}}^{\mu
+}\)</span>与子帧内起始OFDM符号<span
+class="math inline">\(n_{\text{s}}^{\mu
+}N_{\text{symb}}^{\text{slot}}\)</span>在时间上对齐。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160156375.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/160308810.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
 <blockquote>
-<p>注：DM-RS序列索引在TS 38.211中定义。</p>
-</blockquote>
-<p>UE可通过参数[<em>SSB-transmitted-SIB1</em>]被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。UE也可通过高层参数[<em>SSB-transmitted</em>]在每个服务小区被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。[通过[<em>SSB-transmitted</em>]配置优先于通过[<em>SSB-transmitted-SIB1</em>]配置。]</p>
-<blockquote>
-<p>注：May be removed and captured in 38.211。</p>
-</blockquote>
-<p>对于每个服务小区中SS/PBCH块的接收，UE可以在每个服务小区通过高层参数[<em>SSB-timing</em>]每半帧周期性地被配置。如果对于SS/PBCH块的接收，UE没有每半帧被周期性配置，则UE应假设以半帧为周期。UE应假设在服务小区中，对于所有SS/PBCH块，周期是相同的。</p>
-<p>对于初始小区的选择，UE可以假设SS/PBCH块半帧出现的周期为2帧。</p>
-<h2 id="传输定时调整">传输定时调整</h2>
-<h2 id="timing-for-secondary-cell-activation-deactivation">Timing for
-secondary cell activation / deactivation</h2>
-<h1 id="无线链路监测">无线链路监测</h1>
-<p><br/>为了向高层指示失步/同时状态，UE应监测主小区的下行无线链路质量。</p>
-<p>此处暂省略300+字，具体内容详见原文档。</p>
-<h1 id="链路重配置过程">[链路重配置过程]</h1>
-<p><br/>在一个服务小区内为了[RSRP x
-或SINR]测量，UE可以配置一组CSI-RS资源或一组SS/PBCH块索引。UE应假设SCI-RS采用非零传输功率。每个CSI-RS资源参数通过高层信令配置，这些参数包括：</p>
+<p><strong>Agreements:</strong></p>
 <ul>
-<li>[资源配置]</li>
-<li>[周期]</li>
-<li>[天线端口]</li>
-<li>[传输功率]</li>
-<li>[伪随机序列生成参数]</li>
-<li>[QCL参数]</li>
-<li>[…]</li>
+<li>A slot can contain all downlink, all uplink, or {at least one
+downlink part and at least one uplink part}</li>
+<li>There are also agreements on various semi-static configurations with
+different periodicities</li>
 </ul>
-<blockquote>
-<p>[Editor’s note: For reconfiguration request, there are also no
-existing agreements to describe preamble retransmissions, or the window
-for the UE to receive a response, or the configuration of the CORESET
-where the PDCCH scheduling the response is transmitted, etc.]</p>
 </blockquote>
-<h1 id="上行功率控制">上行功率控制</h1>
-<h2 id="物理上行共享信道">物理上行共享信道</h2>
-<h3 id="ue-behaviour">UE behaviour</h3>
-<h3 id="power-headroom">Power headroom</h3>
-<h2 id="物理上行控制信道">物理上行控制信道</h2>
-<h3 id="ue-behaviour-1">UE behaviour</h3>
-<h2 id="探测参考信号">探测参考信号</h2>
-<h2 id="物理随机接入信道">物理随机接入信道</h2>
-<p><br/>在时隙$ i <span
-class="math inline">\(内，对于服务小区\)</span>c$，UE通过下式确定PRACH传输功率：</p>
-<p><span class="math display">\[ { {P}_{\text{PRACH,c}}}(i)=\min {
-{\left\{ { {P}_{\text{CMAX},c}}(i),\ { {P}_{\text{PRACH,target}}}+P{
-{L}_{c}} \right\}}^{ {}}} \]</span> dBm</p>
-<p>其中$ { {P}<em>{}}(i) <span class="math inline">\(是在TS
-38.133中定义的服务小区\)</span>c<span
-class="math inline">\(中在时隙\)</span>i<span
-class="math inline">\(的UE传输功率，\)</span> { {P}</em>{}} <span
-class="math inline">\(由高层参数[*preambleReceivedTargetPower*]提供，\)</span>
-P{ {L}<em>{c}} <span
-class="math inline">\(是UE计算对于服务小区\)</span>c<span
-class="math inline">\(的路径损耗，单位为dB。为了确定\)</span> {
-{P}</em>{}}(i) <span class="math inline">\(，UE计算路径损耗\)</span> P{
-{L}<em>{c}} <span
-class="math inline">\(。路径损耗根据SS/PBCH块得到，即\)</span> P{
-{L}</em>{c}} $ = <em>SS/PBCHBlockPower</em> – higher layer filtered
-RSRP，其中<em>SS/PBCHBlockPower</em>由[<em>SystemInformationBlockType1</em>]提供，RSRP在TS
-38.215中定义，高层滤波器配置在TS 38.331中定义。</p>
-<p>如果一个随机接入响应窗口内，如5.2小节中描述，UE不接收随机接入响应，随机接入响应包含了一个与UE发送的前导序列对应的前导ID，UE将为随后的PRACH传输确定传输功率，如果有的话。[TS
-38.321]</p>
+<h2 id="物理资源">物理资源</h2>
+<h3 id="天线端口">天线端口</h3>
+<p><br/>天线端口定义为，在同一天线端口上，某一符号上的信道可以由另一符号上的信道推知。</p>
+<p>如果一个天线端口上某一符号传输的信道的大尺度性能可以被另一天线端口上某一符号传输的信道所推知，则这两个天线端口被称为quasi
+co-located。大尺度性能包括一个或多个延时扩展，多普勒扩展，多普勒频移，平均增益，平均时延和空间接收参数。</p>
+<h3 id="资源格">资源格</h3>
+<p><br/>对于每种波形参数和载波，资源格由<span
+class="math inline">\(N_{\text{RB,}x}^{\mu
+}N_{\text{sc}}^{\text{RB}}\)</span>个子载波和<span
+class="math inline">\(N_{\text{symb}}^{\text{subframe},\mu
+}\)</span>个OFDM符号定义，其中<span
+class="math inline">\(x\)</span>表示DL或UL，<span
+class="math inline">\(N_{\text{RB,}x}^{\text{max,}\mu }\)</span>由Table
+4.4.2-1给定。在不至于混淆的情况下，下标<span
+class="math inline">\(x\)</span>可省略。每个天线端口<span
+class="math inline">\(p\)</span>，每个子载波间隔配置<span
+class="math inline">\(\mu\)</span>以及每个传输方向（上行或下行）对应一个资源格。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161038568.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h3 id="资源元素">资源元素</h3>
+<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的资源格中每个元素被称为资源元素（Resource
+Element，RE），它用索引对<span class="math inline">\(\left( k,l
+\right)\)</span>唯一地标识，其中<span
+class="math inline">\(k=0,...,N_{\text{RB}}^{\mu
+}N_{\text{sc}}^{\text{RB}}-1\)</span>是频域索引，<span
+class="math inline">\(l\)</span>是时域符号索引。</p>
+<p>天线端口<span class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的RE <span
+class="math inline">\(\left( k,l \right)\)</span>表示为<span
+class="math inline">\({ {\left( k,l \right)}_{p,\mu
+}}\)</span>，相应的复数值表示为<span
+class="math inline">\(a_{k,l}^{(p,\mu
+)}\)</span>。在不至于混淆的情况下，或在没有特定的天线端口或子载波间隔的情况下，索引<span
+class="math inline">\(p\)</span>和<span
+class="math inline">\(\mu\)</span>可以省略，简写为<span
+class="math inline">\(a_{k,l}^{(p)}\)</span>或<span
+class="math inline">\({ {a}_{k,l}}\)</span>。</p>
+<p>一个资源元素（RE）分为4类：‘uplink’, ‘downlink’, ‘flexible’, or
+‘reserved’。</p>
+<ul>
+<li>如果RE被配置为‘reserved’，
+UE不应在上行链路中对该RE发送任何内容，也不对下行链路中的RE内容作出任何假设。</li>
+</ul>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170911/161511352.png" title="Figure 4.4.3-1: Resource grid and resource block" /></p>
+<h3 id="资源块">资源块</h3>
+<p><br/>一个物理资源块（PRB）在频域上定义为<span
+class="math inline">\(N_{\text{sc}}^{\text{RB}}=12\)</span>连续的子载波。</p>
+<p>PRB在频域上从0到<span class="math inline">\(N_{\text{RB}}^{\mu
+}-1\)</span>编号。频域上的PRB数<span class="math inline">\({
+{n}_{\text{PRB}}}\)</span>和RE <span
+class="math inline">\((k,l)\)</span>的关系由下式给定：</p>
+<p><span class="math display">\[{ {n}_{\text{PRB}}}=\left\lfloor
+\frac{k}{N_{\text{sc}}^{\text{RB}}} \right\rfloor \]</span></p>
+<h3 id="载波带宽part">载波带宽part</h3>
+<p><br/>对于给定的载波上的波形参数<span class="math inline">\({ {\mu
+}_{i}}\)</span>，载波带宽part（bandwidth
+part，BWP）是一组连续的PRB。BWP中的RB从0到<span
+class="math inline">\(N_{\text{RB,}x}^{\mu }-1\)</span>编号，其中<span
+class="math inline">\(x\)</span>表示DL或UL，with <span
+class="math inline">\(N_{\text{BWP}}^{i}\)</span> being the offset
+between PRB 0 in the absolute resource block grid in clause 1.4.4 and
+PRB 0 in carrier bandwidth part number <span
+class="math inline">\(i\)</span>。BWP中的RB数应满足<span
+class="math inline">\(N_{\text{RB, }x}^{\text{min, }\mu }\le
+N_{\text{RB,}x}^{\mu }\le N_{\text{RB, }x}^{\text{max, }\mu
+}\)</span>，其中最小值和最大值在Table 4.4.2-1中给定。</p>
+<p>下行链路中，UE可配置具有一个或多个载波BWP，所述载波BWP的子集在给带时间处于激活状态。UE不希望在BWP以外的频带接收PDSCH或PDCCH。</p>
+<p>在上行链路中，UE可配置为具有一个或多个载波BWP，所述载波BWP的子集在给定时间处于激活状态。UE不希望在BWP以外的频带发送PUSCH或PUCCH。</p>
 <h2 id="载波聚合">载波聚合</h2>
-<h2 id="双连接">双连接</h2>
-<h1 id="随机接入过程">随机接入过程</h1>
-<p><br/>在进行初始化的物理随机接入过程之前，L1应该从高层接收一组SS/PBCH块索引，并且应向高层提供一组对应的RSRP测量。</p>
-<p>在进行初始化的物理随机接入过程之前，L1应该从高层接收以下信息：</p>
+<p><br/>在多个小区中的传输可以被聚合，除了主小区外，最多可以使用15个辅小区。除非另有说明，本规范中的描述适用于多达16个服务小区中的每一个。</p>
+<h1 id="通用函数">通用函数</h1>
+<h2 id="调制映射器">调制映射器</h2>
+<p><br/>调制映射器采用二进制0或1作为输入，产生复值调制符号作为输出。</p>
+<h3 id="π2-bpsk">π/2-BPSK</h3>
+<p><br/>对于π/2-BPSK调制，比特<span
+class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{ { {e}^{j{i\pi
+}/{2}\;}}}{\sqrt{2}}\left[ \left( 1-2b(i) \right)+j\left( 1-2b(i)
+\right) \right]\]</span></p>
+<h3 id="bpsk">BPSK</h3>
+<p><br/>对于BPSK调制，比特<span
+class="math inline">\(b(i)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
+1-2b(i) \right)+j\left( 1-2b(i) \right) \right]\]</span></p>
+<h3 id="qpsk">QPSK</h3>
+<p><br/>对于QPSK调制，成对比特<span
+class="math inline">\(b(i),b(i+1)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{2}}\left[ \left(
+1-2b(i) \right)+j\left( 1-2b(i+1) \right) \right]\]</span></p>
+<h3 id="qam">16QAM</h3>
+<p><br/>对于16QAM调制，四位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[x=\frac{1}{\sqrt{10}}\left[ \left(
+1-2b(i) \right)\left( 2-\left( 1-2b(i+2) \right) \right)+j\left(
+1-2b(i+1) \right)\left( 2-\left( 1-2b(i+3) \right) \right)
+\right]\]</span></p>
+<h3 id="qam-1">64QAM</h3>
+<p><br/>对于64QAM调制，六位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+  \nonumber &amp; x=\frac{1}{\sqrt{42}}\left[ \left( 1-2b(i)
+\right)\left( 4-\left( 1-2b(i+2) \right)\left( 2-\left( 1-2b(i+4)
+\right) \right) \right) \right. \\
+\nonumber &amp; \ \ \ \ \ \ \left. +j\left( 1-2b(i+1) \right)\left(
+4-\left( 1-2b(i+3) \right)\left( 2-\left( 1-2b(i+5) \right) \right)
+\right) \right] \\
+\end{align}\]</span></p>
+<h3 id="qam-2">256QAM</h3>
+<p><br/>对于256QAM调制，八位比特<span
+class="math inline">\(b(i),b(i+1),b(i+2),b(i+3),b(i+4),b(i+5),b(i+6),b(i+7)\)</span>根据下式映射为复值调制符号<span
+class="math inline">\(x\)</span></p>
+<p><span class="math display">\[\begin{align}
+\nonumber &amp; x=\frac{1}{\sqrt{170}}\left[ \left( 1-2b(i)
+\right)\left( 8-\left( 1-2b(i+2) \right)\left( 4-\left( 1-2b(i+4)
+\right)\left( 2-\left( 1-2b(i+6) \right) \right) \right) \right) \right.
+\\
+\ \ \ \nonumber &amp; \left. +j\left( 1-2b(i+1) \right)\left( 8-\left(
+1-2b(i+3) \right)\left( 4-\left( 1-2b(i+5) \right)\left( 2-\left(
+1-2b(i+7) \right) \right) \right) \right) \right]  
+\end{align}\]</span></p>
+<h2 id="伪随机序列生成">伪随机序列生成</h2>
+<p><br/>伪随机序列由长度为31的Gold序列定义。长度为<span
+class="math inline">\({ {M}_{\text{PN}}}\)</span>的输出序列<span
+class="math inline">\(c(n)\)</span>，其中<span
+class="math inline">\(n=0,1,...,{
+{M}_{\text{PN}}}-1\)</span>，由下式定义</p>
+<p><span class="math display">\[\begin{align}
+\nonumber &amp; c(n)=\left( { {x}_{1}}(n+{ {N}_{C}})+{ {x}_{2}}(n+{
+{N}_{C}}) \right)\bmod 2 \\
+\nonumber &amp; { {x}_{1}}(n+31)=\left( { {x}_{1}}(n+3)+{ {x}_{1}}(n)
+\right)\bmod 2 \\
+\nonumber &amp; { {x}_{2}}(n+31)=\left( { {x}_{2}}(n+3)+{
+{x}_{2}}(n+2)+{ {x}_{2}}(n+1)+{ {x}_{2}}(n) \right)\bmod 2  
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\({
+{N}_{C}}=1600\)</span>，第一m序列应由<span class="math inline">\({
+{x}_{1}}(0)=1,{
+{x}_{1}}(n)=0,n=1,2,...,30\)</span>初始化。第二m序列的初始化由<span
+class="math inline">\({ {c}_{\text{init}}}=\sum\nolimits_{i=0}^{30}{ {
+{x}_{2}}(i)\cdot { {2}^{i}}}\)</span>表示，其值取决于序列的应用。</p>
+<h2 id="ofdm基带信号生成">OFDM基带信号生成</h2>
+<p><br/>对除PRACH以外的任何物理信道或信号，对于一个子帧内的OFDM符号<span
+class="math inline">\(l\)</span>，天线端口<span
+class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的时间连续信号<span
+class="math inline">\(s_{l}^{(p,\mu )}\left( t
+\right)\)</span>定义为</p>
+<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
+\right)=\sum\limits_{k=-\left\lfloor N_{\text{RB}}^{\mu
+}N_{\text{sc}}^{\text{RB}}/2 \right\rfloor }^{ { {\left\lceil
+N_{\text{RB}}^{\mu }N_{\text{sc}}^{\text{RB}}/2 \right\rceil }^{
+{}}}-1}{a_{ {k}&#39;,\bar{l}}^{(p,\mu )}\cdot { {e}^{j2\pi \left( k+{
+{k}_{0}} \right)\Delta f\left( t-{ {N}_{\text{CP},\bar{l}}}\cdot {
+{T}_{\text{s}}} \right)}}}\]</span></p>
+<p>其中<span class="math inline">\(0\le t&lt;\left( {
+{N}_{\text{u}}}+N_{\text{CP},\bar{l}}^{\mu } \right){
+{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。The value of <span
+class="math inline">\({ {k}_{0}}\)</span> is such that the lowest
+numbered subcarrier in a resource block for subcarrier spacing
+configuration <span class="math inline">\(\mu\)</span> coincides with
+the lowest numbered subcarrier in a resource block for any subcarrier
+spacing configuration less than <span
+class="math inline">\(\mu\)</span>.</p>
+<p>子载波间隔配置<span
+class="math inline">\(\mu\)</span>下的OFDM符号<span
+class="math inline">\(l\)</span>的起始位置为</p>
+<p><span class="math display">\[ t_{\text{start},l}^{\mu }=\left\{
+\begin{array}{*{35}{l}}
+   0 &amp; l=0  \\
+   t_{\text{start},\bar{l}-1}^{\mu }+\left( {
+{N}_{\text{u}}}+N_{\text{CP,}l-1}^{\mu } \right)\cdot { {T}_{\text{s}}}
+&amp; \text{otherwise}  \\
+\end{array} \right.\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; { {N}_{\text{u}}}=2048\kappa \cdot { {2}^{-\mu }} \\
+\nonumber &amp; { {N}_{\text{CP},\bar{l}}}=\left\{
+\begin{array}{*{35}{l}}
+   512\kappa \cdot { {2}^{-\mu }} &amp; \text{extended cyclic
+prefix}  \\
+   144\kappa \cdot { {2}^{-\mu }}+16\kappa  &amp; \text{normal cyclic
+prefix and }l=0\text{ or }l=7  \\
+   144\kappa \cdot { {2}^{-\mu }} &amp; \text{otherwise}  \\
+\end{array} \right.\cdot { {2}^{\mu }} \\
+\nonumber  &amp;   
+\end{align}\]</span></p>
+<p>对于PRACH，天线端口<span
+class="math inline">\(p\)</span>下的时间连续信号<span
+class="math inline">\(s_{l}^{(p,\mu )}\left( t
+\right)\)</span>定义为</p>
+<p><span class="math display">\[s_{l}^{(p,\mu )}\left( t
+\right)=\sum\limits_{k=-\left\lfloor { {L}_{\text{RA}}}/2 \right\rfloor
+}^{ { {\left\lceil { {L}_{\text{RA}}}/2 \right\rceil }^{ {}}}-1}{a_{ {
+{k}&#39;}}^{(p,\text{RA})}\cdot { {e}^{j2\pi \left( k+{ {k}_{0}}
+\right)\Delta { {f}_{\text{RA}}}\left( t-{ {N}_{\text{CP},l}}\cdot {
+{T}_{\text{s}}} \right)}}}\]</span></p>
+<p>其中<span class="math inline">\(0\le t&lt;\left( {
+{N}_{\text{u}}}+N_{\text{CP},l}^{\mu } \right){
+{T}_{\text{s}}}\)</span>且${k}'=k+/{2}; $。</p>
+<p>一个子帧内PRACH前导的起始位置由<span
+class="math inline">\(t_{\text{start}}^{\text{RA}}\)</span>给定，假设子帧始于<span
+class="math inline">\(t=0\)</span>，其中</p>
 <ul>
-<li>PRACH传输参数（PRACH前导格式，用于PRACH传输的时域和频域资源）</li>
-<li>用于决定小区中根序列及其在前导序列集合中的循环移位值的参数（逻辑根序列表格索引、循环移位$
-N_{}^{ {}} $、集合类型（受限集合和非受限集合））</li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+15,30,60,120 \right\}\text{ kHz}\)</span>，有<span
+class="math inline">\(t_{\text{start}}^{\text{RA}}=t_{\text{start},l}^{\mu
+}\)</span> for some <span class="math inline">\(l\)</span></li>
 </ul>
-<p>从物理层来看，物理层随机接入过程包括PRACH中随机接入前导（Msg1）的发送，PDSCH（Msg2）中的随机接入响应（RAR），PUSCH中的Msg3和PDSCH中的Msg4。</p>
-<blockquote>
-<p>批注：Tentatively, Msg3 and Msg4 will be described as part of the RA
-procedure due to various differences from PUSCH/PDSCH after RRC
-connection.</p>
-</blockquote>
-<h2 id="随机接入前导">随机接入前导</h2>
-<p><br/>L1过程通过PRACH传输请求被触发，PRACH传输由高层来配置。高层对PRACH传输的配置包括：</p>
+<p><span class="math inline">\({ {L}_{\text{RA}}}\)</span>和<span
+class="math inline">\({ {N}_{\text{u}}}\)</span>在3.3.3节给定，并且有${
+{N}<em>{,l}}=N</em>{}^{}+n$，其中</p>
 <ul>
-<li>对于PRACH传输，高层参数[<em>PRACH-config</em>]提供的配置</li>
-<li>对于PRACH传输，高层参数[<em>PRACH-cell-idx</em>]提供的服务小区索引</li>
-<li>前导索引，PRACH格式，$ { {P}_{}} $，相应的RA-RNTI，PRACH资源</li>
-<li>[对于PRACH传输的重复次数，也作为请求的一部分由高层指示]</li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+1.25,5 \right\}\text{ kHz}\)</span>，<span
+class="math inline">\(n=0\)</span></li>
+<li>对于<span class="math inline">\(\Delta { {f}_{\text{RA}}}\in \left\{
+15,30,60,120 \right\}\text{ kHz}\)</span>，<span
+class="math inline">\(n\)</span> is the number of times the interval
+<span class="math inline">\(\left[
+t_{\text{start}}^{\text{RA}},t_{\text{start}}^{\text{RA}}+\left(
+N_{\text{u}}^{\text{RA}}+N_{\text{CP}}^{\text{RA}} \right){
+{T}_{\text{s}}} \right]\)</span> overlaps with either time instance 0 or
+time instance <span class="math inline">\(\left( {\Delta { {f}_{\max }}{
+{N}_{\text{f}}}}/{500}\; \right)\cdot { {T}_{\text{s}}}=0.5\text{
+ms}\)</span> in a subframe</li>
 </ul>
-<p>A PRACH format is selected from the preamble sequence set for the
-corresponding preamble sequence length using the preamble index.</p>
-<p>在所指示的PRACH资源上，前导使用所选择的PRACH格式发送，传输功率为4.4节描述的$
-{ {P}_{}} $。</p>
-<h3 id="定时">定时</h3>
-<h2 id="随机接入响应">随机接入响应</h2>
-<p><br/>UE通过高层[TS
-38.321]在一个约束窗内，采用所指示的RA-RNTI尝试检测PDCCH。窗口开始于最早的CORESET的符号。对于Type1-PDCCH公共搜索空间，UE配置了CORESET。Type1-PDCCH公共搜索空间在7.1节进行了定义，在前导序列传输的[X]个符号之后。随机接入响应窗口的长度由高层参数[<em>rar-windowlength</em>]提供。</p>
-<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，UE将传输块传递到高层。高层分析传输块并向物理层指示上行授权。如果在时间窗内，UE不检测PDCCH或相应的DL-SCH传输块，则UE过程如[TS
-38.321]中的描述。</p>
-<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，高层指示[XX]比特的上行授权到物理层。这一过程被称为物理层的随机接入响应（RAR）。UE应接收PDCCH和PDSCH。作为包含[<em>SystemInformationBlockType1</em>]的PDSCH的接收，PDSCH包含了具有相同子载波间隔和相同CP的DL-SCH传输块。[XX]比特的内容，开始于MSB，结束于LSB：</p>
-<p>[…]</p>
-<blockquote>
-<p>批注：To be completed as the contents of the UL grant in the RAR are
-determined.</p>
-</blockquote>
-<h2 id="msg3-pusch">Msg3 PUSCH</h2>
-<p><br/>对于Msg3
-PUSCH传输，高层参数[<em>msg3-tp</em>]指示UE是否应用变换预编码（transform
-precoding），变换预编在[TS 38.211]中描述。</p>
-<p>Msg3 PUSCH传输的子载波间隔由高层参数[<em>msg3-scs</em>]提供。</p>
-<p>UE应在相同的服务小区内发送PRACH和Msg3 PUSCH。</p>
-<h2 id="msg4-pdsch">Msg4 PDSCH</h2>
-<p><br/>Msg4 PDSCH传输的子载波间隔与PDSCH相同提供随机接入响应。</p>
-<h1 id="ue-procedure-for-reporting-control-information">UE procedure for
-reporting control information</h1>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/095958597.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h2 id="ue-procedure-for-harq-ack-codebook-determination">UE procedure
-for HARQ-ACK codebook determination</h2>
-<h3 id="cbg-based-harq-ack-codebook-determination">CBG-based HARQ-ACK
-codebook determination</h3>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100046252.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[HARQ-ACK information bits] The actual number of bits to report
-can be different – e.g. with bundling.</p>
-</blockquote>
-<blockquote>
-<p>批注：[initial] For retransmissions, decisions are needed for
-dynamic/semi-static HARQ-ACK codebook determination and for possible DCI
-indications.</p>
-</blockquote>
-<blockquote>
-<p>批注：[a] No decision currently exists for 2 TBs (e.g. same number
-for both TBs, separately configured number per TB).</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100136656.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[the UE determines whether or not a CBG is retransmitted based
-on a corresponding value of the CBGTI field] Placeholder text – will be
-modified once the specifics for the operation of the CBGTI field are
-decided.</p>
-</blockquote>
-<blockquote>
-<p>批注：[<em>cc</em>] LTE terminology for indicating semi-static
-codebook (can be modified once RRC terminology is finalized). Statement
-in brackets will be removed if only semi-static codebook determination
-is supported for CBG-based HARQ-ACK.</p>
-</blockquote>
-<h2 id="ue-procedure-for-reporting-harq-ack">UE procedure for reporting
-HARQ-ACK</h2>
-<h3 id="harq-ack-reporting-in-physical-uplink-shared-channel">HARQ-ACK
-reporting in physical uplink shared channel</h3>
-<h3 id="harq-ack-reporting-in-physical-uplink-control-channel">HARQ-ACK
-reporting in physical uplink control channel</h3>
-<p><br/>如果UE没有配置为PUSCH和PUCCH同时传输，并且UE不传输PUSCH，且不传输CSI或positive/negative
-SR，则UE应传输HARQ-ACK</p>
-<ul>
-<li>on PUCCH format 0 if
-<ul>
-<li>the transmission is over 1 symbol or 2 symbols,</li>
-<li>the number of HARQ-ACK information bits is 1 or 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 1 if
-<ul>
-<li>the transmission is over 4 or more symbols,</li>
-<li>the number of HARQ-ACK information bits is 1 or 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 2 if
-<ul>
-<li>the transmission is over 1 symbol or 2 symbols,</li>
-<li>the number of HARQ-ACK information bits is more than 2<br />
-</li>
-</ul></li>
-<li>on PUCCH format 3 if
-<ul>
-<li>the transmission is over 4 or more symbols,</li>
-<li>the number of HARQ-ACK information bits is more than [2]</li>
-</ul></li>
-</ul>
-<p>UE在一个时隙的$ N_{}^{,} <span
-class="math inline">\(个符号上发送一个或多个PUCCH。对于PUCCH传输时隙的参考，如果UE在PDCCH上检测DCI格式，其中PDCCH通过一定数量的符号调度PDSCH的接收，这些符号的最后一个符号在时隙\)</span>n<span
-class="math inline">\(内，则UE应在PUCCH传输中提供相应的HARQ-ACK信息，PUCCH在时隙\)</span>
-n+k <span
-class="math inline">\(上传输，其中\)</span>k$是时隙数，且通过DCI格式中的[DL-data-DL-acknowledgement]字段来指示。[DL-data-DL-acknowledgement]字段的值映射到时隙数的值，见Table
-9.1.2-1中的定义。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100506146.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：Dynamic indication of symbols within a slot or joint indication
-of time/frequency/code PUCCH resources is not precluded pending specific
-RAN1 agreements.</p>
-</blockquote>
-<h4 id="harq-ack-procedures-for-one-configured-serving-cell">HARQ-ACK
-procedures for one configured serving cell</h4>
-<h4
-id="harq-ack-procedures-for-more-than-one-configured-serving-cell">HARQ-ACK
-procedures for more than one configured serving cell</h4>
-<h2 id="ue-procedure-for-reporting-sr">UE procedure for reporting
-SR</h2>
-<blockquote>
-<p>批注：There are currently no RAN1 decisions on SR transmission
-structure and possible multiplexing with HARQ-ACK/CSI</p>
-</blockquote>
-<h2 id="ue-procedure-for-reporting-multiple-uci-types">UE procedure for
-reporting multiple UCI types</h2>
-<h2 id="uci-repetition-procedure">UCI repetition procedure</h2>
-<h1 id="ue-procedure-for-receiving-control-information">UE procedure for
-receiving control information</h1>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100635180.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>UE应在一个或多个激活的服务小区或BWPs上，根据相应的搜索空间，在一个或多个CORESET内监听一组PDCCH候选集，其中搜索空间是根据所监听的DCI格式译码每个PDCCH候选。</p>
-<blockquote>
-<p>批注：[PDCCH候选集] Can add more details later, such as per activated
-cell, etc., based on respective agreements.</p>
-</blockquote>
-<blockquote>
-<p>批注：[DCI formats] Can remain applicable for potentially mapping
-multiple DCI formats to a same size (as for LTE DCI format 0 and DCI
-format 1A).</p>
-</blockquote>
-<h2
-id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-common-search-space">UE
-procedure for determining physical downlink control channel assignment
-in common search space</h2>
-<p><br/>UE应在下列一个或多个搜索空间内监听PDCCH候选：</p>
-<ul>
-<li>a Type0-PDCCH common search space for a DCI format scrambled by a
-[SI-RNTI] on a primary cell</li>
-<li>a Type1-PDCCH common search space for a DCI format scrambled by a
-[RA-RNTI] on a primary cell</li>
-<li>a Type2-PDCCH common search space for a DCI format scrambled by a
-[INT-RNTI]</li>
-</ul>
-<p>[UE应在没有载波指示域的情况下监听PDCCH候选。]</p>
-<p>如果UE通过高层配置为以[INT-RNTI]加扰的CRC译码DCI格式，UE也在[每个服务小区]配置[一组]PRBs和一组OFDM符号。如果UE以[INT-RNTI]加扰的CRC检测DCI格式，UE可以假设不在这组PRBs和OFDM符号中发送。UE通过高层参数[<em>int-PRBs-unit</em>]配置PRBs的指示粒度。UE通过高层参数[<em>int-symbols-unit</em>]配置OFDM符号的指示粒度。UE通过高层参数[<em>Num-PDCCH-cand</em>]来配置对于DCI格式的每个CCE聚合等级下的若干PDCCH候选，其中DCI格式使用[INT-RNTI]加扰的CRC。</p>
-<blockquote>
-<p>批注：[[INT-RNTI]加扰的CRC] Eventually, this DCI format will have a
-name and will be used to remove this part.</p>
-</blockquote>
-<h2
-id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-ue-specific-search-space">UE
-procedure for determining physical downlink control channel assignment
-in UE-specific search space</h2>
-<p><br/>对于每个服务小区，高层信令给UE配置$ Q $个CORESETs。对于CORESET
-<span class="math inline">\(q\)</span>，$ 0q&lt;Q $，配置包括：</p>
-<ul>
-<li>高层参数[<em>CORESET-start-symb</em>]提供第1个OFDM符号</li>
-<li>高层参数[<em>CORESET-time-duration</em>]提供若干连续的OFDM符号</li>
-<li>高层参数[<em>CORESET-freq-dom</em>]提供一组RBs集合</li>
-<li>高层参数[<em>CORESET-trans-type</em>]提供CCE-to-REG映射</li>
-<li>对于交织的CCE-to-REG映射，高层参数[<em>CORESET-REG-bundle-size</em>]提供REG
-bundle大小</li>
-<li>[高层参数[<em>CORESET-QCL-ConfigId</em>]提供天线端口quasi-collocation]</li>
-</ul>
-<p>对于非交织的CCE-to-REG映射，REG bundle大小等于6。UE可以假设一个REG
-bundle内的所有REGs上传输的PDCCH应用相同的预编码。</p>
-<blockquote>
-<p>批注：[对于非交织的CCE-to-REG映射，REG bundle大小等于6。] Can be
-updated if additional REG bundle sizes are defined for non-interleaved
-transmissions.</p>
-</blockquote>
-<p>每个CORESET包含一组从0到$ { {N}<em>{,q}}-1 <span
-class="math inline">\(编号的CCEs，其中\)</span> { {N}</em>{,q}}
-$是CORESET <span class="math inline">\(q\)</span>中的CCEs个数。</p>
-<p>UE所监听的PDCCH候选集定义在PDCCH UE特定搜索空间。PDCCH
-UE特定搜索空间在聚合等级$ L{ 1, 2, 4, 8 } <span
-class="math inline">\(上定义为，对于CCE聚合等级\)</span>L$的一组PDCCH候选。对于一个DCI格式，UE在每个服务小区内通过高层参数[<em>Num-PDCCH-cand</em>]配置每个CCE聚合等级
-下的一组PDCCH候选。</p>
-<blockquote>
-<p>批注：[UE特定搜索空间] Cross-carrier scheduling, including use of
-different numerologies, will be captured through the search space.</p>
-</blockquote>
-<p>对于连续接收（non-DRX）模式操作，UE在根据$ { {W}<em>{ q}}
-$个符号周期，监听CORESET <span
-class="math inline">\(q\)</span>中的PDCCH候选，其中对于CORESET <span
-class="math inline">\(q\)</span>的$ { {W}</em>{ q}}
-$由高层参数[<em>CORESET-monitor-period</em>]配置。</p>
-<blockquote>
-<p>批注：[CORESET-monitor-period] Need to determine how, based on
-configured periodicity, UE monitors PDCCH and whether it is a CORESET or
-a search space parameter. Allowed periodicity values (symbol, slot,
-etc.) are TBD (start from 1 symbol) and are to be included in RAN2
-specifications (likely not visible in 38.213).</p>
-</blockquote>
-<p>服务小区中的UE，在UE特定的搜索空间监听PDCCH的候选，如果UE没有配置载波指示域，UE应在没有载波指示域的条件下监听PDCCH候选。服务小区中的UE，在UE
-特定的搜索空间监听PDCCH的候选，如果UE配置了载波指示域，则UE应使用载波指示域监听PDCCH候选。</p>
-<p>如果UE在另一个服务小区上被配置使用对应于secondary
-cell的载波指示来监听PDCCH候选，UE不希望在secondary
-cell上监听PDCCH候选。[对于服务小区中的UE监听PDCCH候选，UE应至少在同一个服务小区内监听PDCCH候选。]</p>
-<h1 id="bandwidth-part-operation">Bandwidth part operation</h1>
-<blockquote>
-<p>批注：It will be attempted, as much as possible, to capture all BWP
-operation aspects in this Subclause while referring to other Subclauses.
-Potential overlaps will be resolved as the specifications progress.</p>
-</blockquote>
-<blockquote>
-<p>批注：Text is subject to revisions as descriptions in 38.211 and
-38.213 are aligned.</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101231694.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[BWP] Regarding the CSS, he agreement for its configuration is
-ambiguous. Which CSS configuration is it (e.g. is it for SIB scheduling,
-for GC-PDCCH, … )? Maybe multiple CSS configurations are applicable as
-in Subclause 10.1? Reference to primary cell in the agreement points to
-SIB scheduling but clarification is needed for what the CSS intends to
-do, whether the respective BWP is same as the BWP from initial access,
-….</p>
-</blockquote>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101316284.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<blockquote>
-<p>批注：[transmissions] Activation/deactivation by DCI requires further
-details (e.g. it is FFS whether it is a DCI scheduling PDSCH/PUSCH in a
-configured BWP ot a separate DCI). Deactivation by a timer also requires
-further details (e.g. no separate specifications if it is the DRX
-timer). A separate timer may be described in RRC specifications as for
-the DRX timer.</p>
-</blockquote>
-<h1
-id="configurations-and-assumptions-independent-of-physical-channels-or-signals">Configurations
-and assumptions independent of physical channels or signals</h1>
-<blockquote>
-<p>批注：[signals] To capture reserved resources, potential LTE-NR
-coexistence aspects, etc. For LTE-NR DC with single UL Tx, corresponding
-agreement regarding configuration of DL-reference UL/DL configuration
-affects only LTE operation, is suitable for LTE specifications, and is
-not captured (unless it is extended to NR-NR DC).</p>
-</blockquote>
+<h2 id="调制和上变频">调制和上变频</h2>
+<p><br/>对于天线端口<span
+class="math inline">\(p\)</span>和子载波间隔配置<span
+class="math inline">\(\mu\)</span>，复值OFDM基带信号调制和上变频至载频<span
+class="math inline">\({ {f}_{0}}\)</span></p>
+<p><span class="math display">\[\operatorname{Re}\left\{ s_{l}^{(p,\mu
+)}\left( t \right)\cdot { {e}^{j2\pi { {f}_{0}}t}} \right\}\]</span></p>
+<h1 id="上行链路">上行链路</h1>
+<p><br/>为避免本页面过于冗长，<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-ul/">上行链路另起一页</a>。</p>
+<h1 id="下行链路">下行链路</h1>
+<p><br/>为避免本页面过于冗长，<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation-dl/">下行链路另起一页</a>。</p>
 <h1 id="相关链接">相关链接</h1>
 <p><br/><a
 href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
 <a
 href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
 <a
-href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a>
 <a
-href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a></p>
+href="http://marshallcomm.cn/2017/09/11/nr-v100-l1-procedure-control/">NR物理层过程（控制）</a></p>
 ]]></content>
       <categories>
         <category>5G-NR</category>
@@ -4525,6 +4111,420 @@ class="math inline">\(分别是SS/PBCH块内的频域和时域索引，并由Tab
         <tag>5G-NR</tag>
         <tag>3GPP</tag>
         <tag>2017-10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>5G-NR物理层过程（控制）v1.0.0</title>
+    <url>/2017/09/11/nr-v100-l1-procedure-control/</url>
+    <content><![CDATA[<h1 id="同步过程">同步过程</h1>
+<h2 id="小区搜索">小区搜索</h2>
+<p><br/>小区搜索过程是UE获得和小区时间和频率同步，并检测物理层小区ID的过程。</p>
+<p>为进行小区搜索，UE需接收下列同步信号：主同步信号（PSS）和辅同步信号（SSS）。主辅同步信号在TS
+38.211中定义。</p>
+<p>UE应假设PBCH、PSS和SSS在连续的OFDM符号内接收，并且形成SS/PBCH块。</p>
+<p>对于半帧中的SS/PBCH块，候选SS/PBCH块的OFDM
+符号索引号和第1个OFDM符号索引根据下列情况确定：</p>
+<ul>
+<li>15 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20} +
+28*n。对于载波频率小于等于3 GHz，有n=0。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1。</li>
+<li>30 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{2, 8} +
+14*n。对于载波频率小于等于3 GHz，有n=0, 1。对于载波频率大于3 GHz且小于6
+GHz，有n=0, 1, 2, 3。</li>
+<li>120 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{4, 8, 16, 20}
++ 28*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12,
+13, 15, 16, 17, 18。</li>
+<li>240 KHz子载波间隔：候选SS/PBCH块的第1个OFDM符号有索引{8, 12, 16, 20,
+32, 36, 40, 44} + 56*n。对于载波频率大于6 GHz，有n=0, 1, 2, 3, 5, 6, 7,
+8。</li>
+</ul>
+<p>一个半帧中的候选SS/PBCH块在时域上以升序从0到$ L-1 ]<span
+class="math inline">\(进行编号。对于\)</span> L=4 <span
+class="math inline">\(或\)</span> L&gt;4 <span
+class="math inline">\(，UE应根据与每个半帧内SS/PBCH块索引一一对应的PBCH中传输的DM-RS序列索引，分别确定SS/PBCH块索引的2或3个LSB比特。对于\)</span>
+L=64
+$，UE应根据高层参数[<em>SSB-index-explicit</em>]确定每个半帧内SS/PBCH块索引的3
+个MSB比特。</p>
+<span id="more"></span>
+<blockquote>
+<p>注：DM-RS序列索引在TS 38.211中定义。</p>
+</blockquote>
+<p>UE可通过参数[<em>SSB-transmitted-SIB1</em>]被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。UE也可通过高层参数[<em>SSB-transmitted</em>]在每个服务小区被配置，SS/PBCH块索引对于与SS/PBCH块对应重叠的REs，UE不应接收其他信号或信道。[通过[<em>SSB-transmitted</em>]配置优先于通过[<em>SSB-transmitted-SIB1</em>]配置。]</p>
+<blockquote>
+<p>注：May be removed and captured in 38.211。</p>
+</blockquote>
+<p>对于每个服务小区中SS/PBCH块的接收，UE可以在每个服务小区通过高层参数[<em>SSB-timing</em>]每半帧周期性地被配置。如果对于SS/PBCH块的接收，UE没有每半帧被周期性配置，则UE应假设以半帧为周期。UE应假设在服务小区中，对于所有SS/PBCH块，周期是相同的。</p>
+<p>对于初始小区的选择，UE可以假设SS/PBCH块半帧出现的周期为2帧。</p>
+<h2 id="传输定时调整">传输定时调整</h2>
+<h2 id="timing-for-secondary-cell-activation-deactivation">Timing for
+secondary cell activation / deactivation</h2>
+<h1 id="无线链路监测">无线链路监测</h1>
+<p><br/>为了向高层指示失步/同时状态，UE应监测主小区的下行无线链路质量。</p>
+<p>此处暂省略300+字，具体内容详见原文档。</p>
+<h1 id="链路重配置过程">[链路重配置过程]</h1>
+<p><br/>在一个服务小区内为了[RSRP x
+或SINR]测量，UE可以配置一组CSI-RS资源或一组SS/PBCH块索引。UE应假设SCI-RS采用非零传输功率。每个CSI-RS资源参数通过高层信令配置，这些参数包括：</p>
+<ul>
+<li>[资源配置]</li>
+<li>[周期]</li>
+<li>[天线端口]</li>
+<li>[传输功率]</li>
+<li>[伪随机序列生成参数]</li>
+<li>[QCL参数]</li>
+<li>[…]</li>
+</ul>
+<blockquote>
+<p>[Editor’s note: For reconfiguration request, there are also no
+existing agreements to describe preamble retransmissions, or the window
+for the UE to receive a response, or the configuration of the CORESET
+where the PDCCH scheduling the response is transmitted, etc.]</p>
+</blockquote>
+<h1 id="上行功率控制">上行功率控制</h1>
+<h2 id="物理上行共享信道">物理上行共享信道</h2>
+<h3 id="ue-behaviour">UE behaviour</h3>
+<h3 id="power-headroom">Power headroom</h3>
+<h2 id="物理上行控制信道">物理上行控制信道</h2>
+<h3 id="ue-behaviour-1">UE behaviour</h3>
+<h2 id="探测参考信号">探测参考信号</h2>
+<h2 id="物理随机接入信道">物理随机接入信道</h2>
+<p><br/>在时隙$ i <span
+class="math inline">\(内，对于服务小区\)</span>c$，UE通过下式确定PRACH传输功率：</p>
+<p><span class="math display">\[ { {P}_{\text{PRACH,c}}}(i)=\min {
+{\left\{ { {P}_{\text{CMAX},c}}(i),\ { {P}_{\text{PRACH,target}}}+P{
+{L}_{c}} \right\}}^{ {}}} \]</span> dBm</p>
+<p>其中$ { {P}<em>{}}(i) <span class="math inline">\(是在TS
+38.133中定义的服务小区\)</span>c<span
+class="math inline">\(中在时隙\)</span>i<span
+class="math inline">\(的UE传输功率，\)</span> { {P}</em>{}} <span
+class="math inline">\(由高层参数[*preambleReceivedTargetPower*]提供，\)</span>
+P{ {L}<em>{c}} <span
+class="math inline">\(是UE计算对于服务小区\)</span>c<span
+class="math inline">\(的路径损耗，单位为dB。为了确定\)</span> {
+{P}</em>{}}(i) <span class="math inline">\(，UE计算路径损耗\)</span> P{
+{L}<em>{c}} <span
+class="math inline">\(。路径损耗根据SS/PBCH块得到，即\)</span> P{
+{L}</em>{c}} $ = <em>SS/PBCHBlockPower</em> – higher layer filtered
+RSRP，其中<em>SS/PBCHBlockPower</em>由[<em>SystemInformationBlockType1</em>]提供，RSRP在TS
+38.215中定义，高层滤波器配置在TS 38.331中定义。</p>
+<p>如果一个随机接入响应窗口内，如5.2小节中描述，UE不接收随机接入响应，随机接入响应包含了一个与UE发送的前导序列对应的前导ID，UE将为随后的PRACH传输确定传输功率，如果有的话。[TS
+38.321]</p>
+<h2 id="载波聚合">载波聚合</h2>
+<h2 id="双连接">双连接</h2>
+<h1 id="随机接入过程">随机接入过程</h1>
+<p><br/>在进行初始化的物理随机接入过程之前，L1应该从高层接收一组SS/PBCH块索引，并且应向高层提供一组对应的RSRP测量。</p>
+<p>在进行初始化的物理随机接入过程之前，L1应该从高层接收以下信息：</p>
+<ul>
+<li>PRACH传输参数（PRACH前导格式，用于PRACH传输的时域和频域资源）</li>
+<li>用于决定小区中根序列及其在前导序列集合中的循环移位值的参数（逻辑根序列表格索引、循环移位$
+N_{}^{ {}} $、集合类型（受限集合和非受限集合））</li>
+</ul>
+<p>从物理层来看，物理层随机接入过程包括PRACH中随机接入前导（Msg1）的发送，PDSCH（Msg2）中的随机接入响应（RAR），PUSCH中的Msg3和PDSCH中的Msg4。</p>
+<blockquote>
+<p>批注：Tentatively, Msg3 and Msg4 will be described as part of the RA
+procedure due to various differences from PUSCH/PDSCH after RRC
+connection.</p>
+</blockquote>
+<h2 id="随机接入前导">随机接入前导</h2>
+<p><br/>L1过程通过PRACH传输请求被触发，PRACH传输由高层来配置。高层对PRACH传输的配置包括：</p>
+<ul>
+<li>对于PRACH传输，高层参数[<em>PRACH-config</em>]提供的配置</li>
+<li>对于PRACH传输，高层参数[<em>PRACH-cell-idx</em>]提供的服务小区索引</li>
+<li>前导索引，PRACH格式，$ { {P}_{}} $，相应的RA-RNTI，PRACH资源</li>
+<li>[对于PRACH传输的重复次数，也作为请求的一部分由高层指示]</li>
+</ul>
+<p>A PRACH format is selected from the preamble sequence set for the
+corresponding preamble sequence length using the preamble index.</p>
+<p>在所指示的PRACH资源上，前导使用所选择的PRACH格式发送，传输功率为4.4节描述的$
+{ {P}_{}} $。</p>
+<h3 id="定时">定时</h3>
+<h2 id="随机接入响应">随机接入响应</h2>
+<p><br/>UE通过高层[TS
+38.321]在一个约束窗内，采用所指示的RA-RNTI尝试检测PDCCH。窗口开始于最早的CORESET的符号。对于Type1-PDCCH公共搜索空间，UE配置了CORESET。Type1-PDCCH公共搜索空间在7.1节进行了定义，在前导序列传输的[X]个符号之后。随机接入响应窗口的长度由高层参数[<em>rar-windowlength</em>]提供。</p>
+<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，UE将传输块传递到高层。高层分析传输块并向物理层指示上行授权。如果在时间窗内，UE不检测PDCCH或相应的DL-SCH传输块，则UE过程如[TS
+38.321]中的描述。</p>
+<p>如果UE在时间窗内，采用所指示的RA-RNTI和相应的DL-SCH传输块检测PDCCH，高层指示[XX]比特的上行授权到物理层。这一过程被称为物理层的随机接入响应（RAR）。UE应接收PDCCH和PDSCH。作为包含[<em>SystemInformationBlockType1</em>]的PDSCH的接收，PDSCH包含了具有相同子载波间隔和相同CP的DL-SCH传输块。[XX]比特的内容，开始于MSB，结束于LSB：</p>
+<p>[…]</p>
+<blockquote>
+<p>批注：To be completed as the contents of the UL grant in the RAR are
+determined.</p>
+</blockquote>
+<h2 id="msg3-pusch">Msg3 PUSCH</h2>
+<p><br/>对于Msg3
+PUSCH传输，高层参数[<em>msg3-tp</em>]指示UE是否应用变换预编码（transform
+precoding），变换预编在[TS 38.211]中描述。</p>
+<p>Msg3 PUSCH传输的子载波间隔由高层参数[<em>msg3-scs</em>]提供。</p>
+<p>UE应在相同的服务小区内发送PRACH和Msg3 PUSCH。</p>
+<h2 id="msg4-pdsch">Msg4 PDSCH</h2>
+<p><br/>Msg4 PDSCH传输的子载波间隔与PDSCH相同提供随机接入响应。</p>
+<h1 id="ue-procedure-for-reporting-control-information">UE procedure for
+reporting control information</h1>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/095958597.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="ue-procedure-for-harq-ack-codebook-determination">UE procedure
+for HARQ-ACK codebook determination</h2>
+<h3 id="cbg-based-harq-ack-codebook-determination">CBG-based HARQ-ACK
+codebook determination</h3>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100046252.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[HARQ-ACK information bits] The actual number of bits to report
+can be different – e.g. with bundling.</p>
+</blockquote>
+<blockquote>
+<p>批注：[initial] For retransmissions, decisions are needed for
+dynamic/semi-static HARQ-ACK codebook determination and for possible DCI
+indications.</p>
+</blockquote>
+<blockquote>
+<p>批注：[a] No decision currently exists for 2 TBs (e.g. same number
+for both TBs, separately configured number per TB).</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100136656.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[the UE determines whether or not a CBG is retransmitted based
+on a corresponding value of the CBGTI field] Placeholder text – will be
+modified once the specifics for the operation of the CBGTI field are
+decided.</p>
+</blockquote>
+<blockquote>
+<p>批注：[<em>cc</em>] LTE terminology for indicating semi-static
+codebook (can be modified once RRC terminology is finalized). Statement
+in brackets will be removed if only semi-static codebook determination
+is supported for CBG-based HARQ-ACK.</p>
+</blockquote>
+<h2 id="ue-procedure-for-reporting-harq-ack">UE procedure for reporting
+HARQ-ACK</h2>
+<h3 id="harq-ack-reporting-in-physical-uplink-shared-channel">HARQ-ACK
+reporting in physical uplink shared channel</h3>
+<h3 id="harq-ack-reporting-in-physical-uplink-control-channel">HARQ-ACK
+reporting in physical uplink control channel</h3>
+<p><br/>如果UE没有配置为PUSCH和PUCCH同时传输，并且UE不传输PUSCH，且不传输CSI或positive/negative
+SR，则UE应传输HARQ-ACK</p>
+<ul>
+<li>on PUCCH format 0 if
+<ul>
+<li>the transmission is over 1 symbol or 2 symbols,</li>
+<li>the number of HARQ-ACK information bits is 1 or 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 1 if
+<ul>
+<li>the transmission is over 4 or more symbols,</li>
+<li>the number of HARQ-ACK information bits is 1 or 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 2 if
+<ul>
+<li>the transmission is over 1 symbol or 2 symbols,</li>
+<li>the number of HARQ-ACK information bits is more than 2<br />
+</li>
+</ul></li>
+<li>on PUCCH format 3 if
+<ul>
+<li>the transmission is over 4 or more symbols,</li>
+<li>the number of HARQ-ACK information bits is more than [2]</li>
+</ul></li>
+</ul>
+<p>UE在一个时隙的$ N_{}^{,} <span
+class="math inline">\(个符号上发送一个或多个PUCCH。对于PUCCH传输时隙的参考，如果UE在PDCCH上检测DCI格式，其中PDCCH通过一定数量的符号调度PDSCH的接收，这些符号的最后一个符号在时隙\)</span>n<span
+class="math inline">\(内，则UE应在PUCCH传输中提供相应的HARQ-ACK信息，PUCCH在时隙\)</span>
+n+k <span
+class="math inline">\(上传输，其中\)</span>k$是时隙数，且通过DCI格式中的[DL-data-DL-acknowledgement]字段来指示。[DL-data-DL-acknowledgement]字段的值映射到时隙数的值，见Table
+9.1.2-1中的定义。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100506146.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：Dynamic indication of symbols within a slot or joint indication
+of time/frequency/code PUCCH resources is not precluded pending specific
+RAN1 agreements.</p>
+</blockquote>
+<h4 id="harq-ack-procedures-for-one-configured-serving-cell">HARQ-ACK
+procedures for one configured serving cell</h4>
+<h4
+id="harq-ack-procedures-for-more-than-one-configured-serving-cell">HARQ-ACK
+procedures for more than one configured serving cell</h4>
+<h2 id="ue-procedure-for-reporting-sr">UE procedure for reporting
+SR</h2>
+<blockquote>
+<p>批注：There are currently no RAN1 decisions on SR transmission
+structure and possible multiplexing with HARQ-ACK/CSI</p>
+</blockquote>
+<h2 id="ue-procedure-for-reporting-multiple-uci-types">UE procedure for
+reporting multiple UCI types</h2>
+<h2 id="uci-repetition-procedure">UCI repetition procedure</h2>
+<h1 id="ue-procedure-for-receiving-control-information">UE procedure for
+receiving control information</h1>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/100635180.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>UE应在一个或多个激活的服务小区或BWPs上，根据相应的搜索空间，在一个或多个CORESET内监听一组PDCCH候选集，其中搜索空间是根据所监听的DCI格式译码每个PDCCH候选。</p>
+<blockquote>
+<p>批注：[PDCCH候选集] Can add more details later, such as per activated
+cell, etc., based on respective agreements.</p>
+</blockquote>
+<blockquote>
+<p>批注：[DCI formats] Can remain applicable for potentially mapping
+multiple DCI formats to a same size (as for LTE DCI format 0 and DCI
+format 1A).</p>
+</blockquote>
+<h2
+id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-common-search-space">UE
+procedure for determining physical downlink control channel assignment
+in common search space</h2>
+<p><br/>UE应在下列一个或多个搜索空间内监听PDCCH候选：</p>
+<ul>
+<li>a Type0-PDCCH common search space for a DCI format scrambled by a
+[SI-RNTI] on a primary cell</li>
+<li>a Type1-PDCCH common search space for a DCI format scrambled by a
+[RA-RNTI] on a primary cell</li>
+<li>a Type2-PDCCH common search space for a DCI format scrambled by a
+[INT-RNTI]</li>
+</ul>
+<p>[UE应在没有载波指示域的情况下监听PDCCH候选。]</p>
+<p>如果UE通过高层配置为以[INT-RNTI]加扰的CRC译码DCI格式，UE也在[每个服务小区]配置[一组]PRBs和一组OFDM符号。如果UE以[INT-RNTI]加扰的CRC检测DCI格式，UE可以假设不在这组PRBs和OFDM符号中发送。UE通过高层参数[<em>int-PRBs-unit</em>]配置PRBs的指示粒度。UE通过高层参数[<em>int-symbols-unit</em>]配置OFDM符号的指示粒度。UE通过高层参数[<em>Num-PDCCH-cand</em>]来配置对于DCI格式的每个CCE聚合等级下的若干PDCCH候选，其中DCI格式使用[INT-RNTI]加扰的CRC。</p>
+<blockquote>
+<p>批注：[[INT-RNTI]加扰的CRC] Eventually, this DCI format will have a
+name and will be used to remove this part.</p>
+</blockquote>
+<h2
+id="ue-procedure-for-determining-physical-downlink-control-channel-assignment-in-ue-specific-search-space">UE
+procedure for determining physical downlink control channel assignment
+in UE-specific search space</h2>
+<p><br/>对于每个服务小区，高层信令给UE配置$ Q $个CORESETs。对于CORESET
+<span class="math inline">\(q\)</span>，$ 0q&lt;Q $，配置包括：</p>
+<ul>
+<li>高层参数[<em>CORESET-start-symb</em>]提供第1个OFDM符号</li>
+<li>高层参数[<em>CORESET-time-duration</em>]提供若干连续的OFDM符号</li>
+<li>高层参数[<em>CORESET-freq-dom</em>]提供一组RBs集合</li>
+<li>高层参数[<em>CORESET-trans-type</em>]提供CCE-to-REG映射</li>
+<li>对于交织的CCE-to-REG映射，高层参数[<em>CORESET-REG-bundle-size</em>]提供REG
+bundle大小</li>
+<li>[高层参数[<em>CORESET-QCL-ConfigId</em>]提供天线端口quasi-collocation]</li>
+</ul>
+<p>对于非交织的CCE-to-REG映射，REG bundle大小等于6。UE可以假设一个REG
+bundle内的所有REGs上传输的PDCCH应用相同的预编码。</p>
+<blockquote>
+<p>批注：[对于非交织的CCE-to-REG映射，REG bundle大小等于6。] Can be
+updated if additional REG bundle sizes are defined for non-interleaved
+transmissions.</p>
+</blockquote>
+<p>每个CORESET包含一组从0到$ { {N}<em>{,q}}-1 <span
+class="math inline">\(编号的CCEs，其中\)</span> { {N}</em>{,q}}
+$是CORESET <span class="math inline">\(q\)</span>中的CCEs个数。</p>
+<p>UE所监听的PDCCH候选集定义在PDCCH UE特定搜索空间。PDCCH
+UE特定搜索空间在聚合等级$ L{ 1, 2, 4, 8 } <span
+class="math inline">\(上定义为，对于CCE聚合等级\)</span>L$的一组PDCCH候选。对于一个DCI格式，UE在每个服务小区内通过高层参数[<em>Num-PDCCH-cand</em>]配置每个CCE聚合等级
+下的一组PDCCH候选。</p>
+<blockquote>
+<p>批注：[UE特定搜索空间] Cross-carrier scheduling, including use of
+different numerologies, will be captured through the search space.</p>
+</blockquote>
+<p>对于连续接收（non-DRX）模式操作，UE在根据$ { {W}<em>{ q}}
+$个符号周期，监听CORESET <span
+class="math inline">\(q\)</span>中的PDCCH候选，其中对于CORESET <span
+class="math inline">\(q\)</span>的$ { {W}</em>{ q}}
+$由高层参数[<em>CORESET-monitor-period</em>]配置。</p>
+<blockquote>
+<p>批注：[CORESET-monitor-period] Need to determine how, based on
+configured periodicity, UE monitors PDCCH and whether it is a CORESET or
+a search space parameter. Allowed periodicity values (symbol, slot,
+etc.) are TBD (start from 1 symbol) and are to be included in RAN2
+specifications (likely not visible in 38.213).</p>
+</blockquote>
+<p>服务小区中的UE，在UE特定的搜索空间监听PDCCH的候选，如果UE没有配置载波指示域，UE应在没有载波指示域的条件下监听PDCCH候选。服务小区中的UE，在UE
+特定的搜索空间监听PDCCH的候选，如果UE配置了载波指示域，则UE应使用载波指示域监听PDCCH候选。</p>
+<p>如果UE在另一个服务小区上被配置使用对应于secondary
+cell的载波指示来监听PDCCH候选，UE不希望在secondary
+cell上监听PDCCH候选。[对于服务小区中的UE监听PDCCH候选，UE应至少在同一个服务小区内监听PDCCH候选。]</p>
+<h1 id="bandwidth-part-operation">Bandwidth part operation</h1>
+<blockquote>
+<p>批注：It will be attempted, as much as possible, to capture all BWP
+operation aspects in this Subclause while referring to other Subclauses.
+Potential overlaps will be resolved as the specifications progress.</p>
+</blockquote>
+<blockquote>
+<p>批注：Text is subject to revisions as descriptions in 38.211 and
+38.213 are aligned.</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101231694.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[BWP] Regarding the CSS, he agreement for its configuration is
+ambiguous. Which CSS configuration is it (e.g. is it for SIB scheduling,
+for GC-PDCCH, … )? Maybe multiple CSS configurations are applicable as
+in Subclause 10.1? Reference to primary cell in the agreement points to
+SIB scheduling but clarification is needed for what the CSS intends to
+do, whether the respective BWP is same as the BWP from initial access,
+….</p>
+</blockquote>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170912/101316284.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<blockquote>
+<p>批注：[transmissions] Activation/deactivation by DCI requires further
+details (e.g. it is FFS whether it is a DCI scheduling PDSCH/PUSCH in a
+configured BWP ot a separate DCI). Deactivation by a timer also requires
+further details (e.g. no separate specifications if it is the DRX
+timer). A separate timer may be described in RRC specifications as for
+the DRX timer.</p>
+</blockquote>
+<h1
+id="configurations-and-assumptions-independent-of-physical-channels-or-signals">Configurations
+and assumptions independent of physical channels or signals</h1>
+<blockquote>
+<p>批注：[signals] To capture reserved resources, potential LTE-NR
+coexistence aspects, etc. For LTE-NR DC with single UL Tx, corresponding
+agreement regarding configuration of DL-reference UL/DL configuration
+affects only LTE operation, is suitable for LTE specifications, and is
+not captured (unless it is extended to NR-NR DC).</p>
+</blockquote>
+<h1 id="相关链接">相关链接</h1>
+<p><br/><a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-general-description/">NR物理层概述</a>
+<a
+href="http://marshallcomm.cn/2017/09/08/nr-v100-l1-service/">NR物理层提供的服务</a>
+<a
+href="http://marshallcomm.cn/2017/09/09/nr-v100-l1-channel-modulation/">NR物理信道与调制</a>
+<a
+href="http://marshallcomm.cn/2017/09/10/nr-v100-l1-multiplexing-coding/">NR复用与信道编码</a></p>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>2017-09</tag>
+        <tag>5G-NR</tag>
+        <tag>3GPP</tag>
       </tags>
   </entry>
   <entry>
@@ -5911,368 +5911,6 @@ PDCCH</a></p>
       </tags>
   </entry>
   <entry>
-    <title>5G PDCCH</title>
-    <url>/2017/12/30/nr-v200-l1-pdcch/</url>
-    <content><![CDATA[<h1 id="pdcch">PDCCH</h1>
-<h2 id="cce">CCE</h2>
-<p><br/>PDCCH由一个或多个控制信道单元（control-channel
-element，CCE）组成，见Table 7.3.2.1-1。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171230/110738019.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<h2 id="coreset">CORESET</h2>
-<p><br/>控制资源集（control-resource set，CORESET）由$ N_{}^{} <span
-class="math inline">\(个频域RBs和\)</span> N_{}^{}{ 1,2,3 } <span
-class="math inline">\(个时域符号组成，\)</span> N_{}^{} <span
-class="math inline">\(的值由高层参数 *CORESET-freq-dom* 给定，\)</span>
-N_{}^{} <span class="math inline">\(的值由高层参数 *CORESET-time-dur*
-给定，其中仅当高层参数 *DL-DMRS-typeA-pos=3* 时才支持\)</span> N_{}^{}=3
-$。</p>
-<p>1个CCE由6个资源粒子组（resource-element
-group，REG）组成，1个REG等于1个OFDM符号上的1个RB。CORESET内的REGs以时域优先的方式按升序编号，从CORESET中第1个OFDM符号且编号最小的RB以0开始编号。</p>
-<p>UE可配置多个CORESETs，每个CORESET仅对应一种CCE-to-REG映射。</p>
-<p>CORESET中CCE-to-REG映射可以是交织的或非交织的，这由高层参数
-<em>CORESET-CCE-REG-mapping-type</em> 来配置，并且由REG捆绑（REG
-bundle）来描述：</p>
-<ul>
-<li>REG bundle $ i $ 定义为一组REGs $ { iL,iL+1,...,iL+L-1 } <span
-class="math inline">\(，其中\)</span> L <span
-class="math inline">\(是REG bundle大小，\)</span>
-i=0,1,...,{N_{}^{}}/{L};-1 <span class="math inline">\(，且\)</span>
-N_{}<sup>{}=N_{}</sup>{}N_{}^{} $是CORESET中REG的数目；</li>
-<li>CCE $ j $由一组REG bundles $ {
-f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
-class="math inline">\(组成，其中\)</span> f() $是交织器</li>
-</ul>
-<p>对于非交织CEE-to-REG映射，$ L=6 <span
-class="math inline">\(且\)</span> f(j)=j $。</p>
-<p>对于交织CEE-to-REG映射，当$ N_{}^{}=1 <span
-class="math inline">\(时，有\)</span> L{ 2,6 } <span
-class="math inline">\(；当\)</span> N_{}^{}{ 2,3 } <span
-class="math inline">\(时，有\)</span> L{ N_{}^{},6 } <span
-class="math inline">\(，其中\)</span> L
-$由高层参数<em>CORESET-REG-bundle-size</em>配置。交织器定义为</p>
-<p><span class="math display">\[ \begin{align}
-\nonumber &amp; f(j)=\left( rC+c+{ {n}_{\text{shift}}} \right)\bmod
-\left( {N_{\text{REG}}^{\text{CORESET}}}/{L}\; \right) \\
-\nonumber &amp; j=cR+r \\
-\nonumber  &amp; r=0,1,...,R-1 \\
-\nonumber &amp; c=0,1,...,C-1 \\
-\nonumber &amp; C=\left\lceil {N_{\text{REG}}^{\text{CORESET}}}/{\left(
-LR \right)}\; \right\rceil   
-\end{align}
-\]</span></p>
-<p>其中$ R{ 2,3,6 } $由高层参数 <em>CORESET-interleaver-size</em>
-给定，且</p>
-<ul>
-<li>$ { {n}<em>{}} $是物理层小区ID $ N</em>{}^{} $ 的函数</li>
-<li>$ { {n}_{}}{ 0,1,...,274 } $是高层参数 <em>CORESET-shift-index</em>
-的函数</li>
-</ul>
-<p>UE可假定（频域预编码颗粒度）</p>
-<ul>
-<li>如果高层参数 <em>CORESET-precoder-granularity</em>
-等于CORESET-REG-bundle-size，则在REG
-bundle中，在频域上使用相同的预编码；</li>
-<li>如果高层参数 <em>CORESET-precoder-granularity</em>
-等于CORESET频域大小，则在CORESET中的连续RBs内的所有REGs中，在频域上使用相同的预编码</li>
-</ul>
-<p>对于PBCH配置的CORESET，$ L=6 $。</p>
-<span id="more"></span>
-<h2 id="加扰">加扰</h2>
-<p><br/>UE应假定比特块$ b(0),...,b(M_{}^{ {}}-1) <span
-class="math inline">\(在调制前进行加扰，其中\)</span> M_{}^{ {}} <span
-class="math inline">\(是PDCCH传输的比特数，加扰后的比特块为\)</span>
-(0),...,(M_{}^{ {}}-1) $</p>
-<p><span class="math display">\[ \tilde{b}(i)=\left( b(i)+c(i)
-\right)\bmod 2 \]</span></p>
-<p>其中扰码序列$ c(i) $在38.211的5.2.1节给定。</p>
-<h2 id="调制">调制</h2>
-<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
-class="math inline">\(采用QPSK调制，得到复值调制符号块\)</span>
-d(0),...,d({ {M}</em>{}}-1) $。QPSK调制见38.211的5.1.3节。</p>
-<h2 id="物理资源映射">物理资源映射</h2>
-<p><br/>在用于所监测的PDCCH的REGs中，UE应假定复值符号块$ d(0),...,d({
-{M}<em>{}}-1) <span class="math inline">\(乘以幅值因子\)</span> {
-{}</em>{}} <span class="math inline">\(，并按照先\)</span> k <span
-class="math inline">\(再\)</span> l <span
-class="math inline">\(的递增顺序依次映射到资源粒子\)</span> { {( k,l
-)}_{p,}} $。</p>
-<h1 id="ue接收控制信息的过程">UE接收控制信息的过程</h1>
-<p><br/>如果UE配置了辅小区群（Secondary Cell
-Group，SCG），则UE应对主小区群（Master Cell
-Group，MCG）和SCG应用本章所描述的过程</p>
-<ul>
-<li>当这一过程应用于<strong>MCG</strong>时，本章所提及的‘secondary
-cell’，‘secondary cells’，‘serving cell’，‘serving
-cells’是分别属于<strong>MCG</strong>的secondary cell，secondary
-cells，serving cell，serving cells。</li>
-<li>当这一过程应用于<strong>SCG</strong>时，本章所提及的‘secondary
-cell’，‘secondary cells’，‘serving cell’，‘serving
-cells’是分别属于<strong>SCG</strong>的secondary cell，secondary
-cells（不包括PSCell），serving cell，serving cells。本章所提及的‘primary
-cell’指的是SCG的PSCell。</li>
-</ul>
-<p>UE将根据对应的搜索空间，监测每个激活的服务小区上激活的DL
-BWP上的一个或多个CORESET（控制资源集）中的一组PDCCH候选。监测搜索空间意味着UE根据所监测的DCI格式对每个PDCCH候选进行译码。</p>
-<p>UE可以通过高层参数 <em>SSB-periodicity-serving-cell</em>
-配置用于在服务小区中发送SSB的半帧的周期。如果UE接收到
-<em>SSB-transmitted-SIB1</em> 但未接收到 <em>SSB-transmitted</em>
-，并且如果用于PDCCH接收的RE与对应于由 <em>SSB-transmitted-SIB1</em>
-指示的SSB索引的RE重叠，则UE通过排除与由 <em>SSB-transmitted-SIB1</em>
-指示的SSB索引相对应的RE来接收PDCCH。如果UE接收到
-<em>SSB-transmitted</em> ，并且如果用于PDCCH接收的RE与对应于由
-<em>SSB-transmitted</em> 指示的SSB索引的RE重叠，则UE通过排除与
-<em>SSB-transmitted</em> 所指示的SSB索引相对应的RE来接收PDCCH。</p>
-<h2 id="确定pdcch分配的ue过程">确定PDCCH分配的UE过程</h2>
-<p><br/>PDCCH搜索空间定义为UE监测的一组PDCCH候选。搜索空间可以是公共搜索空间（CSS）或UE特定搜索空间（USS）。UE将在以下一个或多个搜索空间中的连续接收时隙中监测PDCCH候选</p>
-<ul>
-<li>在PCell上，CRC通过SI-RNTI加扰的DCI格式的Type0-PDCCH公共搜索空间</li>
-<li>在PCell上，CRC通过SI-RNTI加扰的DCI格式的Type0A-PDCCH公共搜索空间</li>
-<li>在PCell上，CRC通过RA-RNTI或TC-RNTI或C-RNTI加扰的DCI格式的Type1-PDCCH公共搜索空间</li>
-<li>在PCell上，CRC通过P-RNTI加扰的DCI格式的Type2-PDCCH公共搜索空间</li>
-<li>在PCell上，CRC通过INT-RNTI或SFI-RNTI或TPC-PUSCH-RNTI或TPC-PUCCH-RNTI或TPC-SRS-RNTI或C-RNTI或CS-RNTI(s)加扰的DCI格式的Type3-PDCCH公共搜索空间</li>
-<li>CRC通过C-RNTI或CS-RNTI(s)加扰的DCI格式的UE特定搜索空间</li>
-</ul>
-<p>通过用于PDCCH接收的高层参数 <em>RMSI-PDCCH-Config</em> 和
-<em>RMSI-sc</em>
-提供的子载波间隔，为UE提供用于Type0-PDCCH公共搜索空间的CORESET的配置。UE确定Type0-PDCCH公共搜索空间的CORESET和监测时机。Type0-PDCCH公共搜索空间由表10.1-1中给出的CCE聚合等级和每个CCE聚合等级的候选数量来定义。</p>
-<p>UE可假定与Type0-PDCCH和Type2-PDCCH公共搜索空间中的PDCCH接收和相应的PDSCH接收相关联的DM-RS天线端口，以及与SSB接收相关联的DM-RS天线端口是关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数QCL的。</p>
-<p>Type0A-PDCCH或Type-2
-PDCCH公共搜索空间的CORESET与Type0-PDCCH公共搜索空间的CORESET相同。UE通过高层参数
-<em>osi-SearchSpace</em>
-获得Type0A-PDCCH公共搜索空间的配置。UE通过高层参数
-<em>paging-SearchSpace</em> 获得Type2-PDCCH公共搜索空间的配置。</p>
-<p>用于Type0A-PDCCH或Type1-PDCCH或Type-2公共搜索空间的PDCCH子载波间隔和CP长度与用于Type0-PDCCH公共搜索空间的PDCCH相同。</p>
-<p>UE可假定与Type0A-PDCCH公共搜索空间中的PDCCH接收相关联的DM-RS天线端口和与SSB接收相关联的DM-RS天线端口是关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数QCL的。</p>
-<p>UE可假定在Type1-PDCCH公共搜索空间中，与PDCCH接收和相应的PDSCH接收相关联的DM-RS天线端口，和相应的PRACH相关联的SSB接收的DM-RS天线端口是QCL的。</p>
-<p>如果SIB1中的参数 <em>PDCCH-DMRS-Scrambling-ID</em>
-未提供用于Type0A-PDCCH或Type1-PDCCH或Type-2
-PDCCH公共搜索空间的DM-RS加扰序列初始化的值，则该加扰序列初始化值为小区ID。</p>
-<p>如果UE被配置用于DL BWP操作，则公共搜索空间的上述配置适用于初始激活DL
-BWP。除了初始激活DL BWP以外，UE可另外为PCell上的每个DL
-BWP配置Type0-PDCCH，Type0A-PDCCH，Type1-PDCCH或Type2-PDCCH公共搜索空间的CORESET。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/132155978.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<p>对于一个服务小区，高层信令为UE提供$ P
-$个CORESET。对于映射有UE特定搜索空间，Type2-PDCCH或Type3-PDCCH公共搜索空间的CORESET
-$ P <span class="math inline">\(，\)</span> 0p&lt;P
-$，高层信令提供：</p>
-<ul>
-<li>高层参数 <em>CORESET-ID</em> 提供的CORESET索引；</li>
-<li>高层参数 <em>PDCCH-DMRS-Scrambling-ID</em>
-提供的DM-RS加扰序列初始化值；</li>
-<li>高层参数 <em>CORESET-time-duration</em> 提供的连续符号数目；</li>
-<li>高层参数 <em>CORESET-freq-dom</em> 提供的RB数目；</li>
-<li>高层参数 <em>CORESET-CCE-to-REG-mapping-type</em>
-提供的CCE-to-REG映射类型；</li>
-<li>高层参数 <em>CORESET-REG-bundle-size</em>
-提供的CCE-to-REG交织映射下的REG bundle大小；</li>
-<li>高层参数 <em>CORESET-shift-index</em> 提供的REG
-bundle交织器的循环移位；</li>
-<li>天线端口QCL（高层参数TCI-StatesPDCCH提供的一组天线端口QCLs）指示用于PDCCH接收的DM-RS天线端口的QCL信息;</li>
-<li>通过高层参数 <em>TCI-PresentInDCI</em> 指示由CORESET $ p
-$中通过PDCCH发送的DCI format1_0或DCI
-format1_1的传输配置指示（TCI）字段的存在或不存在</li>
-</ul>
-<p>对于在服务小区的DL BWP中设置的每个CORESET，相应的高层参数
-<em>CORESET-freq-dom</em>
-提供了一个位图（bitmap）。该bitmap的比特与若干非重叠的PRB组具有一对一映射，其中每个PRB组有6个PRBs。带宽为$
-N_{}^{} <span class="math inline">\(个PRBs的DL
-BWP中的PRB索引按升序编号，其中第一组的第一个PRB的索引为\)</span> 6/{6};
-$。</p>
-<p>如果UE没有从 <em>TCI-StatesPDCCH</em>
-提供的一组天线端口QCL中接收到天线端口QCL的指示，则UE假定UE特定搜索空间中与PDCCH接收相关联的DM-RS天线端口与PBCH接收相关联的DM-RS天线端口关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数是QCL的。</p>
-<p>对于UE被配置为在Type0-PDCCH公共搜索空间之外的搜索空间中监测PDCCH的每个服务小区，UE配置如下：</p>
-<ul>
-<li>高层参数 <em>search-space-config</em> 提供的搜索空间集的数目；</li>
-<li>对于CORESET <span class="math inline">\(p\)</span>中的每个搜索空间集
-<ul>
-<li>高层参数 <em>Common-search-space-flag</em>
-提供的所述搜索空间集为公共搜索空间集或UE特定搜索空间集的指示；</li>
-<li>每个CCE聚合等级<span
-class="math inline">\(L\)</span>下的PDCCH候选数目$ M_{p}^{(L)}
-$，其中聚合等级1、2、4、8、16分别由高层参数
-<em>Aggregation-level-1</em>、<em>Aggregation-level-2</em>、<em>Aggregation-level-4</em>、<em>Aggregation-level-8</em>
-和 <em>Aggregation-level-16</em> 指示。</li>
-<li>高层参数 <em>Monitoring-periodicity-PDCCH-slot</em>
-提供的PDCCH监测周期$ { {k}_{p}} $个时隙</li>
-<li>高层参数 <em>Monitoring-symbols-PDCCH-within-slot</em>
-提供的PDCCH在时隙内的监测模式，用于指示PDCCH监测时隙内CORESET的第一个符号</li>
-</ul></li>
-</ul>
-<p>UE根据时隙内的PDCCH监测周期，PDCCH监测偏移和PDCCH监测模式来确定PDCCH监测时机。</p>
-<p>CCE聚合等级$ L{ 1, 2, 4, 8, 16 } <span
-class="math inline">\(下的PDCCH UE特定搜索空间\)</span> S_{ {
-{k}_{p}}}^{(L)} <span
-class="math inline">\(定义为一组CCE聚合等级为\)</span>L$的PDCCH候选。</p>
-<p>如果UE为服务小区配置了高层参数 <em>CrossCarrierSchedulingConfig</em>
-，则载波指示域的值有对应的 <em>CrossCarrierSchedulingConfig</em>
-的值指示。</p>
-<p>对于UE在UE特定搜索空间上监测PDCCH候选的服务小区，如果UE没有配置载波指示域，则UE应在无载波指示域条件下监测PDCCH候选。对于UE在UE特定搜索空间上监测PDCCH候选的服务小区，如果UE配置有载波指示域，则UE将在具有载波指示域条件下监测PDCCH候选。</p>
-<p>如果UE被配置为监测具有与另一个服务小区中的SCell相对应的载波指示域的PDCCH候选，则UE不期望监测SCell上的PDCCH候选。对于UE监测PDCCH候选的服务小区，UE至少要监测同一个服务小区的PDCCH候选。</p>
-<p>对于CORESET <span
-class="math inline">\(p\)</span>，与载波指示域的值对应的服务小区的搜索空间的PDCCH候选所对应的CCEs由下式给出：</p>
-<p><span class="math display">\[ L\cdot \left\{ \left( { {Y}_{p,{
-{k}_{p}}}}+\left\lfloor \frac{ { {m}_{ { {n}_{CI}}}}\cdot {
-{N}_{\text{CCE},p}}}{L\cdot M_{p,\text{max}}^{(L)}} \right\rfloor +{
-{n}_{CI}} \right)\bmod \left\lfloor { { {N}_{\text{CCE},p}}}/{L}\;
-\right\rfloor  \right\}+i \]</span></p>
-<p>其中</p>
-<p>对于任何公共搜索空间，$ { {Y}<em>{p,{ {k}</em>{p}}}}=0 $；</p>
-<p>对于UE特定搜索空间，$ { {Y}<em>{p,{ {k}</em>{p}}}}=( { {A}<em>{p}} )D
-<span class="math inline">\(，\)</span> { {Y}</em>{p,-1}}={ {n}<em>{}}
-<span class="math inline">\(，\)</span> { {A}</em>{0}}=39827 <span
-class="math inline">\(，\)</span> { {A}_{1}}=39829 <span
-class="math inline">\(，\)</span> D=65537 $；</p>
-<p>$ i=0,,,,L-1 $；</p>
-<p>如果UE配置有监测PDCCH的服务小区的载波指示域，则$ { {n}<em>{CI}} <span
-class="math inline">\(是载波指示域的值；否则，\)</span> {
-{n}</em>{CI}}=0 $（包括任何公共搜索空间）；</p>
-<p>$ { {N}<em>{,p}} $是CORESET <span
-class="math inline">\(p\)</span>内的CCE数量，编号从0到$ {
-{N}</em>{,p}}-1 $；</p>
-<p>$ { {m}<em>{ { {n}</em>{CI}}}}=0,,...,,M_{p,{ {n}<em>{CI}}}^{(L)}-1
-<span class="math inline">\(，其中\)</span> M</em>{p,{
-{n}<em>{CI}}}^{(L)} <span
-class="math inline">\(是UE被配置为监测\)</span> { {n}</em>{CI}} <span
-class="math inline">\(对应的服务小区的聚合等级\)</span>L$的PDCCH候选的数量；</p>
-<p>对于任何公共搜索空间，$ M_{p,}<sup>{(L)}=M_{p,0}</sup>{(L)} $；</p>
-<p>对于UE特定搜索空间，$ M_{p,}^{(L)} <span
-class="math inline">\(是\)</span> M_{p,{ {n}_{CI}}}^{(L)}
-$的最大值，</p>
-<p>$ M_{p,}^{(L)} $是CORESET <span
-class="math inline">\(p\)</span>中CCE聚合等级<span
-class="math inline">\(L\)</span>的所有配置$ { {n}<em>{CI}} <span
-class="math inline">\(值的所有对应DCI格式的\)</span> M</em>{p,{
-{n}_{CI}}}^{(L)} $的最大值；</p>
-<p>RNTI的值$ { {n}_{}} $在38.212和38.214中定义。</p>
-<p>UE配置为在DCI格式大小具有载波指示域和由C-RNTI加扰的CRC的服务小区中监测PDCCH候选，PDCCH候选对于DCI格式大小可以具有载波指示域的一个或多个可能值，应假定具有DCI格式大小的PDCCH候选可以在对应于DCI格式大小的载波指示域的任何可能值的任何PDCCH
-UE特定搜索空间中的服务小区中被发送。</p>
-<h1
-id="监测type0-pdcch公共搜索空间的ue过程">监测Type0-PDCCH公共搜索空间的UE过程</h1>
-<p><br/>UE从表13-1至表13-8中描述的 <em>RMSI-PDCCH-Config</em>
-的前4个比特中确定Type0-PDCCH公共搜索空间的CORESET的连续RB的数量和连续符号的数量；如表13-9至表13-13中所述，从
-<em>RMSI-PDCCH-Config</em> 的后4位确定PDCCH监测时机，其中，$ <span
-class="math inline">\(和\)</span> { {n}<em>{}} <span
-class="math inline">\(分别是CORESET的SFN和时隙，\)</span> <span
-class="math inline">\(和\)</span> { {n}</em>{}}
-$分别是SSB的SFN和时隙。</p>
-<p>表13-1至表13-8中的偏移量是根据CORESET的子载波间隔定义的，该偏移量是SSB的最小RB索引与用于Type0-PDCCH公共搜索空间的CORESET的最小RB索引之间的差值。表13-1至13-8中的条件A或条件B分别对应于SSB
-RBs和Type0-PDCCH公共搜索空间的CORESET RBs之间的PRG
-[38.214]对齐或不对齐的情况。</p>
-<p>对于第一个SSB和CORESET复用模式，UE在两个连续时隙$ { { {n}<em>{}},,{
-{n}</em>{}}+1 } <span
-class="math inline">\(上监测Type0-PDCCH公共搜索空间中的PDCCH。对于具有索引\)</span>i<span
-class="math inline">\(的SSB，UE决定第一个时隙的索引\)</span> {
-{n}<em>{}} <span
-class="math inline">\(位于一定的系统帧号（SFN），且\)</span> {
-{n}</em>{}}=( O+iM )N_{}^{,} <span class="math inline">\(。若\)</span>
-/{N_{}^{,}}; <span class="math inline">\(，则该系统帧号满足\)</span> =0
-<span class="math inline">\(；若\)</span> /{N_{}^{,}}; <span
-class="math inline">\(，则该系统帧号满足\)</span> =1 $。</p>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135655440.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135734082.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135823895.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135853964.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140008216.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140121486.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140208704.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140245627.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140336520.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140439064.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140920630.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140959705.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/141044288.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-<figure>
-<img
-src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/141110766.png"
-alt="mark" />
-<figcaption aria-hidden="true">mark</figcaption>
-</figure>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>5G-NR</tag>
-        <tag>3GPP</tag>
-        <tag>2017-12</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>5G PRACH与随机接入</title>
     <url>/2017/12/29/nr-v200-l1-prach/</url>
     <content><![CDATA[<h1 id="prach">PRACH</h1>
@@ -6683,6 +6321,368 @@ alt="mark" />
       </tags>
   </entry>
   <entry>
+    <title>5G PDCCH</title>
+    <url>/2017/12/30/nr-v200-l1-pdcch/</url>
+    <content><![CDATA[<h1 id="pdcch">PDCCH</h1>
+<h2 id="cce">CCE</h2>
+<p><br/>PDCCH由一个或多个控制信道单元（control-channel
+element，CCE）组成，见Table 7.3.2.1-1。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171230/110738019.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<h2 id="coreset">CORESET</h2>
+<p><br/>控制资源集（control-resource set，CORESET）由$ N_{}^{} <span
+class="math inline">\(个频域RBs和\)</span> N_{}^{}{ 1,2,3 } <span
+class="math inline">\(个时域符号组成，\)</span> N_{}^{} <span
+class="math inline">\(的值由高层参数 *CORESET-freq-dom* 给定，\)</span>
+N_{}^{} <span class="math inline">\(的值由高层参数 *CORESET-time-dur*
+给定，其中仅当高层参数 *DL-DMRS-typeA-pos=3* 时才支持\)</span> N_{}^{}=3
+$。</p>
+<p>1个CCE由6个资源粒子组（resource-element
+group，REG）组成，1个REG等于1个OFDM符号上的1个RB。CORESET内的REGs以时域优先的方式按升序编号，从CORESET中第1个OFDM符号且编号最小的RB以0开始编号。</p>
+<p>UE可配置多个CORESETs，每个CORESET仅对应一种CCE-to-REG映射。</p>
+<p>CORESET中CCE-to-REG映射可以是交织的或非交织的，这由高层参数
+<em>CORESET-CCE-REG-mapping-type</em> 来配置，并且由REG捆绑（REG
+bundle）来描述：</p>
+<ul>
+<li>REG bundle $ i $ 定义为一组REGs $ { iL,iL+1,...,iL+L-1 } <span
+class="math inline">\(，其中\)</span> L <span
+class="math inline">\(是REG bundle大小，\)</span>
+i=0,1,...,{N_{}^{}}/{L};-1 <span class="math inline">\(，且\)</span>
+N_{}<sup>{}=N_{}</sup>{}N_{}^{} $是CORESET中REG的数目；</li>
+<li>CCE $ j $由一组REG bundles $ {
+f({6j}/{L};),f({6j}/{L};+1),...,f({6j}/{L};+{6}/{L};-1) } <span
+class="math inline">\(组成，其中\)</span> f() $是交织器</li>
+</ul>
+<p>对于非交织CEE-to-REG映射，$ L=6 <span
+class="math inline">\(且\)</span> f(j)=j $。</p>
+<p>对于交织CEE-to-REG映射，当$ N_{}^{}=1 <span
+class="math inline">\(时，有\)</span> L{ 2,6 } <span
+class="math inline">\(；当\)</span> N_{}^{}{ 2,3 } <span
+class="math inline">\(时，有\)</span> L{ N_{}^{},6 } <span
+class="math inline">\(，其中\)</span> L
+$由高层参数<em>CORESET-REG-bundle-size</em>配置。交织器定义为</p>
+<p><span class="math display">\[ \begin{align}
+\nonumber &amp; f(j)=\left( rC+c+{ {n}_{\text{shift}}} \right)\bmod
+\left( {N_{\text{REG}}^{\text{CORESET}}}/{L}\; \right) \\
+\nonumber &amp; j=cR+r \\
+\nonumber  &amp; r=0,1,...,R-1 \\
+\nonumber &amp; c=0,1,...,C-1 \\
+\nonumber &amp; C=\left\lceil {N_{\text{REG}}^{\text{CORESET}}}/{\left(
+LR \right)}\; \right\rceil   
+\end{align}
+\]</span></p>
+<p>其中$ R{ 2,3,6 } $由高层参数 <em>CORESET-interleaver-size</em>
+给定，且</p>
+<ul>
+<li>$ { {n}<em>{}} $是物理层小区ID $ N</em>{}^{} $ 的函数</li>
+<li>$ { {n}_{}}{ 0,1,...,274 } $是高层参数 <em>CORESET-shift-index</em>
+的函数</li>
+</ul>
+<p>UE可假定（频域预编码颗粒度）</p>
+<ul>
+<li>如果高层参数 <em>CORESET-precoder-granularity</em>
+等于CORESET-REG-bundle-size，则在REG
+bundle中，在频域上使用相同的预编码；</li>
+<li>如果高层参数 <em>CORESET-precoder-granularity</em>
+等于CORESET频域大小，则在CORESET中的连续RBs内的所有REGs中，在频域上使用相同的预编码</li>
+</ul>
+<p>对于PBCH配置的CORESET，$ L=6 $。</p>
+<span id="more"></span>
+<h2 id="加扰">加扰</h2>
+<p><br/>UE应假定比特块$ b(0),...,b(M_{}^{ {}}-1) <span
+class="math inline">\(在调制前进行加扰，其中\)</span> M_{}^{ {}} <span
+class="math inline">\(是PDCCH传输的比特数，加扰后的比特块为\)</span>
+(0),...,(M_{}^{ {}}-1) $</p>
+<p><span class="math display">\[ \tilde{b}(i)=\left( b(i)+c(i)
+\right)\bmod 2 \]</span></p>
+<p>其中扰码序列$ c(i) $在38.211的5.2.1节给定。</p>
+<h2 id="调制">调制</h2>
+<p><br/>UE应假定比特块$ (0),...,({ {M}<em>{}}-1) <span
+class="math inline">\(采用QPSK调制，得到复值调制符号块\)</span>
+d(0),...,d({ {M}</em>{}}-1) $。QPSK调制见38.211的5.1.3节。</p>
+<h2 id="物理资源映射">物理资源映射</h2>
+<p><br/>在用于所监测的PDCCH的REGs中，UE应假定复值符号块$ d(0),...,d({
+{M}<em>{}}-1) <span class="math inline">\(乘以幅值因子\)</span> {
+{}</em>{}} <span class="math inline">\(，并按照先\)</span> k <span
+class="math inline">\(再\)</span> l <span
+class="math inline">\(的递增顺序依次映射到资源粒子\)</span> { {( k,l
+)}_{p,}} $。</p>
+<h1 id="ue接收控制信息的过程">UE接收控制信息的过程</h1>
+<p><br/>如果UE配置了辅小区群（Secondary Cell
+Group，SCG），则UE应对主小区群（Master Cell
+Group，MCG）和SCG应用本章所描述的过程</p>
+<ul>
+<li>当这一过程应用于<strong>MCG</strong>时，本章所提及的‘secondary
+cell’，‘secondary cells’，‘serving cell’，‘serving
+cells’是分别属于<strong>MCG</strong>的secondary cell，secondary
+cells，serving cell，serving cells。</li>
+<li>当这一过程应用于<strong>SCG</strong>时，本章所提及的‘secondary
+cell’，‘secondary cells’，‘serving cell’，‘serving
+cells’是分别属于<strong>SCG</strong>的secondary cell，secondary
+cells（不包括PSCell），serving cell，serving cells。本章所提及的‘primary
+cell’指的是SCG的PSCell。</li>
+</ul>
+<p>UE将根据对应的搜索空间，监测每个激活的服务小区上激活的DL
+BWP上的一个或多个CORESET（控制资源集）中的一组PDCCH候选。监测搜索空间意味着UE根据所监测的DCI格式对每个PDCCH候选进行译码。</p>
+<p>UE可以通过高层参数 <em>SSB-periodicity-serving-cell</em>
+配置用于在服务小区中发送SSB的半帧的周期。如果UE接收到
+<em>SSB-transmitted-SIB1</em> 但未接收到 <em>SSB-transmitted</em>
+，并且如果用于PDCCH接收的RE与对应于由 <em>SSB-transmitted-SIB1</em>
+指示的SSB索引的RE重叠，则UE通过排除与由 <em>SSB-transmitted-SIB1</em>
+指示的SSB索引相对应的RE来接收PDCCH。如果UE接收到
+<em>SSB-transmitted</em> ，并且如果用于PDCCH接收的RE与对应于由
+<em>SSB-transmitted</em> 指示的SSB索引的RE重叠，则UE通过排除与
+<em>SSB-transmitted</em> 所指示的SSB索引相对应的RE来接收PDCCH。</p>
+<h2 id="确定pdcch分配的ue过程">确定PDCCH分配的UE过程</h2>
+<p><br/>PDCCH搜索空间定义为UE监测的一组PDCCH候选。搜索空间可以是公共搜索空间（CSS）或UE特定搜索空间（USS）。UE将在以下一个或多个搜索空间中的连续接收时隙中监测PDCCH候选</p>
+<ul>
+<li>在PCell上，CRC通过SI-RNTI加扰的DCI格式的Type0-PDCCH公共搜索空间</li>
+<li>在PCell上，CRC通过SI-RNTI加扰的DCI格式的Type0A-PDCCH公共搜索空间</li>
+<li>在PCell上，CRC通过RA-RNTI或TC-RNTI或C-RNTI加扰的DCI格式的Type1-PDCCH公共搜索空间</li>
+<li>在PCell上，CRC通过P-RNTI加扰的DCI格式的Type2-PDCCH公共搜索空间</li>
+<li>在PCell上，CRC通过INT-RNTI或SFI-RNTI或TPC-PUSCH-RNTI或TPC-PUCCH-RNTI或TPC-SRS-RNTI或C-RNTI或CS-RNTI(s)加扰的DCI格式的Type3-PDCCH公共搜索空间</li>
+<li>CRC通过C-RNTI或CS-RNTI(s)加扰的DCI格式的UE特定搜索空间</li>
+</ul>
+<p>通过用于PDCCH接收的高层参数 <em>RMSI-PDCCH-Config</em> 和
+<em>RMSI-sc</em>
+提供的子载波间隔，为UE提供用于Type0-PDCCH公共搜索空间的CORESET的配置。UE确定Type0-PDCCH公共搜索空间的CORESET和监测时机。Type0-PDCCH公共搜索空间由表10.1-1中给出的CCE聚合等级和每个CCE聚合等级的候选数量来定义。</p>
+<p>UE可假定与Type0-PDCCH和Type2-PDCCH公共搜索空间中的PDCCH接收和相应的PDSCH接收相关联的DM-RS天线端口，以及与SSB接收相关联的DM-RS天线端口是关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数QCL的。</p>
+<p>Type0A-PDCCH或Type-2
+PDCCH公共搜索空间的CORESET与Type0-PDCCH公共搜索空间的CORESET相同。UE通过高层参数
+<em>osi-SearchSpace</em>
+获得Type0A-PDCCH公共搜索空间的配置。UE通过高层参数
+<em>paging-SearchSpace</em> 获得Type2-PDCCH公共搜索空间的配置。</p>
+<p>用于Type0A-PDCCH或Type1-PDCCH或Type-2公共搜索空间的PDCCH子载波间隔和CP长度与用于Type0-PDCCH公共搜索空间的PDCCH相同。</p>
+<p>UE可假定与Type0A-PDCCH公共搜索空间中的PDCCH接收相关联的DM-RS天线端口和与SSB接收相关联的DM-RS天线端口是关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数QCL的。</p>
+<p>UE可假定在Type1-PDCCH公共搜索空间中，与PDCCH接收和相应的PDSCH接收相关联的DM-RS天线端口，和相应的PRACH相关联的SSB接收的DM-RS天线端口是QCL的。</p>
+<p>如果SIB1中的参数 <em>PDCCH-DMRS-Scrambling-ID</em>
+未提供用于Type0A-PDCCH或Type1-PDCCH或Type-2
+PDCCH公共搜索空间的DM-RS加扰序列初始化的值，则该加扰序列初始化值为小区ID。</p>
+<p>如果UE被配置用于DL BWP操作，则公共搜索空间的上述配置适用于初始激活DL
+BWP。除了初始激活DL BWP以外，UE可另外为PCell上的每个DL
+BWP配置Type0-PDCCH，Type0A-PDCCH，Type1-PDCCH或Type2-PDCCH公共搜索空间的CORESET。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/132155978.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<p>对于一个服务小区，高层信令为UE提供$ P
+$个CORESET。对于映射有UE特定搜索空间，Type2-PDCCH或Type3-PDCCH公共搜索空间的CORESET
+$ P <span class="math inline">\(，\)</span> 0p&lt;P
+$，高层信令提供：</p>
+<ul>
+<li>高层参数 <em>CORESET-ID</em> 提供的CORESET索引；</li>
+<li>高层参数 <em>PDCCH-DMRS-Scrambling-ID</em>
+提供的DM-RS加扰序列初始化值；</li>
+<li>高层参数 <em>CORESET-time-duration</em> 提供的连续符号数目；</li>
+<li>高层参数 <em>CORESET-freq-dom</em> 提供的RB数目；</li>
+<li>高层参数 <em>CORESET-CCE-to-REG-mapping-type</em>
+提供的CCE-to-REG映射类型；</li>
+<li>高层参数 <em>CORESET-REG-bundle-size</em>
+提供的CCE-to-REG交织映射下的REG bundle大小；</li>
+<li>高层参数 <em>CORESET-shift-index</em> 提供的REG
+bundle交织器的循环移位；</li>
+<li>天线端口QCL（高层参数TCI-StatesPDCCH提供的一组天线端口QCLs）指示用于PDCCH接收的DM-RS天线端口的QCL信息;</li>
+<li>通过高层参数 <em>TCI-PresentInDCI</em> 指示由CORESET $ p
+$中通过PDCCH发送的DCI format1_0或DCI
+format1_1的传输配置指示（TCI）字段的存在或不存在</li>
+</ul>
+<p>对于在服务小区的DL BWP中设置的每个CORESET，相应的高层参数
+<em>CORESET-freq-dom</em>
+提供了一个位图（bitmap）。该bitmap的比特与若干非重叠的PRB组具有一对一映射，其中每个PRB组有6个PRBs。带宽为$
+N_{}^{} <span class="math inline">\(个PRBs的DL
+BWP中的PRB索引按升序编号，其中第一组的第一个PRB的索引为\)</span> 6/{6};
+$。</p>
+<p>如果UE没有从 <em>TCI-StatesPDCCH</em>
+提供的一组天线端口QCL中接收到天线端口QCL的指示，则UE假定UE特定搜索空间中与PDCCH接收相关联的DM-RS天线端口与PBCH接收相关联的DM-RS天线端口关于延迟扩展，多普勒扩展，多普勒频移，平均延迟和空间Rx参数是QCL的。</p>
+<p>对于UE被配置为在Type0-PDCCH公共搜索空间之外的搜索空间中监测PDCCH的每个服务小区，UE配置如下：</p>
+<ul>
+<li>高层参数 <em>search-space-config</em> 提供的搜索空间集的数目；</li>
+<li>对于CORESET <span class="math inline">\(p\)</span>中的每个搜索空间集
+<ul>
+<li>高层参数 <em>Common-search-space-flag</em>
+提供的所述搜索空间集为公共搜索空间集或UE特定搜索空间集的指示；</li>
+<li>每个CCE聚合等级<span
+class="math inline">\(L\)</span>下的PDCCH候选数目$ M_{p}^{(L)}
+$，其中聚合等级1、2、4、8、16分别由高层参数
+<em>Aggregation-level-1</em>、<em>Aggregation-level-2</em>、<em>Aggregation-level-4</em>、<em>Aggregation-level-8</em>
+和 <em>Aggregation-level-16</em> 指示。</li>
+<li>高层参数 <em>Monitoring-periodicity-PDCCH-slot</em>
+提供的PDCCH监测周期$ { {k}_{p}} $个时隙</li>
+<li>高层参数 <em>Monitoring-symbols-PDCCH-within-slot</em>
+提供的PDCCH在时隙内的监测模式，用于指示PDCCH监测时隙内CORESET的第一个符号</li>
+</ul></li>
+</ul>
+<p>UE根据时隙内的PDCCH监测周期，PDCCH监测偏移和PDCCH监测模式来确定PDCCH监测时机。</p>
+<p>CCE聚合等级$ L{ 1, 2, 4, 8, 16 } <span
+class="math inline">\(下的PDCCH UE特定搜索空间\)</span> S_{ {
+{k}_{p}}}^{(L)} <span
+class="math inline">\(定义为一组CCE聚合等级为\)</span>L$的PDCCH候选。</p>
+<p>如果UE为服务小区配置了高层参数 <em>CrossCarrierSchedulingConfig</em>
+，则载波指示域的值有对应的 <em>CrossCarrierSchedulingConfig</em>
+的值指示。</p>
+<p>对于UE在UE特定搜索空间上监测PDCCH候选的服务小区，如果UE没有配置载波指示域，则UE应在无载波指示域条件下监测PDCCH候选。对于UE在UE特定搜索空间上监测PDCCH候选的服务小区，如果UE配置有载波指示域，则UE将在具有载波指示域条件下监测PDCCH候选。</p>
+<p>如果UE被配置为监测具有与另一个服务小区中的SCell相对应的载波指示域的PDCCH候选，则UE不期望监测SCell上的PDCCH候选。对于UE监测PDCCH候选的服务小区，UE至少要监测同一个服务小区的PDCCH候选。</p>
+<p>对于CORESET <span
+class="math inline">\(p\)</span>，与载波指示域的值对应的服务小区的搜索空间的PDCCH候选所对应的CCEs由下式给出：</p>
+<p><span class="math display">\[ L\cdot \left\{ \left( { {Y}_{p,{
+{k}_{p}}}}+\left\lfloor \frac{ { {m}_{ { {n}_{CI}}}}\cdot {
+{N}_{\text{CCE},p}}}{L\cdot M_{p,\text{max}}^{(L)}} \right\rfloor +{
+{n}_{CI}} \right)\bmod \left\lfloor { { {N}_{\text{CCE},p}}}/{L}\;
+\right\rfloor  \right\}+i \]</span></p>
+<p>其中</p>
+<p>对于任何公共搜索空间，$ { {Y}<em>{p,{ {k}</em>{p}}}}=0 $；</p>
+<p>对于UE特定搜索空间，$ { {Y}<em>{p,{ {k}</em>{p}}}}=( { {A}<em>{p}} )D
+<span class="math inline">\(，\)</span> { {Y}</em>{p,-1}}={ {n}<em>{}}
+<span class="math inline">\(，\)</span> { {A}</em>{0}}=39827 <span
+class="math inline">\(，\)</span> { {A}_{1}}=39829 <span
+class="math inline">\(，\)</span> D=65537 $；</p>
+<p>$ i=0,,,,L-1 $；</p>
+<p>如果UE配置有监测PDCCH的服务小区的载波指示域，则$ { {n}<em>{CI}} <span
+class="math inline">\(是载波指示域的值；否则，\)</span> {
+{n}</em>{CI}}=0 $（包括任何公共搜索空间）；</p>
+<p>$ { {N}<em>{,p}} $是CORESET <span
+class="math inline">\(p\)</span>内的CCE数量，编号从0到$ {
+{N}</em>{,p}}-1 $；</p>
+<p>$ { {m}<em>{ { {n}</em>{CI}}}}=0,,...,,M_{p,{ {n}<em>{CI}}}^{(L)}-1
+<span class="math inline">\(，其中\)</span> M</em>{p,{
+{n}<em>{CI}}}^{(L)} <span
+class="math inline">\(是UE被配置为监测\)</span> { {n}</em>{CI}} <span
+class="math inline">\(对应的服务小区的聚合等级\)</span>L$的PDCCH候选的数量；</p>
+<p>对于任何公共搜索空间，$ M_{p,}<sup>{(L)}=M_{p,0}</sup>{(L)} $；</p>
+<p>对于UE特定搜索空间，$ M_{p,}^{(L)} <span
+class="math inline">\(是\)</span> M_{p,{ {n}_{CI}}}^{(L)}
+$的最大值，</p>
+<p>$ M_{p,}^{(L)} $是CORESET <span
+class="math inline">\(p\)</span>中CCE聚合等级<span
+class="math inline">\(L\)</span>的所有配置$ { {n}<em>{CI}} <span
+class="math inline">\(值的所有对应DCI格式的\)</span> M</em>{p,{
+{n}_{CI}}}^{(L)} $的最大值；</p>
+<p>RNTI的值$ { {n}_{}} $在38.212和38.214中定义。</p>
+<p>UE配置为在DCI格式大小具有载波指示域和由C-RNTI加扰的CRC的服务小区中监测PDCCH候选，PDCCH候选对于DCI格式大小可以具有载波指示域的一个或多个可能值，应假定具有DCI格式大小的PDCCH候选可以在对应于DCI格式大小的载波指示域的任何可能值的任何PDCCH
+UE特定搜索空间中的服务小区中被发送。</p>
+<h1
+id="监测type0-pdcch公共搜索空间的ue过程">监测Type0-PDCCH公共搜索空间的UE过程</h1>
+<p><br/>UE从表13-1至表13-8中描述的 <em>RMSI-PDCCH-Config</em>
+的前4个比特中确定Type0-PDCCH公共搜索空间的CORESET的连续RB的数量和连续符号的数量；如表13-9至表13-13中所述，从
+<em>RMSI-PDCCH-Config</em> 的后4位确定PDCCH监测时机，其中，$ <span
+class="math inline">\(和\)</span> { {n}<em>{}} <span
+class="math inline">\(分别是CORESET的SFN和时隙，\)</span> <span
+class="math inline">\(和\)</span> { {n}</em>{}}
+$分别是SSB的SFN和时隙。</p>
+<p>表13-1至表13-8中的偏移量是根据CORESET的子载波间隔定义的，该偏移量是SSB的最小RB索引与用于Type0-PDCCH公共搜索空间的CORESET的最小RB索引之间的差值。表13-1至13-8中的条件A或条件B分别对应于SSB
+RBs和Type0-PDCCH公共搜索空间的CORESET RBs之间的PRG
+[38.214]对齐或不对齐的情况。</p>
+<p>对于第一个SSB和CORESET复用模式，UE在两个连续时隙$ { { {n}<em>{}},,{
+{n}</em>{}}+1 } <span
+class="math inline">\(上监测Type0-PDCCH公共搜索空间中的PDCCH。对于具有索引\)</span>i<span
+class="math inline">\(的SSB，UE决定第一个时隙的索引\)</span> {
+{n}<em>{}} <span
+class="math inline">\(位于一定的系统帧号（SFN），且\)</span> {
+{n}</em>{}}=( O+iM )N_{}^{,} <span class="math inline">\(。若\)</span>
+/{N_{}^{,}}; <span class="math inline">\(，则该系统帧号满足\)</span> =0
+<span class="math inline">\(；若\)</span> /{N_{}^{,}}; <span
+class="math inline">\(，则该系统帧号满足\)</span> =1 $。</p>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135655440.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135734082.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135823895.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/135853964.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140008216.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140121486.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140208704.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140245627.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140336520.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140439064.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140920630.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/140959705.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/141044288.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+<figure>
+<img
+src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20171231/141110766.png"
+alt="mark" />
+<figcaption aria-hidden="true">mark</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>5G-NR</tag>
+        <tag>3GPP</tag>
+        <tag>2017-12</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>5G SSB与小区搜索</title>
     <url>/2017/12/29/nr-v200-l1-ssb/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -6964,112 +6964,6 @@ L=64 $，UE应从高层参数 <em>SSB-index-explicit</em>
         <tag>5G-NR</tag>
         <tag>3GPP</tag>
         <tag>2017-12</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NR PRG</title>
-    <url>/2020/03/07/nr_prg/</url>
-    <content><![CDATA[<h2 id="prg">PRG</h2>
-<p>PRG（Precoding Resource Block
-Group）是预编码资源块组，由一组频域连续的 RB 组成，这些连续的 RB
-具有相同的预编码。</p>
-<p>PRG size 的确定涉及到 a) UE能力，b) RRC配置，c) UE 所调度的连续 PRB
-数目。</p>
-<h3 id="dynamicprb-bundlingdl">dynamicPRB-BundlingDL</h3>
-<p><strong><em>dynamicPRB-BundlingDL</em></strong> 用于指示 UE
-是否支持基于 DCI 来指示 PDSCH 接收的 PRG size。</p>
-<p>如果 gNB 收到 UE 上报的 Phy-ParametersCommon ::
-dynamicPRB-BundlingDL，则表明 UE 支持基于 DCI 来指示 PDSCH 接收的 PRG
-size。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dynamicPRB-BundlingDL        ENUMERATED &#123;supported&#125;           OPTIONAL,</span><br></pre></td></tr></table></figure>
-<h3 id="prb-bundlingtype">prb-BundlingType</h3>
-<p>PDSCH-Config :: prb-BundlingType 用于RRC配置PRG size。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">prb-BundlingType            CHOICE &#123;</span><br><span class="line">​    staticBundling             SEQUENCE &#123;</span><br><span class="line">​      bundleSize               ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;,</span><br><span class="line">​     dynamicBundling           SEQUENCE &#123;</span><br><span class="line">​      bundleSizeSet1             ENUMERATED &#123; n4, wideband, n2-wideband, n4-wideband &#125;    OPTIONAL,  -- Need S</span><br><span class="line">​      bundleSizeSet2             ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">prb-BundlingType</span><br><span class="line">Indicates the PRB bundle type and bundle size(s) (see TS 38.214 [19], clause 5.1.2.3). If *dynamic* is chosen, the actual *bundleSizeSet1 or bundleSizeSet2* to use is indicated via DCI. Constraints on *bundleSize(Set)* setting depending on *vrb-ToPRB-Interleaver* and *rbg-Size* settings are described in TS 38.214 [19], clause 5.1.2.3. If a *bundleSize(Set)* value is absent, the UE applies the value *n2*.</span><br></pre></td></tr></table></figure>
-<h3 id="consecutively-scheduled-bandwidth-in-frequency">consecutively
-scheduled bandwidth in frequency</h3>
-<p>UE所调度的连续 PRB 数目将与 (BWP size)/2 进行比较。</p>
-<h2 id="prg-size">PRG size</h2>
-<p>PRG size 有 {n2, n4, wideband} 三种可能，具体配置策略如下。</p>
-<p>对于 DCI format 1_0 调度的 PDSCH ，固定配置为 <strong>PRG size =
-n2</strong>。</p>
-<p>对于 DCI format 1_1 调度的 PDSCH，PRG size如下：</p>
-<ol type="a">
-<li>如果 UE 没有 dynamicPRB-BundlingDL 能力，则 gNB 只能采用 RRC
-静态配置 PRG size。此时 prb-BundlingType为staticBundling。</li>
-</ol>
-<ul>
-<li>如果配置 bundleSize = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSize = wideband，则 <strong>PRG size =
-wideband</strong></li>
-</ul>
-<ol start="2" type="a">
-<li>如果UE有 dynamicPRB-BundlingDL 能力，则 gNB 可采用 1）RRC + DCI
-动态配置 PRG size，或 2）RRC静态配置 PRG size。</li>
-</ol>
-<ul>
-<li>1）RRC + DCI 动态配置，此时 prb-BundlingType 为 dynamicBundling。
-<ul>
-<li>DCI 字段 <em>PRB bundling size indicator</em> 用一个 bit 来指示
-bundleSizeSet1 或 bundleSizeSet2 。值为 1 表示使用 bundleSizeSet1，值为
-0 表示使用 bundleSizeSet2。
-<ul>
-<li>bundleSizeSet1 = {n4, wideband, n2-wideband, n4-wideband}</li>
-<li>bundleSizeSet2 = {n4, wideband}</li>
-</ul></li>
-<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
-指示bundleSizeSet1
-<ul>
-<li>如果配置 bundleSizeSet1 = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSizeSet1 = wideband，则 <strong>PRG size =
-wideband</strong></li>
-<li>如果配置 bundleSizeSet1 = n2-wideband，则
-<ul>
-<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则 <strong>PRG size
-= wideband</strong>；否则，<strong>PRG size = n2</strong>。</li>
-</ul></li>
-<li>如果配置 bundleSizeSet1 = n4-wideband，则
-<ul>
-<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则<strong>PRG size
-= wideband</strong>；否则，<strong>PRG size = n4</strong>。</li>
-</ul></li>
-</ul></li>
-<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
-指示bundleSizeSet2
-<ul>
-<li>如果配置 bundleSizeSet2 = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSizeSet2 = wideband，则 <strong>PRG size =
-wideband</strong></li>
-</ul></li>
-</ul></li>
-<li>2）RRC 静态配置，同 a</li>
-</ul>
-<ol start="3" type="a">
-<li><p>如有 gNB 没有配置 bundleSize(Set)，则默认 <strong>PRG size =
-n2</strong>。</p></li>
-<li><p>PRG size限制条件</p></li>
-</ol>
-<ul>
-<li>如果RBG = 2 或 vrb-ToPRB-Interleaver = n2，则 <strong>不能配置PRG
-size = n4</strong>。</li>
-</ul>
-<p>Note: 当 PRG size 配置为 wideband 时，意味着 PRG size 等于 UE
-所调度的连续 PRB 数目，分配给 UE 的资源必须是连续的 PRB。在这些连续的
-PRB 上使用相同的预编码。</p>
-<h3 id="references">References</h3>
-<ul>
-<li>3GPP Spec. 38.211</li>
-<li>3GPP Spec. 38.212</li>
-<li>3GPP Spec. 38.214</li>
-<li>3GPP Spec. 38.331</li>
-<li>3GPP Spec. 38.306</li>
-</ul>
-]]></content>
-      <categories>
-        <category>5G-NR</category>
-      </categories>
-      <tags>
-        <tag>5G-NR</tag>
       </tags>
   </entry>
   <entry>
@@ -7456,6 +7350,113 @@ Information Theory, 2008, 55(7):3051-3073. [3] 陈凯.
       </tags>
   </entry>
   <entry>
+    <title>NR PRG</title>
+    <url>/2020/03/07/nr_prg/</url>
+    <content><![CDATA[<h2 id="prg">PRG</h2>
+<p>PRG（Precoding Resource Block
+Group）是预编码资源块组，由一组频域连续的 RB 组成，这些连续的 RB
+具有相同的预编码。</p>
+<p>PRG size 的确定涉及到 a) UE能力，b) RRC配置，c) UE 所调度的连续 PRB
+数目。</p>
+<h3 id="dynamicprb-bundlingdl">dynamicPRB-BundlingDL</h3>
+<p><strong><em>dynamicPRB-BundlingDL</em></strong> 用于指示 UE
+是否支持基于 DCI 来指示 PDSCH 接收的 PRG size。</p>
+<p>如果 gNB 收到 UE 上报的 Phy-ParametersCommon ::
+dynamicPRB-BundlingDL，则表明 UE 支持基于 DCI 来指示 PDSCH 接收的 PRG
+size。</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dynamicPRB-BundlingDL        ENUMERATED &#123;supported&#125;           OPTIONAL,</span><br></pre></td></tr></table></figure>
+<h3 id="prb-bundlingtype">prb-BundlingType</h3>
+<p>PDSCH-Config :: prb-BundlingType 用于RRC配置PRG size。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">prb-BundlingType            CHOICE &#123;</span><br><span class="line">​    staticBundling             SEQUENCE &#123;</span><br><span class="line">​      bundleSize               ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;,</span><br><span class="line">​     dynamicBundling           SEQUENCE &#123;</span><br><span class="line">​      bundleSizeSet1             ENUMERATED &#123; n4, wideband, n2-wideband, n4-wideband &#125;    OPTIONAL,  -- Need S</span><br><span class="line">​      bundleSizeSet2             ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">prb-BundlingType</span><br><span class="line">Indicates the PRB bundle type and bundle size(s) (see TS 38.214 [19], clause 5.1.2.3). If *dynamic* is chosen, the actual *bundleSizeSet1 or bundleSizeSet2* to use is indicated via DCI. Constraints on *bundleSize(Set)* setting depending on *vrb-ToPRB-Interleaver* and *rbg-Size* settings are described in TS 38.214 [19], clause 5.1.2.3. If a *bundleSize(Set)* value is absent, the UE applies the value *n2*.</span><br></pre></td></tr></table></figure>
+<h3 id="consecutively-scheduled-bandwidth-in-frequency">consecutively
+scheduled bandwidth in frequency</h3>
+<p>UE所调度的连续 PRB 数目将与 (BWP size)/2 进行比较。</p>
+<h2 id="prg-size">PRG size</h2>
+<p>PRG size 有 {n2, n4, wideband} 三种可能，具体配置策略如下。</p>
+<p>对于 DCI format 1_0 调度的 PDSCH ，固定配置为 <strong>PRG size =
+n2</strong>。</p>
+<p>对于 DCI format 1_1 调度的 PDSCH，PRG size如下：</p>
+<ol type="a">
+<li>如果 UE 没有 dynamicPRB-BundlingDL 能力，则 gNB 只能采用 RRC
+静态配置 PRG size。此时 prb-BundlingType为staticBundling。</li>
+</ol>
+<ul>
+<li>如果配置 bundleSize = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSize = wideband，则 <strong>PRG size =
+wideband</strong></li>
+</ul>
+<ol start="2" type="a">
+<li>如果UE有 dynamicPRB-BundlingDL 能力，则 gNB 可采用 1）RRC + DCI
+动态配置 PRG size，或 2）RRC静态配置 PRG size。</li>
+</ol>
+<ul>
+<li>1）RRC + DCI 动态配置，此时 prb-BundlingType 为 dynamicBundling。
+<ul>
+<li>DCI 字段 <em>PRB bundling size indicator</em> 用一个 bit 来指示
+bundleSizeSet1 或 bundleSizeSet2 。值为 1 表示使用 bundleSizeSet1，值为
+0 表示使用 bundleSizeSet2。
+<ul>
+<li>bundleSizeSet1 = {n4, wideband, n2-wideband, n4-wideband}</li>
+<li>bundleSizeSet2 = {n4, wideband}</li>
+</ul></li>
+<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
+指示bundleSizeSet1
+<ul>
+<li>如果配置 bundleSizeSet1 = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSizeSet1 = wideband，则 <strong>PRG size =
+wideband</strong></li>
+<li>如果配置 bundleSizeSet1 = n2-wideband，则
+<ul>
+<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则 <strong>PRG size
+= wideband</strong>；否则，<strong>PRG size = n2</strong>。</li>
+</ul></li>
+<li>如果配置 bundleSizeSet1 = n4-wideband，则
+<ul>
+<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则<strong>PRG size
+= wideband</strong>；否则，<strong>PRG size = n4</strong>。</li>
+</ul></li>
+</ul></li>
+<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
+指示bundleSizeSet2
+<ul>
+<li>如果配置 bundleSizeSet2 = n4，则 <strong>PRG size = n4</strong></li>
+<li>如果配置 bundleSizeSet2 = wideband，则 <strong>PRG size =
+wideband</strong></li>
+</ul></li>
+</ul></li>
+<li>2）RRC 静态配置，同 a</li>
+</ul>
+<ol start="3" type="a">
+<li><p>如有 gNB 没有配置 bundleSize(Set)，则默认 <strong>PRG size =
+n2</strong>。</p></li>
+<li><p>PRG size限制条件</p></li>
+</ol>
+<ul>
+<li>如果RBG = 2 或 vrb-ToPRB-Interleaver = n2，则 <strong>不能配置PRG
+size = n4</strong>。</li>
+</ul>
+<p>Note: 当 PRG size 配置为 wideband 时，意味着 PRG size 等于 UE
+所调度的连续 PRB 数目，分配给 UE 的资源必须是连续的 PRB。在这些连续的
+PRB 上使用相同的预编码。</p>
+<h3 id="references">References</h3>
+<ul>
+<li>3GPP Spec. 38.211</li>
+<li>3GPP Spec. 38.212</li>
+<li>3GPP Spec. 38.214</li>
+<li>3GPP Spec. 38.331</li>
+<li>3GPP Spec. 38.306</li>
+</ul>
+]]></content>
+      <categories>
+        <category>5G-NR</category>
+      </categories>
+      <tags>
+        <tag>5G-NR</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Polar Code（10）速率适配的凿孔极化码</title>
     <url>/2017/03/21/polar-code-10-rcpp/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -7554,6 +7555,52 @@ codes[C]// IEEE International Conference on Communications. IEEE,
       </categories>
       <tags>
         <tag>Polar Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polar Code（14）3GPP RAN1#88bis</title>
+    <url>/2017/05/15/polar-code-14-3gpp-ran1-88b/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p><br/>RAN1#87次会议已将Polar
+code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G
+NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar
+code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar
+code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
+<p>言归正传，从3GPP
+RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code
+construction，二是Sequence design。</p>
+<span id="more"></span>
+<h1 id="code-construction">Code construction</h1>
+<p><br/>Code construction讨论的是编码结构，犹如一个盒子，<span
+class="math inline">\(k\)</span>比特输入，<span
+class="math inline">\(N\)</span>比特输出。只要这个盒子的内部结构确定，输入任意<span
+class="math inline">\(k\)</span>个信息比特，都可以得到<span
+class="math inline">\(N\)</span>比特的极化码编码序列。这个编码结构简略地说就是“<strong>J+J'检错比特
++ basic polar</strong>”的控制信道编码结构。J
+bits是CRC，主要用于错误检测，但也可以用于辅助译码。J'
+bits用于辅助译码。</p>
+<p>根据Arikan的结论，极化码在码长趋于无穷长时，由于信道极化完全而能够达到香农容量。但实际的码长是有限长的，采用SC/SCL译码算法并不能达到理想的译码性能。添加一些检错比特以辅助译码，则能够以较低的复杂度提高译码检错能力，从而提高译码性能。3GPP所讨论的主要是基于辅助的极化码方案，目前有CRC-polar、PC-polar和Hash-polar三种方案，甚至是它们的组合。所以J'
+bits可以是CRC或PC或Hash code，或它们的组合。</p>
+<p>此外，极化码编码结构要考虑Early
+termination，在不降低BLRE性能或增加时延的前提下，不必等到译出全部比特才去判断该码字是否正确，而是在译出一部分比特的时候就可以提前发现错误。这样做的好处，一是在译码过程中能够尽早发现译码错误，减少译码复杂度；二是对于控制信道可以减少盲检测的数量。</p>
+<h1 id="sequence-design">Sequence design</h1>
+<p><br/>Sequence
+design涉及极化码信息比特和冻结比特位置的选择问题。对极化码而言，由于信道极化特性，某些比特位置（子信道）总是比其他比特位置更可靠。构造极化码时，需要一个基于可靠性度量的比特位置顺序序列（ordered
+sequence），指示信息比特和检错比特放置在可靠性较高的比特位置上，冻结比特放置在可靠性较低的比特位置上。</p>
+<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/094419143.jpg" title="The structure of Polar codes for NR" /></p>
+<p>上图红色方框表示的序列就是ordered sequence。有了“<strong>J+J'检错比特
++ basic
+polar</strong>”的编码结构，加上指示信息比特/冻结比特位置的<strong>ordered
+sequence</strong>，最后加上<strong>速率匹配方案</strong>以突破码长<span
+class="math inline">\(N\)</span>必须为2的幂次方的限制，最终构成了一套适用于NR-PDCCH的极化码编码方案。</p>
+<p>关于Sequence design，本次会议并没有达成任何实质性结论。</p>
+]]></content>
+      <categories>
+        <category>3GPP_PolarCode</category>
+      </categories>
+      <tags>
+        <tag>Polar Code</tag>
+        <tag>3GPP</tag>
       </tags>
   </entry>
   <entry>
@@ -7671,52 +7718,6 @@ Code上下行控制信息编码的母码长度确定了。性能评估指标一�
 <h1 id="参考文献">参考文献</h1>
 <p><br/>[1] Draft_Minutes_report_RAN1#AH1_NR_v010 [2]
 Draft_Minutes_report_RAN1#88_v010</p>
-]]></content>
-      <categories>
-        <category>3GPP_PolarCode</category>
-      </categories>
-      <tags>
-        <tag>Polar Code</tag>
-        <tag>3GPP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Polar Code（14）3GPP RAN1#88bis</title>
-    <url>/2017/05/15/polar-code-14-3gpp-ran1-88b/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p><br/>RAN1#87次会议已将Polar
-code确定为eMBB场景下控制信道的信道编码，因此3GPP对极化码的讨论并不是在单纯地讨论编码理论，而是在讨论极化码在5G
-NR控制信道框架下的应用。所以随着3GPP对极化码讨论的深入，关于极化码达成的结论会自然地和控制信道的特性结合在一起。也就是说，你所看到的3GPP关于极化码达成的结论，未必是Polar
-code本身应该具有的，但它一定是<strong>5G NR控制信道下的Polar
-code</strong>应该具有的。所以仍然有必要把学术界研究的极化码与工程界研究的极化码做个区分。</p>
-<p>言归正传，从3GPP
-RAN1#88bis次会议开始，对极化码的讨论分为两个部分：一是Code
-construction，二是Sequence design。</p>
-<span id="more"></span>
-<h1 id="code-construction">Code construction</h1>
-<p><br/>Code construction讨论的是编码结构，犹如一个盒子，<span
-class="math inline">\(k\)</span>比特输入，<span
-class="math inline">\(N\)</span>比特输出。只要这个盒子的内部结构确定，输入任意<span
-class="math inline">\(k\)</span>个信息比特，都可以得到<span
-class="math inline">\(N\)</span>比特的极化码编码序列。这个编码结构简略地说就是“<strong>J+J'检错比特
-+ basic polar</strong>”的控制信道编码结构。J
-bits是CRC，主要用于错误检测，但也可以用于辅助译码。J'
-bits用于辅助译码。</p>
-<p>根据Arikan的结论，极化码在码长趋于无穷长时，由于信道极化完全而能够达到香农容量。但实际的码长是有限长的，采用SC/SCL译码算法并不能达到理想的译码性能。添加一些检错比特以辅助译码，则能够以较低的复杂度提高译码检错能力，从而提高译码性能。3GPP所讨论的主要是基于辅助的极化码方案，目前有CRC-polar、PC-polar和Hash-polar三种方案，甚至是它们的组合。所以J'
-bits可以是CRC或PC或Hash code，或它们的组合。</p>
-<p>此外，极化码编码结构要考虑Early
-termination，在不降低BLRE性能或增加时延的前提下，不必等到译出全部比特才去判断该码字是否正确，而是在译出一部分比特的时候就可以提前发现错误。这样做的好处，一是在译码过程中能够尽早发现译码错误，减少译码复杂度；二是对于控制信道可以减少盲检测的数量。</p>
-<h1 id="sequence-design">Sequence design</h1>
-<p><br/>Sequence
-design涉及极化码信息比特和冻结比特位置的选择问题。对极化码而言，由于信道极化特性，某些比特位置（子信道）总是比其他比特位置更可靠。构造极化码时，需要一个基于可靠性度量的比特位置顺序序列（ordered
-sequence），指示信息比特和检错比特放置在可靠性较高的比特位置上，冻结比特放置在可靠性较低的比特位置上。</p>
-<p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170529/094419143.jpg" title="The structure of Polar codes for NR" /></p>
-<p>上图红色方框表示的序列就是ordered sequence。有了“<strong>J+J'检错比特
-+ basic
-polar</strong>”的编码结构，加上指示信息比特/冻结比特位置的<strong>ordered
-sequence</strong>，最后加上<strong>速率匹配方案</strong>以突破码长<span
-class="math inline">\(N\)</span>必须为2的幂次方的限制，最终构成了一套适用于NR-PDCCH的极化码编码方案。</p>
-<p>关于Sequence design，本次会议并没有达成任何实质性结论。</p>
 ]]></content>
       <categories>
         <category>3GPP_PolarCode</category>

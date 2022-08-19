@@ -912,7 +912,7 @@ src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/2020112
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-19 07:49:59" itemprop="dateModified" datetime="2022-08-19T07:49:59+08:00">2022-08-19</time>
+      <time title="修改时间：2022-08-19 08:11:07" itemprop="dateModified" datetime="2022-08-19T08:11:07+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -946,90 +946,9 @@ Group）是预编码资源块组，由一组频域连续的 RB 组成，这些�
 <p>如果 gNB 收到 UE 上报的 Phy-ParametersCommon ::
 dynamicPRB-BundlingDL，则表明 UE 支持基于 DCI 来指示 PDSCH 接收的 PRG
 size。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dynamicPRB-BundlingDL        ENUMERATED &#123;supported&#125;           OPTIONAL,</span><br></pre></td></tr></table></figure>
-<h3 id="prb-bundlingtype">prb-BundlingType</h3>
-<p>PDSCH-Config :: prb-BundlingType 用于RRC配置PRG size。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prb-BundlingType            CHOICE &#123;</span><br><span class="line">​    staticBundling             SEQUENCE &#123;</span><br><span class="line">​      bundleSize               ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;,</span><br><span class="line">​     dynamicBundling           SEQUENCE &#123;</span><br><span class="line">​      bundleSizeSet1             ENUMERATED &#123; n4, wideband, n2-wideband, n4-wideband &#125;    OPTIONAL,  -- Need S</span><br><span class="line">​      bundleSizeSet2             ENUMERATED &#123; n4, wideband &#125;                 OPTIONAL  -- Need S</span><br><span class="line">​    &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">prb-BundlingType</span><br><span class="line">Indicates the PRB bundle type and bundle size(s) (see TS 38.214 [19], clause 5.1.2.3). If *dynamic* is chosen, the actual *bundleSizeSet1 or bundleSizeSet2* to use is indicated via DCI. Constraints on *bundleSize(Set)* setting depending on *vrb-ToPRB-Interleaver* and *rbg-Size* settings are described in TS 38.214 [19], clause 5.1.2.3. If a *bundleSize(Set)* value is absent, the UE applies the value *n2*.</span><br></pre></td></tr></table></figure>
-<h3 id="consecutively-scheduled-bandwidth-in-frequency">consecutively
-scheduled bandwidth in frequency</h3>
-<p>UE所调度的连续 PRB 数目将与 (BWP size)/2 进行比较。</p>
-<h2 id="prg-size">PRG size</h2>
-<p>PRG size 有 {n2, n4, wideband} 三种可能，具体配置策略如下。</p>
-<p>对于 DCI format 1_0 调度的 PDSCH ，固定配置为 <strong>PRG size =
-n2</strong>。</p>
-<p>对于 DCI format 1_1 调度的 PDSCH，PRG size如下：</p>
-<ol type="a">
-<li>如果 UE 没有 dynamicPRB-BundlingDL 能力，则 gNB 只能采用 RRC
-静态配置 PRG size。此时 prb-BundlingType为staticBundling。</li>
-</ol>
-<ul>
-<li>如果配置 bundleSize = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSize = wideband，则 <strong>PRG size =
-wideband</strong></li>
-</ul>
-<ol start="2" type="a">
-<li>如果UE有 dynamicPRB-BundlingDL 能力，则 gNB 可采用 1）RRC + DCI
-动态配置 PRG size，或 2）RRC静态配置 PRG size。</li>
-</ol>
-<ul>
-<li>1）RRC + DCI 动态配置，此时 prb-BundlingType 为 dynamicBundling。
-<ul>
-<li>DCI 字段 <em>PRB bundling size indicator</em> 用一个 bit 来指示
-bundleSizeSet1 或 bundleSizeSet2 。值为 1 表示使用 bundleSizeSet1，值为
-0 表示使用 bundleSizeSet2。
-<ul>
-<li>bundleSizeSet1 = {n4, wideband, n2-wideband, n4-wideband}</li>
-<li>bundleSizeSet2 = {n4, wideband}</li>
-</ul></li>
-<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
-指示bundleSizeSet1
-<ul>
-<li>如果配置 bundleSizeSet1 = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSizeSet1 = wideband，则 <strong>PRG size =
-wideband</strong></li>
-<li>如果配置 bundleSizeSet1 = n2-wideband，则
-<ul>
-<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则 <strong>PRG size
-= wideband</strong>；否则，<strong>PRG size = n2</strong>。</li>
-</ul></li>
-<li>如果配置 bundleSizeSet1 = n4-wideband，则
-<ul>
-<li>如果 UE 所调度的连续 PRB 数目 &gt; (BWP size)/2，则<strong>PRG size
-= wideband</strong>；否则，<strong>PRG size = n4</strong>。</li>
-</ul></li>
-</ul></li>
-<li>如果 DCI 字段 <em>PRB bundling size indicator</em>
-指示bundleSizeSet2
-<ul>
-<li>如果配置 bundleSizeSet2 = n4，则 <strong>PRG size = n4</strong></li>
-<li>如果配置 bundleSizeSet2 = wideband，则 <strong>PRG size =
-wideband</strong></li>
-</ul></li>
-</ul></li>
-<li>2）RRC 静态配置，同 a</li>
-</ul>
-<ol start="3" type="a">
-<li><p>如有 gNB 没有配置 bundleSize(Set)，则默认 <strong>PRG size =
-n2</strong>。</p></li>
-<li><p>PRG size限制条件</p></li>
-</ol>
-<ul>
-<li>如果RBG = 2 或 vrb-ToPRB-Interleaver = n2，则 <strong>不能配置PRG
-size = n4</strong>。</li>
-</ul>
-<p>Note: 当 PRG size 配置为 wideband 时，意味着 PRG size 等于 UE
-所调度的连续 PRB 数目，分配给 UE 的资源必须是连续的 PRB。在这些连续的
-PRB 上使用相同的预编码。</p>
-<h3 id="references">References</h3>
-<ul>
-<li>3GPP Spec. 38.211</li>
-<li>3GPP Spec. 38.212</li>
-<li>3GPP Spec. 38.214</li>
-<li>3GPP Spec. 38.331</li>
-<li>3GPP Spec. 38.306</li>
-</ul>
-
+          <!--noindex-->
+          <!--/noindex-->
+        
       
     </div>
 
