@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140245285.jpg">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140423071.jpg">
 <meta property="article:published_time" content="2017-03-15T12:40:17.000Z">
-<meta property="article:modified_time" content="2022-08-20T05:05:40.894Z">
+<meta property="article:modified_time" content="2022-08-20T05:18:05.702Z">
 <meta property="article:author" content="Marshall">
 <meta property="article:tag" content="Polar Code">
 <meta name="twitter:card" content="summary">
@@ -265,7 +265,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-20 13:05:40" itemprop="dateModified" datetime="2022-08-20T13:05:40+08:00">2022-08-20</time>
+      <time title="修改时间：2022-08-20 13:18:05" itemprop="dateModified" datetime="2022-08-20T13:18:05+08:00">2022-08-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -295,7 +295,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="前言">前言</h1>
-<p><br/>Polar
+<p>Polar
 Code在码长趋于无穷时，信道极化才越完全。但在有限码长下，由于信道极化并不完全，依然会存在一些信息比特无法被正确译码。当前面<span
 class="math inline">\(i-1\)</span>个信息比特的译码中发生错误之后，由于SC译码器在对后面的信息比特译码时需要用到之前的信息比特的估计值，这就会导致较为严重的错误传递。SC译码算法是一种贪婪算法，对码树的每一层仅仅搜索到最优路径就进行下一层，所以无法对错误进行修改。SCL译码算法就是对SC算法的改进。但在SCL之前，先来看看SC译码算法的码树表示。</p>
 <span id="more"></span>
@@ -345,7 +345,7 @@ class="math inline">\(\left| \varepsilon_i \right| =
 0 &amp; 1 &amp; 1 \end{matrix} \right]\)</span>。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/205026503.jpg" title="图 1 码长为4的极化码译码码树" /></p>
 <h1 id="scl译码算法">SCL译码算法</h1>
-<p><br/>针对SC译码算法的缺点，一个直接的改进方案是，增加每一层路径搜索后允许保留的候选路径数量，从仅允许选择“最好的一条路径进行下一步扩展”改为“最大允许选择最好的
+<p>针对SC译码算法的缺点，一个直接的改进方案是，增加每一层路径搜索后允许保留的候选路径数量，从仅允许选择“最好的一条路径进行下一步扩展”改为“最大允许选择最好的
 条路径进行下一步扩展”，其中<span class="math inline">\(L\ge
 1\)</span>。与SC算法一样，改进的算法依然从码树根节点开始，逐层依次向叶子节点层进行路径搜索。不同的是，每一层扩展后，尽可能多地保留后继路径（每一层保留的路径数不大于<span
 class="math inline">\(L\)</span>）。完成一层的路径扩展后，选择路径度量值（Path
@@ -357,7 +357,7 @@ class="math inline">\(L=1\)</span>时，SCL译码算法退化为SC译码算法�
 class="math inline">\(L\ge {
 {2}^{K}}\)</span>时，SCL译码等价于最大似然译码。</p>
 <h2 id="思考">思考</h2>
-<p><br/>现在思考一个问题：如图2所示，当Polar
+<p>现在思考一个问题：如图2所示，当Polar
 Code编译码结构用“蝶形图”表示时，在译码时只需要在每个节点处计算相应的对数似然比，从右到左依次计算，并最终得到<span
 class="math inline">\(L_{N}^{\left( i \right)}\left(
 y_{1}^{N},u_{1}^{i-1} \right)\)</span>，若LLR值为非负则判决<span
@@ -375,7 +375,7 @@ class="math inline">\(2L\)</span>个后继节点中挑选<span
 class="math inline">\(L\)</span>个最优节点作为后继译码路径的。这就需要在LLR的基础上对<span
 class="math inline">\(2L\)</span>条路径度量值进行计算，以便可以实现在对数似然域上的SCL译码算法。因此需要明确的第三点就是：重新定义路径度量值（PM）。</p>
 <h2 id="路径度量值">路径度量值</h2>
-<p><br/>在SCL译码过程中，存在<span
+<p>在SCL译码过程中，存在<span
 class="math inline">\(L\)</span>条路径同时进行译码搜索，对于任意一条路径<span
 class="math inline">\(l\in \left\{ 1,2,...,L
 \right\}\)</span>以及任意发送比特<span class="math inline">\({
@@ -439,7 +439,7 @@ class="math inline">\(PM_{l}^{\left( 0
 y_{1}^{N},\hat{u}_{1}^{i-1} \right) \right)
 \end{align}\]</span></p>
 <h1 id="scl译码示例">SCL译码示例</h1>
-<p><br/>下面仍然以<a
+<p>下面仍然以<a
 href="http://marshallcomm.cn/2017/03/13/polar-code-6-sc-decoder/">《Polar
 Code（6）SC译码算法》</a>中的SC译码的例子为例来说明SCL算法的具体实现过程。给定发送端原始比特序列<span
 class="math inline">\(u_{1}^{4}=\left( \begin{matrix}  { {u}_{1}} &amp;
@@ -456,8 +456,8 @@ class="math inline">\(L_{1}^{\left( 1 \right)}\left( y_{1}^{4}
 </font></p>
 <h2 id="搜索第一层">搜索第一层</h2>
 <h3 id="计算第1个比特相关的llr">计算第1个比特相关的LLR</h3>
-<p><br/><span class="math display">\[L_{4}^{\left( 1 \right)}\left(
-y_{1}^{4} \right)=f\left( L_{2}^{\left( 1 \right)}\left( y_{1}^{2}
+<p><span class="math display">\[L_{4}^{\left( 1 \right)}\left( y_{1}^{4}
+\right)=f\left( L_{2}^{\left( 1 \right)}\left( y_{1}^{2}
 \right),L_{2}^{\left( 1 \right)}\left( y_{3}^{4} \right)
 \right)\]</span></p>
 <p>其中，<span class="math inline">\(L_{2}^{\left( 1 \right)}\left(
@@ -479,7 +479,7 @@ y_{1}^{4} \right)=f\left( 1.06,-0.23 \right)=-0.11\]</span>。</p>
 \end{matrix} \right]\]</span></p>
 <h3 id="计算候选路径的度量值">计算候选路径的度量值</h3>
 <h4 id="a.-0">a. 0</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 1
+<p><span class="math inline">\(L_{4}^{\left( 1
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 1
@@ -495,7 +495,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 \right)=PM_{1}^{\left( 0 \right)}+\left| L_{4}^{\left( 1 \right)}
 \right|=0+0.11=0.11\]</span></p>
 <h4 id="b.-1">b. 1</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 1
+<p><span class="math inline">\(L_{4}^{\left( 1
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 1
@@ -509,17 +509,17 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p><span class="math display">\[PM\left( { { {\hat{u}}}_{1}}=1
 \right)=\text{+}\infty \]</span></p>
 <h4 id="路径扩展">路径扩展</h4>
-<p><br/>如图3所示，由于搜索宽度已达到<span
+<p>如图3所示，由于搜索宽度已达到<span
 class="math inline">\(L=2\)</span>，因此第1层的2条路径均保留。继续在下一层扩展，至<span
 class="math inline">\(2L\)</span>条路径，再从中挑选<span
 class="math inline">\(L\)</span>条。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221254645.jpg" title="图 3 SCL译码算法在第1层的扩展" /></p>
 <h2 id="搜索第二层">搜索第二层</h2>
 <h3 id="计算第2个比特相关的llr">计算第2个比特相关的LLR</h3>
-<p><br/>分别计算<span
+<p>分别计算<span
 class="math inline">\(2L\)</span>条路径在第2层对应的LLR。</p>
 <h4 id="a.-00">a. 00</h4>
-<p><br/>比特估计值<span class="math inline">\({
+<p>比特估计值<span class="math inline">\({
 {\hat{u}}_{1}}=0\)</span>，所以有</p>
 <p><span class="math display">\[\nonumber \begin{align}
   &amp; L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ { {\hat{u}}}_{1}}
@@ -534,14 +534,14 @@ class="math inline">\(2L\)</span>条路径在第2层对应的LLR。</p>
 <p><span class="math display">\[\mathbf{LLR}=\left[ 0.83
 \right]\]</span></p>
 <h4 id="b.-01">b. 01</h4>
-<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left(
+<p>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left(
 y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=0.83\)</span>。</p>
 <p><strong>更新向量LLR</strong></p>
 <p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
    0.83 &amp; 0.83  \\
 \end{matrix} \right]\]</span></p>
 <h4 id="c.-10">c. 10</h4>
-<p><br/>比特估计值<span class="math inline">\({
+<p>比特估计值<span class="math inline">\({
 {\hat{u}}_{1}}=1\)</span>，所以有</p>
 <p><span class="math display">\[\begin{align}
   \nonumber &amp; L_{4}^{\left( 2 \right)}\left( y_{1}^{4},{ {
@@ -559,7 +559,7 @@ y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=0.83\)</span>。</p>
 \end{matrix} &amp; -1.29  \\
 \end{matrix} \right]\]</span></p>
 <h4 id="d.-11">d. 11</h4>
-<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left(
+<p>同上，<span class="math inline">\(L_{4}^{\left( 2 \right)}\left(
 y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=-1.29\)</span>。</p>
 <p><strong>更新向量LLR</strong></p>
 <p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
@@ -570,12 +570,12 @@ y_{1}^{4},{ { {\hat{u}}}_{1}} \right)=-1.29\)</span>。</p>
 \end{matrix} &amp; -1.29  \\
 \end{matrix} \right]\]</span></p>
 <h3 id="计算候选路径的度量值-1">计算候选路径的度量值</h3>
-<p><br/>由于在上一层已经扩展至<span
+<p>由于在上一层已经扩展至<span
 class="math inline">\(L\)</span>条路径，那么在这一层将会计算<span
 class="math inline">\(2L\)</span>条路径的度量值，然后保留PM最小的<span
 class="math inline">\(L\)</span>条路径，并且删除其余路径。</p>
 <h4 id="a.-00-1">a. 00</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 2
+<p><span class="math inline">\(L_{4}^{\left( 2
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2
@@ -590,7 +590,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p><span class="math display">\[PM\left( \hat{u}_{1}^{2}=00
 \right)=PM\left( { { {\hat{u}}}_{1}}=0 \right)=0.11\]</span></p>
 <h4 id="b.-01-1">b. 01</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 2
+<p><span class="math inline">\(L_{4}^{\left( 2
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2
@@ -608,7 +608,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图4所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/221926567.jpg" title="图 4 SCL译码算法在第2层的扩展" /></p>
 <h4 id="c.-10-1">c. 10</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 2
+<p><span class="math inline">\(L_{4}^{\left( 2
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2
@@ -624,7 +624,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 \right)=PM\left( { { {\hat{u}}}_{1}}=1 \right)\text{+}L_{4}^{\left( 2
 \right)}\text{=}+\infty +1.29\to +\infty \]</span></p>
 <h4 id="d.-11-1">d. 11</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 2
+<p><span class="math inline">\(L_{4}^{\left( 2
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 2
@@ -642,16 +642,16 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图5所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222254421.jpg" title="图 5 SCL译码算法在第2层的扩展" /></p>
 <h3 id="剪枝">剪枝</h3>
-<p><br/>将已经计算出的<span
+<p>将已经计算出的<span
 class="math inline">\(2L\)</span>路径按照PM值从小到大排序，对这<span
 class="math inline">\(2L\)</span>条路径进行剪枝操作：保留<span
 class="math inline">\(L\)</span>条PM值最小的路径，并且删掉其余路径。如图6所示，被保留的路径为红色，被剪枝的路径均已变成灰色。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/222502055.jpg" title="图 6 剪枝" /></p>
 <h2 id="搜索第三层">搜索第三层</h2>
-<p><br/>分别计算 条路径在第3层对应的LLR。</p>
+<p>分别计算 条路径在第3层对应的LLR。</p>
 <h3 id="计算第3个比特相关的llr">计算第3个比特相关的LLR</h3>
 <h4 id="a.-000">a. 000</h4>
-<p><br/>比特估计值<span
+<p>比特估计值<span
 class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0\)</span>。</p>
 <p><span class="math display">\[L_{4}^{\left( 3 \right)}\left(
 y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( L_{2}^{\left( 2 \right)}\left(
@@ -688,7 +688,7 @@ y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 3.5,-0.5
 <p><span class="math display">\[\mathbf{LLR}=\left[ -0.47
 \right]\]</span></p>
 <h4 id="b.-001">b. 001</h4>
-<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left(
+<p>同上，<span class="math inline">\(L_{4}^{\left( 3 \right)}\left(
 y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 3.5,-0.5
 \right)=-0.47\)</span>。</p>
 <p><strong>更新向量LLR</strong></p>
@@ -696,7 +696,7 @@ y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 3.5,-0.5
    -0.47 &amp; -0.47  \\
 \end{matrix} \right]\]</span></p>
 <h4 id="c.-010">c. 010</h4>
-<p><br/>比特估计值<span
+<p>比特估计值<span
 class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=1\)</span>。</p>
 <p><span class="math display">\[\begin{align}
   \nonumber &amp; L_{2}^{\left( 2 \right)}\left(
@@ -738,10 +738,9 @@ y_{1}^{4},\hat{u}_{1}^{2} \right)=f\left( 0.5,1.5
 \end{matrix} &amp; 0.31  \\
 \end{matrix} \right]\]</span></p>
 <h3 id="计算候选路径的度量值-2">计算候选路径的度量值</h3>
-<p><br/>分别计算<span
-class="math inline">\(2L\)</span>条路径的度量值。</p>
+<p>分别计算<span class="math inline">\(2L\)</span>条路径的度量值。</p>
 <h4 id="a.-000-1">a. 000</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 3
+<p><span class="math inline">\(L_{4}^{\left( 3
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3
@@ -757,7 +756,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 \right)=PM\left( \hat{u}_{1}^{2}=00 \right)+\left| L_{4}^{\left( 3
 \right)} \right|=0.11+0.47=0.58\]</span></p>
 <h4 id="b.-001-1">b. 001</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 3
+<p><span class="math inline">\(L_{4}^{\left( 3
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3
@@ -774,7 +773,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图7所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/223032922.jpg" title="图 7 SCL译码算法在第3层的扩展" /></p>
 <h4 id="c.-010-1">c. 010</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 3
+<p><span class="math inline">\(L_{4}^{\left( 3
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3
@@ -789,7 +788,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p><span class="math display">\[PM\left( \hat{u}_{1}^{3}=010
 \right)=PM\left( \hat{u}_{1}^{2}=01 \right)=0.94\]</span></p>
 <h4 id="d.-011-1">d. 011</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 3
+<p><span class="math inline">\(L_{4}^{\left( 3
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 3
@@ -807,17 +806,17 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图8所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134154868.jpg" title="图 8 SCL译码算法在第3层的扩展" /></p>
 <h3 id="剪枝-1">剪枝</h3>
-<p><br/>将已经计算出的<span
+<p>将已经计算出的<span
 class="math inline">\(2L\)</span>路径按照PM值从小到大排序，对这<span
 class="math inline">\(2L\)</span>条路径进行剪枝操作：保留<span
 class="math inline">\(L\)</span>条PM值最小的路径，并且删掉其余路径。如图9所示，被保留的路径为红色，被剪枝的路径均已变成灰色。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/134331096.jpg" title="图 9 剪枝" /></p>
 <h2 id="搜索第四层">搜索第四层</h2>
 <h3 id="计算第4个比特相关的llr">计算第4个比特相关的LLR</h3>
-<p><br/>分别计算<span
+<p>分别计算<span
 class="math inline">\(2L\)</span>条路径在第4层对应的LLR。</p>
 <h4 id="a.-0000">a. 0000</h4>
-<p><br/>比特估计值<span
+<p>比特估计值<span
 class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0,\hat{u}{}_{3}=0\)</span>。</p>
 <p><span class="math display">\[\begin{align}
   \nonumber &amp; L_{4}^{\left( 4 \right)}\left(
@@ -833,14 +832,14 @@ y_{1}^{2},{ { {\hat{u}}}_{1}}\oplus { { {\hat{u}}}_{2}}
 <p><span class="math display">\[\mathbf{LLR}=\left[ 3
 \right]\]</span></p>
 <h4 id="b.-0001">b. 0001</h4>
-<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left(
+<p>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left(
 y_{1}^{4},\hat{u}_{1}^{3} \right)=3\)</span>。</p>
 <p><strong>更新向量LLR</strong></p>
 <p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
    3 &amp; 3  \\
 \end{matrix} \right]\]</span></p>
 <h4 id="c.-0010">c. 0010</h4>
-<p><br/>比特估计值<span
+<p>比特估计值<span
 class="math inline">\(\hat{u}{}_{1}=0,\hat{u}{}_{2}=0,\hat{u}{}_{3}=1\)</span>。</p>
 <p><span class="math display">\[\begin{align}
 \nonumber &amp; L_{4}^{\left( 4 \right)}\left( y_{1}^{4},u_{1}^{3}
@@ -857,7 +856,7 @@ y_{3}^{4},{ {u}_{2}} \right),{ {u}_{3}} \right)=g\left( 3.5,-0.5,1
    3 &amp; 3 &amp; -4  \\
 \end{matrix} \right]\]</span></p>
 <h4 id="d.-0011">d. 0011</h4>
-<p><br/>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left(
+<p>同上，<span class="math inline">\(L_{4}^{\left( 4 \right)}\left(
 y_{1}^{4},\hat{u}_{1}^{3} \right)=-4\)</span>。</p>
 <p><strong>更新向量LLR</strong></p>
 <p><span class="math display">\[\mathbf{LLR}=\left[ \begin{matrix}
@@ -866,10 +865,10 @@ y_{1}^{4},\hat{u}_{1}^{3} \right)=-4\)</span>。</p>
 \end{matrix} &amp; -4  \\
 \end{matrix} \right]\]</span></p>
 <h3 id="计算候选路径的度量值-3">计算候选路径的度量值</h3>
-<p><br/>终于到最后一层了，继续计算<span
+<p>终于到最后一层了，继续计算<span
 class="math inline">\(2L\)</span>个路径的度量值。</p>
 <h4 id="a.-0000-1">a. 0000</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 4
+<p><span class="math inline">\(L_{4}^{\left( 4
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第1元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4
@@ -884,7 +883,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p><span class="math display">\[PM\left( \hat{u}_{1}^{4}=0000
 \right)=PM\left( \hat{u}_{1}^{3}=000 \right)=0.58\]</span></p>
 <h4 id="b.-0001-1">b. 0001</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 4
+<p><span class="math inline">\(L_{4}^{\left( 4
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第2元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4
@@ -902,7 +901,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图10所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/135823406.jpg" title="图 10 SCL译码算法在4层的扩展" /></p>
 <h4 id="c.-0010-1">c. 0010</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 4
+<p><span class="math inline">\(L_{4}^{\left( 4
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第3元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4
@@ -918,7 +917,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 \right)=PM\left( \hat{u}_{1}^{3}=001 \right)+\left| L_{4}^{\left( 4
 \right)} \right|=0.11+4=4.\text{11}\]</span></p>
 <h4 id="d.-0011-1">d. 0011</h4>
-<p><br/><span class="math inline">\(L_{4}^{\left( 4
+<p><span class="math inline">\(L_{4}^{\left( 4
 \right)}\)</span>取向量<span
 class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 第4元素</font> ，即<span class="math inline">\(L_{4}^{\left( 4
@@ -935,7 +934,7 @@ class="math inline">\(\mathbf{LLR}\)</span>的<font color="#FF0000">
 <p>截止目前的扩展路径如图11所示。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140245285.jpg" title="图 11 SCL译码算法在4层的扩展" /></p>
 <h3 id="剪枝-2">剪枝</h3>
-<p><br/>到了最后一层，选取PM最小的路径作为唯一路径，即为译码输出结果：<span
+<p>到了最后一层，选取PM最小的路径作为唯一路径，即为译码输出结果：<span
 class="math inline">\(\hat{u}_{1}^{4}=\left( \begin{matrix}  0 &amp; 0
 &amp; 1 &amp; 1 \\ \end{matrix}
 \right)\)</span>。如图12所示，只保留这一条路径，删除其余路径。</p>
@@ -957,7 +956,7 @@ alt="mark" />
 <figcaption aria-hidden="true">mark</figcaption>
 </figure>
 <h1 id="总结">总结</h1>
-<p><br/>SC译码算法是深度优先的，要的是从根节点快速到达叶子节点。而SCL译码算法是广度优先的，先扩展，再剪枝，最终到达叶子节点。SCL译码算法的PM机制就像“马太效应”，越是错误的路径越要施加惩罚，越是正确的路径越可以直接继承父节点以便保证自己具有最小的PM。对于信息比特且<span
+<p>SC译码算法是深度优先的，要的是从根节点快速到达叶子节点。而SCL译码算法是广度优先的，先扩展，再剪枝，最终到达叶子节点。SCL译码算法的PM机制就像“马太效应”，越是错误的路径越要施加惩罚，越是正确的路径越可以直接继承父节点以便保证自己具有最小的PM。对于信息比特且<span
 class="math inline">\({ {\hat{u}}_{i}}\left[ l \right]\)</span>与<span
 class="math inline">\(\delta \left( L_{N}^{\left( i \right)}\left[ l
 \right]
@@ -967,7 +966,7 @@ class="math inline">\(\delta \left( L_{N}^{\left( i \right)}\left[ l
 \right]
 \right)\)</span>不相等的情况则次之，施加一个惩罚因子，该惩罚因子的大小就是LLR的模值；对于冻结比特而且还取值错误的情况是最坏的，施加的惩罚因子是无穷大。</p>
 <h1 id="参考文献">参考文献</h1>
-<p><br/>[1] Tal I, Vardy A. List Decoding of Polar Codes[J]. Information
+<p>[1] Tal I, Vardy A. List Decoding of Polar Codes[J]. Information
 Theory IEEE Transactions on, 2012, 61(5):2213-2226. [2]
 Balatsoukas-Stimming A, Parizi M B, Burg A. LLR-Based Successive
 Cancellation List Decoding of Polar Codes[J]. IEEE Transactions on
