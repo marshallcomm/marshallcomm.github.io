@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140245285.jpg">
 <meta property="og:image" content="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170427/140423071.jpg">
 <meta property="article:published_time" content="2017-03-15T12:40:17.000Z">
-<meta property="article:modified_time" content="2018-10-21T05:49:25.006Z">
+<meta property="article:modified_time" content="2022-08-20T05:05:40.894Z">
 <meta property="article:author" content="Marshall">
 <meta property="article:tag" content="Polar Code">
 <meta name="twitter:card" content="summary">
@@ -265,7 +265,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2018-10-21 13:49:25" itemprop="dateModified" datetime="2018-10-21T13:49:25+08:00">2018-10-21</time>
+      <time title="修改时间：2022-08-20 13:05:40" itemprop="dateModified" datetime="2022-08-20T13:05:40+08:00">2022-08-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -300,45 +300,49 @@ Code在码长趋于无穷时，信道极化才越完全。但在有限码长下�
 class="math inline">\(i-1\)</span>个信息比特的译码中发生错误之后，由于SC译码器在对后面的信息比特译码时需要用到之前的信息比特的估计值，这就会导致较为严重的错误传递。SC译码算法是一种贪婪算法，对码树的每一层仅仅搜索到最优路径就进行下一层，所以无法对错误进行修改。SCL译码算法就是对SC算法的改进。但在SCL之前，先来看看SC译码算法的码树表示。</p>
 <span id="more"></span>
 <h1 id="sc译码算法的码树表示">SC译码算法的码树表示</h1>
-<p><br/>根据极化码在SC译码下各个比特判决之间的依赖关系，能够构造一颗码树<span
-class="math inline">\(\Gamma =\left( \varepsilon ,V
-\right)\)</span>，其中$<span class="math inline">\(和\)</span>V<span
-class="math inline">\(分别表示码树中的边和节点集合。定义节点的深度为该节点到根节点的最短路径长度，对于一个码长为\)</span>N<span
-class="math inline">\(的极化码，其码树节点集合\)</span>V<span
-class="math inline">\(能够按照深度\)</span>d<span
-class="math inline">\(划分成\)</span>N+1<span
-class="math inline">\(个子集，记作\)</span>{ {V}<em>{d}}<span
-class="math inline">\(，其中\)</span>d=0,1,...,N<span
-class="math inline">\(。特别地，\)</span>{ {V}</em>{0}}<span
-class="math inline">\(仅包含根节点，即\)</span>| { {V}<em>{0}} |=1<span
-class="math inline">\(。除了叶节点（即\)</span>d=N<span
-class="math inline">\(时），码树\)</span><span
-class="math inline">\(中的每一个节点\)</span>v<span
-class="math inline">\(均分别通过两条标记着0、1的边与两个\)</span>{
-{V}</em>{d+1}}<span
-class="math inline">\(中的后继节点相连。某一个节点\)</span>v<span
-class="math inline">\(所对应的序列\)</span>u_{1}<sup>{d}<span
-class="math inline">\(的值定义为从根节点开始到达该节点\)</span>v<span
-class="math inline">\(所需经过的各个边的标记序列。例如，若某一个节点\)</span>v<span
-class="math inline">\(表示了序列\)</span>u_{1}</sup>{i}<span
-class="math inline">\(，则其左、右后继节点分别代表了路径\)</span>(
-u_{1}<sup>{i},u_{1}</sup>{i+1}=0 )<span
-class="math inline">\(与\)</span>( u_{1}<sup>{i},u_{1}</sup>{i+1}=1
-)<span
-class="math inline">\(。于是，从根节点到每一个深度为\)</span>d<span
-class="math inline">\(的节点\)</span>v<span
-class="math inline">\(的路径，均对应了一种\)</span>u_{1}^{d}<span
-class="math inline">\(可能的取值，由于信源序列为二进制比特序列，所以\)</span>|
-{ {V}<em>{d}} |={ {2}^{d}}<span
-class="math inline">\(。定义连接着深度为\)</span>i-1<span
-class="math inline">\(和\)</span>i<span
-class="math inline">\(的节点的边所构成的集合为第\)</span>i<span
-class="math inline">\(层边，记作\)</span>{ {}</em>{i}}<span
-class="math inline">\(。显然，对任意\)</span>i{ 1,2,...,N }<span
-class="math inline">\(，有\)</span>| { {}<em>{i}} |={ {2}^{i}}<span
-class="math inline">\(。从根节点到任何一个节点所形成的路径，均对应一个路径度量值（PM）。值得注意的是，该码树结构仅与码长\)</span>N<span
-class="math inline">\(有关。极化码译码码树实质上是一个满二叉树，因此译码过程也就是在满二叉树上寻找合适的路径。如图1所示，给出了一个当\)</span>N=4<span
-class="math inline">\(时极化码码树的示例，各节点旁的数字指示了对应的转移概率，在每个节点处选择转移概率最大的路径，最终译码序列为\)</span></em>{1}^{N}=$。</p>
+<p>根据极化码在SC译码下各个比特判决之间的依赖关系，能够构造一颗码树
+<span class="math inline">\(\Gamma = \left( \varepsilon, V
+\right)\)</span>，其中 <span class="math inline">\(\varepsilon\)</span>
+和 <span class="math inline">\(V\)</span>
+分别表示码树中的边和节点集合。定义节点的深度为该节点到根节点的最短路径长度，对于一个码长为
+<span class="math inline">\(N\)</span> 的极化码，其码树节点集合<span
+class="math inline">\(V\)</span> 能够按照深度 <span
+class="math inline">\(d\)</span> 划分成 <span
+class="math inline">\(N+1\)</span> 个子集，记作 <span
+class="math inline">\(V_d\)</span>，其中 <span class="math inline">\(d =
+0,1,...,N\)</span>。特别地，<span class="math inline">\(V_0\)</span>
+仅包含根节点，即 <span class="math inline">\(\left| V_0 \right| =
+1\)</span>。除了叶节点（即 <span class="math inline">\(d = N\)</span>
+时），码树 <span class="math inline">\(\Gamma\)</span> 中的每一个节点
+<span class="math inline">\(v \in V_d\)</span> 均分别通过两条标记着 0、1
+的边与两个 <span class="math inline">\(V_{d+1}\)</span>
+中的后继节点相连。某一个节点 <span class="math inline">\(v\)</span>
+所对应的序列 <span class="math inline">\(u_1^d\)</span>
+的值定义为从根节点开始到达该节点 <span class="math inline">\(v\)</span>
+所需经过的各个边的标记序列。例如，若某一个节点 <span
+class="math inline">\(v\)</span> 表示了序列 <span
+class="math inline">\(u_1^i\)</span>，则其左、右后继节点分别代表了路径
+<span class="math inline">\(\left( u_1^i, u_1^{i+1} = 0 \right)\)</span>
+与 <span class="math inline">\(\left( u_1^i, u_1^{i+1} = 1
+\right)\)</span>。于是，从根节点到每一个深度为 <span
+class="math inline">\(d\)</span> 的节点 <span class="math inline">\(v\in
+V_d\)</span> 的路径，均对应了一种 <span
+class="math inline">\(u_1^d\)</span>
+可能的取值，由于信源序列为二进制比特序列，所以 <span
+class="math inline">\(\left| V_d \right| =
+2^d\)</span>。定义连接着深度为 <span class="math inline">\(i-1\)</span>
+和 <span class="math inline">\(i\)</span> 的节点的边所构成的集合为第
+<span class="math inline">\(i\)</span> 层边，记作 <span
+class="math inline">\(\varepsilon_i\)</span>。显然，对任意 <span
+class="math inline">\(i \in \left\{1,2,...,N \right\}\)</span>，有 <span
+class="math inline">\(\left| \varepsilon_i \right| =
+2^i\)</span>。从根节点到任何一个节点所形成的路径，均对应一个路径度量值（PM）。值得注意的是，该码树结构仅与码长
+<span class="math inline">\(N\)</span>
+有关。极化码译码码树实质上是一个满二叉树，因此译码过程也就是在满二叉树上寻找合适的路径。如图
+1 所示，给出了一个当 <span class="math inline">\(N = 4\)</span>
+时极化码码树的示例，各节点旁的数字指示了对应的转移概率，在每个节点处选择转移概率最大的路径，最终译码序列为
+<span class="math inline">\(\hat{u}_1^N = \left[ \begin{matrix} 0 &amp;
+0 &amp; 1 &amp; 1 \end{matrix} \right]\)</span>。</p>
 <p><img src="https://picture-1257868707.cos.ap-beijing.myqcloud.com/marshallcomm/20170315/205026503.jpg" title="图 1 码长为4的极化码译码码树" /></p>
 <h1 id="scl译码算法">SCL译码算法</h1>
 <p><br/>针对SC译码算法的缺点，一个直接的改进方案是，增加每一层路径搜索后允许保留的候选路径数量，从仅允许选择“最好的一条路径进行下一步扩展”改为“最大允许选择最好的
